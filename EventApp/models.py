@@ -130,13 +130,27 @@ class Team(models.Model):
     def __str__(self):
         return self.team_name
 
+
+class Document_type(models.Model):
+    type = models.CharField(max_length=100)
+
+    class Meta:
+        ordering = ['type',]
+
+    def __str__(self):
+        return self.type
+
 class Documents(models.Model):
     title = models.CharField(max_length=50)
+    category = models.ForeignKey(Document_type,on_delete=models.PROTECT)
     description = models.TextField(max_length = 3000,blank = True)
     file = models.FileField(upload_to='documents/')
 
+    class Meta:
+        ordering = ['category',]
+
 
     def __str__(self):
-        return self.title
+        return 'Category : ' +  self.category.type + '   Title : ' + self.title
 
 
