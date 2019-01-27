@@ -116,4 +116,27 @@ class GandharvaHome(models.Model):
     def __str__(self):
         return self.title
 
+class Receipt(models.Model):
+    event = models.ForeignKey(EventMaster, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return self.event.event_name
+
+class Team(models.Model):
+    team_name = models.CharField(max_length=50)
+    receipt = models.ForeignKey(Receipt, on_delete=models.CASCADE)
+    user = models.ForeignKey(MyUser, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return self.team_name
+
+class Documents(models.Model):
+    title = models.CharField(max_length=50)
+    description = models.TextField(max_length = 3000,blank = True)
+    file = models.FileField(upload_to='documents/')
+
+
+    def __str__(self):
+        return self.title
+
 
