@@ -30,9 +30,11 @@ class Department(models.Model):
 #Abstract User , it is the extension of the base User model which can be customized
 class MyUser(AbstractUser):
     email = models.EmailField(max_length=100, unique=True)
+    coll_email = models.EmailField(max_length = 100,blank= True)
     user_coll = models.ForeignKey(College,on_delete = models.PROTECT,blank = True, null =True)
     user_year = models.CharField(max_length = 20 , blank = True, default= None, null = True)
     user_dept = models.ForeignKey(Department,on_delete=models.PROTECT, null = True )
+    prof_img = models.ImageField(blank =True)
 
 
     def __str__(self):
