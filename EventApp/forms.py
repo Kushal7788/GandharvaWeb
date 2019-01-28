@@ -1,13 +1,13 @@
 #include the various features to be used in forms here
 from django import forms
-from .models import ContactUs, MyUser , Department, RoleMaster, College
+from .models import ContactUs, MyUser , Department, RoleMaster, College, College_year
 
 class UserRegistration(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
     email = forms.EmailField(max_length=100, required = True )
     coll_email = forms.EmailField(max_length=100, required=True)
     user_dept = forms.ModelChoiceField(queryset=Department.objects.all(), required=True)
-    user_year = forms.CharField(max_length=20, required=True)
+    user_year = forms.ModelChoiceField(queryset=College_year.objects.all(), required=True)
     user_coll = forms.ModelChoiceField(queryset=College.objects.all(), required=True)
 
     class Meta:

@@ -19,3 +19,5 @@ admin.site.register(GandharvaHome)
 admin.site.register(College)
 admin.site.register(Document)
 admin.site.register(Document_type)
+admin.site.register(College_year)
+

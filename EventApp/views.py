@@ -2,7 +2,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login , logout
 from django.urls import reverse
-from EventApp.models import Department, EventMaster, Carousel, SponsorMaster, RoleAssignment, RoleMaster, MyUser, EventDepartment,GandharvaHome,College
+from EventApp.models import *
 from .forms import UserRegistration , ContactUsForm, RoleMasterForm
 from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test
@@ -75,8 +75,9 @@ def contactus(request):
 #Registration for normal User and log in user after registration Immediately
 @user_passes_test(lambda u: u.is_superuser)
 def register(request):
-    dept = Department.objects.all();
-    coll = College.objects.all();
+    dept = Department.objects.all()
+    coll = College.objects.all()
+    year = College_year.objects.all()
     if request.method == 'POST':
         form = UserRegistration(request.POST)
         if form.is_valid():
@@ -104,7 +105,7 @@ def register(request):
     else:
         form = UserRegistration()
 
-    return render(request, 'events/register.html', {'form': form,'colleges':coll,'depts': dept})
+    return render(request, 'events/register.html', {'form': form,'colleges':coll,'depts': dept,'years':year})
 
 
 # Activates the user after clicking on the email link
@@ -155,9 +156,10 @@ def payment (request):
 #Head Login View only to be used for Heads
 @user_passes_test(lambda u: u.is_superuser)
 def RegisterHead(request):
-    Roles = RoleMaster.objects.all();
-    dept = Department.objects.all();
-    coll = College.objects.all();
+    Roles = RoleMaster.objects.all()
+    dept = Department.objects.all()
+    coll = College.objects.all()
+    year = College_year.objects.all()
     if request.method == 'POST':
         userform = UserRegistration(request.POST)
         roleform = RoleMasterForm(request.POST)
@@ -184,7 +186,7 @@ def RegisterHead(request):
         userform = UserRegistration()
         roleform = RoleMasterForm
 
-    return render(request, 'events/RegisterHead.html', {'userform': userform , 'roleform': roleform, 'roles':Roles ,'depts':dept,'colleges':coll})
+    return render(request, 'events/RegisterHead.html', {'userform': userform , 'roleform': roleform, 'roles':Roles ,'depts':dept,'colleges':coll,'years':year})
 
 
 
