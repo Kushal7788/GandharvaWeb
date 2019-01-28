@@ -73,6 +73,7 @@ def contactus(request):
     return render(request, 'gandharva/contactus.html',{'form':form, 'success_form' : success_form})
 
 #Registration for normal User and log in user after registration Immediately
+@user_passes_test(lambda u: u.is_superuser)
 def register(request):
     dept = Department.objects.all();
     coll = College.objects.all();
