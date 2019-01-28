@@ -39,6 +39,7 @@ class MyUser(AbstractUser):
     user_year = models.ForeignKey(College_year,on_delete=models.PROTECT,blank=True,null=True)
     user_dept = models.ForeignKey(Department, on_delete=models.PROTECT, null=True)
     prof_img = models.ImageField(blank=True)
+    user_phone = models.CharField(max_length=10,blank=True)
 
     def __str__(self):
         return self.username

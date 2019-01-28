@@ -9,6 +9,8 @@ class UserRegistration(forms.ModelForm):
     user_dept = forms.ModelChoiceField(queryset=Department.objects.all(), required=True)
     user_year = forms.ModelChoiceField(queryset=College_year.objects.all(), required=True)
     user_coll = forms.ModelChoiceField(queryset=College.objects.all(), required=True)
+    prof_img = forms.ImageField(required=False)
+    user_phone = forms.CharField(max_length=10,required=True)
 
     class Meta:
         model = MyUser
