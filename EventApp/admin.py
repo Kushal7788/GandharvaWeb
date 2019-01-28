@@ -5,6 +5,7 @@ from .models import *
 
 
 #register here after creating new models to view at back end
+
 admin.site.register(RoleAssignment)
 admin.site.register(RoleMaster)
 admin.site.register(MyUser)
@@ -16,5 +17,5 @@ admin.site.register(Carousel)
 admin.site.register(ContactUs)
 admin.site.register(GandharvaHome)
 admin.site.register(College)
-admin.site.register(Documents)
+admin.site.register(Document)
 admin.site.register(Document_type)

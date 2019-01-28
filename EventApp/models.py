@@ -1,18 +1,18 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, PermissionsMixin
 
+
 # Create your models here.
 
 
-
-#Use this table to store college name for Campaigning.
+# Use this table to store college name for Campaigning.
 class College(models.Model):
-
     name = models.CharField(max_length=100)
     address = models.TextField(max_length=200, blank=True)
 
     def __str__(self):
         return self.name
+
 
 # model for Department
 class Department(models.Model):
@@ -21,35 +21,35 @@ class Department(models.Model):
     description = models.TextField()
     img = models.CharField(max_length=200)
     link_to = models.CharField(max_length=200)
-    banner_src = models.CharField(max_length=500,blank = True)
+    banner_src = models.CharField(max_length=500, blank=True)
 
     def __str__(self):
         return self.name
 
 
-#Abstract User , it is the extension of the base User model which can be customized
+# Abstract User , it is the extension of the base User model which can be customized
 class MyUser(AbstractUser):
     email = models.EmailField(max_length=100, unique=True)
-    coll_email = models.EmailField(max_length = 100,blank= True)
-    user_coll = models.ForeignKey(College,on_delete = models.PROTECT,blank = True, null =True)
-    user_year = models.CharField(max_length = 20 , blank = True, default= None, null = True)
-    user_dept = models.ForeignKey(Department,on_delete=models.PROTECT, null = True )
-    prof_img = models.ImageField(blank =True)
-
+    coll_email = models.EmailField(max_length=100, blank=True)
+    user_coll = models.ForeignKey(College, on_delete=models.PROTECT, blank=True, null=True)
+    user_year = models.CharField(max_length=20, blank=True, default=None, null=True)
+    user_dept = models.ForeignKey(Department, on_delete=models.PROTECT, null=True)
+    prof_img = models.ImageField(blank=True)
 
     def __str__(self):
-     return self.username
+        return self.username
 
-#RoleMaster contains all the vaarious roles of users
-class RoleMaster (models.Model):
+
+# RoleMaster contains all the vaarious roles of users
+class RoleMaster(models.Model):
     name = models.CharField(max_length=50)
-
 
     def __str__(self):
         return self.name
 
-#RoleAssignment assigns the roles to the user
-class RoleAssignment (models.Model):
+
+# RoleAssignment assigns the roles to the user
+class RoleAssignment(models.Model):
     user = models.ForeignKey(MyUser, on_delete=models.CASCADE)
     role = models.ForeignKey(RoleMaster, on_delete=models.PROTECT)
 
@@ -73,7 +73,7 @@ class EventMaster(models.Model):
         return self.event_name
 
 
-#links the events with the departments
+# links the events with the departments
 class EventDepartment(models.Model):
     event = models.ForeignKey(EventMaster, on_delete=models.CASCADE)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
@@ -81,7 +81,8 @@ class EventDepartment(models.Model):
     def __str__(self):
         return self.event.event_name
 
-#sponsors model
+
+# sponsors model
 class SponsorMaster(models.Model):
     sponsor_name = models.CharField(max_length=30)
     sponsor_logo = models.CharField(max_length=200)
@@ -91,38 +92,41 @@ class SponsorMaster(models.Model):
     def __str__(self):
         return self.sponsor_name
 
-#contains media for front-end
+
+# contains media for front-end
 class Carousel(models.Model):
     src = models.CharField(max_length=200)
 
-#ContactUs contains fields for user Services to contact to admin (Foreign Key to Dept)
-class ContactUs(models.Model):
 
+# ContactUs contains fields for user Services to contact to admin (Foreign Key to Dept)
+class ContactUs(models.Model):
     class Meta:
-        verbose_name_plural= "Contact Us"
+        verbose_name_plural = "Contact Us"
 
     user_name = models.CharField(max_length=30)
     user_id = models.EmailField()
-    category = models.ForeignKey(Department, on_delete =models.PROTECT, null=True,blank = True)
+    category = models.ForeignKey(Department, on_delete=models.PROTECT, null=True, blank=True)
     user_message = models.CharField(max_length=300)
 
     def __str__(self):
         return self.user_name
 
-#used for all data on home page
-class GandharvaHome(models.Model):
 
+# used for all data on home page
+class GandharvaHome(models.Model):
     title = models.CharField(max_length=100)
-    data = models.TextField(max_length=1000,blank=True)
+    data = models.TextField(max_length=1000, blank=True)
 
     def __str__(self):
         return self.title
+
 
 class Receipt(models.Model):
     event = models.ForeignKey(EventMaster, on_delete=models.PROTECT)
 
     def __str__(self):
         return self.event.event_name
+
 
 class Team(models.Model):
     team_name = models.CharField(max_length=50)
@@ -137,26 +141,26 @@ class Document_type(models.Model):
     type = models.CharField(max_length=100)
 
     class Meta:
-        ordering = ['type',]
+        ordering = ['type', ]
 
     def __str__(self):
         return self.type
 
-def path(instance,filename):
-    ext=filename.split('.')[-1]
-    filename='{}.{}'.format("documents/"+instance.category.type+"/"+instance.title,ext)
+
+def path(instance, filename):
+    ext = filename.split('.')[-1]
+    filename = '{}.{}'.format("documents/" + instance.category.type + "/" + instance.title, ext)
     return filename
 
 
-class Documents(models.Model):
+class Document(models.Model):
     title = models.CharField(max_length=50)
-    category = models.ForeignKey(Document_type,on_delete=models.PROTECT)
-    description = models.TextField(max_length = 3000,blank = True)
+    category = models.ForeignKey(Document_type, on_delete=models.CASCADE)
+    description = models.TextField(max_length=3000, blank=True)
     file = models.FileField(upload_to=path)
 
     class Meta:
-        ordering = ['category',]
+        ordering = ['category', ]
+
     def __str__(self):
-        return 'Category : ' +  self.category.type + '/' + self.title
-
-
+        return 'Category : ' + self.category.type + '/' + self.title
