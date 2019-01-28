@@ -157,6 +157,6 @@ class Documents(models.Model):
     class Meta:
         ordering = ['category',]
     def __str__(self):
-        return 'Category : ' +  self.category.type + '   Title : ' + self.title
+        return 'Category : ' +  self.category.type + '/' + self.title
 
 
