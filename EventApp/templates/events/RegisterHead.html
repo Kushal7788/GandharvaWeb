@@ -84,9 +84,14 @@
                 {{ form.user_coll.errors }}
             </div>
             <div class="form-group">
-                <input class="form-control" type="text" name="user_year" placeholder="Year">
-                {{ form.user_year.errors }}
-            </div>
+                    Year of Engineering:
+                    <select name="user_year">
+                        {% for year in years %}
+                            <option value="{{ year.pk }}">{{ year.title }}</option>
+                        {% endfor %}
+                    </select>
+                    {{ form.user_year.errors }}
+                </div>
             <div class="form-group">
                 Category :
                 <select name="name">

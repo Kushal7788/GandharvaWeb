@@ -2,8 +2,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
-from EventApp.models import Department, EventMaster, Carousel, SponsorMaster, RoleAssignment, RoleMaster, MyUser, \
-    EventDepartment, GandharvaHome, College
+from EventApp.models import *
 from .forms import UserRegistration, ContactUsForm, RoleMasterForm
 from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test
@@ -92,6 +91,7 @@ def contactus(request):
 def register(request):
     dept = Department.objects.all();
     coll = College.objects.all();
+    year = College_year.objects.all();
     if request.method == 'POST':
         form = UserRegistration(request.POST)
         if form.is_valid():
@@ -119,7 +119,7 @@ def register(request):
     else:
         form = UserRegistration()
 
-    return render(request, 'events/register.html', {'form': form, 'colleges': coll, 'depts': dept})
+    return render(request, 'events/register.html', {'form': form, 'colleges': coll, 'depts': dept,'years':year})
 
 
 # Activates the user after clicking on the email link
@@ -175,6 +175,7 @@ def RegisterHead(request):
     Roles = RoleMaster.objects.all();
     dept = Department.objects.all();
     coll = College.objects.all();
+    year = College_year.objects.all();
     if request.method == 'POST':
         userform = UserRegistration(request.POST)
         roleform = RoleMasterForm(request.POST)
@@ -202,7 +203,7 @@ def RegisterHead(request):
         roleform = RoleMasterForm
 
     return render(request, 'events/RegisterHead.html',
-                  {'userform': userform, 'roleform': roleform, 'roles': Roles, 'depts': dept, 'colleges': coll})
+                  {'userform': userform, 'roleform': roleform, 'roles': Roles, 'depts': dept, 'colleges': coll,'years':year})
 
 ## Important Notes:
 # to get user role from models

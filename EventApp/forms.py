@@ -8,7 +8,7 @@ class UserRegistration(forms.ModelForm):
     email = forms.EmailField(max_length=100, required=True)
     coll_email = forms.EmailField(max_length=100, required=True)
     user_dept = forms.ModelChoiceField(queryset=Department.objects.all(), required=True)
-    user_year = forms.CharField(max_length=20, required=True)
+    user_year = forms.ModelChoiceField(queryset=Department.objects.all(), required=True)
     user_coll = forms.ModelChoiceField(queryset=College.objects.all(), required=True)
 
     class Meta:
