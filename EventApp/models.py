@@ -142,7 +142,7 @@ class Document_type(models.Model):
 
 def path(instance,filename):
     ext=filename.split('.')[-1]
-    filename='{}.{}'.format("documents/"+instance.category.type+"_"+instance.title,ext)
+    filename='{}.{}'.format("documents/"+instance.category.type+"/"+instance.title,ext)
     return filename
 
 
