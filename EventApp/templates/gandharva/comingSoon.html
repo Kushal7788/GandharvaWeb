@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>{% block title %}Home{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
+          integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+          integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Lato|Lobster" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'base/css/base.css' %}">
+    <link href="{% static 'gandharva/css/timer.css' %}" rel="stylesheet">
+    <link href="{% static 'gandharva/css/util.css' %}" rel="stylesheet">
+    <link href="{% static 'gandharva/css/sal.css' %}" rel="stylesheet">
+</head>
+<body>
+<div class="bg-img1 overlay1 size1 flex-w flex-c-m  p-b-55 p-l-15 p-r-15"
+     style="background-image: url('{% static 'gandharva/img/7.jpg' %}');">
+    <div class="wsize1">
+        <h3 class="l1-txt1 txt-center p-b-18" data-sal="slide-up" data-sal-easing="ease-out-bounce" data-sal-delay="100"
+            data-sal-duration="800">
+            Gandharva'19
+        </h3>
+        <p class="txt-center m2-txt1 p-b-30" data-sal="slide-up" data-sal-easing="ease-out-bounce" data-sal-delay="100"
+           data-sal-duration="800">
+            Coming soon in
+        </p>
+        <div class="flex-w flex-sa-m cd100 bor1 p-t-42 p-b-22 p-l-50 p-r-50 respon1" id="countdown" data-sal="slide-up"
+             data-sal-easing="ease-out-bounce" data-sal-delay="100"
+             data-sal-duration="800">
+            <div class="flex-col-c-m wsize2 m-b-20">
+                <span class="l1-txt2 p-b-4 days">00</span>
+                <span class="m2-txt2">Days</span>
+            </div>
+            <span class="l1-txt2 p-b-22">:</span>
+            <div class="flex-col-c-m wsize2 m-b-20">
+                <span class="l1-txt2 p-b-4 hours">00</span>
+                <span class="m2-txt2">Hours</span>
+            </div>
+            <span class="l1-txt2 p-b-22 respon2">:</span>
+            <div class="flex-col-c-m wsize2 m-b-20">
+                <span class="l1-txt2 p-b-4 minutes">00</span>
+                <span class="m2-txt2">Minutes</span>
+            </div>
+            <span class="l1-txt2 p-b-22">:</span>
+            <div class="flex-col-c-m wsize2 m-b-20">
+                <span class="l1-txt2 p-b-4 seconds">00</span>
+                <span class="m2-txt2">Seconds</span>
+            </div>
+        </div>
+    </div>
+</div>
+<footer id="footer" style="position:fixed;left: 0;bottom: 0;width: 100%;z-index: 1000">
+    <div class="container">
+        <div class="text-center">
+            <a class="fb-ic" href="https://www.facebook.com/viitgandharva/" target="_blank">
+                <i class="fab fa-facebook-f white-text  fa-2x"
+                   style="color: #fff;font-size: 26px;margin-right:2vw"></i>
+            </a>
+            <a class="tw-ic" href="https://mobile.twitter.com/gandharva_18" target="_blank">
+                <i class="fab fa-twitter fa-lg white-text fa-2x"
+                   style="color: #fff;font-size: 26px;margin-right:2vw"> </i>
+            </a>
+            <a class="ins-ic" href="https://www.instagram.com/viitgandharva/" target="_blank">
+                <i class="fab fa-instagram fa-lg white-text fa-2x"
+                   style="color:#fff;font-size: 26px;margin-right:2vw"> </i>
+            </a>
+            <a class="pin-ic" href="https://www.youtube.com/channel/UCdtq-lCC25RpJIjSPCIR9Nw/featured"
+               target="_blank">
+                <i class="fab fa-youtube fa-lg white-text fa-2x"
+                   style="color: #fff;font-size: 26px;margin-right:2vw"> </i>
+            </a>
+            <p style="font-size:14px"> Copyright &copy;2019 Gandharva. All Rights Reserved.</p>
+        </div>
+    </div>
+</footer>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"
+        integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"
+        crossorigin="anonymous"></script>
+<script type="text/javascript" src="{% static 'gandharva/js/sal.js' %}"></script>
+<script> var GandharvaDate = "{{gandharvaDate}}";
+sal();</script>
+<script type="text/javascript" src="{% static 'gandharva/js/coundown-timer.js' %}"></script>
+<script type="text/javascript" src="{% static 'gandharva/js/main.js' %}"></script>
+</body>
+</html>

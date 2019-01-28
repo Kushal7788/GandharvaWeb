@@ -14,15 +14,18 @@
     <br>
     <div class="container">
         {% if event.objective %}
-            <h3 class="colorlib-heading" data-sal="slide-up" data-sal-easing="ease-out-bounce" data-sal-delay="100" data-sal-duration="500">
+            <h3 class="colorlib-heading" data-sal="slide-up" data-sal-easing="ease-out-bounce" data-sal-delay="100"
+                data-sal-duration="500">
                 Objective</h3>
-            <p data-sal="slide-up" data-sal-easing="ease-out-bounce" data-sal-delay="100" data-sal-duration="500">{{ event.objective }}</p>
+            <p data-sal="slide-up" data-sal-easing="ease-out-bounce" data-sal-delay="100"
+               data-sal-duration="500">{{ event.objective }}</p>
         {% endif %}
     </div>
     <br>
     <div class="container">
         {% if event.rounds %}
-            <h3 class="colorlib-heading" data-sal="slide-up" data-sal-easing="ease-out-bounce" data-sal-delay="100" data-sal-duration="500">
+            <h3 class="colorlib-heading" data-sal="slide-up" data-sal-easing="ease-out-bounce" data-sal-delay="100"
+                data-sal-duration="500">
                 Rounds</h3>
             <pre data-sal="slide-up" data-sal-easing="ease-out-bounce" data-sal-delay="300">{{ event.rounds }}</pre>
         {% endif %}
@@ -38,21 +41,28 @@
     </div>
     <br>
     <div class="container">
-        <h3 class="colorlib-heading" data-sal="slide-up" data-sal-easing="ease-out-bounce" data-sal-delay="100" data-sal-duration="500">Team and
+        <h3 class="colorlib-heading" data-sal="slide-up" data-sal-easing="ease-out-bounce" data-sal-delay="100"
+            data-sal-duration="500">Team and
             Fee Structure</h3>
-        <p data-sal="slide-up" data-sal-easing="ease-out-bounce" data-sal-delay="100" data-sal-duration="500">Max {{ event.team_size }}
+        <p data-sal="slide-up" data-sal-easing="ease-out-bounce" data-sal-delay="100" data-sal-duration="500">
+            Max {{ event.team_size }}
             Participants per Team & ₹ {{ event.entry_fee }} per team.</p>
     </div>
     <br><br>
-    {#    <div class="container"#}
-    {#     <form method="get" action=>#}
-    {#                    {% csrf_token %}#}
-    {#                    <input type="hidden" name="dept" value=>#}
-    {#                    <button type="submit" class="btn btn-primary eventButtons">Register#}
-    {#                        Now#}
-    {#                    </button>#}
-    {#     </form>#}
-    {#    </div>#}
+    <div class="container">
+        <form method="get"
+                {% if user.is_authenticated %}
+              action= >
+                {% else %}
+                    action ={% url 'user_login' %}>
+                {% endif %}
+        {% csrf_token %}
+{#        <input type="hidden" name="" value="">#}
+{#        <button type="submit" class="btn btn-primary eventButtons">Register#}
+{#            Now#}
+{#        </button>#}
+        </form>
+    </div>
 {% endblock %}
 {% block scripts %}
     <script src="{% static 'events/js/events.js' %}"></script>

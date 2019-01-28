@@ -21,7 +21,7 @@ html, body {
 }
 
 #contact .container {
-    padding-top:60px;
+    padding-top: 60px;
 }
 
 #contact h3 {
@@ -68,7 +68,7 @@ html, body {
 
 #contact-section .btn-primary {
     background-color: #373737;
-    color:#fff;
+    color: #fff;
     border: none;
     font-size: 24px;
     padding: 6px 42px;

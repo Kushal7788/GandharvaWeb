@@ -44,7 +44,6 @@ $("#countdown").countdown({
 // });
 
 
-
 $(document).ready(function () {
     $(".testimonial-carousel").slick({
         infinite: !0,

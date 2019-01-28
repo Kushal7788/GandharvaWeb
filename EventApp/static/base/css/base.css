@@ -20,6 +20,7 @@ nav {
 .navbar {
     background-color: #004E8A !important;
     opacity: 1;
+    padding-bottom: 0;
 }
 
 nav .navbar-nav li a {
@@ -28,7 +29,7 @@ nav .navbar-nav li a {
 }
 
 .dropdownStyle {
-    color: white ;
+    color: white;
     font-weight: bold;
     margin: 4px;
 }
@@ -74,8 +75,8 @@ nav li .active a {
     background-repeat: no-repeat;
     background-size: cover;
     color: #FFFFFF;
-    padding-top: 20px;
-    padding-bottom: 10px;
+    padding-top: 10px;
+    padding-bottom: 8px;
 }
 
 a {
