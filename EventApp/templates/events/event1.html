@@ -23,7 +23,7 @@
              data-sal="slide-up" data-sal-easing="ease-out-bounce" data-sal-delay="300" data-sal-duration="1100">
             <h4 class="eventTitle">{{ event.event.event_name }}</h4>
             <p class="eventDescription">
-                                                {{ event.event.objective }}
+                {{ event.event.objective }}
             </p>
             <form method="get" action="{% url 'details' %}">
                 {% csrf_token %}
@@ -44,7 +44,7 @@
     </div>
     <br><br><br>
 {% endblock %}
-    {% block scripts %}
-        <script src="{% static 'events/js/events.js' %}"></script>
-    {% endblock %}
+{% block scripts %}
+    <script src="{% static 'events/js/events.js' %}"></script>
+{% endblock %}
 

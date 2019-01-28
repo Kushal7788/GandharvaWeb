@@ -4,108 +4,108 @@
 
 
 {% block body %}
-<div>
-    <p>
-    <h1>Head Registration</h1>
-    </p>
+    <div>
+        <p>
+        <h1>Head Registration</h1>
+        </p>
 
-    <br>
+        <br>
         <h1>Register Here</h1>
         <h3>Just fill out the form.</h3>
-<form method="post">
-    {% csrf_token %}
+        <form method="post">
+            {% csrf_token %}
 
 
-    {% if userform.non_field_errors %}
-    <ul>
-            {% for error in userform.non_field_errors %}
-                <li>{{ error }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-    {% if userform.name.errors %}
-        <ul>
-            {% for error in userform.name.errors %}
-                <li>{{ error }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-     {% if roleform.non_field_errors %}
-    <ul>
-            {% for error in roleform.non_field_errors %}
-                <li>{{ error }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-    {% if roleform.name.errors %}
-        <ul>
-            {% for error in roleform.name.errors %}
-                <li>{{ error }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-    <div class="form-group">
-        <input id="name" type="text" class="form-control" name="username"
-               placeholder="Name">
-        {{ userform.username.errors }}
+            {% if userform.non_field_errors %}
+                <ul>
+                    {% for error in userform.non_field_errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            {% if userform.name.errors %}
+                <ul>
+                    {% for error in userform.name.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            {% if roleform.non_field_errors %}
+                <ul>
+                    {% for error in roleform.non_field_errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            {% if roleform.name.errors %}
+                <ul>
+                    {% for error in roleform.name.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <div class="form-group">
+                <input id="name" type="text" class="form-control" name="username"
+                       placeholder="Name">
+                {{ userform.username.errors }}
+            </div>
+            <div class="form-group">
+                <input id="email" type="email" class="form-control" name="email"
+                       placeholder="Email">
+                {{ userform.email.errors }}
+            </div>
+
+            <div class="form-group">
+                <input id="email" type="email" class="form-control" name="coll_email"
+                       placeholder="College-Email">
+                {{ userform.coll_email.errors }}
+            </div>
+
+            <div class="form-group">
+                <input id="password" type="password" name="password" placeholder="password">
+
+            </div>
+            <div class="form-group">
+                Department:
+                <select name="user_dept">
+                    {% for dept in depts %}
+                        <option value="{{ dept.pk }}">{{ dept.name }}</option>
+                    {% endfor %}
+                </select>
+                {{ form.user_dept.errors }}
+            </div>
+            <div class="form-group">
+                College:
+                <select name="user_coll">
+                    {% for college in colleges %}
+                        <option value="{{ college.pk }}">{{ college.name }}</option>
+                    {% endfor %}
+                </select>
+                {{ form.user_coll.errors }}
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="text" name="user_year" placeholder="Year">
+                {{ form.user_year.errors }}
+            </div>
+            <div class="form-group">
+                Category :
+                <select name="name">
+                    {% for role in roles %}
+                        <option value="{{ role.pk }}">{{ role.name }}</option>
+                    {% endfor %}
+                </select>
+                {{ roleform.name.errors }}
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary pull-right">Register</button>
+            </div>
+        </form>
+
+        <br>
+        <p><strong>-- OR --</strong></p>
+        <a href="{% url 'social:begin' 'google-oauth2' %}">SignUp with Google</a><br>
     </div>
-    <div class="form-group">
-        <input id="email" type="email" class="form-control" name="email"
-               placeholder="Email">
-        {{ userform.email.errors }}
-    </div>
-
-    <div class="form-group">
-        <input id="email" type="email" class="form-control" name="coll_email"
-               placeholder="College-Email">
-        {{ userform.coll_email.errors }}
-    </div>
-
-    <div class = "form-group">
-            <input id ="password" type = "password" name="password" placeholder="password">
-
-    </div>
-    <div class="form-group">
-                    Department:
-                    <select name="user_dept">
-                        {% for dept in depts %}
-                             <option value="{{dept.pk}}">{{dept.name}}</option>
-                        {% endfor %}
-                    </select>
-                    {{ form.user_dept.errors }}
-                </div>
-    <div class="form-group">
-                     College:
-                    <select name="user_coll">
-                        {% for college in colleges %}
-                             <option value="{{college.pk}}">{{college.name}}</option>
-                        {% endfor %}
-                    </select>
-                    {{ form.user_coll.errors }}
-                </div>
-    <div class="form-group">
-                    <input class="form-control" type="text" name="user_year" placeholder="Year">
-                    {{ form.user_year.errors }}
-                </div>
-    <div class="form-group">
-        Category :
-        <select name="name">
-        {% for role in roles %}
-        <option value="{{role.pk}}">{{role.name}}</option>
-            {% endfor %}
-         </select>
-        {{ roleform.name.errors }}
-    </div>
-
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary pull-right">Register</button>
-        </div>
-</form>
-
-     <br>
-  <p><strong>-- OR --</strong></p>
-  <a href="{% url 'social:begin' 'google-oauth2' %}">SignUp with Google</a><br>
-</div>
 
 
 

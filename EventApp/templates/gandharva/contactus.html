@@ -6,92 +6,93 @@
     <link href="{% static 'gandharva/css/contactUs.css' %}" rel="stylesheet">
 {% endblock %}
 {% block body %}
-{#    <section id="contact">#}
-        <div class="contact-section" style="background:linear-gradient(45deg,rgba(0,0,0,0.3),rgba(0,0,0,0.3)),url('{% static 'gandharva/img/p.jpg' %}');margin-top: 70px">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class=" col-md-3 ear-piece">
-                        <img class="img-fluid" src="{% static 'gandharva/img/ear-piece.png' %}" alt="">
+    {#    <section id="contact">#}
+    <div class="contact-section"
+         style="background:linear-gradient(45deg,rgba(0,0,0,0.3),rgba(0,0,0,0.3)),url('{% static 'gandharva/img/p.jpg' %}');margin-top: 70px">
+        <div class="container-fluid">
+            <div class="row">
+                <div class=" col-md-3 ear-piece">
+                    <img class="img-fluid" src="{% static 'gandharva/img/ear-piece.png' %}" alt="">
+                </div>
+                <div class="col-md-3 col-sm-5" data-sal="slide-left" data-sal-easing="ease-out-bounce"
+                     data-sal-delay="100"
+                     data-sal-duration="800">
+                    <div class="contact-text">
+                        <h3 style="margin-top:4vh">Contact</h3>
+                        <address>
+                            Email : gandharva@viit.ac.in
+                        </address>
                     </div>
-                    <div class="col-md-3 col-sm-5" data-sal="slide-left" data-sal-easing="ease-out-bounce"
-                         data-sal-delay="100"
-                         data-sal-duration="800">
-                        <div class="contact-text">
-                            <h3 style="margin-top:4vh">Contact</h3>
-                            <address>
-                                Email : gandharva@viit.ac.in
-                            </address>
-                        </div>
-                        <div class="contact-address">
-                            <address>
-                                Vishwakarma Institute Of Information Technology,<br>
-                                Survey No. 2/3/4,<br>
-                                Kondhawa (Bk),<br>
-                                Pune-48
-                            </address>
-                        </div>
+                    <div class="contact-address">
+                        <address>
+                            Vishwakarma Institute Of Information Technology,<br>
+                            Survey No. 2/3/4,<br>
+                            Kondhawa (Bk),<br>
+                            Pune-48
+                        </address>
                     </div>
-                    <div class="col-sm-1"></div>
-                    <div class="col-sm-5 col-md-4" data-sal="slide-right" data-sal-easing="ease-out-bounce"
-                         data-sal-delay="100"
-                         data-sal-duration="800" style="padding-bottom:10vh">
-                        <div id="contact-section">
-                            <h3 style="margin-top:4vh">Send a message</h3>
-                            <div class="status alert alert-success" style="display: none"></div>
-                            <form id="main-contact-form" class="contact-form" name="contact-form" method="post"
-                                  action="">
-                                {% csrf_token %}
-                                {% if form.non_field_errors %}
-                                    <ul>
-                                        {% for error in form.non_field_errors %}
-                                            <li>{{ error }}</li>
-                                        {% endfor %}
-                                    </ul>
-                                {% endif %}
-                                {% if form.name.errors %}
-                                    <ul>
-                                        {% for error in form.name.errors %}
-                                            <li>{{ error }}</li>
-                                        {% endfor %}
-                                    </ul>
-                                {% endif %}
-                                <div class="form-group">
-                                    <input id="name" type="text" class="form-control" name="user_name"
-                                           placeholder="Name">
-                                    {{ form.user_name.errors }}
-                                </div>
-                                <div class="form-group">
-                                    <input id="email" type="email" class="form-control" name="user_id"
-                                           placeholder="Email">
-                                    {{ form.user_id.errors }}
-                                </div>
-                                <div class="form-group">
-                                    Category :
-                                    <select name="category" class="form-control">
-                                        <option value="1">COMPUTER</option>
-                                        <option value="2">IT</option>
-                                        <option value="3">ENTC</option>
-                                        <option value="4">MECHANICAL</option>
-                                        <option value="5">CIVIL</option>
-                                        <option value="">OHTER</option>
-                                    </select>
-                                    {{ form.category.errors }}
-                                </div>
-                                <div class="form-group">
+                </div>
+                <div class="col-sm-1"></div>
+                <div class="col-sm-5 col-md-4" data-sal="slide-right" data-sal-easing="ease-out-bounce"
+                     data-sal-delay="100"
+                     data-sal-duration="800" style="padding-bottom:10vh">
+                    <div id="contact-section">
+                        <h3 style="margin-top:4vh">Send a message</h3>
+                        <div class="status alert alert-success" style="display: none"></div>
+                        <form id="main-contact-form" class="contact-form" name="contact-form" method="post"
+                              action="">
+                            {% csrf_token %}
+                            {% if form.non_field_errors %}
+                                <ul>
+                                    {% for error in form.non_field_errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                            {% if form.name.errors %}
+                                <ul>
+                                    {% for error in form.name.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                            <div class="form-group">
+                                <input id="name" type="text" class="form-control" name="user_name"
+                                       placeholder="Name">
+                                {{ form.user_name.errors }}
+                            </div>
+                            <div class="form-group">
+                                <input id="email" type="email" class="form-control" name="user_id"
+                                       placeholder="Email">
+                                {{ form.user_id.errors }}
+                            </div>
+                            <div class="form-group">
+                                Category :
+                                <select name="category" class="form-control">
+                                    <option value="1">COMPUTER</option>
+                                    <option value="2">IT</option>
+                                    <option value="3">ENTC</option>
+                                    <option value="4">MECHANICAL</option>
+                                    <option value="5">CIVIL</option>
+                                    <option value="">OHTER</option>
+                                </select>
+                                {{ form.category.errors }}
+                            </div>
+                            <div class="form-group">
                                     <textarea name="user_message" rows="10" cols="30" class="form-control"
                                               placeholder="Message"></textarea>
-                                    {{ form.user_message.errors }}
-                                </div>
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-primary pull-right">Send</button>
-                                </div>
-                            </form>
-                        </div>
+                                {{ form.user_message.errors }}
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary pull-right">Send</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-{#    </section>#}
+    </div>
+    {#    </section>#}
 {% endblock %}
 {% block scripts %}
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

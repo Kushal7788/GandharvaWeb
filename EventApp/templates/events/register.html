@@ -42,7 +42,7 @@
                     Department:
                     <select name="user_dept">
                         {% for dept in depts %}
-                             <option value="{{dept.pk}}">{{dept.name}}</option>
+                            <option value="{{ dept.pk }}">{{ dept.name }}</option>
                         {% endfor %}
                     </select>
                     {{ form.user_dept.errors }}
@@ -52,10 +52,10 @@
                     {{ form.user_year.errors }}
                 </div>
                 <div class="form-group">
-                     College:
+                    College:
                     <select name="user_coll">
                         {% for college in colleges %}
-                             <option value="{{college.pk}}">{{college.name}}</option>
+                            <option value="{{ college.pk }}">{{ college.name }}</option>
                         {% endfor %}
                     </select>
                     {{ form.user_coll.errors }}

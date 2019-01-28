@@ -24,7 +24,8 @@ SECRET_KEY = '^)ef3%8r$&327z%qz92yxgcxt6m@4s8j7$czx%5r6140^zh&g4'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'gandharva19.pythonanywhere.com', '0.0.0.0', 'localhost', 'www.viitgandharva.com','viitgandharva.com','*.viitgandharva.com','192.168.43.139']
+ALLOWED_HOSTS = ['127.0.0.1', 'gandharva19.pythonanywhere.com', '0.0.0.0', 'localhost', 'www.viitgandharva.com',
+                 'viitgandharva.com', '*.viitgandharva.com', '192.168.43.139']
 
 # Application definition
 
@@ -40,7 +41,6 @@ INSTALLED_APPS = [
     'social_django',
 ]
 AUTH_USER_MODEL = 'EventApp.MyUser'
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -135,16 +135,14 @@ STATIC_URL = '/static/'
 # ]
 
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY ='519854616069-hj7chgsltbjad2p5mcvv8241ruob2e5m.apps.googleusercontent.com'  #Paste CLient Key
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'x77Vt0Zv3fTqjpCLN-Ec4Irg' #Paste Secret Key
-
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '519854616069-hj7chgsltbjad2p5mcvv8241ruob2e5m.apps.googleusercontent.com'  # Paste CLient Key
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'x77Vt0Zv3fTqjpCLN-Ec4Irg'  # Paste Secret Key
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'

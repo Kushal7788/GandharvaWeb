@@ -1,10 +1,8 @@
-#inluce the models to be viewed here
+# inluce the models to be viewed here
 from django.contrib import admin
 from .models import *
 
-
-
-#register here after creating new models to view at back end
+# register here after creating new models to view at back end
 
 admin.site.register(RoleAssignment)
 admin.site.register(RoleMaster)
