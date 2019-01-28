@@ -4,13 +4,13 @@ from .models import ContactUs, MyUser , Department, RoleMaster, College, College
 
 class UserRegistration(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
-    email = forms.EmailField(max_length=100, required = True )
-    coll_email = forms.EmailField(max_length=100, required=True)
-    user_dept = forms.ModelChoiceField(queryset=Department.objects.all(), required=True)
+    email = forms.EmailField(max_length=100, required=True)
+    coll_email = forms.EmailField(max_length=100, required=False)
+    user_dept = forms.ModelChoiceField(queryset=Department.objects.all(), required=False)
     user_year = forms.ModelChoiceField(queryset=College_year.objects.all(), required=True)
-    user_coll = forms.ModelChoiceField(queryset=College.objects.all(), required=True)
+    user_coll = forms.ModelChoiceField(queryset=College.objects.all(), required=False)
     prof_img = forms.ImageField(required=False)
-    user_phone = forms.CharField(max_length=10,required=True)
+    user_phone = forms.CharField(max_length=10,required=False)
 
     class Meta:
         model = MyUser
