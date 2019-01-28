@@ -155,6 +155,8 @@ def payment (request):
 @user_passes_test(lambda u: u.is_superuser)
 def RegisterHead(request):
     Roles = RoleMaster.objects.all();
+    dept = Department.objects.all();
+    coll = College.objects.all();
     if request.method == 'POST':
         userform = UserRegistration(request.POST)
         roleform = RoleMasterForm(request.POST)
@@ -181,7 +183,7 @@ def RegisterHead(request):
         userform = UserRegistration()
         roleform = RoleMasterForm
 
-    return render(request, 'events/RegisterHead.html', {'userform': userform , 'roleform': roleform, 'roles':Roles})
+    return render(request, 'events/RegisterHead.html', {'userform': userform , 'roleform': roleform, 'roles':Roles ,'depts':dept,'colleges':coll})
 
 
 
