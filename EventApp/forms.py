@@ -6,10 +6,10 @@ from .models import ContactUs, MyUser, Department, RoleMaster, College, College_
 class UserRegistration(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
     email = forms.EmailField(max_length=100, required=True)
-    coll_email = forms.EmailField(max_length=100, required=True)
-    user_dept = forms.ModelChoiceField(queryset=Department.objects.all(), required=True)
-    user_year = forms.ModelChoiceField(queryset=College_year.objects.all(), required=True)
-    user_coll = forms.ModelChoiceField(queryset=College.objects.all(), required=True)
+    coll_email = forms.EmailField(max_length=100, required=False)
+    user_dept = forms.ModelChoiceField(queryset=Department.objects.all(), required=False)
+    user_year = forms.ModelChoiceField(queryset=College_year.objects.all(), required=False)
+    user_coll = forms.ModelChoiceField(queryset=College.objects.all(), required=False)
 
     class Meta:
         model = MyUser
