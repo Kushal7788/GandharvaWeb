@@ -44,15 +44,20 @@
             Participants per Team & ₹ {{ event.entry_fee }} per team.</p>
     </div>
     <br><br>
-    {#    <div class="container"#}
-    {#     <form method="get" action=>#}
-    {#                    {% csrf_token %}#}
-    {#                    <input type="hidden" name="dept" value=>#}
-    {#                    <button type="submit" class="btn btn-primary eventButtons">Register#}
-    {#                        Now#}
-    {#                    </button>#}
-    {#     </form>#}
-    {#    </div>#}
+    <div class="container">
+     <form method="get"
+           {% if user.is_authenticated %}
+            action= >
+            {% else %}
+            action ={% url 'user_login' %}>
+            {% endif %}
+                    {% csrf_token %}
+                    <input type="hidden" name="" value="">
+                    <button type="submit" class="btn btn-primary eventButtons">Register
+                        Now
+                    </button>
+     </form>
+    </div>
 {% endblock %}
 {% block scripts %}
     <script src="{% static 'events/js/events.js' %}"></script>

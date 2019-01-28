@@ -144,3 +144,13 @@ LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'viitgandharva3@gmail.com'
+EMAIL_HOST_PASSWORD = 'admintest1234'
+EMAIL_PORT = 587
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
