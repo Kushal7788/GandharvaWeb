@@ -119,7 +119,7 @@ def register(request):
     else:
         form = UserRegistration()
 
-    return render(request, 'events/register.html', {'form': form, 'colleges': coll, 'depts': dept,'years':year})
+    return render(request, 'events/register.html', {'form': form, 'colleges': coll, 'depts': dept, 'years': year})
 
 
 # Activates the user after clicking on the email link
@@ -172,7 +172,7 @@ def payment(request):
 # Head Login View only to be used for Heads
 @user_passes_test(lambda u: u.is_superuser)
 def RegisterHead(request):
-    Roles = RoleMaster.objects.all()
+    Roles = RoleMaster.objects.all().order_by('name')
     dept = Department.objects.all()
     coll = College.objects.all()
     year = College_year.objects.all()
@@ -190,24 +190,23 @@ def RegisterHead(request):
             roleassign.user = user
             roleassign.role = roleform.cleaned_data.get('name')
 
-
             current_site = get_current_site(request)
-            token1=account_activation_token.make_token(user)
+            token1 = account_activation_token.make_token(user)
             message = render_to_string('user/acc_active_email_register_head.html', {
                 'user': user,
                 'domain': current_site.domain,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
                 'token': token1,
             })
-            user.token1=str(token1)
-            token2=account_activation_token.make_token(user)
+            user.token1 = str(token1)
+            token2 = account_activation_token.make_token(user)
             message2 = render_to_string('user/acc_active_email_register_head.html', {
                 'user': user,
                 'domain': current_site.domain,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
                 'token': token2,
             })
-            user.token2=str(token2)
+            user.token2 = str(token2)
             user.save()
             roleassign.save()
             mail_subject = 'Activate your account to continue.'
@@ -218,8 +217,6 @@ def RegisterHead(request):
             email = EmailMessage(mail_subject, message2, to=[to_email_two])
             email.send()
             return render(request, 'user/AccountConfirm.html')
-
-
 
             #       group = Group.objects.get(name='groupname')
             #      user.groups.add(group)
@@ -234,7 +231,9 @@ def RegisterHead(request):
         roleform = RoleMasterForm
 
     return render(request, 'events/RegisterHead.html',
-                  {'userform': userform, 'roleform': roleform, 'roles': Roles, 'depts': dept, 'colleges': coll,'years':year})
+                  {'userform': userform, 'roleform': roleform, 'roles': Roles, 'depts': dept, 'colleges': coll,
+                   'years': year})
+
 
 def activate_register_head(request, uidb64, token):
     try:
@@ -243,7 +242,7 @@ def activate_register_head(request, uidb64, token):
 
     except(TypeError, ValueError, OverflowError, user.DoesNotExist):
         user = None
-    if (user is not None ):
+    if (user is not None):
         if user.token1 == token:
             print(user.token1)
             user.token1 = None
@@ -258,9 +257,6 @@ def activate_register_head(request, uidb64, token):
         return render(request, 'user/accountActivate.html')
     else:
         return HttpResponse('You have already confirmed your email id. Activation link is invalid!')
-
-
-
 
 ## Important Notes:
 # to get user role from models
