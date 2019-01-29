@@ -13,8 +13,8 @@
 {% block body %}
     <br><br><br>
     <div class="container">
-        <div class="col-sm-5 container-center">
-            <h1 style="text-align: center;color: #fff;padding-top: 20px">Head Registration</h1>
+        <div class="col-sm-6 container-center">
+            <h2 style="text-align: center;padding-top: 20px">Head Registration</h2>
             <br>
             <form method="post">
                 {% csrf_token %}
@@ -48,25 +48,23 @@
                 {% endif %}
                 <div class="form-group">
                     <input id="username" type="text" class="form-control" name="username"
-                           placeholder="Username">
+                           placeholder="Username" required>
                     <div style="color: whitesmoke">
 
                         {{ userform.username.errors }}
                     </div>
                 </div>
                 <div class="form-group">
-
                     <input id="full_name" type="text" class="form-control" name="full_name"
-                           placeholder="Full Name">
+                           placeholder="Full Name" required>
                     <div style="color: whitesmoke">
-
                         {{ userform.full_name.errors }}
                     </div>
                 </div>
 
                 <div class="form-group">
                     <input id="email" type="email" class="form-control" name="email"
-                           placeholder="Email">
+                           placeholder="Email" required>
                     <p style="color: whitesmoke">
                         {{ userform.email.errors }}
                     </p>
@@ -74,23 +72,22 @@
 
                 <div class="form-group">
                     <input id="coll_email" type="email" class="form-control" name="coll_email"
-                           placeholder="College-Email">
+                           placeholder="College-Email" required>
                     <div style="color: whitesmoke">
                         {{ userform.coll_email.errors }}
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <input id="password" class="form-control" type="password" name="password" placeholder="Password">
-
+                    <input id="password" class="form-control" type="password" name="password" placeholder="Password" required>
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="user_phone" placeholder="Mobile No.">
+                    <input class="form-control" type="text" name="user_phone" placeholder="Mobile Number" required>
                     {{ form.user_phone.errors }}
                 </div>
-                <div class="form-group" style="color: #fff">
+                <div class="form-group" style="margin-left: 10%">
                     Department:
-                    <select name="user_dept" class="form-control">
+                    <select name="user_dept" class="form-control" style="margin-left: 0;width: 90%">
                         {% for dept in depts %}
                             <option value="{{ dept.pk }}">{{ dept.name }}</option>
                         {% endfor %}
@@ -99,9 +96,9 @@
                         {{ form.user_dept.errors }}
                     </div>
                 </div>
-                <div class="form-group" style="color: #fff">
+                <div class="form-group" style="margin-left: 10%">
                     College:
-                    <select name="user_coll" class="form-control">
+                    <select name="user_coll" class="form-control" style="margin-left: 0;width: 90%">
                         {% for college in colleges %}
                             <option value="{{ college.pk }}">{{ college.name }}</option>
                         {% endfor %}
@@ -110,18 +107,18 @@
                         {{ form.user_coll.errors }}
                     </div>
                 </div>
-                <div class="form-group" style="color: #fff">
+                <div class="form-group" style="margin-left: 10%">
                     Year of Engineering:
-                    <select name="user_year" class="form-control">
+                    <select name="user_year" class="form-control" style="margin-left: 0;width: 90%">
                         {% for year in years %}
                             <option value="{{ year.pk }}">{{ year.title }}</option>
                         {% endfor %}
                     </select>
                     {{ form.user_year.errors }}
                 </div>
-                <div class="form-group" style="color: #fff">
+                <div class="form-group" style="margin-left: 10%">
                     Category :
-                    <select name="name" class="form-control">
+                    <select name="name" class="form-control" style="margin-left: 0;width: 90%">
                         {% for role in roles %}
                             <option value="{{ role.pk }}">{{ role.name }}</option>
                         {% endfor %}
@@ -130,12 +127,11 @@
                 </div>
 
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary pull-right"
-                            style="background-color: #00e6e6;color: #fff">Register
+                    <button type="submit" class="btn btn-primary pull-right">Register
                     </button>
                 </div>
             </form>
-            <hr>
+
             {#            <div class='g-sign-in-button'>#}
             {#                <div class=content-wrapper>#}
             {#                    <div class='logo-wrapper'>#}
