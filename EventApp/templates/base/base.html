@@ -92,17 +92,17 @@
                                 <button type="submit" class="dropdown-item dropdownStyle">Register Heads</button>
                             </form>
                         {% endif %}
-                        <form method="get" action="">
+                        <form method="get" action="{% url 'user_profile' %}">
                             {% csrf_token %}
                             <input type="hidden" name="profile" value=>
                             <button type="submit" class="dropdown-item dropdownStyle">My Profile</button>
                         </form>
-                        <form method="get" action="">
+                        <form method="get" action="{% url 'eventsRegister' %}">
                             {% csrf_token %}
                             <input type="hidden" name="EventRegister" value=>
                             <button type="submit" class="dropdown-item dropdownStyle">Register Events</button>
                         </form>
-                        <form method="get" action="">
+                        <form method="get" action="{% url 'paymentDetails' %}">
                             {% csrf_token %}
                             <input type="hidden" name="payment" value=>
                             <button type="submit" class="dropdown-item dropdownStyle">Payments</button>
