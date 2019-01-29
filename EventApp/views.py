@@ -128,9 +128,7 @@ def activate(request, uidb64, token):
         user = MyUser.objects.get(pk=uid)
     except(TypeError, ValueError, OverflowError, user.DoesNotExist):
         user = None
-    if user is not None and account_activation_token.check_token(user, token)or(user.is_active and not user.is_staff):
-        if user.is_active:
-            user.is_staff = True
+    if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
         login(request, user, backend='social_core.backends.google.GoogleOAuth2')
@@ -193,7 +191,7 @@ def RegisterHead(request):
             roleassign.save()
 
             current_site = get_current_site(request)
-            message = render_to_string('user/acc_active_email.html', {
+            message = render_to_string('user/acc_active_email_register_head.html', {
                 'user': user,
                 'domain': current_site.domain,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
@@ -223,6 +221,27 @@ def RegisterHead(request):
 
     return render(request, 'events/RegisterHead.html',
                   {'userform': userform, 'roleform': roleform, 'roles': Roles, 'depts': dept, 'colleges': coll,'years':year})
+
+def activate_register_head(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = MyUser.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, user.DoesNotExist):
+        user = None
+    if (user is not None and account_activation_token.check_token(user, token))or(user.is_active and not user.is_staff):
+        if user.is_active:
+            user.is_staff = True
+        else:
+            user.is_active = True
+        user.save()
+        login(request, user, backend='social_core.backends.google.GoogleOAuth2')
+        # return redirect('home')
+        return render(request, 'user/accountActivate.html')
+    else:
+        return HttpResponse('You have already confirmed your email id. Activation link is invalid!')
+
+
+
 
 ## Important Notes:
 # to get user role from models
