@@ -5,17 +5,20 @@ html, body {
     padding: 0px;
     scroll-behavior: smooth;
     font-family: 'Lato', sans-serif;
-    background-image: radial-gradient(700px at center,white, #bfbfbf);
+    background-color: #fff;
 }
 
 .container-center {
     margin-left: auto;
     margin-right: auto;
-    background-color: rgba(38, 38, 38, 0.9);
+    border-style: solid;
+    border-width: 1px;
+    border-color: #cccccc;
+    border-radius: 12px;
 }
 
 hr {
-    border-color: #fff;
+    border-color: #cccccc;
 }
 
 *, *:before, *:after {
@@ -23,12 +26,13 @@ hr {
 }
 
 .g-sign-in-button {
+    margin-left:30px;
     margin-top: 10px;
     margin-bottom: 22px;
     display: inline-block;
     width: 240px;
     height: 50px;
-    background-color: #4285f4;
+    background-color: #DD4B39;
     color: #fff;
     border-radius: 1px;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .25);
@@ -42,7 +46,8 @@ hr {
 }
 
 .g-sign-in-button:active {
-    background-color: #3367D6;
+    /*background-color: #3367D6;*/
+    background-color: #DD4B39;
     transition: background-color 0.2s;
 }
 
@@ -81,12 +86,15 @@ hr {
 }
 
 .form-control {
-    border-color: #ae750d;
+    border-color: #cccccc;
     box-shadow: none;
     outline: 0 none;
     border-radius: 0;
     color: #797979;
     font-size: 18px;
+    width: 80%;
+    margin-left: 10%;
+    margin-bottom: 24px;
 }
 
 .form-control:focus {
@@ -98,15 +106,23 @@ input {
 }
 
 .btn-primary {
-    background-color: #373737;
-    color: #f7ab24;
+    text-align: center;
+    background-color: #1a73e8;
+    color: #fff;
     border: none;
-    font-size: 24px;
+    font-size: 22px;
     padding-right: 18px;
     padding-top: 4px;
     padding-left: 18px;
     margin-bottom: 20px;
-    margin-top: 10px
+    margin-top: 10px;
+    margin-left: 10%;
+    width: 80%;
+}
+@media only screen and (min-width: 600px) {
+    .g-sign-in-button {
+        margin-left:26%;
+    }
 }
 
 .btn-primary:hover {
