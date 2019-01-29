@@ -13,6 +13,7 @@ class College(models.Model):
     def __str__(self):
         return self.name
 
+
 class College_year(models.Model):
     title = models.CharField(max_length=50)
 
@@ -38,12 +39,13 @@ class MyUser(AbstractUser):
     email = models.EmailField(max_length=100, unique=True)
     coll_email = models.EmailField(max_length=100, blank=True)
     user_coll = models.ForeignKey(College, on_delete=models.PROTECT, blank=True, null=True)
-    user_year = models.ForeignKey(College_year,on_delete=models.PROTECT, null=True,blank=True)
+    user_year = models.ForeignKey(College_year, on_delete=models.PROTECT, null=True, blank=True)
     user_dept = models.ForeignKey(Department, on_delete=models.PROTECT, null=True)
     prof_img = models.ImageField(blank=True)
-    count=models.IntegerField(default=0,null=True)
-    token1=models.CharField(max_length=100,null=True)
-    token2=models.CharField(max_length=100,null=True)
+    count = models.IntegerField(default=0, null=True)
+    token1 = models.CharField(max_length=100, null=True)
+    token2 = models.CharField(max_length=100, null=True)
+    full_name = models.CharField(max_length=1001)
 
     def __str__(self):
         return self.username
@@ -173,4 +175,3 @@ class Document(models.Model):
 
     def __str__(self):
         return 'Category : ' + self.category.type + '/' + self.title
-
