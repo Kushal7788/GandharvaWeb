@@ -264,6 +264,15 @@ def activate_register_head(request, uidb64, token):
 
 
 
+def Profile(request):
+    return render(request, 'user/userProfile.html')
+
+def Registered_Events(request):
+    return render(request, 'user/registeredEvents.html')
+
+def Payment_Details(request):
+    return render(request, 'user/paymentDetails.html')
+
 
 ## Important Notes:
 # to get user role from models

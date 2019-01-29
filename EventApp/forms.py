@@ -10,11 +10,13 @@ class UserRegistration(forms.ModelForm):
     user_dept = forms.ModelChoiceField(queryset=Department.objects.all(), required=False)
     user_year = forms.ModelChoiceField(queryset=College_year.objects.all(), required=False)
     user_coll = forms.ModelChoiceField(queryset=College.objects.all(), required=False)
-    full_name = forms.CharField(max_length=200, required=True)
+    user_phone = forms.CharField(max_length=10, required=True)
+
+    # full_name = forms.CharField(widget=forms.CharField())
 
     class Meta:
         model = MyUser
-        fields = ['username', 'email', 'password', 'user_dept', 'user_year', 'user_coll', 'coll_email', 'full_name']
+        fields = ['username', 'email', 'password', 'user_dept', 'user_year', 'user_coll', 'coll_email','full_name']
 
 
 class ContactUsForm(forms.ModelForm):
