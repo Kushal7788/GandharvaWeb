@@ -26,6 +26,10 @@
                     </ul>
                 {% endif %}
                 <div class="form-group">
+                    <input class="form-control" type="text" name="full_name" placeholder="Full name">
+                    {{ form.full_name.errors }}
+                </div>
+                <div class="form-group">
                     <input class="form-control" type="text" name="username" placeholder="Username">
                     {{ form.username.errors }}
                 </div>

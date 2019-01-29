@@ -88,9 +88,9 @@ def contactus(request):
 
 # Registration for normal User and log in user after registration Immediately
 def register(request):
-    dept = Department.objects.all();
-    coll = College.objects.all();
-    year = College_year.objects.all();
+    dept = Department.objects.all()
+    coll = College.objects.all()
+    year = College_year.objects.all()
     if request.method == 'POST':
         form = UserRegistration(request.POST)
         if form.is_valid():
@@ -100,15 +100,16 @@ def register(request):
             password = form.cleaned_data.get('password')
             user.set_password(password)
             user.save()
-
             current_site = get_current_site(request)
+            token1=account_activation_token.make_token(user)
             message = render_to_string('user/acc_active_email.html', {
                 'user': user,
                 'domain': current_site.domain,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
-                'token': account_activation_token.make_token(user),
+                'token': token1,
             })
-
+            user.token1 = str(token1)
+            user.save()
             mail_subject = 'Activate your account to continue.'
             to_email = form.cleaned_data.get('email')
             email = EmailMessage(mail_subject, message, to=[to_email])
@@ -129,8 +130,10 @@ def activate(request, uidb64, token):
         user = MyUser.objects.get(pk=uid)
     except(TypeError, ValueError, OverflowError, user.DoesNotExist):
         user = None
-    if user is not None and account_activation_token.check_token(user, token):
-        user.is_active = True
+    if user is not None:
+        if user.token1 == token:
+            user.is_active = True
+            user.token1 = None
         user.save()
         login(request, user, backend='social_core.backends.google.GoogleOAuth2')
         # return redirect('home')
@@ -236,6 +239,7 @@ def RegisterHead(request):
     return render(request, 'events/RegisterHead.html',
                   {'userform': userform, 'roleform': roleform, 'roles': Roles, 'depts': dept, 'colleges': coll,'years':year})
 
+
 def activate_register_head(request, uidb64, token):
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
@@ -245,7 +249,6 @@ def activate_register_head(request, uidb64, token):
         user = None
     if (user is not None ):
         if user.token1 == token:
-            print(user.token1)
             user.token1 = None
         if user.token2 == token:
             user.token2 = None

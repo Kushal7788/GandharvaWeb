@@ -45,7 +45,7 @@ class MyUser(AbstractUser):
     count = models.IntegerField(default=0, null=True)
     token1 = models.CharField(max_length=100, null=True)
     token2 = models.CharField(max_length=100, null=True)
-    full_name = models.CharField(max_length=1001)
+    full_name = models.CharField(max_length=200, null=True, blank=True)
 
     def __str__(self):
         return self.username
