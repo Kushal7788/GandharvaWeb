@@ -128,7 +128,9 @@ def activate(request, uidb64, token):
         user = MyUser.objects.get(pk=uid)
     except(TypeError, ValueError, OverflowError, user.DoesNotExist):
         user = None
-    if user is not None and account_activation_token.check_token(user, token):
+    if user is not None and account_activation_token.check_token(user, token)or(user.is_active and not user.is_staff):
+        if user.is_active:
+            user.is_staff = True
         user.is_active = True
         user.save()
         login(request, user, backend='social_core.backends.google.GoogleOAuth2')
@@ -171,27 +173,45 @@ def payment(request):
 # Head Login View only to be used for Heads
 @user_passes_test(lambda u: u.is_superuser)
 def RegisterHead(request):
-    Roles = RoleMaster.objects.all();
-    dept = Department.objects.all();
-    coll = College.objects.all();
-    year = College_year.objects.all();
+    Roles = RoleMaster.objects.all()
+    dept = Department.objects.all()
+    coll = College.objects.all()
+    year = College_year.objects.all()
     if request.method == 'POST':
         userform = UserRegistration(request.POST)
         roleform = RoleMasterForm(request.POST)
         if userform.is_valid() and roleform.is_valid():
-            user = userform.save()
+            user = userform.save(commit=False)
             username = userform.cleaned_data.get('username')
             password = userform.cleaned_data.get('password')
             user.set_password(password)
+            user.is_active = False
             user.save()
             roleassign = RoleAssignment()
             roleassign.user = user
             roleassign.role = roleform.cleaned_data.get('name')
             roleassign.save()
+
+            current_site = get_current_site(request)
+            message = render_to_string('user/acc_active_email.html', {
+                'user': user,
+                'domain': current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
+                'token': account_activation_token.make_token(user),
+            })
+
+            mail_subject = 'Activate your account to continue.'
+            to_email_one = userform.cleaned_data.get('email')
+            to_email_two = userform.cleaned_data.get('coll_email')
+            email = EmailMessage(mail_subject, message, to=[to_email_one, to_email_two])
+            email.send()
+            return render(request, 'user/AccountConfirm.html')
+
+
+
             #       group = Group.objects.get(name='groupname')
             #      user.groups.add(group)
             # login(request, user, backend='social_core.backends.google.GoogleOAuth2')
-            return redirect('home')
         else:
             print(userform.errors)
             print(roleform.errors)
