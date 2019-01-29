@@ -78,46 +78,46 @@
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'contactus' %}">Contact Us</a>
             </li>
-                  {% if user.is_authenticated %}
-                   <li class="nav-item dropdown">
-                              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                                 aria-haspopup="true" aria-expanded="false">
-                                  {{ user.username }}
-                              </a>
-                              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        {{ user.username }}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                         {% if user.is_superuser %}
-                                  <form method="get" action="{% url 'RegisterHead' %}">
-                                      {% csrf_token %}
-                                      <input type="hidden" name="HeadRegister" value=>
-                                      <button type="submit" class="dropdown-item">Register Heads</button>
-                                  </form>
-                       {% endif %}
-                                  <form method="get" action="">
-                                      {% csrf_token %}
-                                      <input type="hidden" name="profile" value=>
-                                      <button type="submit" class="dropdown-item">My Profile</button>
-                                  </form>
-                                  <form method="get" action="">
-                                      {% csrf_token %}
-                                      <input type="hidden" name="EventRegister" value=>
-                                      <button type="submit" class="dropdown-item">Register Events</button>
-                                  </form>
-                                   <form method="get" action="">
-                                      {% csrf_token %}
-                                      <input type="hidden" name="payment" value=>
-                                      <button type="submit" class="dropdown-item">Payments</button>
-                                  </form>
-                                  <form method="get" action="{% url 'user_logout' %}">
-                                      {% csrf_token %}
-                                      <input type="hidden" name="dept" value=>
-                                      <button type="submit" class="dropdown-item">Log Out</button>
-                                  </form>
-                              </div>
-                  {% else %}
-                      <li class="nav-item">
-                          <a class="nav-link" href="{% url 'user_login' %}">Login</a>
-                      </li>
-                  {% endif %}
+                            <form method="get" action="{% url 'RegisterHead' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="HeadRegister" value=>
+                                <button type="submit" class="dropdown-item dropdownStyle">Register Heads</button>
+                            </form>
+                        {% endif %}
+                        <form method="get" action="">
+                            {% csrf_token %}
+                            <input type="hidden" name="profile" value=>
+                            <button type="submit" class="dropdown-item dropdownStyle">My Profile</button>
+                        </form>
+                        <form method="get" action="">
+                            {% csrf_token %}
+                            <input type="hidden" name="EventRegister" value=>
+                            <button type="submit" class="dropdown-item dropdownStyle">Register Events</button>
+                        </form>
+                        <form method="get" action="">
+                            {% csrf_token %}
+                            <input type="hidden" name="payment" value=>
+                            <button type="submit" class="dropdown-item dropdownStyle">Payments</button>
+                        </form>
+                        <form method="get" action="{% url 'user_logout' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="dept" value=>
+                            <button type="submit" class="dropdown-item dropdownStyle">Log Out</button>
+                        </form>
+                    </div>
+                    {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'user_login' %}">Login</a>
+                </li>
+            {% endif %}
         </ul>
     </div>
 </nav>
