@@ -8,9 +8,8 @@
 {% block body %}
     <br><br><br>
     <div class="container">
-        <div class="col-sm-5 container-center" data-sal="slide-up"
-             data-sal-easing="ease-out-bounce" data-sal-delay="100" data-sal-duration="800">
-            <h1>User Login</h1>
+        <div class="col-sm-5 container-center">
+            <h1 style="text-align: center;color: #fff;padding-top: 20px">User Login</h1>
             <br>
             <form method="post" action="{% url 'user_login' %}">
                 {% csrf_token %}
@@ -28,7 +27,8 @@
                     </ul>
                 {% endif %}
                 <div class="form-group">
-                    <input type="submit" class="btn btn-primary pull-right" value="Login">
+                    <input type="submit" class="btn btn-primary pull-right"
+                           style="background-color: #00e6e6;color: #fff" value="Login">
                 </div>
             </form>
             <hr>
@@ -45,9 +45,10 @@
             <br>
             <form method="get" action="{% url 'register' %}">
                 {% csrf_token %}
-                <h5>Not Signed Up?
+                <h5 style="color: #fff">Not Signed Up?
                     Register Now</h5>
-                <button type="submit" class="btn btn-primary pull-right">Register
+                <button type="submit" class="btn btn-primary pull-right" style="background-color: #00e6e6;color: #fff">
+                    Register
                 </button>
             </form>
         </div>

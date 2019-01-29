@@ -5,12 +5,17 @@ html, body {
     padding: 0px;
     scroll-behavior: smooth;
     font-family: 'Lato', sans-serif;
-    background-color: #f9ab00;
+    background-image: radial-gradient(white, #bfbfbf);
 }
 
 .container-center {
     margin-left: auto;
     margin-right: auto;
+    background-color: rgba(38, 38, 38, 0.9);
+}
+
+hr {
+    border-color: #fff;
 }
 
 *, *:before, *:after {

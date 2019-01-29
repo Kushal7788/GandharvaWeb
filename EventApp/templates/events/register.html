@@ -7,9 +7,8 @@
 {% block body %}
     <br><br><br>
     <div class="container">
-        <div class="col-sm-5 container-center" data-sal="slide-up"
-             data-sal-easing="ease-out-bounce" data-sal-delay="100" data-sal-duration="800">
-            <h1>User Registration</h1>
+        <div class="col-sm-5 container-center">
+            <h1 style="color: #fff;text-align: center;padding-top: 20px;padding-bottom: 20px">User Registration</h1>
             <form method="post">
                 {% csrf_token %}
                 {% if form.non_field_errors %}
@@ -38,34 +37,36 @@
                     <input class="form-control" type="password" name="password" placeholder="Password">
                     {{ form.password.errors }}
                 </div>
-                <div class="form-group">
+                <div class="form-group" style="color:#fff">
                     Department:
-                    <select name="user_dept">
+                    <select name="user_dept" class="form-control">
                         {% for dept in depts %}
                             <option value="{{ dept.pk }}">{{ dept.name }}</option>
                         {% endfor %}
                     </select>
                     {{ form.user_dept.errors }}
                 </div>
-                <div class="form-group">
+                <div class="form-group" style="color:#fff">
                     Year of Engineering:
-                    <select name="user_year">
+                    <select name="user_year" class="form-control">
                         {% for year in years %}
                             <option value="{{ year.pk }}">{{ year.title }}</option>
                         {% endfor %}
                     </select>
                     {{ form.user_year.errors }}
                 </div>
-                <div class="form-group">
+                <div class="form-group" style="color:#fff">
                     College:
-                    <select name="user_coll">
+                    <select name="user_coll" class="form-control">
                         {% for college in colleges %}
                             <option value="{{ college.pk }}">{{ college.name }}</option>
                         {% endfor %}
                     </select>
                     {{ form.user_coll.errors }}
                 </div>
-                <button type="submit" class="btn btn-primary pull-right">Submit</button>
+                <button type="submit" class="btn btn-primary pull-right" style="background-color: #00e6e6;color: #fff">
+                    Submit
+                </button>
             </form>
             <hr>
             <div class='g-sign-in-button'>
