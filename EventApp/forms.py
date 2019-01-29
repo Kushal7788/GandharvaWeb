@@ -5,6 +5,7 @@ from .models import ContactUs, MyUser, Department, RoleMaster, College, College_
 
 class UserRegistration(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
+    confirm_password = forms.CharField(widget=forms.PasswordInput())
     email = forms.EmailField(max_length=100, required=True)
     coll_email = forms.EmailField(max_length=100, required=False)
     user_dept = forms.ModelChoiceField(queryset=Department.objects.all(), required=False)
@@ -17,6 +18,15 @@ class UserRegistration(forms.ModelForm):
         model = MyUser
         fields = ['username', 'email', 'password', 'user_dept', 'user_year', 'user_coll', 'coll_email','full_name']
 
+    def clean(self):
+        cleaned_data = super(UserRegistration, self).clean()
+        password = cleaned_data.get("password")
+        confirm_password = cleaned_data.get("confirm_password")
+
+        if password != confirm_password:
+            raise forms.ValidationError(
+                "password and confirm_password does not match"
+            )
 
 class ContactUsForm(forms.ModelForm):
     user_name = forms.CharField(required=True)
