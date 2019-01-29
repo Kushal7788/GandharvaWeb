@@ -188,20 +188,33 @@ def RegisterHead(request):
             roleassign = RoleAssignment()
             roleassign.user = user
             roleassign.role = roleform.cleaned_data.get('name')
-            roleassign.save()
+
 
             current_site = get_current_site(request)
+            token1=account_activation_token.make_token(user)
             message = render_to_string('user/acc_active_email_register_head.html', {
                 'user': user,
                 'domain': current_site.domain,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
-                'token': account_activation_token.make_token(user),
+                'token': token1,
             })
-
+            user.token1=str(token1)
+            token2=account_activation_token.make_token(user)
+            message2 = render_to_string('user/acc_active_email_register_head.html', {
+                'user': user,
+                'domain': current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
+                'token': token2,
+            })
+            user.token2=str(token2)
+            user.save()
+            roleassign.save()
             mail_subject = 'Activate your account to continue.'
             to_email_one = userform.cleaned_data.get('email')
             to_email_two = userform.cleaned_data.get('coll_email')
-            email = EmailMessage(mail_subject, message, to=[to_email_one, to_email_two])
+            email = EmailMessage(mail_subject, message, to=[to_email_one])
+            email.send()
+            email = EmailMessage(mail_subject, message2, to=[to_email_two])
             email.send()
             return render(request, 'user/AccountConfirm.html')
 
@@ -226,13 +239,18 @@ def activate_register_head(request, uidb64, token):
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
         user = MyUser.objects.get(pk=uid)
+
     except(TypeError, ValueError, OverflowError, user.DoesNotExist):
         user = None
-    if (user is not None and account_activation_token.check_token(user, token))or(user.is_active and not user.is_staff):
-        if user.is_active:
-            user.is_staff = True
-        else:
+    if (user is not None ):
+        if user.token1 == token:
+            print(user.token1)
+            user.token1 = None
+        if user.token2 == token:
+            user.token2 = None
+        if user.token1 == None and user.token2 == None:
             user.is_active = True
+            user.is_staff = True
         user.save()
         login(request, user, backend='social_core.backends.google.GoogleOAuth2')
         # return redirect('home')
