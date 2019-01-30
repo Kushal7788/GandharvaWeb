@@ -80,6 +80,8 @@ class EventMaster(models.Model):
     rounds = models.TextField(max_length=10000, blank=True)
     rules = models.TextField(max_length=100000, blank=True)
     container_src = models.CharField(max_length=500, blank=True)
+    location = models.CharField(max_length=40,blank=True)
+    timings = models.CharField(max_length=200, blank=True)
 
     def __str__(self):
         return self.event_name
