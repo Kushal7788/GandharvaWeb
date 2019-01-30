@@ -12,11 +12,13 @@ class UserRegistration(forms.ModelForm):
     user_year = forms.ModelChoiceField(queryset=College_year.objects.all(), required=False)
     user_coll = forms.ModelChoiceField(queryset=College.objects.all(), required=False)
     user_phone = forms.CharField(max_length=10, required=True)
-    full_name = forms.CharField(max_length=200, required=True)
+    first_name = forms.CharField(max_length=30, required=True)
+    last_name = forms.CharField(max_length=30, required=True)
+
 
     class Meta:
         model = MyUser
-        fields = ['username', 'email', 'password', 'user_dept', 'user_year', 'user_coll', 'coll_email','full_name']
+        fields = ['username', 'email', 'password', 'user_dept', 'user_year', 'user_coll', 'coll_email','first_name','last_name']
 
     def clean(self):
         cleaned_data = super(UserRegistration, self).clean()
