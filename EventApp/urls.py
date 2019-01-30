@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^login/register/$', views.register, name='register'),
     url(r'^login/$', views.user_login, name='user_login'),
     url(r'^logout/$', views.user_logout, name='user_logout'),
+    url(r'^success/$', views.success, name='success'),
     url(r'^profile/$', views.Profile, name='user_profile'),
     url(r'^eventsRegister/$', views.Registered_Events, name='eventsRegister'),
     url(r'^paymentDetails/$', views.Payment_Details, name='paymentDetails'),

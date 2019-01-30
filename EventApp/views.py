@@ -14,7 +14,8 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.http import HttpResponse
 from django.contrib.sites.shortcuts import get_current_site
 from EventApp.decorators import user_Role_head
-
+from GandharvaWeb19 import settings
+from instamojo_wrapper import Instamojo
 
 # Create your views here.
 
@@ -56,18 +57,70 @@ def event(request):
     }
     return render(request, 'events/newEvent.html', args1)
 
+#Payment success
+def success(request):
+    if request.method == 'GET':
+        payment_id = request.GET.get('payment_id')
+        payment_status = request.GET.get('payment_status')
+        payment_request_id = request.GET.get('payment_request_id')
+
+        api2 = Instamojo(api_key=settings.INSTAMOJO_KEY,
+                         auth_token=settings.INSTAMOJO_AUTH_TOKEN,
+                         endpoint='https://test.instamojo.com/api/1.1/')
+        response2 = api2.payment_request_payment_status(payment_request_id, payment_id)
+
+        print(response2['payment_request']['purpose'])  # Purpose of Payment Request
+        print(response2['payment_request']['payment']['status'])  # Payment status
+
+        args2 = {
+            'pageTitle': 'Payment Successful',
+            'paymentStatus': payment_status,
+            'paymentAmount': response2['payment_request']['amount'],
+            'buyerName': response2['payment_request']['payment']['buyer_name'],
+            'buyPurpose': response2['payment_request']['purpose'],
+            'buyerPhone': response2['payment_request']['payment']['buyer_phone']
+        }
+        return render(request, 'events/success1.html', args2)
+    else:
+        print("ERROR")
 
 # Details of Individual Events
 def details(request):
-    event_name = request.GET.get('event')
+    if request.method == 'POST':
+        api = Instamojo(api_key=settings.INSTAMOJO_KEY,
+                        auth_token=settings.INSTAMOJO_AUTH_TOKEN,
+                        endpoint='https://test.instamojo.com/api/1.1/')
+        event_id=request.POST.get('event_id')
+        userEmail=request.POST.get('userEmail')
+        event=EventMaster.objects.get(pk=event_id)
+        user=MyUser.objects.get(email=userEmail)
+        response = api.payment_request_create(
+            amount=event.entry_fee,
+            purpose=event.event_name,
+            send_email=False,
+            send_sms=False,
+            email=user.email,
+            buyer_name=user.full_name,
+            phone=user.user_phone,
+            redirect_url="http://127.0.0.1:8000/success/"
+        )
+        # print the long URL of the payment request.
+        print(response['payment_request']['longurl'])
+        # print the unique ID(or payment request ID)
+        print(response['payment_request']['id'])
+        print(response['payment_request']['purpose'])
+        print(response['payment_request']['amount'])
 
-    arg = {
-        'events_list': EventMaster.objects.all(),
-        'pageTitle': EventMaster.objects.get(event_name__startswith=event_name).event_name,
-        'event': EventMaster.objects.get(event_name__startswith=event_name),
-        'dept': EventDepartment.objects.get(event=EventMaster.objects.get(event_name__startswith=event_name)),
-    }
-    return render(request, 'events/category1Event1.html', arg)
+        return redirect(response['payment_request']['longurl'])
+    else:
+        event_name = request.GET.get('event')
+        arg = {
+            'events_list': EventMaster.objects.all(),
+            'pageTitle': EventMaster.objects.get(event_name__startswith=event_name).event_name,
+            'event': EventMaster.objects.get(event_name__startswith=event_name),
+            'dept': EventDepartment.objects.get(event=EventMaster.objects.get(event_name__startswith=event_name)),
+        }
+        return render(request, 'events/category1Event1.html', arg)
 
 
 # ContactUs View (Form created)

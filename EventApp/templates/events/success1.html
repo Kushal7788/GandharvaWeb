@@ -1,0 +1,33 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}{{ pageTitle }}{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'events/css/events.css' %}">
+{% endblock %}
+{% block body %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <p>
+        Amount : {{ paymentAmount }}
+    </p>
+    <p>
+        Status : {{ paymentStatus }}
+    </p>
+    <p>
+        Name : {{ buyerName }}
+    </p>
+    <p>
+        Event: {{ buyPurpose }}
+    </p>
+    <p>
+        Phone: {{ buyerPhone }}
+    </p>
+{% endblock %}
+    {% block scripts %}
+        <script src="{% static 'events/js/events.js' %}"></script>
+    {% endblock %}
