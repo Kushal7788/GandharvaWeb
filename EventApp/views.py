@@ -321,7 +321,9 @@ def Profile(request):
     return render(request, 'user/userProfile.html')
 
 def Registered_Events(request):
-    return render(request, 'user/registeredEvents.html')
+    teams = Team.objects.filter(user = request.user)
+
+    return render(request, 'user/registeredEvents.html',{'teams':teams})
 
 def Payment_Details(request):
     return render(request, 'user/paymentDetails.html')

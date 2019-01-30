@@ -13,4 +13,18 @@
         <script type="text/javascript" src="{% static 'user/js/registeredEvents.js' %}"></script>
     {% endblock %}
 
+
+    <br>
+    <br>
+    <br>
+        <br>
+    <br>
+    <br>
+
+        <br>
+    <br>
+    <br>
+    {% for team in teams %}
+    <h1>{{ team.receipt.event.event_name }}</h1>
+    {% endfor %}
 {% endblock %}
