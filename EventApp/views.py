@@ -342,6 +342,48 @@ def TeamDetails(request):
 
         return render(request, 'events/TeamDetails.html', {'form': form,'event':event_choose})
 
+def reset_password(request):
+    if request.method == 'POST':
+        username_to_reset = request.POST.get('username')
+        user = MyUser.objects.get(username=username_to_reset)
+        if not user:
+            return HttpResponse("Enter valid username.Go back to enter the username.")
+
+        current_site = get_current_site(request)
+        token2 = account_activation_token.make_token(user)
+        message = render_to_string('user/reset_password_email.html', {
+            'user': user,
+            'domain': current_site.domain,
+            'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
+            'token': token2,
+        })
+        user.token2 = str(token2)
+        user.save()
+
+        mail_subject = 'Reset Password'
+        email = EmailMessage(mail_subject, message, to=[user.email])
+        email.send()
+        return HttpResponse("Mail has been send. Click on the email link to reset password")
+    else:
+        return render(request, "user/reset_password.html")
+
+
+def reset_password_new(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = MyUser.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, user.DoesNotExist):
+        user = None
+    if user is not None:
+        if user.token2 == token:
+            user.token2 = None
+            user.save()
+            return render(request, 'user/new_password.html')
+    return HttpResponse("Your passsword has been reset")
+
+
+
+
 
 ## Important Notes:
 # to get user role from models

@@ -2,6 +2,7 @@ from django.conf.urls import url, include
 from . import views
 from django.views.generic.base import TemplateView
 
+
 # Url defined here, can access the page related to the url by adding the path
 urlpatterns = [
     url(r'^$', views.home, name='home'),
@@ -26,4 +27,9 @@ urlpatterns = [
         views.activate, name='activate'),
     url(r'^activate_register_head/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         views.activate_register_head, name='activate_register_head'),
+    url(r'^login/reset_password$', views.reset_password, name='reset_password'),
+    url(r'^reset_password_new/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        views.reset_password_new, name='reset_password_new'),
+
+
 ]
