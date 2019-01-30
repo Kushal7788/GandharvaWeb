@@ -28,7 +28,7 @@
                 </div>
                 <div class="col-sm-12 col-md-6" data-sal="slide-up" data-sal-easing="ease-out-bounce"
                      data-sal-delay="100" data-sal-duration="500">
-                    <h1 class="eventTitle colorlib-heading">{{ event.event.event_name }}</h1>
+                    <h1 class="colorlib-heading">{{ event.event.event_name }}</h1>
                     <p class="eventDescription">
                         {{ event.event.objective }}
                     </p>
@@ -44,6 +44,7 @@
                             team.</p>
                     </div>
 
+                <div style="display: flex;flex-direction: row;justify-items: left;">
                     <form method="get" action="{% url 'details' %}">
                         {% csrf_token %}
                         <input type="hidden" name="event" value="{{ event.event.event_name }}">
@@ -63,6 +64,8 @@
                                 Now
                             </button>
                     </form>
+                </div>
+
                 </div>
             </div>
             <br>

@@ -23,11 +23,11 @@ p {
 
 .colorlib-heading {
     font-size: 24px;
-    margin-bottom: 12px;
+    margin-bottom:2px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 5px;
-    line-height: 1.8;
+    line-height: 2;
     position: relative;
     color: #000;
 }
@@ -99,7 +99,7 @@ p {
 
 .eventDescription {
     z-index: 100;
-    padding-top: 0.5vh;
+    padding-top: 4px;
     padding-bottom: 1vh;
     color: #000;
     opacity: 1;
@@ -119,6 +119,7 @@ p {
     margin-top: 2vh;
     margin-bottom: 1vh;
     font-weight: bold;
+    margin-right: 10px;
     /*position: absolute;*/
     /*bottom: 2vh;*/
 }
@@ -187,7 +188,9 @@ pre {
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
-
+.colorlib-heading{
+    margin-bottom: 4vh;
+}
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
