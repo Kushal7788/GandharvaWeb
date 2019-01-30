@@ -28,8 +28,8 @@ urlpatterns = [
     url(r'^activate_register_head/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         views.activate_register_head, name='activate_register_head'),
     url(r'^login/reset_password$', views.reset_password, name='reset_password'),
-    url(r'^reset_password_new/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
-        views.reset_password_new, name='reset_password_new'),
+    #url(r'^reset_password_new/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+     #   views.reset_password_new, name='reset_password_new'),
 
 
 ]

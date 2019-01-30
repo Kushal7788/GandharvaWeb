@@ -367,7 +367,7 @@ def reset_password(request):
     else:
         return render(request, "user/reset_password.html")
 
-
+"""
 def reset_password_new(request, uidb64, token):
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
@@ -380,7 +380,7 @@ def reset_password_new(request, uidb64, token):
             user.save()
             return render(request, 'user/new_password.html')
     return HttpResponse("Your passsword has been reset")
-
+"""
 
 
 
