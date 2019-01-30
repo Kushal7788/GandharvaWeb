@@ -367,7 +367,7 @@ def reset_password(request):
     else:
         return render(request, "user/reset_password.html")
 
-"""
+
 def reset_password_new(request, uidb64, token):
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
@@ -378,10 +378,32 @@ def reset_password_new(request, uidb64, token):
         if user.token2 == token:
             user.token2 = None
             user.save()
-            return render(request, 'user/new_password.html')
-    return HttpResponse("Your passsword has been reset")
-"""
+            args = {
+                'pk': uid,
+            }
+            return render(request, 'user/new_password.html', args)
+        else:
+            return render(request, "user/reset_password.html")
+    return HttpResponse("You have already reset your password")
 
+
+def new_password(request):
+    if request.method == 'POST':
+        new_password = request.POST.get('new_password')
+        confirm_new_password = request.POST.get('confirm_new_password')
+        username = request.POST.get('username')
+        user = MyUser.objects.get(username=username)
+        if new_password == confirm_new_password:
+            user.set_password(new_password)
+            user.save()
+
+            return render(request, 'events/login.html', {})
+        else:
+            args = {
+                'error': "Please enter same password in both the fields",
+            }
+            return render(request, 'user/new_password.html', args)
+    return render(request, 'user/new_password.html')
 
 
 
