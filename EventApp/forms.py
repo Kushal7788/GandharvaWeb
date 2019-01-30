@@ -1,6 +1,6 @@
 # include the various features to be used in forms here
 from django import forms
-from .models import ContactUs, MyUser, Department, RoleMaster, College, College_year
+from .models import *
 
 
 class UserRegistration(forms.ModelForm):
@@ -45,3 +45,11 @@ class RoleMasterForm(forms.ModelForm):
     class Meta:
         model = RoleMaster
         fields = ['name']
+
+class TeamDetailsForm(forms.ModelForm):
+    team_name = forms.CharField(required=True)
+    user = forms.CharField(required=True)
+
+    class Meta:
+        model = ContactUs
+        fields = ['team_name', 'user',]

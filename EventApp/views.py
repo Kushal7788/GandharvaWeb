@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from EventApp.models import *
-from .forms import UserRegistration, ContactUsForm, RoleMasterForm
+from .forms import *
 from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test
 from django.core.mail import EmailMessage
@@ -272,6 +272,20 @@ def Registered_Events(request):
 
 def Payment_Details(request):
     return render(request, 'user/paymentDetails.html')
+
+def TeamDetails(request):
+        event = request.GET.get('event')
+        event_choose = EventMaster.objects.get(event_name=event)
+        if request.method == 'GET':
+         form = TeamDetailsForm()
+        if request.method == 'POST':
+            form = TeamDetailsForm(request.POST)
+            if form.is_valid():
+                form.save()
+            else:
+                print(form.errors)
+
+        return render(request, 'events/TeamDetails.html', {'form': form,'event':event_choose})
 
 
 ## Important Notes:

@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^profile/$', views.Profile, name='user_profile'),
     url(r'^eventsRegister/$', views.Registered_Events, name='eventsRegister'),
     url(r'^paymentDetails/$', views.Payment_Details, name='paymentDetails'),
+    url(r'^TeamDetails/$', views.TeamDetails, name='TeamDetails'),
     url(r'^auth/', include('social_django.urls', namespace='social')),
     url(r'^RegisterHead/$', views.RegisterHead, name='RegisterHead'),
     url(r'^service-worker.js', (TemplateView.as_view(

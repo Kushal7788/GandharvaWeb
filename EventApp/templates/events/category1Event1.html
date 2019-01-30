@@ -52,15 +52,15 @@
     <div class="container">
         <form method="get"
                 {% if user.is_authenticated %}
-              action= >
+                    action="{% url 'TeamDetails' %}" >
                 {% else %}
-                    action ={% url 'user_login' %}>
+                    action ="{% url 'user_login' %}">
                 {% endif %}
         {% csrf_token %}
-{#        <input type="hidden" name="" value="">#}
-{#        <button type="submit" class="btn btn-primary eventButtons">Register#}
-{#            Now#}
-{#        </button>#}
+        <input type="hidden" name="event" value="{{ event.event_name }}">
+        <button type="submit" class="btn btn-primary eventButtons">Register
+            Now
+        </button>
         </form>
     </div>
 {% endblock %}
