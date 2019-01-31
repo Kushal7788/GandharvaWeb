@@ -56,7 +56,6 @@
                 {% else %}
                     action ="{% url 'user_login' %}">
                 {% endif %}
-        {% csrf_token %}
         <input type="hidden" name="event" value="{{ event.event_name }}">
         <button type="submit" class="btn btn-primary eventButtons">Register
             Now
