@@ -2,15 +2,6 @@ console.log('Hello');
 
 sal();
 
-//Countdown js
-$("#countdown").countdown({
-        date: "10 july 2014 12:00:00",
-        format: "on"
-    },
-
-    function () {
-        // callback function
-    });
 
 //Owl
 // var owl = $('.owl-carousel');
