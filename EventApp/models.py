@@ -36,7 +36,7 @@ class Department(models.Model):
 
 # Abstract User , it is the extension of the base User model which can be customized
 class MyUser(AbstractUser):
-    email = models.EmailField(max_length=100, unique=True)
+    email = models.EmailField(max_length=100)
     coll_email = models.EmailField(max_length=100, blank=True)
     user_coll = models.ForeignKey(College, on_delete=models.PROTECT, blank=True, null=True)
     user_year = models.ForeignKey(College_year, on_delete=models.PROTECT, null=True, blank=True)

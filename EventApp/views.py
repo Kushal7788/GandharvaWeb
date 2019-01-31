@@ -183,7 +183,24 @@ def register(request):
     coll = College.objects.all()
     year = College_year.objects.all()
     if request.method == 'POST':
-        form = UserRegistration(request.POST,request.FILES)
+        form = UserRegistration(request.POST, request.FILES)
+
+        new_email = request.POST.get('email')
+
+        try:
+            old_user = MyUser.objects.get(email=new_email)
+        except:
+            old_user = None
+
+        if old_user!= None and old_user.is_active == False:
+            old_user.delete()
+            pass
+        elif old_user!= None and old_user.is_active == True:
+            args = {
+                'error': "You have already registered and your email is verified too. Enter email to reset your password."
+            }
+            return render(request, "user/reset_password.html", args)
+
         if form.is_valid():
             user = form.save(commit=False)
             user.is_active = False
