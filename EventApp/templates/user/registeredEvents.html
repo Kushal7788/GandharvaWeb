@@ -27,27 +27,37 @@
                 {#                        The objective of this event is to test the proficiency of the participant in C Programming Language.#}
                 {#                    </p>#}
                 <p style="font-weight: bold; margin-bottom: 0;font-size: 18px"> Event Details</p>
+                {% if team.receipt.event.timings %}
                 <div class="con">
                     <p style="font-weight: bold;margin-right: 6px">Time:</p>
                     <p> {{team.receipt.event.timings}}</p>
                 </div>
+                {% endif %}
+                {% if team.receipt.event.location %}
                 <div class="con">
                     <p style="font-weight: bold;margin-right: 6px">Location:</p>
                     <p>{{team.receipt.event.location}}</p>
                 </div>
+                {% endif %}
+                {% if team.receipt.event.team_size %}
                 <div class="con">
                     <p style="font-weight: bold;margin-right: 6px">Team:</p>
                     <p>{{team.receipt.event.team_size}}</p>
                 </div>
+                {% endif %}
+                {% if team.receipt.event.entry_fee %}
                 <div class="con">
                     <p style="font-weight: bold;margin-right: 6px">Fees:</p>
                     <p>{{team.receipt.event.entry_fee}}</p>
                 </div>
-                <div class="con">
-                    <p style="font-weight: bold; margin-bottom: 0">Contact:</p>
-                    <p style="margin-right:14px;margin-left: 6px">Sanul : 123456789</p>
-                    <p>Sanul : 123456789</p>
-                </div>
+                {% endif %}
+{#                {% if team.receipt.event.timings %}#}
+{#                <div class="con">#}
+{#                    <p style="font-weight: bold; margin-bottom: 0">Contact:</p>#}
+{#                    <p style="margin-right:14px;margin-left: 6px">Sanul : 123456789</p>#}
+{#                    <p>Sanul : 123456789</p>#}
+{#                </div>#}
+{#                {% endif %}#}
                 <br>
                 <p style="font-weight: bold; margin-bottom: 0;font-size: 18px"> Payment Details</p>
                 <div class="paymentdetails">
