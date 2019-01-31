@@ -11,7 +11,7 @@
         <div class="col-sm-6 container-center">
             <h2 style="text-align: center;padding-top: 20px">Head Registration</h2>
             <br>
-            <form method="post">
+            <form method="post" onsubmit="return validate()">
                 {% csrf_token %}
                 {% if userform.non_field_errors %}
                     <ul>
