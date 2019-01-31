@@ -126,7 +126,6 @@
                  data-sal="slide-up" data-sal-easing="ease-out-bounce" data-sal-delay="30" data-sal-duration="500">
                 <h3 class="eventTitle">{{ event.name }}</h3>
                 <form method="get" action={% url event.link_to %}>
-                    {% csrf_token %}
                     <input type="hidden" name="dept" value={{ event.name }}>
                     <button type="submit" class="btn btn-primary eventButtons">Learn
                         More

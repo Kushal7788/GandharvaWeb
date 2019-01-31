@@ -60,7 +60,6 @@
                 </div>
                 <div style="display: flex;flex-direction: row;justify-items: left;">
                     <form method="get" action="{% url 'details' %}">
-                        {% csrf_token %}
                         <input type="hidden" name="event" value="{{ team.receipt.event.event_name }}">
                         <button type="submit" class="btn btn-primary eventButtons">Rules
                         </button>
