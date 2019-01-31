@@ -183,7 +183,7 @@ def register(request):
     coll = College.objects.all()
     year = College_year.objects.all()
     if request.method == 'POST':
-        form = UserRegistration(request.POST)
+        form = UserRegistration(request.POST,request.FILES)
         if form.is_valid():
             user = form.save(commit=False)
             user.is_active = False
@@ -271,7 +271,7 @@ def RegisterHead(request):
     coll = College.objects.all()
     year = College_year.objects.all()
     if request.method == 'POST':
-        userform = UserRegistration(request.POST)
+        userform = UserRegistration(request.POST,request.FILES)
         roleform = RoleMasterForm(request.POST)
         if userform.is_valid() and roleform.is_valid():
             user = userform.save(commit=False)

@@ -14,11 +14,12 @@ class UserRegistration(forms.ModelForm):
     user_phone = forms.CharField(max_length=10, required=True)
     first_name = forms.CharField(max_length=30, required=True)
     last_name = forms.CharField(max_length=30, required=True)
+    prof_img = forms.ImageField(required=False);
 
 
     class Meta:
         model = MyUser
-        fields = ['username', 'email', 'password', 'user_dept', 'user_year', 'user_coll', 'coll_email','first_name','last_name']
+        fields = ['username', 'email', 'password', 'user_dept', 'user_year', 'user_coll', 'coll_email','first_name','last_name','prof_img']
 
     def clean(self):
         cleaned_data = super(UserRegistration, self).clean()
