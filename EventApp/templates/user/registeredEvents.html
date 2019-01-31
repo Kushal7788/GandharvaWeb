@@ -6,45 +6,111 @@
 {% endblock %}
 
 {% block body %}
+    <br><br><br><br>
+    <div class="container">
+        {#        {% for event in events %}#}
 
-    <h1>Registered Events</h1>
+        <div class="row">
+            <div id="eventImage" class="col-sm-12 col-md-5"
+                 style="background-image: url('{% static 'events/img/eventContainer/compEvents.jpg' %}');background-size: cover">
+                <div id="eventImageTitle" style="margin:20px;height:400px;">
+                    <div
+                            style="background:linear-gradient(45deg,rgba(0,0,0,0.5),rgba(0,0,0,0.5));height: inherit;text-align: center">
+                        <h2 style="color:#fff;word-wrap: break-word;padding-top:12vh">Event Title</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-1"></div>
+            <div class="col-sm-12 col-md-6">
+                <h1 class="colorlib-heading">Event Name</h1>
+                {#                    <p class="eventDescription">#}
+                {#                        The objective of this event is to test the proficiency of the participant in C Programming Language.#}
+                {#                    </p>#}
+                <p style="font-weight: bold; margin-bottom: 0;font-size: 18px"> Event Details</p>
+                <div class="con">
+                    <p style="font-weight: bold;margin-right: 6px">Time:</p>
+                    <p> 13/03/2019 11:00AM</p>
+                </div>
+                <div class="con">
+                    <p style="font-weight: bold;margin-right: 6px">Location:</p>
+                    <p>A306</p>
+                </div>
+                <div class="con">
+                    <p style="font-weight: bold;margin-right: 6px">Team:</p>
+                    <p>3 Members</p>
+                </div>
+                <div class="con">
+                    <p style="font-weight: bold;margin-right: 6px">Fees:</p>
+                    <p>100/-</p>
+                </div>
+                <div class="con">
+                    <p style="font-weight: bold; margin-bottom: 0">Contact:</p>
+                    <p style="margin-right:14px;margin-left: 6px">Sanul : 123456789</p>
+                    <p>Sanul : 123456789</p>
+                </div>
+                <br>
+                <p style="font-weight: bold; margin-bottom: 0;font-size: 18px"> Payment Details</p>
+                <div class="paymentdetails">
+                    <p><span style="font-weight: bold">Amount</span> : {{ paymentAmount }}</p>
+                    <p><span style="font-weight: bold">Status</span> : {{ paymentStatus }}</p>
+                    <p><span style="font-weight: bold">Name</span> : {{ buyerName }}</p>
+                    <p><span style="font-weight: bold">Event</span> : {{ buyPurpose }}</p>
+                    <p><span style="font-weight: bold">Phone</span> : {{ buyerPhone }}</p>
+
+                </div>
+                <div style="display: flex;flex-direction: row;justify-items: left;">
+                    <form method="get" action="{% url 'details' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="event" value="{{ event.event.event_name }}">
+                        <button type="submit" class="btn btn-primary eventButtons">Rules
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
         <br>
+
+        {#        {% endfor %}#}
+    </div>
     <br>
-    <br>
-    <br>
-    <br>
-    <p>
-        Amount : {{ paymentAmount }}
-    </p>
-    <p>
-        Status : {{ paymentStatus }}
-    </p>
-    <p>
-        Name : {{ buyerName }}
-    </p>
-    <p>
-        Event: {{ buyPurpose }}
-    </p>
-    <p>
-        Phone: {{ buyerPhone }}
-    </p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+{#    <h1>Registered Events</h1>#}
+{##}
+{#    <p>#}
+{#        Amount : {{ paymentAmount }}#}
+{#    </p>#}
+{#    <p>#}
+{#        Status : {{ paymentStatus }}#}
+{#    </p>#}
+{#    <p>#}
+{#        Name : {{ buyerName }}#}
+{#    </p>#}
+{#    <p>#}
+{#        Event: {{ buyPurpose }}#}
+{#    </p>#}
+{#    <p>#}
+{#        Phone: {{ buyerPhone }}#}
+{#    </p>#}
 
     {% block scripts %}
         <script type="text/javascript" src="{% static 'user/js/registeredEvents.js' %}"></script>
     {% endblock %}
 
 
-    <br>
-    <br>
-    <br>
-        <br>
-    <br>
-    <br>
-
-        <br>
-    <br>
-    <br>
     {% for team in teams %}
-    <h1>{{ team.receipt.event.event_name }}</h1>
+        <h1>{{ team.receipt.event.event_name }}</h1>
     {% endfor %}
 {% endblock %}
