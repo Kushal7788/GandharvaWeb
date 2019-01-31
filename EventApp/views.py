@@ -105,6 +105,7 @@ def success(request):
             transaction.receipt = receipt
             transaction.date = datetime.date.today()
             transaction.time = datetime.datetime.now().time()
+            transaction.team=team
             transaction.save()
 
 
@@ -373,11 +374,16 @@ def activate_register_head(request, uidb64, token):
 
 
 def Profile(request):
+    if request.method == 'POST':
+        user_phone = request.POST.get('user_phone')
+        user = request.user
+        user.user_phone=user_phone
+        user.save();
+
     return render(request, 'user/userProfile.html')
 
 def Registered_Events(request):
     teams = Team.objects.filter(user = request.user)
-
     return render(request, 'user/registeredEvents.html',{'teams':teams})
 
 def Payment_Details(request):

@@ -34,6 +34,11 @@ class Department(models.Model):
         return self.name
 
 
+def prof_path(instance, filename):
+    ext = filename.split('.')[-1]
+    filename = '{}.{}'.format("profile_img/" + instance.username, ext)
+    return filename
+
 # Abstract User , it is the extension of the base User model which can be customized
 class MyUser(AbstractUser):
     email = models.EmailField(max_length=100)
@@ -41,7 +46,7 @@ class MyUser(AbstractUser):
     user_coll = models.ForeignKey(College, on_delete=models.PROTECT, blank=True, null=True)
     user_year = models.ForeignKey(College_year, on_delete=models.PROTECT, null=True, blank=True)
     user_dept = models.ForeignKey(Department, on_delete=models.PROTECT, null=True)
-    prof_img = models.ImageField(upload_to='profile_img/%Y/%m/%d/',blank=True)
+    prof_img = models.ImageField(upload_to=prof_path,blank=True)
     user_phone = models.CharField(max_length=10,blank=True)
     count = models.IntegerField(default=0, null=True)
     token1 = models.CharField(max_length=100, null=True)
@@ -160,7 +165,7 @@ class Transaction(models.Model):
     date=models.DateField()
     time=models.TimeField()
     receipt=models.ForeignKey(Receipt,on_delete=models.CASCADE)
-
+    team= models.ForeignKey(Team,on_delete=models.PROTECT,blank=True,null=True)
 
 class Document_type(models.Model):
     type = models.CharField(max_length=100)
@@ -170,6 +175,7 @@ class Document_type(models.Model):
 
     def __str__(self):
         return self.type
+
 
 
 def path(instance, filename):
