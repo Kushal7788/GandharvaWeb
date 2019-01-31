@@ -418,7 +418,7 @@ def reset_password_new(request, uidb64, token):
             user.token2 = None
             user.save()
             args = {
-                'pk': uid,
+                'user': user,
             }
             return render(request, 'user/new_password.html', args)
         else:
@@ -430,8 +430,8 @@ def new_password(request):
     if request.method == 'POST':
         new_password = request.POST.get('new_password')
         confirm_new_password = request.POST.get('confirm_new_password')
-        email = request.POST.get('email')
-        user = MyUser.objects.get(email=email)
+        id = request.POST.get('pk')
+        user = MyUser.objects.get(pk=id)
         if new_password == confirm_new_password:
             user.set_password(new_password)
             user.save()
