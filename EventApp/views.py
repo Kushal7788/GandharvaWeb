@@ -382,10 +382,11 @@ def TeamDetails(request):
 
 def reset_password(request):
     if request.method == 'POST':
-        username_to_reset = request.POST.get('username')
-        user = MyUser.objects.get(username=username_to_reset)
-        if not user:
-            return HttpResponse("Enter valid username.Go back to enter the username.")
+        email_to_reset = request.POST.get('email')
+        try:
+            user = MyUser.objects.get(email=email_to_reset)
+        except:
+                return HttpResponse("Enter valid username.Go back to enter the username.")
 
         current_site = get_current_site(request)
         token2 = account_activation_token.make_token(user)
@@ -429,18 +430,13 @@ def new_password(request):
     if request.method == 'POST':
         new_password = request.POST.get('new_password')
         confirm_new_password = request.POST.get('confirm_new_password')
-        username = request.POST.get('username')
-        user = MyUser.objects.get(username=username)
+        email = request.POST.get('email')
+        user = MyUser.objects.get(email=email)
         if new_password == confirm_new_password:
             user.set_password(new_password)
             user.save()
-
             return render(request, 'events/login.html', {})
-        else:
-            args = {
-                'error': "Please enter same password in both the fields",
-            }
-            return render(request, 'user/new_password.html', args)
+
     return render(request, 'user/new_password.html')
 
 
