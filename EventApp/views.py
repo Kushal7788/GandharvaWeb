@@ -195,7 +195,7 @@ def register(request):
 
         if old_user!= None and old_user.is_active == False:
             old_user.delete()
-            pass
+            
         elif old_user!= None and old_user.is_active == True:
             args = {
                 'error': "You have already registered and your email is verified too. Enter email to reset your password."
