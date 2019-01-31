@@ -189,3 +189,11 @@ class Document(models.Model):
 
     def __str__(self):
         return 'Category : ' + self.category.type + '/' + self.title
+
+
+
+
+class InstamojoCredential(models.Model):
+    key=models.CharField(max_length=50)
+    token=models.CharField(max_length=50)
+    salt=models.CharField(max_length=50)

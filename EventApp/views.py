@@ -67,9 +67,9 @@ def success(request):
         payment_id = request.GET.get('payment_id')
         payment_status = request.GET.get('payment_status')
         payment_request_id = request.GET.get('payment_request_id')
-
-        api2 = Instamojo(api_key=settings.INSTAMOJO_KEY,
-                         auth_token=settings.INSTAMOJO_AUTH_TOKEN,
+        insta = InstamojoCredential.objects.latest('key')
+        api2 = Instamojo(api_key=insta.key,
+                         auth_token=insta.token,
                          endpoint='https://test.instamojo.com/api/1.1/')
         response2 = api2.payment_request_payment_status(payment_request_id, payment_id)
 
@@ -123,9 +123,11 @@ def success(request):
 
 # Details of Individual Events
 def details(request):
+
     if request.method == 'POST':
-        api = Instamojo(api_key=settings.INSTAMOJO_KEY,
-                        auth_token=settings.INSTAMOJO_AUTH_TOKEN,
+        insta=InstamojoCredential.objects.latest('key')
+        api = Instamojo(api_key=insta.key,
+                        auth_token=insta.token,
                         endpoint='https://test.instamojo.com/api/1.1/')
         event_id=request.POST.get('event_id')
         userEmail=request.POST.get('userEmail')

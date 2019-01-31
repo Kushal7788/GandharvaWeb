@@ -21,4 +21,5 @@ admin.site.register(College_year)
 admin.site.register(Team)
 admin.site.register(Receipt)
 admin.site.register(Transaction)
+admin.site.register(InstamojoCredential)
 
