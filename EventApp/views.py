@@ -374,11 +374,14 @@ def activate_register_head(request, uidb64, token):
 
 
 def Profile(request):
+    user = request.user
     if request.method == 'POST':
+        if request.method == 'POST' and request.FILES['prof_img']:
+            prof_img = request.FILES['prof_img']
+            user.prof_img = prof_img
         user_phone = request.POST.get('user_phone')
-        user = request.user
         user.user_phone=user_phone
-        user.save();
+        user.save()
 
     return render(request, 'user/userProfile.html')
 

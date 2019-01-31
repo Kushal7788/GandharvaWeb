@@ -12,17 +12,17 @@
         <hr>
         <div class="row">
             <div class="col-md-3">
+                <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data">>
+                    {% csrf_token %}
                 <div class="text-center">
                     <img src="{{ user.prof_img }}" >
                     <h6>Upload a different photo...</h6>
 
-                    <input type="file" class="form-control">
+                    <input type="file" class="form-control" name="prof_img">
                 </div>
             </div>
             <div class="col-md-9 personal-info">
                 <h3 style="margin-top: 14px">Personal info</h3>
-                <form class="form-horizontal" role="form" method="post">
-                    {% csrf_token %}
                     <div class="form-group">
                         <label class="col-lg-3 control-label">First name:</label>
                         <div class="col-lg-8">
