@@ -60,14 +60,16 @@
 {#                {% endif %}#}
                 <br>
                 <p style="font-weight: bold; margin-bottom: 0;font-size: 18px"> Payment Details</p>
+            {% for transaction in team.transaction_set.all %}
                 <div class="paymentdetails">
-                    <p><span style="font-weight: bold">Amount</span> : {{ paymentAmount }}</p>
-                    <p><span style="font-weight: bold">Status</span> : {{ paymentStatus }}</p>
-                    <p><span style="font-weight: bold">Name</span> : {{ buyerName }}</p>
-                    <p><span style="font-weight: bold">Event</span> : {{ buyPurpose }}</p>
-                    <p><span style="font-weight: bold">Phone</span> : {{ buyerPhone }}</p>
+                    <p><span style="font-weight: bold">Amount</span> : {{ team.receipt.event.entry_fee }}</p>
+                    <p><span style="font-weight: bold">Status</span> : {{ transaction.status }}</p>
+                    <p><span style="font-weight: bold">Name</span> : {{ user.first_name }}</p>
+                    <p><span style="font-weight: bold">Event</span> : {{ team.receipt.event.event_name }}</p>
+                    <p><span style="font-weight: bold">Phone</span> : {{ user.user_phone }}</p>
 
                 </div>
+                {%  endfor %}
                 <div style="display: flex;flex-direction: row;justify-items: left;">
                     <form method="get" action="{% url 'details' %}">
                         <input type="hidden" name="event" value="{{ team.receipt.event.event_name }}">
