@@ -357,6 +357,12 @@ def activate_register_head(request, uidb64, token):
 
 
 def Profile(request):
+    if request.method == 'POST':
+        user_phone = request.POST.get('user_phone')
+        user = request.user
+        user.user_phone=user_phone
+        user.save();
+
     return render(request, 'user/userProfile.html')
 
 def Registered_Events(request):
