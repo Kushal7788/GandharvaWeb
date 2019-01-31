@@ -104,6 +104,13 @@ input {
     height: 44px;
 }
 
+.errors{
+    display: none;
+    margin-top: 0;
+    margin-left: 10%;
+    color: red;
+
+}
 .btn-primary {
     text-align: center;
     background-color: #1a73e8;
