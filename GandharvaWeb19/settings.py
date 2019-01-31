@@ -142,8 +142,8 @@ INSTAMOJO_KEY = 'test_faf65f582c906177257c757e6cd'
 INSTAMOJO_AUTH_TOKEN = 'test_6ad0a420610b722f76d5437da00'
 INSTAMOJO_SALT = '924b7e87c0924c7e87224e698a829825'
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '519854616069-hj7chgsltbjad2p5mcvv8241ruob2e5m.apps.googleusercontent.com'  # Paste CLient Key
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'x77Vt0Zv3fTqjpCLN-Ec4Irg'  # Paste Secret Key
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '941888329527-bknhunrj63gk5id2ibhtd1ou4hv4bkc7.apps.googleusercontent.com'  # Paste CLient Key
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'FSqq7HvDDkZucHi0Wr-EHVuu'  # Paste Secret Key
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 LOGIN_URL = 'login'
