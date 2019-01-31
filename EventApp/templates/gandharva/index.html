@@ -8,9 +8,7 @@
     {#    <link href="{% static 'gandharva/css/owl.carousel.min.css' %}" rel="stylesheet">#}
     <link href="{% static 'gandharva/css/home.css' %}" rel="stylesheet">
 
-    <script>
-        var GandharvaDate = "{{gandharvaDate}}";
-    </script>
+    <script>var GandharvaDate = "{{gandharvaDate}}";</script>
 {% endblock %}
 
 {% block body %}
@@ -45,6 +43,7 @@
                         <h1 class="userselect">Gandharva</h1>
                         <h3 class="userselect" style="color: #fff;text-align: center;padding-left: 14px;">A
                             Techno-Cultural Fest</h3>
+                        <h3 style="color: #fff;text-align: center;padding-left: 14px;">13 - 16th March</h3>
                         <br>
                         <h4 class="userselect" style="color: #fff;padding-left: 16px;text-align: center;">Starts
                             in</h4>
@@ -52,19 +51,19 @@
                              id="countdown">
                             <div class="row" style="border-style: solid;border-width: 2px;border-color: #fff;">
                                 <div id="dayDiv" class="col-3 text-center text-white ">
-                                    <h2 class="userselect day days">00</h2>
+                                    <h2 class="userselect day days"></h2>
                                     <p class="userselect">Days</p>
                                 </div>
                                 <div id="hrDiv" class="col-3 text-center text-white">
-                                    <h2 class="userselect hr hours">00</h2>
+                                    <h2 class="userselect hr hours"></h2>
                                     <p class="userselect">Hours</p>
                                 </div>
                                 <div id="minDiv" class="col-3 text-center text-white">
-                                    <h2 class="userselect min minutes">00</h2>
+                                    <h2 class="userselect min minutes"></h2>
                                     <p class="userselect">Minutes</p>
                                 </div>
                                 <div id="secDiv" class="col-3 text-center text-white">
-                                    <h2 class="userselect sec seconds">00</h2>
+                                    <h2 class="userselect sec seconds"></h2>
                                     <p class="userselect">Seconds</p>
                                 </div>
                             </div>
@@ -256,6 +255,14 @@
 {% endblock %}
 {% block scripts %}
     <script type="text/javascript" src="{% static 'gandharva/js/coundown-timer.js' %}"></script>
+    <script>$("#countdown").countdown({
+            date: "10 july 2014 12:00:00",
+            format: "on"
+        },
+        function () {
+            // callback function
+        });
+    </script>
     <script type="text/javascript" src="{% static 'gandharva/js/slick.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'gandharva/js/particles.min.js' %}"></script>
     {#    <script type="text/javascript" src="{% static 'gandharva/js/owl.carousel.min.js' %}"></script>#}
