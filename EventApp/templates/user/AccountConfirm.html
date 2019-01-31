@@ -5,15 +5,15 @@
     <link href="{% static 'user/css/reset_password.css' %}" rel="stylesheet">
 {% endblock %}
 
-
 {% block body %}
     <br><br><br><br><br>
     <div class="container">
         <div class="col-sm-6 container-center">
             <h2 style="text-align: center;padding-top: 20px">Confirm Email</h2>
             <p style="text-align: center">Please confirm your email address to complete the registration.</p>
-            <h2 style="text-align: center">You will not be able to log in unless you confirm your email.</h2>
-            <a href="{% url 'home' %}">Click here to go on home page.</a>
+            <p style="text-align: center">You will not be able to log in unless you confirm your email.</p>
+            <br>
+            <a href="{% url 'home' %}" class="btn bg-primary btn-primary">Home</a>
         </div>
     </div>
     <br>
