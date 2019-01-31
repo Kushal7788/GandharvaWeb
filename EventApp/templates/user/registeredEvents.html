@@ -8,6 +8,26 @@
 {% block body %}
 
     <h1>Registered Events</h1>
+        <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <p>
+        Amount : {{ paymentAmount }}
+    </p>
+    <p>
+        Status : {{ paymentStatus }}
+    </p>
+    <p>
+        Name : {{ buyerName }}
+    </p>
+    <p>
+        Event: {{ buyPurpose }}
+    </p>
+    <p>
+        Phone: {{ buyerPhone }}
+    </p>
 
     {% block scripts %}
         <script type="text/javascript" src="{% static 'user/js/registeredEvents.js' %}"></script>

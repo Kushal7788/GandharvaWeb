@@ -20,3 +20,5 @@ admin.site.register(Document_type)
 admin.site.register(College_year)
 admin.site.register(Team)
 admin.site.register(Receipt)
+admin.site.register(Transaction)
+

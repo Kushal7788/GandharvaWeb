@@ -136,6 +136,7 @@ class GandharvaHome(models.Model):
 
 
 class Receipt(models.Model):
+    name=models.CharField(max_length=70,null=True)
     event = models.ForeignKey(EventMaster, on_delete=models.PROTECT)
 
     def __str__(self):
@@ -143,12 +144,22 @@ class Receipt(models.Model):
 
 
 class Team(models.Model):
-    team_name = models.CharField(max_length=50)
+    #team_name = models.CharField(max_length=50)
     receipt = models.ForeignKey(Receipt, on_delete=models.CASCADE)
     user = models.ForeignKey(MyUser, on_delete=models.PROTECT)
 
-    def __str__(self):
-        return self.team_name
+    #def __str__(self):
+        #return self.team_name
+
+class Transaction(models.Model):
+    transaction_id=models.CharField(max_length=50,unique=True)
+    transaction_request_id=models.CharField(max_length=50)
+    instrment_type=models.CharField(max_length=50)
+    billing_instrument=models.CharField(max_length=70)
+    status=models.CharField(max_length=30)
+    date=models.DateField()
+    time=models.TimeField()
+    receipt=models.ForeignKey(Receipt,on_delete=models.CASCADE)
 
 
 class Document_type(models.Model):

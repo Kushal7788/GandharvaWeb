@@ -16,6 +16,9 @@ from django.contrib.sites.shortcuts import get_current_site
 from EventApp.decorators import user_Role_head
 from GandharvaWeb19 import settings
 from instamojo_wrapper import Instamojo
+from django.db import IntegrityError
+import datetime
+from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
 
@@ -60,6 +63,7 @@ def event(request):
 #Payment success
 def success(request):
     if request.method == 'GET':
+        print("Enter success")
         payment_id = request.GET.get('payment_id')
         payment_status = request.GET.get('payment_status')
         payment_request_id = request.GET.get('payment_request_id')
@@ -71,6 +75,38 @@ def success(request):
 
         print(response2['payment_request']['purpose'])  # Purpose of Payment Request
         print(response2['payment_request']['payment']['status'])  # Payment status
+        eid=request.GET.get("eid")
+        event=EventMaster.objects.get(event_id=eid)
+        user=MyUser.objects.get(email=response2['payment_request']['email'])
+        try:
+            transaction2=Transaction.objects.get(transaction_id=payment_id)
+            print("herereere")
+            print(transaction2)
+        except(IntegrityError,ObjectDoesNotExist):
+            transaction2=None
+            print("here")
+            #transaction2=Transaction.objects.get(transaction_id=payment_id)
+            #print(transaction2)
+        if transaction2==None:
+            receipt = Receipt()
+            team = Team()
+            transaction = Transaction()
+            receipt.name = response2['payment_request']['payment']['buyer_name']
+            receipt.event = event
+            receipt.save()
+            team.receipt = receipt
+            team.user = user
+            team.save()
+            transaction.transaction_id = payment_id
+            transaction.transaction_request_id = payment_request_id
+            transaction.instrment_type = response2['payment_request']['payment']["instrument_type"],
+            transaction.billing_instrument = response2['payment_request']['payment']["billing_instrument"]
+            transaction.status = payment_status
+            transaction.receipt = receipt
+            transaction.date = datetime.date.today()
+            transaction.time = datetime.datetime.now().time()
+            transaction.save()
+
 
         args2 = {
             'pageTitle': 'Payment Successful',
@@ -79,8 +115,9 @@ def success(request):
             'buyerName': response2['payment_request']['payment']['buyer_name'],
             'buyPurpose': response2['payment_request']['purpose'],
             'buyerPhone': response2['payment_request']['payment']['buyer_phone']
+
         }
-        return render(request, 'events/success1.html', args2)
+        return render(request, 'user/registeredEvents.html', args2)
     else:
         print("ERROR")
 
@@ -100,9 +137,8 @@ def details(request):
             send_email=False,
             send_sms=False,
             email=user.email,
-            buyer_name=user.full_name,
             phone=user.user_phone,
-            redirect_url="http://127.0.0.1:8000/success/"
+            redirect_url="http://127.0.0.1:8000/success?eid="+event_id
         )
         # print the long URL of the payment request.
         print(response['payment_request']['longurl'])
