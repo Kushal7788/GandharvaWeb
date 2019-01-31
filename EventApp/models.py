@@ -160,7 +160,7 @@ class Transaction(models.Model):
     date=models.DateField()
     time=models.TimeField()
     receipt=models.ForeignKey(Receipt,on_delete=models.CASCADE)
-
+    team= models.ForeignKey(Team,on_delete=models.PROTECT,blank=True,null=True)
 
 class Document_type(models.Model):
     type = models.CharField(max_length=100)

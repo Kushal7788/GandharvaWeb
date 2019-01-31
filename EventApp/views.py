@@ -105,6 +105,7 @@ def success(request):
             transaction.receipt = receipt
             transaction.date = datetime.date.today()
             transaction.time = datetime.datetime.now().time()
+            transaction.team=team
             transaction.save()
 
 
@@ -360,7 +361,6 @@ def Profile(request):
 
 def Registered_Events(request):
     teams = Team.objects.filter(user = request.user)
-
     return render(request, 'user/registeredEvents.html',{'teams':teams})
 
 def Payment_Details(request):
