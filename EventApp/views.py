@@ -367,6 +367,9 @@ def RegisterHead(request):
 def load_roles(request):
     category_id = request.GET.get('role_categories')
     roles = Category_assign.objects.filter(category_id=category_id)
+    print("yeassssssssssssssssss")
+    for role in roles:
+        print(role.role.name)
     #cities = RoleMaster.objects.filter(country_id=category_id).order_by('name')
     return render(request, 'events/RegisterHead.html', {'selected_roles': roles})
 
