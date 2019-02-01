@@ -134,6 +134,13 @@
                     {{ userform.prof_img.errors }}
                 </div>
                 <div class="form-group" style="margin-left: 10%">
+                     <select name="role_categories" class="form-control" style="margin-left: 0;width: 90%">
+                        {% for categorie in categories %}
+                            <option value="{{ categorie.category }}">{{ categorie.category }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group" style="margin-left: 10%">
                     Category :
                     <select name="name" class="form-control" style="margin-left: 0;width: 90%">
                         {% for role in roles %}

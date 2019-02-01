@@ -22,4 +22,7 @@ admin.site.register(Team)
 admin.site.register(Receipt)
 admin.site.register(Transaction)
 admin.site.register(InstamojoCredential)
+admin.site.register(Role_category)
+admin.site.register(Category_assign)
+
 

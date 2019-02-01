@@ -75,9 +75,22 @@ class RoleAssignment(models.Model):
     user = models.ForeignKey(MyUser, on_delete=models.CASCADE)
     role = models.ForeignKey(RoleMaster, on_delete=models.PROTECT)
 
-    def __int__(self):
+    def __str__(self):
         return self.role.name
 
+class Role_category(models.Model):
+    category=models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.category
+
+
+class Category_assign(models.Model):
+    role = models.ForeignKey(RoleMaster,on_delete=models.CASCADE)
+    category = models.ForeignKey(Role_category,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.category.category
 
 # EventMaster to handle the events section
 class EventMaster(models.Model):

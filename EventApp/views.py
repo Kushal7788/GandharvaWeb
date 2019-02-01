@@ -302,6 +302,7 @@ def payment(request):
 @user_passes_test(lambda u: u.is_superuser)
 def RegisterHead(request):
     Roles = RoleMaster.objects.all()
+    role_categories = Role_category.objects.all()
     dept = Department.objects.all()
     coll = College.objects.all()
     year = College_year.objects.all()
@@ -361,7 +362,7 @@ def RegisterHead(request):
 
     return render(request, 'events/RegisterHead.html',
                   {'userform': userform, 'roleform': roleform, 'roles': Roles, 'depts': dept, 'colleges': coll,
-                   'years': year})
+                   'years': year,'categories':role_categories})
 
 
 def activate_register_head(request, uidb64, token):
