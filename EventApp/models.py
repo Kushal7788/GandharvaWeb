@@ -39,6 +39,11 @@ def prof_path(instance, filename):
     filename = '{}.{}'.format("profile_img/" + instance.username, ext)
     return filename
 
+def QRcode_path(instance, filename):
+    ext = filename.split('.')[-1]
+    filename = '{}.{}'.format("QRcode/" + instance.user.username, ext)
+    return filename
+
 # Abstract User , it is the extension of the base User model which can be customized
 class MyUser(AbstractUser):
     email = models.EmailField(max_length=100)
@@ -150,8 +155,10 @@ class Receipt(models.Model):
 
 class Team(models.Model):
     #team_name = models.CharField(max_length=50)
+    QRcode=models.ImageField(upload_to=QRcode_path,blank=True,null=True)
     receipt = models.ForeignKey(Receipt, on_delete=models.CASCADE)
     user = models.ForeignKey(MyUser, on_delete=models.PROTECT)
+
 
     #def __str__(self):
         #return self.team_name

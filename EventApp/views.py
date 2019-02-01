@@ -1,7 +1,11 @@
 # inlcude the various features which are to be used in Views here
+
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
+from io import BytesIO
+from django.core.files import File
+
 from EventApp.models import *
 from .forms import *
 from django.contrib import messages
@@ -19,7 +23,8 @@ from instamojo_wrapper import Instamojo
 from django.db import IntegrityError
 import datetime
 from django.core.exceptions import ObjectDoesNotExist
-
+import qrcode
+import json
 
 # Create your views here.
 
@@ -109,9 +114,25 @@ def success(request):
             transaction.time = datetime.datetime.now().time()
             transaction.team = team
             transaction.save()
+            #Generate QR code if transaction is success full
+            if transaction.status=="Credit":
+                qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_M, box_size=10, border=4)
+                content = "event:" + event.event_name + ", user:" + user.username
+                qr.add_data(content)
+                img = qr.make_image(fill_color="black", back_color="white")
+                img.save(user.username+event.event_name+"png")
+                thumb_io = BytesIO()
+                img.save(thumb_io, format='JPEG')
+                team.QRcode.save('ticket-filename.jpg', File(thumb_io), save=False)
+                team.save()
+
 
         teams = reversed(Team.objects.filter(user=request.user).reverse())
         print(teams)
+
+
+
+
 
         return render(request, 'user/registeredEvents.html', {'teams': teams})
     else:
@@ -371,12 +392,12 @@ def Profile(request):
     if request.method == 'POST':
         if request.method == 'POST' and request.FILES['prof_img']:
             prof_img = request.FILES['prof_img']
+            print(request.FILES['prof_img'])
             user.prof_img = prof_img
         user_phone = request.POST.get('user_phone')
         user.user_phone = user_phone
         user.save()
-
-    return render(request, 'user/userProfile.html')
+    return render(request, 'user/userProfile.html',{'prof_img': user.prof_img.url})
 
 
 def Registered_Events(request):
@@ -466,3 +487,5 @@ def new_password(request):
 # to get user role from models
 # userget = RoleAssignment.objects.get(user=request.user.id)
 #   print (userget.role)
+
+
