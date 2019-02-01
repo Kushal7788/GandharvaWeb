@@ -316,9 +316,11 @@ def RegisterHead(request):
             user.set_password(password)
             user.is_active = False
             user.save()
+            print("after user assign")
             roleassign = RoleAssignment()
             roleassign.user = user
-            roleassign.role = roleform.cleaned_data.get('name')
+            roleassign.role = roleform.cleaned_data.get('role')
+            print("after role assign")
 
             current_site = get_current_site(request)
             token1 = account_activation_token.make_token(user)
