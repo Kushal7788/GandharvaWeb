@@ -371,12 +371,12 @@ def Profile(request):
     if request.method == 'POST':
         if request.method == 'POST' and request.FILES['prof_img']:
             prof_img = request.FILES['prof_img']
+            print(request.FILES['prof_img'])
             user.prof_img = prof_img
         user_phone = request.POST.get('user_phone')
         user.user_phone = user_phone
         user.save()
-
-    return render(request, 'user/userProfile.html')
+    return render(request, 'user/userProfile.html',{'prof_img': user.prof_img.url})
 
 
 def Registered_Events(request):
