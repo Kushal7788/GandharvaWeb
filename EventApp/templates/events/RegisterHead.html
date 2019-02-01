@@ -147,7 +147,6 @@
                 <div class="form-group" style="margin-left: 10%">
                     Category :
                     <select id="id_role" name="role" class="form-control" style="margin-left: 0;width: 90%">
-                        <option value="">---------</option>
                         {% for selected_role in selected_roles %}
                             <option value="{{ selected_role.role.id }}">{{ selected_role.role.name }}</option>
                         {% endfor %}
