@@ -125,14 +125,28 @@
                     </select>
                     {{ form.user_coll.errors }}
                 </div>
-                <div class="row">
-                    <div class="col">
-                        <p>Upload your profile photo</p>
+
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroupFileAddon01">Profile Image</span>
                     </div>
-                    <div class="col">
-                        <input id="prof_img" type="file" class="" name="prof_img">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="prof_img" name="prof_img"
+                               aria-describedby="inputGroupFileAddon01" hidden>
+                        <label class="custom-file-label" for="prof_img">Choose file</label>
                     </div>
                 </div>
+
+
+                {#                <div class="row">#}
+                {#                    <div class="col">#}
+                {#                        <p>Upload your profile photo</p>#}
+                {#                    </div>#}
+                {#                    <div class="col">#}
+                {#                        <input id="prof_img"  type="file" class="form-control" name="prof_img">#}
+                {#                    </div>#}
+                {#                </div>#}
+                {#            <input id="prof_img"  type="file" class="form-control" name="prof_img">#}
                 {{ form.prof_img.errors }}
                 <br>
                 <button type="submit" class="btn Register_btn-primary">
