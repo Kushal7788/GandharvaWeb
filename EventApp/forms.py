@@ -43,6 +43,7 @@ class ContactUsForm(forms.ModelForm):
 
 
 class RoleMasterForm(forms.ModelForm):
+    category = forms.ModelChoiceField(queryset=Role_category.objects.all(), required=False)
     class Meta:
         model = Category_assign
         fields = ['role','category']
