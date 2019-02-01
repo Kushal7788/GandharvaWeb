@@ -107,7 +107,6 @@ input {
 .errors{
     display: none;
     margin-top: 0;
-    margin-left: 10%;
     color: red;
 }
 

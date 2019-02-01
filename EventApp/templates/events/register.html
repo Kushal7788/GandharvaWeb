@@ -38,7 +38,6 @@
                             <span id="firstNameErrors" class="errors"></span>
                             {{ form.first_name.errors }}
                         </div>
-
                     </div>
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
@@ -126,32 +125,34 @@
                     {{ form.user_coll.errors }}
                 </div>
 
+                {#                <div class="row">#}
+                {#                    <div class="col">#}
+                {#                        <p>Profile Image</p>#}
+                {#                    </div>#}
+                {#                    <div class="col">#}
+                {#                        <input id="prof_img" type="file" name="prof_img">#}
+                {#                    </div>#}
+                {#                </div>#}
+
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroupFileAddon01">Profile Image</span>
+                        <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
                     </div>
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="prof_img" name="prof_img"
+                        <input type="file" class="custom-file-input" id="inputGroupFile01"
                                aria-describedby="inputGroupFileAddon01" hidden>
-                        <label class="custom-file-label" for="prof_img">Choose file</label>
+                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                     </div>
                 </div>
 
-
-                {#                <div class="row">#}
-                {#                    <div class="col">#}
-                {#                        <p>Upload your profile photo</p>#}
-                {#                    </div>#}
-                {#                    <div class="col">#}
-                {#                        <input id="prof_img"  type="file" class="form-control" name="prof_img">#}
-                {#                    </div>#}
-                {#                </div>#}
-                {#            <input id="prof_img"  type="file" class="form-control" name="prof_img">#}
                 {{ form.prof_img.errors }}
                 <br>
-                <button type="submit" class="btn Register_btn-primary">
-                    Submit
-                </button>
+                <div class="text-right">
+                    <button type="submit" class="btn Register_btn-primary">
+                        Submit
+                    </button>
+                </div>
+
             </form>
             <hr>
             <div class='g-sign-in-button'>
@@ -170,6 +171,13 @@
     </div>
     <br>
     {% block scripts %}
+
+        <script type="application/javascript">
+            $('input[type="file"]').change(function (e) {
+                var fileName = e.target.files[0].name;
+                $('.custom-file-label').html(fileName);
+            });
+        </script>
         <script type="text/javascript" src="{% static 'events/js/inputValidations.js' %}"></script>
     {% endblock %}
 

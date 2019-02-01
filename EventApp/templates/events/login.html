@@ -16,10 +16,12 @@
             <form method="post" action="{% url 'user_login' %}">
                 {% csrf_token %}
                 <div class="form-group">
-                    <input class="form-control" style="margin: 0;width: 100%" type="text" name="username" placeholder="Username" required>
+                    <input class="form-control" style="margin: 0;width: 100%" type="text" name="username"
+                           placeholder="Username" required>
                 </div>
                 <div class="form-group">
-                    <input class="form-control" style="margin: 0;width: 100%" type="password" name="password" placeholder="Password" required>
+                    <input class="form-control" style="margin: 0;width: 100%" type="password" name="password"
+                           placeholder="Password" required>
                 </div>
 
                 {% if messages %}
@@ -36,7 +38,10 @@
                             password?</a>
                     </div>
                     <div class="form-group col-sm-12 col-md-5 col">
-                        <input type="submit" class="btn Login_btn-primary" value="Login" style="width:96px;height: auto;">
+                        <div class="text-right">
+                            <input type="submit" class="btn Login_btn-primary" value="Login"
+                                   style="width:96px;height: auto;">
+                        </div>
                     </div>
                 </div>
             </form>
@@ -48,10 +53,12 @@
                 <div class="col-sm-12 col-md-5 col">
                     <form method="get" action="{% url 'register' %}">
                         {% csrf_token %}
+                        <div class="text-right">
+                            <button type="submit" class="btn Login_btn-primary" style="width:100px;height: auto;">
+                                Register
+                            </button>
+                        </div>
 
-                        <button type="submit" class="btn Login_btn-primary" style="width:100px;height: auto;">
-                            Register
-                        </button>
                     </form>
                 </div>
             </div>
