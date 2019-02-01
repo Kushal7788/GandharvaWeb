@@ -11,7 +11,8 @@
         <div class="col-sm-6 container-center">
             <h2 style="text-align: center;padding-top: 20px">Head Registration</h2>
             <br>
-            <form method="post" enctype="multipart/form-data" onsubmit="return validate()" id="personForm" data-roles-url="{% url 'ajax_load_roles' %}" novalidate>
+            <form method="post" enctype="multipart/form-data" onsubmit="return validate()" id="personForm"
+                  data-roles-url="{% url 'ajax_load_roles' %}" novalidate>
                 {% csrf_token %}
                 {% if userform.non_field_errors %}
                     <ul>
@@ -136,7 +137,7 @@
                 <div class="form-group" style="margin-left: 10%">
 
                     Select the Category which you belong to
-                     <select id="category" name="role_categories" class="form-control" style="margin-left: 0;width: 90%">
+                    <select id="id_category" name="role_categories" class="form-control" style="margin-left: 0;width: 90%">
                         {% for categorie in categories %}
                             <option value="{{ categorie.category }}">{{ categorie.category }}</option>
                         {% endfor %}
@@ -144,7 +145,7 @@
                 </div>
                 <div class="form-group" style="margin-left: 10%">
                     Category :
-                    <select id="role" name="role" class="form-control" style="margin-left: 0;width: 90%">
+                    <select id="id_role" name="role" class="form-control" style="margin-left: 0;width: 90%">
                         <option value="">---------</option>
                         {% for selected_role in selected_roles %}
                             <option value="{{ selected_role.role.id }}">{{ selected_role.role.name }}</option>
@@ -172,23 +173,26 @@
     </div>
     {% block scripts %}
         <script type="text/javascript" src="{% static 'events/js/HeadInputValidate.js' %}"></script>
-  <script>
-    $("#id_category").change(function () {
-      var url = $("#personForm").attr("data-roles-url");  // get the url of the `load_cities` view
-      var categoryid = $(this).val();  // get the selected country ID from the HTML input
+          <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script>
+            $("#id_category").change(function () {
+                console.log("In function");
+                var url = $("#personForm").attr("data-roles-url");  // get the url of the `load_cities` view
+                var categoryid = $(this).val();  // get the selected country ID from the HTML input
 
-      $.ajax({                       // initialize an AJAX request
-        url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
-        data: {
-          'role_categories': categoryid       // add the country id to the GET parameters
-        },
-        success: function (data) {   // `data` is the return of the `load_cities` view function
-          $("#id_role").html(data);  // replace the contents of the city input with the data that came from the server
-        }
-      });
+                console.log(categoryid);
+                $.ajax({                       // initialize an AJAX request
+                    url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+                    data: {
+                        'role_categories': categoryid       // add the country id to the GET parameters
+                    },
+                    success: function (data) {   // `data` is the return of the `load_cities` view function
+                        $("#id_role").html(data);  // replace the contents of the city input with the data that came from the server
+                    }
+                });
 
-    });
-  </script>
+            });
+        </script>
 
     {% endblock %}
 
