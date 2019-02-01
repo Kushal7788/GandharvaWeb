@@ -242,7 +242,7 @@ def register(request):
             email.send()
             return render(request, 'user/AccountConfirm.html')
         else:
-            print(form.errors)
+            print(form.errors,"heere")
     else:
         form = UserRegistration()
 
@@ -301,6 +301,7 @@ def payment(request):
 # Head Login View only to be used for Heads
 @user_passes_test(lambda u: u.is_superuser)
 def RegisterHead(request):
+
     Roles = RoleMaster.objects.all()
     role_categories = Role_category.objects.all()
     dept = Department.objects.all()
@@ -361,10 +362,11 @@ def RegisterHead(request):
     else:
         userform = UserRegistration()
         roleform = RoleMasterForm
+    dict={"Gandharva":[1,2,3], "Perception":[4,5,6]}
 
     return render(request, 'events/RegisterHead.html',
                   {'userform': userform, 'roleform': roleform, 'roles': Roles, 'depts': dept, 'colleges': coll,
-                   'years': year,'categories':role_categories})
+                   'years': year,'categories':role_categories,'dict':dict})
 
 def load_roles(request):
     category_id = request.GET.get('role_categories')

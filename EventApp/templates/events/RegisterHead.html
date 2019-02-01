@@ -162,7 +162,7 @@
                     Select the Category which you belong to
                     <select id="id_category" name="role_categories" class="form-control"
                             style="width: 100%;margin-left: 0"
-                            style="margin-left: 0;width: 90%">
+                            style="margin-left: 0;width: 90%" onchange="Myfunction()">
                         <option value="">---------------</option>
                         {% for categorie in categories %}
                             <option value="{{ categorie.id }}">{{ categorie.category }}</option>
@@ -208,23 +208,47 @@
         </div>
         <br>
     </div>
+    <script type="text/javascript">
+
+            function Myfunction(){
+                alert("here");
+                var obj=document.getElementById("id_category");
+                var d= {{ dict|safe }};
+                console.log(d);
+                console.log(obj);
+                var new_values=d[obj.options[obj.selectedIndex].textContent];
+                console.log(new_values);
+
+
+                var obj2=document.getElementById("id_role");
+                $("#id_role").empty();
+                for (var i = 0; i < new_values.length; i++) {
+                    var option = document.createElement("option");
+                    option.value = new_values[i];
+                    option.text = new_values[i];
+                    obj2.appendChild(option);
+                }
+
+            }
+        </script>
     {% block scripts %}
         <script type="text/javascript" src="{% static 'events/js/HeadInputValidate.js' %}"></script>
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-        <script>
-            $("#id_category").change(function () {
-                var url = $("#personForm").attr("data-roles-url");  // get the url of the `load_cities` view
-                var categoryid = $(this).val();  // get the selected country ID from the HTML input
-                $.ajax({                       // initialize an AJAX request
-                    url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
-                    data: {
-                        'role_categories': categoryid       // add the country id to the GET parameters
-                    },
-                    success: function (data) {   // `data` is the return of the `load_cities` view function
-                        $("#id_role").html(data);  // replace the contents of the city input with the data that came from the server
-                    }
-                });
-            });
-        </script>
+{#        <script>#}
+{#            $("#id_category").change(function () {#}
+{#                var url = $("#personForm").attr("data-roles-url");  // get the url of the `load_cities` view#}
+{#                var categoryid = $(this).val();  // get the selected country ID from the HTML input#}
+{#                $.ajax({                       // initialize an AJAX request#}
+{#                    url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)#}
+{#                    data: {#}
+{#                        'role_categories': categoryid       // add the country id to the GET parameters#}
+{#                    },#}
+{#                    success: function (data) {   // `data` is the return of the `load_cities` view function#}
+{#                        $("#id_role").html(data);  // replace the contents of the city input with the data that came from the server#}
+{#                    }#}
+{#                });#}
+{#            });#}
+{#        </script>#}
+
     {% endblock %}
 {% endblock %}
