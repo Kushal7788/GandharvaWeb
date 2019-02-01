@@ -46,10 +46,10 @@
                 </div>
                 {% endif %}
                 {% if team.receipt.event.entry_fee %}
-                <div class="con">
-                    <p style="font-weight: bold;margin-right: 6px">Fees:</p>
-                    <p>{{team.receipt.event.entry_fee}}</p>
-                </div>
+{#                <div class="con">#}
+{#                    <p style="font-weight: bold;margin-right: 6px">Fees:</p>#}
+{#                    <p>{{team.receipt.event.entry_fee}}</p>#}
+{#                </div>#}
                 {% endif %}
 {#                {% if team.receipt.event.timings %}#}
 {#                <div class="con">#}
@@ -64,9 +64,12 @@
                 <div class="paymentdetails">
                     <p><span style="font-weight: bold">Amount</span> : {{ team.receipt.event.entry_fee }}</p>
                     <p><span style="font-weight: bold">Status</span> : {{ transaction.status }}</p>
-                    <p><span style="font-weight: bold">Name</span> : {{ user.first_name }}</p>
-                    <p><span style="font-weight: bold">Event</span> : {{ team.receipt.event.event_name }}</p>
-                    <p><span style="font-weight: bold">Phone</span> : {{ user.user_phone }}</p>
+                    <p><span style="font-weight: bold">Transaction ID</span> : {{ transaction.transaction_id }}</p>
+                    <p><span style="font-weight: bold">Payment Date</span> : {{ transaction.date }}</p>
+                    <p><span style="font-weight: bold">Payment Time</span> : {{ transaction.time }}</p>
+{#                    <p><span style="font-weight: bold">Name</span> : {{ user.first_name }}</p>#}
+{#                    <p><span style="font-weight: bold">Event</span> : {{ team.receipt.event.event_name }}</p>#}
+{#                    <p><span style="font-weight: bold">Phone</span> : {{ user.user_phone }}</p>#}
 
                 </div>
                 {%  endfor %}
@@ -123,7 +126,7 @@
     {% endblock %}
 
 
-    {% for team in teams %}
-        <h1>{{ team.receipt.event.event_name }}</h1>
-    {% endfor %}
+{#    {% for team in teams %}#}
+{#        <h1>{{ team.receipt.event.event_name }}</h1>#}
+{#    {% endfor %}#}
 {% endblock %}

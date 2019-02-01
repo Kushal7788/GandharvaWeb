@@ -20,6 +20,7 @@ from django.db import IntegrityError
 import datetime
 from django.core.exceptions import ObjectDoesNotExist
 
+
 # Create your views here.
 
 
@@ -60,7 +61,8 @@ def event(request):
     }
     return render(request, 'events/newEvent.html', args1)
 
-#Payment success
+
+# Payment success
 def success(request):
     if request.method == 'GET':
         print("Enter success")
@@ -75,19 +77,19 @@ def success(request):
 
         print(response2['payment_request']['purpose'])  # Purpose of Payment Request
         print(response2['payment_request']['payment']['status'])  # Payment status
-        eid=request.GET.get("eid")
-        event=EventMaster.objects.get(event_id=eid)
-        user=MyUser.objects.get(email=response2['payment_request']['email'])
+        eid = request.GET.get("eid")
+        event = EventMaster.objects.get(event_id=eid)
+        user = MyUser.objects.get(email=response2['payment_request']['email'])
         try:
-            transaction2=Transaction.objects.get(transaction_id=payment_id)
+            transaction2 = Transaction.objects.get(transaction_id=payment_id)
             print("herereere")
             print(transaction2)
-        except(IntegrityError,ObjectDoesNotExist):
-            transaction2=None
+        except(IntegrityError, ObjectDoesNotExist):
+            transaction2 = None
             print("here")
-            #transaction2=Transaction.objects.get(transaction_id=payment_id)
-            #print(transaction2)
-        if transaction2==None:
+            # transaction2=Transaction.objects.get(transaction_id=payment_id)
+            # print(transaction2)
+        if transaction2 == None:
             receipt = Receipt()
             team = Team()
             transaction = Transaction()
@@ -105,35 +107,28 @@ def success(request):
             transaction.receipt = receipt
             transaction.date = datetime.date.today()
             transaction.time = datetime.datetime.now().time()
-            transaction.team=team
+            transaction.team = team
             transaction.save()
 
+        teams = reversed(Team.objects.filter(user=request.user).reverse())
+        print(teams)
 
-        args2 = {
-            'pageTitle': 'Payment Successful',
-            'paymentStatus': payment_status,
-            'paymentAmount': response2['payment_request']['amount'],
-            'buyerName': response2['payment_request']['payment']['buyer_name'],
-            'buyPurpose': response2['payment_request']['purpose'],
-            'buyerPhone': response2['payment_request']['payment']['buyer_phone']
-
-        }
-        return render(request, 'user/registeredEvents.html', args2)
+        return render(request, 'user/registeredEvents.html', {'teams': teams})
     else:
         print("ERROR")
 
+
 # Details of Individual Events
 def details(request):
-
     if request.method == 'POST':
-        insta=InstamojoCredential.objects.latest('key')
+        insta = InstamojoCredential.objects.latest('key')
         api = Instamojo(api_key=insta.key,
                         auth_token=insta.token,
                         endpoint='https://test.instamojo.com/api/1.1/')
-        event_id=request.POST.get('event_id')
-        userEmail=request.POST.get('userEmail')
-        event=EventMaster.objects.get(pk=event_id)
-        user=MyUser.objects.get(email=userEmail)
+        event_id = request.POST.get('event_id')
+        userEmail = request.POST.get('userEmail')
+        event = EventMaster.objects.get(pk=event_id)
+        user = MyUser.objects.get(email=userEmail)
         response = api.payment_request_create(
             amount=event.entry_fee,
             purpose=event.event_name,
@@ -141,7 +136,7 @@ def details(request):
             send_sms=False,
             email=user.email,
             phone=user.user_phone,
-            redirect_url="http://127.0.0.1:8000/success?eid="+event_id
+            redirect_url="http://127.0.0.1:8000/success?eid=" + event_id
         )
         # print the long URL of the payment request.
         print(response['payment_request']['longurl'])
@@ -193,10 +188,10 @@ def register(request):
         except:
             old_user = None
 
-        if old_user!= None and old_user.is_active == False:
+        if old_user != None and old_user.is_active == False:
             old_user.delete()
-            
-        elif old_user!= None and old_user.is_active == True:
+
+        elif old_user != None and old_user.is_active == True:
             args = {
                 'error': "You have already registered and your email is verified too. Enter email to reset your password."
             }
@@ -208,9 +203,10 @@ def register(request):
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             user.set_password(password)
+            user.user_phone=form.cleaned_data.get('user_phone')
             user.save()
             current_site = get_current_site(request)
-            token1=account_activation_token.make_token(user)
+            token1 = account_activation_token.make_token(user)
             message = render_to_string('user/acc_active_email.html', {
                 'user': user,
                 'domain': current_site.domain,
@@ -229,7 +225,7 @@ def register(request):
     else:
         form = UserRegistration()
 
-    return render(request, 'events/register.html', {'form': form, 'colleges': coll, 'depts': dept,'years':year})
+    return render(request, 'events/register.html', {'form': form, 'colleges': coll, 'depts': dept, 'years': year})
 
 
 # Activates the user after clicking on the email link
@@ -289,7 +285,7 @@ def RegisterHead(request):
     coll = College.objects.all()
     year = College_year.objects.all()
     if request.method == 'POST':
-        userform = UserRegistration(request.POST,request.FILES)
+        userform = UserRegistration(request.POST, request.FILES)
         roleform = RoleMasterForm(request.POST)
         if userform.is_valid() and roleform.is_valid():
             user = userform.save(commit=False)
@@ -302,24 +298,23 @@ def RegisterHead(request):
             roleassign.user = user
             roleassign.role = roleform.cleaned_data.get('name')
 
-
             current_site = get_current_site(request)
-            token1=account_activation_token.make_token(user)
+            token1 = account_activation_token.make_token(user)
             message = render_to_string('user/acc_active_email_register_head.html', {
                 'user': user,
                 'domain': current_site.domain,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
                 'token': token1,
             })
-            user.token1=str(token1)
-            token2=account_activation_token.make_token(user)
+            user.token1 = str(token1)
+            token2 = account_activation_token.make_token(user)
             message2 = render_to_string('user/acc_active_email_register_head.html', {
                 'user': user,
                 'domain': current_site.domain,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
                 'token': token2,
             })
-            user.token2=str(token2)
+            user.token2 = str(token2)
             user.save()
             roleassign.save()
             mail_subject = 'Activate your account to continue.'
@@ -330,8 +325,6 @@ def RegisterHead(request):
             email = EmailMessage(mail_subject, message2, to=[to_email_two])
             email.send()
             return render(request, 'user/AccountConfirm.html')
-
-
 
             #       group = Group.objects.get(name='groupname')
             #      user.groups.add(group)
@@ -346,7 +339,8 @@ def RegisterHead(request):
         roleform = RoleMasterForm
 
     return render(request, 'events/RegisterHead.html',
-                  {'userform': userform, 'roleform': roleform, 'roles': Roles, 'depts': dept, 'colleges': coll,'years':year})
+                  {'userform': userform, 'roleform': roleform, 'roles': Roles, 'depts': dept, 'colleges': coll,
+                   'years': year})
 
 
 def activate_register_head(request, uidb64, token):
@@ -356,7 +350,7 @@ def activate_register_head(request, uidb64, token):
 
     except(TypeError, ValueError, OverflowError, user.DoesNotExist):
         user = None
-    if (user is not None ):
+    if (user is not None):
         if user.token1 == token:
             user.token1 = None
         if user.token2 == token:
@@ -372,7 +366,6 @@ def activate_register_head(request, uidb64, token):
         return HttpResponse('You have already confirmed your email id. Activation link is invalid!')
 
 
-
 def Profile(request):
     user = request.user
     if request.method == 'POST':
@@ -380,31 +373,35 @@ def Profile(request):
             prof_img = request.FILES['prof_img']
             user.prof_img = prof_img
         user_phone = request.POST.get('user_phone')
-        user.user_phone=user_phone
+        user.user_phone = user_phone
         user.save()
 
     return render(request, 'user/userProfile.html')
 
+
 def Registered_Events(request):
-    teams = Team.objects.filter(user = request.user)
-    return render(request, 'user/registeredEvents.html',{'teams':teams})
+    teams = reversed(Team.objects.filter(user=request.user))
+    return render(request, 'user/registeredEvents.html', {'teams': teams})
+
 
 def Payment_Details(request):
     return render(request, 'user/paymentDetails.html')
 
-def TeamDetails(request):
-        event = request.GET.get('event')
-        event_choose = EventMaster.objects.get(event_name=event)
-        if request.method == 'GET':
-         form = TeamDetailsForm()
-        if request.method == 'POST':
-            form = TeamDetailsForm(request.POST)
-            if form.is_valid():
-                form.save()
-            else:
-                print(form.errors)
 
-        return render(request, 'events/TeamDetails.html', {'form': form,'event':event_choose})
+def TeamDetails(request):
+    event = request.GET.get('event')
+    event_choose = EventMaster.objects.get(event_name=event)
+    if request.method == 'GET':
+        form = TeamDetailsForm()
+    if request.method == 'POST':
+        form = TeamDetailsForm(request.POST)
+        if form.is_valid():
+            form.save()
+        else:
+            print(form.errors)
+
+    return render(request, 'events/TeamDetails.html', {'form': form, 'event': event_choose})
+
 
 def reset_password(request):
     if request.method == 'POST':
@@ -412,7 +409,7 @@ def reset_password(request):
         try:
             user = MyUser.objects.get(email=email_to_reset)
         except:
-                return HttpResponse("Enter valid username.Go back to enter the username.")
+            return HttpResponse("Enter your correct email.Go back to enter the email.")
 
         current_site = get_current_site(request)
         token2 = account_activation_token.make_token(user)
@@ -437,7 +434,7 @@ def reset_password_new(request, uidb64, token):
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
         user = MyUser.objects.get(pk=uid)
-    except(TypeError, ValueError, OverflowError, user.DoesNotExist):
+    except(TypeError, ValueError, OverflowError, user.DoesNotExist, IntegrityError, ObjectDoesNotExist):
         user = None
     if user is not None:
         if user.token2 == token:
@@ -464,8 +461,6 @@ def new_password(request):
             return render(request, 'events/login.html', {})
 
     return render(request, 'user/new_password.html')
-
-
 
 ## Important Notes:
 # to get user role from models
