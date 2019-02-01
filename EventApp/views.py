@@ -397,7 +397,7 @@ def Profile(request):
         user_phone = request.POST.get('user_phone')
         user.user_phone = user_phone
         user.save()
-    return render(request, 'user/userProfile.html',{'prof_img': user.prof_img.url})
+    return render(request, 'user/userProfile.html')
 
 
 def Registered_Events(request):
