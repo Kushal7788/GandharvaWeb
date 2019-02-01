@@ -43,11 +43,13 @@ class ContactUsForm(forms.ModelForm):
 
 
 class RoleMasterForm(forms.ModelForm):
-    name = forms.ModelChoiceField(queryset=RoleMaster.objects.all(), required=False)
-
     class Meta:
-        model = RoleMaster
-        fields = ['name']
+        model = Category_assign
+        fields = ['role','category']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['category'].queryset = RoleMaster.objects.none()
 
 class TeamDetailsForm(forms.ModelForm):
     team_name = forms.CharField(required=True)

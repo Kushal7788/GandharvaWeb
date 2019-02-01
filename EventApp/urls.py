@@ -19,6 +19,7 @@ urlpatterns = [
     url(r'^TeamDetails/$', views.TeamDetails, name='TeamDetails'),
     url(r'^auth/', include('social_django.urls', namespace='social')),
     url(r'^RegisterHead/$', views.RegisterHead, name='RegisterHead'),
+    url(r'^ajax/load-roles/', views.load_roles, name='ajax_load_roles'),
     url(r'^login/reset_password$', views.reset_password, name='reset_password'),
     url(r'new_password', views.new_password, name='new_password'),
     url(r'^service-worker.js', (TemplateView.as_view(

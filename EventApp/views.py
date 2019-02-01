@@ -364,6 +364,11 @@ def RegisterHead(request):
                   {'userform': userform, 'roleform': roleform, 'roles': Roles, 'depts': dept, 'colleges': coll,
                    'years': year,'categories':role_categories})
 
+def load_roles(request):
+    category_id = request.GET.get('role_categories')
+    roles = Category_assign.objects.filter(category_id=category_id)
+    #cities = RoleMaster.objects.filter(country_id=category_id).order_by('name')
+    return render(request, 'events/RegisterHead.html', {'selected_roles': roles})
 
 def activate_register_head(request, uidb64, token):
     try:
