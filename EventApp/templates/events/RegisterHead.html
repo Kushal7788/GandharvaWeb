@@ -32,14 +32,14 @@
                 {% if roleform.non_field_errors %}
                     <ul>
                         {% for error in roleform.non_field_errors %}
-                            <li style="color: whitesmoke">{{ error }}</li>
+                            <li style="color: whitesmoke">{{ error }}qqqqqqqqqq</li>
                         {% endfor %}
                     </ul>
                 {% endif %}
                 {% if roleform.name.errors %}
                     <ul>
                         {% for error in roleform.name.errors %}
-                            <li style="color: whitesmoke">{{ error }}</li>
+                            <li style="color: whitesmoke">{{ error }}ssssssssss</li>
                         {% endfor %}
                     </ul>
                 {% endif %}
@@ -160,7 +160,7 @@
                 <div class="form-group">
 
                     Select the Category which you belong to
-                    <select id="id_category" name="role_categories" class="form-control"
+                    <select id="id_category" name="category" class="form-control"
                             style="width: 100%;margin-left: 0"
                             style="margin-left: 0;width: 90%">
                         <option value="">---------------</option>
