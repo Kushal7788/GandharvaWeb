@@ -10,6 +10,11 @@
     <div class="container">
         {#        {% for event in events %}#}
        {% for team in teams %}
+{#           USE THIS FOR RENDERING QR CODE#}
+
+{#           {% if team.QRcode %}#}
+{#           <img src={{ team.QRcode.url }}>#}
+{#           {% endif %}#}
         <div class="row">
             <div id="eventImage" class="col-sm-12 col-md-5"
                  style="background-image: url('{% static team.receipt.event.container_src %}');background-size: cover">
