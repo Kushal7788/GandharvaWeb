@@ -1,16 +1,88 @@
 {% extends 'base/base.html' %}
 {% load static %}
-{% block title %}Profile{% endblock %}
+{% block title %}Registered Events{% endblock %}
 {% block css %}
     <link href="{% static 'user/css/registeredEvents.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
+    <br><br><br><br>
+    <div class="container">
+        {% for team in teams %}
+            <div class="row">
+                <div class="col-sm-12 col-md-4">
+                    {% if team.QRcode %}
+                        <img src={{ team.QRcode.url }} height="200" width="200">
+                    {% endif %}
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <h1 class="colorlib-heading">{{ team.receipt.event.event_name }}</h1>
+                    <p style="font-weight: bold; margin-bottom: 0;font-size: 18px"> Event Details</p>
+                    {% if team.receipt.event.timings %}
+                        <div class="con">
+                            <p style="font-weight: bold;margin-right: 6px">Time:</p>
+                            <p> {{ team.receipt.event.timings }}</p>
+                        </div>
+                    {% endif %}
+                    {% if team.receipt.event.location %}
+                        <div class="con">
+                            <p style="font-weight: bold;margin-right: 6px">Location:</p>
+                            <p>{{ team.receipt.event.location }}</p>
+                        </div>
+                    {% endif %}
+                    {% if team.receipt.event.team_size %}
+                        <div class="con">
+                            <p style="font-weight: bold;margin-right: 6px">Team:</p>
+                            <p>{{ team.receipt.event.team_size }}</p>
+                        </div>
+                    {% endif %}
+                    {% if team.receipt.event.entry_fee %}
+                        {#                <div class="con">#}
+                        {#                    <p style="font-weight: bold;margin-right: 6px">Fees:</p>#}
+                        {#                    <p>{{team.receipt.event.entry_fee}}</p>#}
+                        {#                </div>#}
+                    {% endif %}
+                    {#                {% if team.receipt.event.timings %}#}
+                    {#                <div class="con">#}
+                    {#                    <p style="font-weight: bold; margin-bottom: 0">Contact:</p>#}
+                    {#                    <p style="margin-right:14px;margin-left: 6px">Sanul : 123456789</p>#}
+                    {#                    <p>Sanul : 123456789</p>#}
+                    {#                </div>#}
+                    {#                {% endif %}#}
 
-    <h1>Registered Events</h1>
+                                    <div style="display: flex;flex-direction: row;justify-items: left;">
+                                        <form method="get" action="{% url 'details' %}">
+                                            <input type="hidden" name="event" value="{{ team.receipt.event.event_name }}">
+                                            <button type="submit" class="btn btn-primary eventButtons">Rules
+                                            </button>
+                                        </form>
+                                    </div>
+                </div>
+                <div class="col-sm-12 col-md-4" style="margin-top: 24px">
+                    <p style="font-weight: bold; margin-bottom: 0;font-size: 18px"> Payment Details</p>
+                    {% for transaction in team.transaction_set.all %}
+                        <div class="paymentdetails">
+                            <p><span style="font-weight: bold">Amount</span> : {{ team.receipt.event.entry_fee }}
+                            </p>
+                            <p><span style="font-weight: bold">Status</span> : {{ transaction.status }}</p>
+                            <p><span style="font-weight: bold">Transaction ID</span>
+                                : {{ transaction.transaction_id }}
+                            </p>
+                            <p><span style="font-weight: bold">Payment Date</span> : {{ transaction.date }}</p>
+                            <p><span style="font-weight: bold">Payment Time</span> : {{ transaction.time }}</p>
+                            {#                    <p><span style="font-weight: bold">Name</span> : {{ user.first_name }}</p>#}
+                            {#                    <p><span style="font-weight: bold">Event</span> : {{ team.receipt.event.event_name }}</p>#}
+                            {#                    <p><span style="font-weight: bold">Phone</span> : {{ user.user_phone }}</p>#}
 
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <hr>
+        {% endfor %}
+    </div>
+    <br>
     {% block scripts %}
         <script type="text/javascript" src="{% static 'user/js/registeredEvents.js' %}"></script>
     {% endblock %}
-
 {% endblock %}

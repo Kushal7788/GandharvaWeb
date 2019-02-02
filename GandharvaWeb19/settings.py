@@ -25,7 +25,7 @@ SECRET_KEY = '^)ef3%8r$&327z%qz92yxgcxt6m@4s8j7$czx%5r6140^zh&g4'
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'gandharva19.pythonanywhere.com', '0.0.0.0', 'localhost', 'www.viitgandharva.com',
-                 'viitgandharva.com', '*.viitgandharva.com', '192.168.43.139']
+                 'viitgandharva.com', '*.viitgandharva.com', '192.168.43.139','192.168.43.211']
 
 # Application definition
 
@@ -134,9 +134,16 @@ STATIC_URL = '/static/'
 #     os.path.join(BASE_DIR, "EventApp/static")
 # ]
 
+# INSTAMOJO_KEY = '3ec2051ed0ae46ae17db917ee1ea381b'
+# INSTAMOJO_AUTH_TOKEN = 'b80aafa7472907fbd0b60a3861c5731f'
+# INSTAMOJO_SALT = 'dc3ff23932af4594aa376c3793d803fe'
 
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '519854616069-hj7chgsltbjad2p5mcvv8241ruob2e5m.apps.googleusercontent.com'  # Paste CLient Key
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'x77Vt0Zv3fTqjpCLN-Ec4Irg'  # Paste Secret Key
+#INSTAMOJO_KEY = 'test_faf65f582c906177257c757e6cd'
+#INSTAMOJO_AUTH_TOKEN = 'test_6ad0a420610b722f76d5437da00'
+#INSTAMOJO_SALT = '924b7e87c0924c7e87224e698a829825'
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '941888329527-bknhunrj63gk5id2ibhtd1ou4hv4bkc7.apps.googleusercontent.com'  # Paste CLient Key
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'FSqq7HvDDkZucHi0Wr-EHVuu'  # Paste Secret Key
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 LOGIN_URL = 'login'

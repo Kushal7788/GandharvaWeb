@@ -8,9 +8,7 @@
     {#    <link href="{% static 'gandharva/css/owl.carousel.min.css' %}" rel="stylesheet">#}
     <link href="{% static 'gandharva/css/home.css' %}" rel="stylesheet">
 
-    <script>
-        var GandharvaDate = "{{gandharvaDate}}";
-    </script>
+    <script>var GandharvaDate = "{{gandharvaDate}}";</script>
 {% endblock %}
 
 {% block body %}
@@ -45,70 +43,43 @@
                         <h1 class="userselect">Gandharva</h1>
                         <h3 class="userselect" style="color: #fff;text-align: center;padding-left: 14px;">A
                             Techno-Cultural Fest</h3>
-                        <br>
                         <h4 class="userselect" style="color: #fff;padding-left: 16px;text-align: center;">Starts
                             in</h4>
                         <div class="container"
                              id="countdown">
                             <div class="row" style="border-style: solid;border-width: 2px;border-color: #fff;">
-                                <div id="dayDiv" class="col-3 text-center text-white ">
-                                    <h2 class="userselect day days">00</h2>
+                                <div id="dayDiv" class="col-3 text-center text-white"
+                                     style="margin-top: 10px;margin-bottom: 10px">
+                                    <h2 class="userselect day days"></h2>
                                     <p class="userselect">Days</p>
                                 </div>
-                                <div id="hrDiv" class="col-3 text-center text-white">
-                                    <h2 class="userselect hr hours">00</h2>
+                                <div id="hrDiv" class="col-3 text-center text-white"
+                                     style="margin-top: 10px;margin-bottom: 10px">
+                                    <h2 class="userselect hr hours"></h2>
                                     <p class="userselect">Hours</p>
                                 </div>
-                                <div id="minDiv" class="col-3 text-center text-white">
-                                    <h2 class="userselect min minutes">00</h2>
+                                <div id="minDiv" class="col-3 text-center text-white"
+                                     style="margin-top: 10px;margin-bottom: 10px">
+                                    <h2 class="userselect min minutes"></h2>
                                     <p class="userselect">Minutes</p>
                                 </div>
-                                <div id="secDiv" class="col-3 text-center text-white">
-                                    <h2 class="userselect sec seconds">00</h2>
+                                <div id="secDiv" class="col-3 text-center text-white"
+                                     style="margin-top: 10px;margin-bottom: 10px">
+                                    <h2 class="userselect sec seconds"></h2>
                                     <p class="userselect">Seconds</p>
                                 </div>
                             </div>
                         </div>
 
+                        <h4 class="userselect"
+                            style="color: #fff;text-align: center;padding-left: 14px;padding-top: 6px;">13<sup>th</sup>
+                            - 16<sup>th</sup>
+                            March</h4>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
-    {#    <section id="explore"#}
-    {#             style="background:linear-gradient(45deg,rgba(0,0,0,0.3),rgba(0,0,0,0.3)),url('{% static "gandharva/img/nextEvent.JPG" %}');background-size: cover;">#}
-    {#        <div class="container-fluid">#}
-    {#            <div class="row">#}
-    {#                <div class=" col-md-4 watch">#}
-    {#                    <img class="img-fluid" src="{% static 'gandharva/images/watch.png' %}" alt="">#}
-    {#                </div>#}
-    {#                <div class="col-sm-12 col-md-6">#}
-    {#                    <h2 data-sal="slide-up" data-sal-easing="ease-out-bounce" data-sal-delay="100"#}
-    {#                        data-sal-duration="800">Gandharva'19 in</h2>#}
-    {#                    <div id="countdown" style="display: flex;flex-direction: row;justify-content:space-between">#}
-    {#                        <div class="col text-center text-white mt-1 ml-4 mr-4 mb-1">#}
-    {#                            <h2 class="day days">00</h2>#}
-    {#                            <p>Days</p>#}
-    {#                        </div>#}
-    {#                        <div class="col text-center text-white mt-1 ml-4 mr-4 mb-1">#}
-    {#                            <h2 class=" hr hours">00</h2>#}
-    {#                            <p>Hours</p>#}
-    {#                        </div>#}
-    {#                        <div class="col text-center text-white mt-1 ml-4 mr-4 mb-1">#}
-    {#                            <h2 class=" min minutes">00</h2>#}
-    {#                            <p>Minutes</p>#}
-    {#                        </div>#}
-    {#                        <div class="col text-center text-white mt-1 ml-4 mr-4 mb-1">#}
-    {#                            <h2 class="sec seconds">00</h2>#}
-    {#                            <p>Seconds</p>#}
-    {#                        </div>#}
-    {#                    </div>#}
-    {#                </div>#}
-    {#            </div>#}
-    {#        </div>#}
-    {#    </section>#}
-
 
     <div class="col-sm-12" style="height:60px; background-color:#348a91"></div>
     <section id="eventSection">
@@ -127,7 +98,6 @@
                  data-sal="slide-up" data-sal-easing="ease-out-bounce" data-sal-delay="30" data-sal-duration="500">
                 <h3 class="eventTitle">{{ event.name }}</h3>
                 <form method="get" action={% url event.link_to %}>
-                    {% csrf_token %}
                     <input type="hidden" name="dept" value={{ event.name }}>
                     <button type="submit" class="btn btn-primary eventButtons">Learn
                         More
@@ -256,6 +226,14 @@
 {% endblock %}
 {% block scripts %}
     <script type="text/javascript" src="{% static 'gandharva/js/coundown-timer.js' %}"></script>
+    <script>$("#countdown").countdown({
+            date: "10 july 2014 12:00:00",
+            format: "on"
+        },
+        function () {
+            // callback function
+        });
+    </script>
     <script type="text/javascript" src="{% static 'gandharva/js/slick.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'gandharva/js/particles.min.js' %}"></script>
     {#    <script type="text/javascript" src="{% static 'gandharva/js/owl.carousel.min.js' %}"></script>#}

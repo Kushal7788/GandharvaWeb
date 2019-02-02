@@ -1,16 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<p>'Please confirm your email address to complete the registration.'</p>
-<p>
-<h2>'You will not be able to log in unless you confirm your email.'</h2></p>
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}New Password{% endblock %}
+{% block css %}
+    <link href="{% static 'user/css/reset_password.css' %}" rel="stylesheet">
+{% endblock %}
 
-<a href="{% url 'home' %}">Click here to go on home page.</a>
-
-
-</body>
-</html>
+{% block body %}
+    <br><br><br><br><br>
+    <div class="container" style="height: 80vh">
+        <div class="col-sm-6 container-center">
+            <h2 style="text-align: center;padding-top: 20px">Confirm Email</h2>
+            <p style="text-align: center">Please confirm your email address to complete the registration.</p>
+            <p style="text-align: center">You will not be able to log in unless you confirm your email.</p>
+            <div class="text-center">
+                <a href="{% url 'home' %}" class="btn bg-primary confirmEmailButton" style="margin-left: 0">Home</a>
+            </div>
+        </div>
+    </div>
+    <br>
+{% endblock %}

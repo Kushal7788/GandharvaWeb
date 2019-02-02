@@ -3,20 +3,17 @@
 {% block title %}Register Head{% endblock %}
 {% block css %}
     <link href="{% static 'events/css/login_signup.css' %}" rel="stylesheet">
-    <style>
-        .error {
-            color: whitesmoke;
-        }
-    </style>
 {% endblock %}
 
 {% block body %}
     <br><br><br>
     <div class="container">
         <div class="col-sm-5 container-center">
-            <h1 style="text-align: center;color: #fff;padding-top: 20px">Head Registration</h1>
+            <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
+            <h6 style="text-align: center;">Create your Gandharva Account</h6>
             <br>
-            <form method="post">
+            <form method="post" enctype="multipart/form-data" onsubmit="return validate()" id="personForm"
+                  data-roles-url="{% url 'ajax_load_roles' %}" novalidate>
                 {% csrf_token %}
                 {% if userform.non_field_errors %}
                     <ul>
@@ -35,119 +32,210 @@
                 {% if roleform.non_field_errors %}
                     <ul>
                         {% for error in roleform.non_field_errors %}
-                            <li style="color: whitesmoke">{{ error }}</li>
+                            <li style="color: whitesmoke">{{ error }}qqqqqqqqqq</li>
                         {% endfor %}
                     </ul>
                 {% endif %}
                 {% if roleform.name.errors %}
                     <ul>
                         {% for error in roleform.name.errors %}
-                            <li style="color: whitesmoke">{{ error }}</li>
+                            <li style="color: whitesmoke">{{ error }}ssssssssss</li>
                         {% endfor %}
                     </ul>
                 {% endif %}
+                <div class="row">
+                    <div class="col-sm-12  col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">First Name:</label>
+                            <input id="firstName" class="form-control" style="margin: 0;width: 100%" type="text"
+                                   name="first_name"
+                                   placeholder="First name">
+                            <span id="firstNameErrors" class="errors"></span>
+                            {{ userform.first_name.errors }}
+                        </div>
+                    </div>
+                    <div class="col-sm-12  col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Last Name:</label>
+                            <input id="lastName" class="form-control" style="margin: 0;width: 100%" type="text"
+                                   name="last_name"
+                                   placeholder="Last name">
+                            <span id="lastNameErrors" class="errors"></span>
+                            {{ userform.last_name.errors }}
+
+                        </div>
+                    </div>
+                </div>
+
                 <div class="form-group">
-                    <input id="username" type="text" class="form-control" name="username"
+                    <label class="control-label">User Name:</label>
+                    <input id="userName" type="text" class="form-control" style="width: 100%;margin-left: 0"
+                           name="username"
                            placeholder="Username">
-                    <div style="color: whitesmoke">
+                    <span id="userNameErrors" class="errors"></span>
+                    {{ userform.username.errors }}
 
-                        {{ userform.username.errors }}
-                    </div>
                 </div>
                 <div class="form-group">
-
-                    <input id="full_name" type="text" class="form-control" name="full_name"
-                           placeholder="Full Name">
-                    <div style="color: whitesmoke">
-
-                        {{ userform.full_name.errors }}
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <input id="email" type="email" class="form-control" name="email"
+                    <label class="control-label">Email:</label>
+                    <input id="EMail" class="form-control" style="width: 100%;margin-left: 0" name="email"
                            placeholder="Email">
-                    <p style="color: whitesmoke">
-                        {{ userform.email.errors }}
-                    </p>
+                    <span id="EmailErrors" class="errors"></span>
+                    {{ userform.email.errors }}
                 </div>
 
                 <div class="form-group">
-                    <input id="coll_email" type="email" class="form-control" name="coll_email"
+                    <label class="control-label">College Email:</label>
+                    <input id="colEMail" class="form-control" style="width: 100%;margin-left: 0" name="coll_email"
                            placeholder="College-Email">
-                    <div style="color: whitesmoke">
-                        {{ userform.coll_email.errors }}
+                    <span id="ColEmailErrors" class="errors"></span>
+                    {{ userform.coll_email.errors }}
+                </div>
+                <div class="row">
+                    <div class="col-sm-12  col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Password:</label>
+                            <input id="password1" class="form-control" style="width: 100%;margin-left: 0"
+                                   type="password" name="password"
+                                   placeholder="Password">
+                            <span id="password1Errors" class="errors"></span>
+                        </div>
+                    </div>
+                    <div class="col-sm-12  col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Confirm Password:</label>
+                            <input id="password2" class="form-control" style="width: 100%;margin-left: 0"
+                                   type="password" name="confirm_password"
+                                   placeholder="Confirm Password">
+                            <span id="password2Errors" class="errors"></span>
+                            {{ userform.confirm_password.errors }}
+                        </div>
                     </div>
                 </div>
-
                 <div class="form-group">
-                    <input id="password" class="form-control" type="password" name="password" placeholder="Password">
-
+                    <label class="control-label">Mobile Number:</label>
+                    <input id="mobile" class="form-control" style="width: 100%;margin-left: 0" type="tel"
+                           name="user_phone" placeholder="Mobile Number">
+                    <span id="MobileErrors" class="errors"></span>
+                    {{ userform.user_phone.errors }}
                 </div>
-                <div class="form-group" style="color: #fff">
+                <div class="form-group">
                     Department:
-                    <select name="user_dept" class="form-control">
+                    <select name="user_dept" class="form-control" style="width: 100%;margin-left: 0">
                         {% for dept in depts %}
                             <option value="{{ dept.pk }}">{{ dept.name }}</option>
                         {% endfor %}
                     </select>
                     <div style="color: whitesmoke">
-                        {{ form.user_dept.errors }}
+                        {{ userform.user_dept.errors }}
                     </div>
                 </div>
-                <div class="form-group" style="color: #fff">
+                <div class="form-group">
                     College:
-                    <select name="user_coll" class="form-control">
+                    <select name="user_coll" class="form-control" style="width: 100%;margin-left: 0">
                         {% for college in colleges %}
                             <option value="{{ college.pk }}">{{ college.name }}</option>
                         {% endfor %}
                     </select>
                     <div style="color: whitesmoke">
-                        {{ form.user_coll.errors }}
+                        {{ userform.user_coll.errors }}
                     </div>
                 </div>
-                <div class="form-group" style="color: #fff">
+                <div class="form-group">
                     Year of Engineering:
-                    <select name="user_year" class="form-control">
+                    <select name="user_year" class="form-control" style="width: 100%;margin-left: 0">
                         {% for year in years %}
                             <option value="{{ year.pk }}">{{ year.title }}</option>
                         {% endfor %}
                     </select>
-                    {{ form.user_year.errors }}
+                    {{ userform.user_year.errors }}
                 </div>
-                <div class="form-group" style="color: #fff">
-                    Category :
-                    <select name="name" class="form-control">
-                        {% for role in roles %}
-                            <option value="{{ role.pk }}">{{ role.name }}</option>
+{#                <div class="form-group">#}
+{#                    Select the Category which you belong to#}
+{#                    <select id="id_category" name="category" class="form-control"#}
+{#                            style="width: 100%;margin-left: 0">#}
+{#                        <option value="">---------------</option>#}
+{#                        {% for categorie in categories %}#}
+{#                            <option value="{{ categorie.id }}">{{ categorie.category }}</option>#}
+{#                        {% endfor %}#}
+{#                    </select>#}
+{#                </div>#}
+                <div class="form-group">
+                    Role :
+                    <select id="id_role" name="role" class="form-control" style="width: 100%;margin-left: 0">
+                        {% for selected_role in selected_roles %}
+                            <option value="{{ selected_role.id }}">{{ selected_role.name }}</option>
                         {% endfor %}
                     </select>
                     {{ roleform.name.errors }}
                 </div>
-
+{#                <div class="input-group">#}
+{#                    <div class="input-group-prepend">#}
+{#                        <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>#}
+{#                    </div>#}
+{#                    <div class="custom-file">#}
+{#                        <input type="file" class="custom-file-input" id="inputGroupFile01"#}
+{#                               aria-describedby="inputGroupFileAddon01" name="prof_img" hidden>#}
+{#                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>#}
+{#                    </div>#}
+{#                </div>#}
+                <br>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary pull-right"
-                            style="background-color: #00e6e6;color: #fff">Register
-                    </button>
+                    <div class="text-right">
+                        <button type="submit" class="btn Login_btn-primary">Register</button>
+                    </div>
                 </div>
             </form>
-            <hr>
-            {#            <div class='g-sign-in-button'>#}
-            {#                <div class=content-wrapper>#}
-            {#                    <div class='logo-wrapper'>#}
-            {#                        <img src='https://developers.google.com/identity/images/g-logo.png'>#}
-            {#                    </div>#}
-            {#                    <span class='text-container'>#}
-            {#                    <a style="color: #fff" href="{% url 'social:begin' 'google-oauth2' %}">Sign in using Google</a>#}
-            {#                 </span>#}
-            {#                </div>#}
-            {#            </div>#}
             <br>
         </div>
         <br>
     </div>
+    <script type="text/javascript">
+
+            function Myfunction(){
+                alert("here");
+                var obj=document.getElementById("id_category");
+                var d= {{ dict|safe }};
+                console.log(d);
+                console.log(obj);
+                var new_values=d[obj.options[obj.selectedIndex].textContent];
+                console.log(new_values);
 
 
+                var obj2=document.getElementById("id_role");
+                $("#id_role").empty();
+                for (var i = 0; i < new_values.length; i++) {
+                    var option = document.createElement("option");
+                    option.value = new_values[i];
+                    option.text = new_values[i];
+                    obj2.appendChild(option);
+                }
 
-
+            }
+        </script>
+    {% block scripts %}
+        <script type="text/javascript" src="{% static 'events/js/HeadInputValidate.js' %}"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+{#        <script>#}
+{#            $("#id_category").change(function () {#}
+{#                var url = $("#personForm").attr("data-roles-url");  // get the url of the `load_cities` view#}
+{#                var categoryid = $(this).val();  // get the selected country ID from the HTML input#}
+{#                $.ajax({                       // initialize an AJAX request#}
+{#                    url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)#}
+{#                    data: {#}
+{#                        'role_categories': categoryid       // add the country id to the GET parameters#}
+{#                    },#}
+{#                    success: function (data) {   // `data` is the return of the `load_cities` view function#}
+{#                        $("#id_role").html(data);  // replace the contents of the city input with the data that came from the server#}
+{#                    }#}
+{#                });#}
+{#            });#}
+{#        </script>#}
+        <script type="application/javascript">
+            $('input[type="file"]').change(function (e) {
+                var fileName = e.target.files[0].name;
+                $('.custom-file-label').html(fileName);
+            });
+        </script>
+    {% endblock %}
 {% endblock %}
