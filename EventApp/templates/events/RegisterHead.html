@@ -66,6 +66,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label class="control-label">User Name:</label>
                     <input id="userName" type="text" class="form-control" style="width: 100%;margin-left: 0"
@@ -149,35 +150,35 @@
                     </select>
                     {{ userform.user_year.errors }}
                 </div>
+{#                <div class="form-group">#}
+{#                    Select the Category which you belong to#}
+{#                    <select id="id_category" name="category" class="form-control"#}
+{#                            style="width: 100%;margin-left: 0">#}
+{#                        <option value="">---------------</option>#}
+{#                        {% for categorie in categories %}#}
+{#                            <option value="{{ categorie.id }}">{{ categorie.category }}</option>#}
+{#                        {% endfor %}#}
+{#                    </select>#}
+{#                </div>#}
                 <div class="form-group">
-                    Select the Category which you belong to
-                    <select id="id_category" name="category" class="form-control"
-                            style="width: 100%;margin-left: 0">
-                        <option value="">---------------</option>
-                        {% for categorie in categories %}
-                            <option value="{{ categorie.id }}">{{ categorie.category }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="form-group">
-                    Category :
+                    Role :
                     <select id="id_role" name="role" class="form-control" style="width: 100%;margin-left: 0">
                         {% for selected_role in selected_roles %}
-                            <option value="{{ selected_role.role.id }}">{{ selected_role.role.name }}</option>
+                            <option value="{{ selected_role.id }}">{{ selected_role.name }}</option>
                         {% endfor %}
                     </select>
                     {{ roleform.name.errors }}
                 </div>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-                    </div>
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="inputGroupFile01"
-                               aria-describedby="inputGroupFileAddon01" name="prof_img" hidden>
-                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                    </div>
-                </div>
+{#                <div class="input-group">#}
+{#                    <div class="input-group-prepend">#}
+{#                        <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>#}
+{#                    </div>#}
+{#                    <div class="custom-file">#}
+{#                        <input type="file" class="custom-file-input" id="inputGroupFile01"#}
+{#                               aria-describedby="inputGroupFileAddon01" name="prof_img" hidden>#}
+{#                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>#}
+{#                    </div>#}
+{#                </div>#}
                 <br>
                 <div class="form-group">
                     <div class="text-right">
@@ -215,21 +216,21 @@
     {% block scripts %}
         <script type="text/javascript" src="{% static 'events/js/HeadInputValidate.js' %}"></script>
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-        <script>
-            $("#id_category").change(function () {
-                var url = $("#personForm").attr("data-roles-url");  // get the url of the `load_cities` view
-                var categoryid = $(this).val();  // get the selected country ID from the HTML input
-                $.ajax({                       // initialize an AJAX request
-                    url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
-                    data: {
-                        'role_categories': categoryid       // add the country id to the GET parameters
-                    },
-                    success: function (data) {   // `data` is the return of the `load_cities` view function
-                        $("#id_role").html(data);  // replace the contents of the city input with the data that came from the server
-                    }
-                });
-            });
-        </script>
+{#        <script>#}
+{#            $("#id_category").change(function () {#}
+{#                var url = $("#personForm").attr("data-roles-url");  // get the url of the `load_cities` view#}
+{#                var categoryid = $(this).val();  // get the selected country ID from the HTML input#}
+{#                $.ajax({                       // initialize an AJAX request#}
+{#                    url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)#}
+{#                    data: {#}
+{#                        'role_categories': categoryid       // add the country id to the GET parameters#}
+{#                    },#}
+{#                    success: function (data) {   // `data` is the return of the `load_cities` view function#}
+{#                        $("#id_role").html(data);  // replace the contents of the city input with the data that came from the server#}
+{#                    }#}
+{#                });#}
+{#            });#}
+{#        </script>#}
         <script type="application/javascript">
             $('input[type="file"]').change(function (e) {
                 var fileName = e.target.files[0].name;

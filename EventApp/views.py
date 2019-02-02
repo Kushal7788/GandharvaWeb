@@ -26,6 +26,7 @@ from django.core.exceptions import ObjectDoesNotExist
 import qrcode
 import json
 
+
 # Create your views here.
 
 
@@ -114,25 +115,20 @@ def success(request):
             transaction.time = datetime.datetime.now().time()
             transaction.team = team
             transaction.save()
-            #Generate QR code if transaction is success full
-            if transaction.status=="Credit":
+            # Generate QR code if transaction is success full
+            if transaction.status == "Credit":
                 qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_M, box_size=10, border=4)
                 content = "event:" + event.event_name + ", user:" + user.username
                 qr.add_data(content)
                 img = qr.make_image(fill_color="black", back_color="white")
-                img.save(user.username+event.event_name+"png")
+                img.save(user.username + event.event_name + "png")
                 thumb_io = BytesIO()
                 img.save(thumb_io, format='JPEG')
                 team.QRcode.save('ticket-filename.jpg', File(thumb_io), save=False)
                 team.save()
 
-
         teams = reversed(Team.objects.filter(user=request.user).reverse())
         print(teams)
-
-
-
-
 
         return render(request, 'user/registeredEvents.html', {'teams': teams})
     else:
@@ -224,7 +220,7 @@ def register(request):
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             user.set_password(password)
-            user.user_phone=form.cleaned_data.get('user_phone')
+            user.user_phone = form.cleaned_data.get('user_phone')
             user.save()
             current_site = get_current_site(request)
             token1 = account_activation_token.make_token(user)
@@ -242,7 +238,7 @@ def register(request):
             email.send()
             return render(request, 'user/AccountConfirm.html')
         else:
-            print(form.errors,"heere")
+            print(form.errors, "heere")
     else:
         form = UserRegistration()
 
@@ -299,9 +295,8 @@ def payment(request):
 
 
 # Head Login View only to be used for Heads
-@user_passes_test(lambda u: u.is_superuser)
+# @user_passes_test(lambda u: u.is_superuser)
 def RegisterHead(request):
-
     Roles = RoleMaster.objects.all()
     role_categories = Role_category.objects.all()
     dept = Department.objects.all()
@@ -321,6 +316,7 @@ def RegisterHead(request):
             roleassign = RoleAssignment()
             roleassign.user = user
             roleassign.role = roleform.cleaned_data.get('role')
+
             print("after role assign")
 
             current_site = get_current_site(request)
@@ -362,16 +358,18 @@ def RegisterHead(request):
     else:
         userform = UserRegistration()
         roleform = RoleMasterForm
-    dict={"Gandharva":[1,2,3], "Perception":[4,5,6]}
-
+    selected_roles = RoleMaster.objects.all().order_by('name')
+    print(selected_roles)
     return render(request, 'events/RegisterHead.html',
                   {'userform': userform, 'roleform': roleform, 'roles': Roles, 'depts': dept, 'colleges': coll,
-                   'years': year,'categories':role_categories,'dict':dict})
+                   'years': year, 'categories': role_categories, 'selected_roles': selected_roles})
+
 
 def load_roles(request):
     category_id = request.GET.get('role_categories')
     roles = Category_assign.objects.filter(category_id=category_id)
     return render(request, 'events/category_roles.html', {'selected_roles': roles})
+
 
 def activate_register_head(request, uidb64, token):
     try:
@@ -496,5 +494,3 @@ def new_password(request):
 # to get user role from models
 # userget = RoleAssignment.objects.get(user=request.user.id)
 #   print (userget.role)
-
-

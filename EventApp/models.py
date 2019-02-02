@@ -39,10 +39,12 @@ def prof_path(instance, filename):
     filename = '{}.{}'.format("profile_img/" + instance.username, ext)
     return filename
 
+
 def QRcode_path(instance, filename):
     ext = filename.split('.')[-1]
     filename = '{}.{}'.format("QRcode/" + instance.user.username, ext)
     return filename
+
 
 # Abstract User , it is the extension of the base User model which can be customized
 class MyUser(AbstractUser):
@@ -51,8 +53,8 @@ class MyUser(AbstractUser):
     user_coll = models.ForeignKey(College, on_delete=models.PROTECT, blank=True, null=True)
     user_year = models.ForeignKey(College_year, on_delete=models.PROTECT, null=True, blank=True)
     user_dept = models.ForeignKey(Department, on_delete=models.PROTECT, null=True)
-    prof_img = models.ImageField(upload_to=prof_path,blank=True)
-    user_phone = models.CharField(max_length=10,blank=True)
+    prof_img = models.ImageField(upload_to=prof_path, blank=True)
+    user_phone = models.CharField(max_length=10, blank=True)
     count = models.IntegerField(default=0, null=True)
     token1 = models.CharField(max_length=100, null=True)
     token2 = models.CharField(max_length=100, null=True)
@@ -78,19 +80,21 @@ class RoleAssignment(models.Model):
     def __str__(self):
         return self.role.name
 
+
 class Role_category(models.Model):
-    category=models.CharField(max_length=100)
+    category = models.CharField(max_length=100)
 
     def __str__(self):
         return self.category
 
 
 class Category_assign(models.Model):
-    role = models.ForeignKey(RoleMaster,on_delete=models.CASCADE)
-    category = models.ForeignKey(Role_category,on_delete=models.CASCADE)
+    role = models.ForeignKey(RoleMaster, on_delete=models.CASCADE)
+    category = models.ForeignKey(Role_category, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.category.category
+        return self.category.category + self.role.name
+
 
 # EventMaster to handle the events section
 class EventMaster(models.Model):
@@ -103,7 +107,7 @@ class EventMaster(models.Model):
     rounds = models.TextField(max_length=10000, blank=True)
     rules = models.TextField(max_length=100000, blank=True)
     container_src = models.CharField(max_length=500, blank=True)
-    location = models.CharField(max_length=40,blank=True)
+    location = models.CharField(max_length=40, blank=True)
     timings = models.CharField(max_length=200, blank=True)
 
     def __str__(self):
@@ -159,7 +163,7 @@ class GandharvaHome(models.Model):
 
 
 class Receipt(models.Model):
-    name=models.CharField(max_length=70,null=True)
+    name = models.CharField(max_length=70, null=True)
     event = models.ForeignKey(EventMaster, on_delete=models.PROTECT)
 
     def __str__(self):
@@ -167,25 +171,26 @@ class Receipt(models.Model):
 
 
 class Team(models.Model):
-    #team_name = models.CharField(max_length=50)
-    QRcode=models.ImageField(upload_to=QRcode_path,blank=True,null=True)
+    # team_name = models.CharField(max_length=50)
+    QRcode = models.ImageField(upload_to=QRcode_path, blank=True, null=True)
     receipt = models.ForeignKey(Receipt, on_delete=models.CASCADE)
     user = models.ForeignKey(MyUser, on_delete=models.PROTECT)
 
+    # def __str__(self):
+    # return self.team_name
 
-    #def __str__(self):
-        #return self.team_name
 
 class Transaction(models.Model):
-    transaction_id=models.CharField(max_length=50,unique=True)
-    transaction_request_id=models.CharField(max_length=50)
-    instrment_type=models.CharField(max_length=50)
-    billing_instrument=models.CharField(max_length=70)
-    status=models.CharField(max_length=30)
-    date=models.DateField()
-    time=models.TimeField()
-    receipt=models.ForeignKey(Receipt,on_delete=models.CASCADE)
-    team= models.ForeignKey(Team,on_delete=models.PROTECT,blank=True,null=True)
+    transaction_id = models.CharField(max_length=50, unique=True)
+    transaction_request_id = models.CharField(max_length=50)
+    instrment_type = models.CharField(max_length=50)
+    billing_instrument = models.CharField(max_length=70)
+    status = models.CharField(max_length=30)
+    date = models.DateField()
+    time = models.TimeField()
+    receipt = models.ForeignKey(Receipt, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.PROTECT, blank=True, null=True)
+
 
 class Document_type(models.Model):
     type = models.CharField(max_length=100)
@@ -195,7 +200,6 @@ class Document_type(models.Model):
 
     def __str__(self):
         return self.type
-
 
 
 def path(instance, filename):
@@ -217,9 +221,7 @@ class Document(models.Model):
         return 'Category : ' + self.category.type + '/' + self.title
 
 
-
-
 class InstamojoCredential(models.Model):
-    key=models.CharField(max_length=50)
-    token=models.CharField(max_length=50)
-    salt=models.CharField(max_length=50)
+    key = models.CharField(max_length=50)
+    token = models.CharField(max_length=50)
+    salt = models.CharField(max_length=50)

@@ -46,11 +46,11 @@ class RoleMasterForm(forms.ModelForm):
     category = forms.ModelChoiceField(queryset=Role_category.objects.all(), required=False)
     class Meta:
         model = Category_assign
-        fields = ['role','category']
+        fields = ['role']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['category'].queryset = RoleMaster.objects.none()
+        # self.fields['category'].queryset = RoleMaster.objects.none()
 
 class TeamDetailsForm(forms.ModelForm):
     team_name = forms.CharField(required=True)
