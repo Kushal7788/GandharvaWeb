@@ -4,6 +4,14 @@
 
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{% static 'events/css/events.css' %}">
+    <style>
+    #footer{
+        position: relative;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+    }
+    </style>
 {% endblock %}
 {% block body %}
     <div class="container-fluid"
@@ -62,6 +70,7 @@
         </button>
         </form>
     </div>
+    <br>
 {% endblock %}
 {% block scripts %}
     <script src="{% static 'events/js/events.js' %}"></script>
