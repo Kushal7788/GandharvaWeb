@@ -189,6 +189,29 @@
         </div>
         <br>
     </div>
+    <script type="text/javascript">
+
+            function Myfunction(){
+                alert("here");
+                var obj=document.getElementById("id_category");
+                var d= {{ dict|safe }};
+                console.log(d);
+                console.log(obj);
+                var new_values=d[obj.options[obj.selectedIndex].textContent];
+                console.log(new_values);
+
+
+                var obj2=document.getElementById("id_role");
+                $("#id_role").empty();
+                for (var i = 0; i < new_values.length; i++) {
+                    var option = document.createElement("option");
+                    option.value = new_values[i];
+                    option.text = new_values[i];
+                    obj2.appendChild(option);
+                }
+
+            }
+        </script>
     {% block scripts %}
         <script type="text/javascript" src="{% static 'events/js/HeadInputValidate.js' %}"></script>
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
