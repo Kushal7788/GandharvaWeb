@@ -1,17 +1,15 @@
 {% extends 'base/base.html' %}
 {% load static %}
-
 {% block title %}{{ pageTitle }}{% endblock %}
-
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{% static 'events/css/events.css' %}">
     <style>
-    #footer{
-        position: relative;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-    }
+        #footer {
+            position: relative;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+        }
     </style>
 {% endblock %}
 {% block body %}
@@ -37,7 +35,7 @@
                 <div class="col-sm-12 col-md-6" data-sal="slide-up" data-sal-easing="ease-out-bounce"
                      data-sal-delay="100" data-sal-duration="500">
                     <h1 class="colorlib-heading">{{ event.event.event_name }}</h1>
-                    <p class="eventDescription">
+                    <p class="eventDescription" style="margin-top: 12px">
                         {{ event.event.objective }}
                     </p>
                     {#                    <div class="contact">#}
@@ -52,26 +50,23 @@
                             team.</p>
                     </div>
 
-                <div style="display: flex;flex-direction: row;justify-items: left;">
-                    <form method="get" action="{% url 'details' %}">
-                        <input type="hidden" name="event" value="{{ event.event.event_name }}">
-                        <button type="submit" class="btn btn-primary eventButtons">Rules
-                        </button>
-                    </form>
-                    <form
-                     {% if user.is_authenticated %} method="post" action="{% url 'details' %}">
-                     {% else %}
-                    method="get" action ={% url 'user_login' %}>
-                    {% endif %}
-                            {% csrf_token %}
-                            <input type="hidden" name="event_id" value={{ event.event.event_id }}>
-                            <input type="hidden" name="userEmail" value={{ user.email }}>
-
-                            <button type="submit" class="btn btn-primary eventButtons">Register
-                                Now
+                    <div style="display: flex;flex-direction: row;justify-items: left;">
+                        <form method="get" action="{% url 'details' %}">
+                            <input type="hidden" name="event" value="{{ event.event.event_name }}">
+                            <button type="submit" class="btn btn-primary eventButtons">Rules
                             </button>
-                    </form>
-                </div>
+                        </form>
+                        <form
+                                {% if user.is_authenticated %} method="post" action="{% url 'details' %}">
+                                {% else %}
+                                    method="get" action ={% url 'user_login' %}>
+                                {% endif %}
+                        {% csrf_token %}
+                        <input type="hidden" name="event_id" value={{ event.event.event_id }}>
+                        <input type="hidden" name="userEmail" value={{ user.email }}>
+                        <button type="submit" class="btn btn-primary eventButtons">Register Now</button>
+                        </form>
+                    </div>
 
                 </div>
             </div>
