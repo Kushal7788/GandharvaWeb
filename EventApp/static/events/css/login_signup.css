@@ -84,22 +84,6 @@ hr {
     width: 180px;
 }
 
-.form-control {
-    border-color: #cccccc;
-    box-shadow: none;
-    outline: 0 none;
-    border-radius: 0;
-    color: #797979;
-    font-size: 18px;
-    width: 74%;
-    margin-left: 12%;
-    margin-bottom: 18px;
-}
-
-.form-control:focus {
-    border-color: #ae750d;
-}
-
 input {
     height: 44px;
 }
@@ -122,7 +106,6 @@ input {
     margin-bottom: 20px;
     margin-top: 10px;
     margin-left: 12%;
-    /*width: 80%;*/
 }
 
 
@@ -137,8 +120,6 @@ input {
     padding-left: 18px;
     margin-bottom: 2px;
     margin-top: 4px;
-    margin-left: 12%;
-    /*width: 80%;*/
 }
 
 

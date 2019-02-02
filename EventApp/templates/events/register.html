@@ -32,7 +32,7 @@
                     <div class="col-sm-12  col-md-6">
                         <div class="form-group">
                             <label class="control-label">First Name:</label>
-                            <input id="firstName" class="form-control" style="margin: 0;width: 100%" type="text"
+                            <input id="firstName" class="form-control"  type="text"
                                    name="first_name" placeholder="First name"
                             >
                             <span id="firstNameErrors" class="errors"></span>
@@ -42,7 +42,7 @@
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
                             <label class="control-label">Last Name:</label>
-                            <input id="lastName" class="form-control" style="margin: 0;width: 100%" type="text"
+                            <input id="lastName" class="form-control"  type="text"
                                    name="last_name" placeholder="Last name"
                             >
                             <span id="lastNameErrors" class="errors"></span>
@@ -52,7 +52,7 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">User Name:</label>
-                    <input id="userName" class="form-control" style="margin: 0;width: 100%" type="text" name="username"
+                    <input id="userName" class="form-control"  type="text" name="username"
                            placeholder="Username"
                     >
                     <span id="userNameErrors" class="errors"></span>
@@ -60,7 +60,7 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">Email:</label>
-                    <input id="EMail" class="form-control" style="margin: 0;width: 100%" name="email"
+                    <input id="EMail" class="form-control"  name="email"
                            placeholder="E-mail Id">
                     <span id="EmailErrors" class="errors"></span>
                     {{ form.email.errors }}
@@ -69,7 +69,7 @@
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
                             <label class="control-label">Password:</label>
-                            <input id="password1" class="form-control" style="width: 100%;margin-left: 0"
+                            <input id="password1" class="form-control"
                                    type="password"
                                    name="password" placeholder="Password"
                             >
@@ -80,7 +80,7 @@
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
                             <label class="control-label">Confirm Password:</label>
-                            <input id="password2" class="form-control" style="width: 100%;margin-left: 0"
+                            <input id="password2" class="form-control"
                                    type="password"
                                    name="confirm_password"
                                    placeholder="Confirm Password">
@@ -91,7 +91,7 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">Mobile:</label>
-                    <input id="mobile" class="form-control" style="width: 100%;margin-left: 0" type="tel"
+                    <input id="mobile" class="form-control"  type="tel"
                            name="user_phone" placeholder="Mobile Number"
                     >
                     <span id="MobileErrors" class="errors"></span>
@@ -99,7 +99,7 @@
                 </div>
                 <div class="form-group">
                     Department:
-                    <select name="user_dept" class="form-control" style="margin-left: 0;width: 100%">
+                    <select name="user_dept" class="form-control">
                         {% for dept in depts %}
                             <option value="{{ dept.pk }}">{{ dept.name }}</option>
                         {% endfor %}
@@ -108,7 +108,7 @@
                 </div>
                 <div class="form-group">
                     Year of Engineering:
-                    <select name="user_year" class="form-control" style="margin-left: 0;width: 100%">
+                    <select name="user_year" class="form-control">
                         {% for year in years %}
                             <option value="{{ year.pk }}">{{ year.title }}</option>
                         {% endfor %}
@@ -117,7 +117,7 @@
                 </div>
                 <div class="form-group">
                     College:
-                    <select name="user_coll" class="form-control" style="margin-left: 0;width: 100%">
+                    <select name="user_coll" class="form-control">
                         {% for college in colleges %}
                             <option value="{{ college.pk }}">{{ college.name }}</option>
                         {% endfor %}
