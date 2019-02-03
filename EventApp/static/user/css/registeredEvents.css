@@ -7,11 +7,37 @@ html, body {
     background-color: #fff;
 }
 
+.container-center {
+    margin-left: auto;
+    margin-right: auto;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #cccccc;
+    border-radius: 12px;
+}
+
+.ExploreButton {
+    text-align: center;
+    background-color: #1a73e8;
+    color: #fff;
+    border: none;
+    font-size: 22px;
+    padding-right: 18px;
+    padding-top: 4px;
+    padding-left: 18px;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+
 pre {
     font-family: Verdana, Geneva, sans-serif;
     font-weight: 300;
     font-size: 15px;
     color: #000;
+    white-space: pre-wrap; /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word; /* Internet Explorer 5.5+ */
 }
 
 p {
@@ -67,11 +93,6 @@ p {
     margin: 0;
 }
 
-@media screen and (max-width: 768px) {
-    .colorlib-heading {
-        margin-bottom: 3em;
-    }
-}
 
 .title {
     text-align: center;
@@ -183,12 +204,6 @@ p {
     transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
 }
 
-pre {
-    white-space: pre-wrap; /* Since CSS 2.1 */
-    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
-    white-space: -o-pre-wrap; /* Opera 7 */
-    word-wrap: break-word; /* Internet Explorer 5.5+ */
-}
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
@@ -196,9 +211,7 @@ pre {
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
-.colorlib-heading{
-    margin-bottom: 4vh;
-}
+
 }
 
 /* Medium devices (landscape tablets, 768px and up) */

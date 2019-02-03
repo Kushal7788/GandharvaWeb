@@ -7,6 +7,25 @@
 
 {% block body %}
     <br><br><br><br>
+
+    {#    if#}
+
+    {#    <div class="container" style="height: 100vh">#}
+    {#        <div class="col-sm-6 container-center">#}
+    {#            <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>#}
+    {#            <br>#}
+    {#            <h5 style="text-align: center">You haven't registered for any events yet.</h5>#}
+    {#            <div class="text-center">#}
+    {#                <a href="{% url 'home' %}" style="color: #3673e8;">Explore our Events</a>#}
+    {#            </div>#}
+    {#            <br>#}
+    {#        </div>#}
+    {#    </div>#}
+
+
+
+    {#    else#}
+
     <div class="container">
         {% for team in teams %}
             <div class="row">
@@ -50,13 +69,13 @@
                     {#                </div>#}
                     {#                {% endif %}#}
 
-                                    <div style="display: flex;flex-direction: row;justify-items: left;">
-                                        <form method="get" action="{% url 'details' %}">
-                                            <input type="hidden" name="event" value="{{ team.receipt.event.event_name }}">
-                                            <button type="submit" class="btn btn-primary eventButtons">Rules
-                                            </button>
-                                        </form>
-                                    </div>
+                    <div style="display: flex;flex-direction: row;justify-items: left;">
+                        <form method="get" action="{% url 'details' %}">
+                            <input type="hidden" name="event" value="{{ team.receipt.event.event_name }}">
+                            <button type="submit" class="btn btn-primary eventButtons">Rules
+                            </button>
+                        </form>
+                    </div>
                 </div>
                 <div class="col-sm-12 col-md-4" style="margin-top: 24px">
                     <p style="font-weight: bold; margin-bottom: 0;font-size: 18px"> Payment Details</p>
@@ -81,6 +100,9 @@
             <hr>
         {% endfor %}
     </div>
+
+
+
     <br>
     {% block scripts %}
         <script type="text/javascript" src="{% static 'user/js/registeredEvents.js' %}"></script>
