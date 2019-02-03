@@ -88,7 +88,7 @@ input {
     height: 44px;
 }
 
-.errors{
+.errors {
     display: none;
     margin-top: 0;
     color: red;
@@ -108,10 +108,9 @@ input {
     margin-left: 12%;
 }
 
-
 .Login_btn-primary {
     text-align: center;
-    background-color:#1a73e8;
+    background-color: #1a73e8;
     color: #fff;
     border: none;
     font-size: 18px;
@@ -121,11 +120,10 @@ input {
     margin-bottom: 2px;
     margin-top: 4px;
 }
-
 
 .Register_btn-primary {
     text-align: center;
-    background-color:#1a73e8;
+    background-color: #1a73e8;
     color: #fff;
     border: none;
     font-size: 18px;
@@ -135,15 +133,17 @@ input {
     margin-bottom: 2px;
     margin-top: 4px;
 }
+
 @media only screen and (min-width: 600px) {
     .g-sign-in-button {
-        margin-left: 26%;
+        margin-left: 22%;
         width: 240px;
     }
 
-    .g-sign-in-button .text-container{
+    .g-sign-in-button .text-container {
         font-size: 16px;
     }
+
     .btn-primary {
         margin-left: 26%;
         width: 46%;
@@ -156,12 +156,11 @@ input {
         width: 240px;
     }
 
-    .g-sign-in-button .text-container{
+    .g-sign-in-button .text-container {
         font-size: 17px;
     }
 
 }
-
 
 .btn-primary:hover {
     background-color: #212020;
