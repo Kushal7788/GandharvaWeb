@@ -1,12 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+{% extends 'base/base.html' %}
+{% block title %}Email Confirmation{% endblock %}
+{% block css %}
+    <link href="{% static 'user/css/reset_password.css' %}" rel="stylesheet">
+{% endblock %}
 
-<h3>Thank you for your email confirmation.</h3>
-
-</body>
-</html>
+{% block body %}
+    <br><br><br><br><br>
+    <div class="container" style="height: 100vh">
+        <div class="col-sm-6 container-center">
+             <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
+            <h5 style="text-align: center;">Thank you for your email confirmation</h5>
+            <br>
+        </div>
+    </div>
+{% endblock %}
