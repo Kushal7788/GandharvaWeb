@@ -40,12 +40,21 @@ def TabletoExcel(request):
 
 # Home page Functionality
 def home(request):
+    userget=0
+    if request.user:
+        roles=RoleAssignment.objects.all()
+        for role in roles:
+            if role.user==request.user:
+                if role.role.name=="Jt Campaigning Head" or role.role.name=="Campaigning Head":
+                    userget=1
+                    print("userget1")
     args = {
         'events': Department.objects.all(),
         'sponsors': SponsorMaster.objects.all(),
         'carouselImage': Carousel.objects.all(),
         'gandharvaDate': GandharvaHome.objects.get(title__startswith="Date").data,
         'About': GandharvaHome.objects.get(title__startswith="About").data,
+        'role':userget
     }
 
     return render(request, 'gandharva/index.html', args)

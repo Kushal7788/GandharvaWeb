@@ -101,6 +101,13 @@
                                 <button type="submit" class="dropdown-item dropdownStyle">Register Heads</button>
                             </form>
                         {% endif %}
+                        {% if role == 1 %}
+                            <form method="get" action="{% url 'campaign' %}">
+                                {% csrf_token %}
+                                <button type="submit" class="dropdown-item dropdownStyle">Campaign Data</button>
+                            </form>
+                        {% endif %}
+
                         <form method="get" action="{% url 'user_profile' %}">
                             {% csrf_token %}
                             <input type="hidden" name="profile" value=>

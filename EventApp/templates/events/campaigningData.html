@@ -6,17 +6,44 @@
 </head>
 <body>
 {% if volunteers %}
+<table border="1">
+  <tr>
+    <th>Volunteer Name</th>
+    <th>Participant Count</th>
+  </tr>
 {% for volunteer in volunteers %}
-{{ volunteer.name }} = {{volunteer.count}}
+ <tr>
+     <td>{{ volunteer.name }}</td>
+     <td>{{volunteer.count}}</td>
+ </tr>
 {% endfor %}
+</table >
 {% elif events %}
+<table border="1">
+  <tr>
+    <th>Event Name</th>
+    <th>Participant Count</th>
+  </tr>
 {% for event in events %}
-{{ event.event_name }} = {{ event.count }}
+<tr>
+    <td>{{ event.event_name }}</td>
+    <td>{{ event.count }}</td>
+</tr>
 {% endfor %}
+</table>
 {% elif colleges %}
+    <table border="1">
+  <tr>
+    <th>College Name</th>
+    <th>Participant Count</th>
+  </tr>
 {% for college in colleges %}
-{{ college.name }} = {{ college.count }}
+<tr>
+    <td>{{ college.name }}</td>
+    <td>{{ college.count }}</td>
+</tr>
 {% endfor %}
+    </table>
 {% endif %}
 </body>
 </html>
