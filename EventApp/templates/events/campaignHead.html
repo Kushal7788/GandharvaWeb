@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Head</title>
+</head>
+<body>
+<form method="post" action="{% url 'campaign' %}">
+    {% csrf_token %}
+    <input type="hidden" name="criteria" value="0">
+    <button type="submit" class="btn Login_btn-primary" style="width:100px;height: auto;">Number of Entries</button>
+</form>
+<br>
+<form method="post" action="{% url 'campaign' %}">
+    {% csrf_token %}
+    <input type="hidden" name="criteria" value="1">
+    <button type="submit" class="btn Login_btn-primary" style="width:100px;height: auto;">Eventwise Entries</button>
+</form>
+<br>
+<form method="post" action="{% url 'campaign' %}">
+    {% csrf_token %}
+    <input type="hidden" name="criteria" value="2">
+<button type="submit" class="btn Login_btn-primary" style="width:100px;height: auto;">Collegewise Entries</button>
+</form>
+<br>
+<form method="post" action="{% url 'campaign' %}">
+    {% csrf_token %}
+    <input type="hidden" name="criteria" value="3">
+<button type="submit" class="btn Login_btn-primary" style="width:100px;height: auto;">Add Volunteer</button>
+</form>
+</body>
+</html>

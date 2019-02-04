@@ -33,4 +33,6 @@ urlpatterns = [
 
     url(r'^reset_password_new/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         views.reset_password_new, name='reset_password_new'),
+    url(r'^campaignHead/$', views.campaign, name='campaign'),
+    url(r'^AddVolunteer/$', views.AddVolunteer, name='AddVolunteer'),
 ]
