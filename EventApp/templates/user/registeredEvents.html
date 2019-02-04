@@ -8,23 +8,20 @@
 {% block body %}
     <br><br><br><br>
 
-    {#    if#}
+    {% if not teams %}
+        <div class="container" style="height: 100vh">
+            <div class="col-sm-6 container-center">
+                <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
+                <br>
+                <h5 style="text-align: center">You haven't registered for any events yet.</h5>
+                <div class="text-center">
+                    <a href="{% url 'home' %}" style="color: #3673e8;">Explore our Events</a>
+                </div>
+                <br>
+            </div>
+        </div>
+    {% endif %}
 
-    {#    <div class="container" style="height: 100vh">#}
-    {#        <div class="col-sm-6 container-center">#}
-    {#            <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>#}
-    {#            <br>#}
-    {#            <h5 style="text-align: center">You haven't registered for any events yet.</h5>#}
-    {#            <div class="text-center">#}
-    {#                <a href="{% url 'home' %}" style="color: #3673e8;">Explore our Events</a>#}
-    {#            </div>#}
-    {#            <br>#}
-    {#        </div>#}
-    {#    </div>#}
-
-
-
-    {#    else#}
 
     <div class="container">
         {% for team in teams %}
