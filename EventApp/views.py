@@ -425,7 +425,7 @@ def Profile(request):
 
 
 def Registered_Events(request):
-    teams = reversed(Team.objects.filter(user=request.user))
+    teams = Team.objects.filter(user=request.user)
     return render(request, 'user/registeredEvents.html', {'teams': teams})
 
 

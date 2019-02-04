@@ -14,7 +14,7 @@ class UserRegistration(forms.ModelForm):
     user_phone = forms.CharField(max_length=10, required=True)
     first_name = forms.CharField(max_length=30, required=True)
     last_name = forms.CharField(max_length=30, required=True)
-    prof_img = forms.ImageField(required=False);
+    prof_img = forms.ImageField(required=False)
 
 
     class Meta:
