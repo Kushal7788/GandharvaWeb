@@ -275,19 +275,36 @@ def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                return redirect('home')
-            else:
-                print("Your account was inactive.")
-        else:
-            messages.error(request, 'Error wrong username/password')
-            return render(request, 'events/login.html', {})
+        try:
+            usercheck=MyUser.objects.get(username=username)
+        except(ObjectDoesNotExist):
+            usercheck=None
+        if usercheck!=None:
+            if not usercheck.is_active:
+                print("your account is inactive")
+                messages.error(request, 'Email not verified, please verify your email to login')
+                return render(request, 'events/login.html', {})
 
+            else:
+                user = authenticate(username=username, password=password)
+                if user is not None:
+                    if user.is_active:
+                        print("io")
+                        login(request, user)
+                        return redirect('home')
+                    else:
+                        messages.error(request, 'Invalid Username or Password')
+                        return render(request, 'events/login.html', {})
+                else:
+                    messages.error(request, 'Invalid Username or Password')
+                    return render(request, 'events/login.html', {})
+
+        else:
+            messages.error(request, 'Invalid Username or Password')
+            return render(request, 'events/login.html', {})
     else:
         return render(request, 'events/login.html', {})
+
 
 
 def payment(request):
