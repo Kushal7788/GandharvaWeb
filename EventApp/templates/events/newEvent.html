@@ -64,11 +64,37 @@
                         {% csrf_token %}
                         <input type="hidden" name="event_id" value={{ event.event.event_id }}>
                         <input type="hidden" name="userEmail" value={{ user.email }}>
-                        <button type="submit" class="btn btn-primary eventButtons">Register Now</button>
+                        <button type="submit" id="modal-btn" class="btn btn-primary eventButtons">Register Now</button>
                         </form>
                     </div>
-
                 </div>
+
+                {#            Referral code pop up#}
+                {#                <div style="display: flex;align-items: center;justify-content: center;">#}
+                {#                    <div id="my-modal" class="modal">#}
+                {#                        <div class="modal-content">#}
+                {#                            <div class="modal-header">#}
+                {#                                <h2>Got referral code ?</h2>#}
+                {#                                <span class="close">&times;</span>#}
+                {#                            </div>#}
+                {#                            <div class="modal-body">#}
+                {#                                <p>Enter your referral code :</p>#}
+                {#                                <form>#}
+                {#                                    <input type="text" class="form-control">#}
+                {#                                    <button type="submit" class="btn btn-primary eventButtons">Submit</button>#}
+                {#                                </form>#}
+                {#                            </div>#}
+                {#                            <div class="modal-footer">#}
+                {#                                <div class="text-right">#}
+                {#                                    <button class="btn btn-primary eventButtons">#}
+                {#                                        Skip#}
+                {#                                    </button>#}
+                {#                                </div>#}
+                {#                            </div>#}
+                {#                        </div>#}
+                {#                    </div>#}
+                {#                </div>#}
+
             </div>
             <br>
         {% endfor %}
