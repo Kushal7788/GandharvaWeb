@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Data</title>
+</head>
+<body>
+{% if volunteers %}
+{% for volunteer in volunteers %}
+{{ volunteer.name }} = {{volunteer.count}}
+{% endfor %}
+{% elif events %}
+{% for event in events %}
+{{ event.event_name }} = {{ event.count }}
+{% endfor %}
+{% elif colleges %}
+{% for college in colleges %}
+{{ college.name }} = {{ college.count }}
+{% endfor %}
+{% endif %}
+</body>
+</html>

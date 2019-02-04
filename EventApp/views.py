@@ -17,7 +17,7 @@ from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.http import HttpResponse
 from django.contrib.sites.shortcuts import get_current_site
-from EventApp.decorators import user_Role_head
+from EventApp.decorators import user_Role_head,user_Campaign_head
 from GandharvaWeb19 import settings
 from instamojo_wrapper import Instamojo
 from django.db import IntegrityError
@@ -28,6 +28,14 @@ import json
 
 
 # Create your views here.
+import xlwt
+
+def TabletoExcel(request):
+    workbook = xlwt.Workbook()
+    sheet = workbook.add_sheet('Sheet_1')
+    cols = ["A", "B", "C", "D", "E"]
+    txt = "Row %s, Col %s"
+    workbook.save('my_file.xls')
 
 
 # Home page Functionality
@@ -328,6 +336,7 @@ def RegisterHead(request):
             password = userform.cleaned_data.get('password')
             user.set_password(password)
             user.is_active = False
+            user.full_name=user.first_name + " " +user.last_name
             user.save()
             print("after user assign")
             roleassign = RoleAssignment()
@@ -511,3 +520,156 @@ def new_password(request):
 # to get user role from models
 # userget = RoleAssignment.objects.get(user=request.user.id)
 #   print (userget.role)
+
+
+#Volunteer College Date Entry by Campaign Head
+@user_Campaign_head
+def AddVolunteer(request):
+    if request.method=="POST":
+        uid=request.POST.get('volunteers')
+        cid=request.POST.get('colleges')
+        user=MyUser.objects.get(pk=uid)
+        college=College.objects.get(pk=cid)
+        volunteer=Volunteer()
+        volunteer.user=user
+        volunteer.college=college
+        volunteer.date=request.POST.get('campaignDate')
+        volunteer.save()
+        volunteerData = Volunteer.objects.all()
+        volunteers = []
+        roles = RoleAssignment.objects.all()
+        for role in roles:
+            if role.role.name == "Volunteer":
+                volunteers.append(role.user)
+                print(role.user)
+        colleges = College.objects.all()
+        args = {
+            'volunteers': volunteers,
+            'colleges': colleges,
+            'volunteerData': volunteerData
+        }
+        return render(request, 'events/campaignVolunteer.html', args)
+
+
+#Campaign Head Method
+@user_Campaign_head
+def campaign(request):
+    if request.method=="POST":
+        check=request.POST.get('criteria')
+        #volunteer wise
+        if check=="0":
+            volunteers=[]
+            transactions=Transaction.objects.all()
+            for transaction in transactions:
+                if transaction.status=="Credit":
+                    ref=transaction.team.referral
+                    try:
+                        name=MyUser.objects.get(username=ref)
+                    except(ObjectDoesNotExist):
+                        continue
+                    c=0
+                    for i in range(len(volunteers)):
+                        if volunteers[i].username==ref:
+                            c=1
+                            volunteers[i].count = volunteers[i].count + 1
+                            break
+                    if c==0:
+                        v=volunteerwise()
+                        v.username=ref
+                        v.name=name
+                        v.count=1
+                        volunteers.append(v)
+                args = {
+
+                    'volunteers': volunteers,
+                }
+                print("volunteer")
+                print(volunteers)
+            return render(request, 'events/campaigningData.html', args)
+        elif check=="1":
+            events=[]
+            transactions=Transaction.objects.all()
+            for transaction in transactions:
+                if transaction.status=="Credit":
+                    event=transaction.team.receipt.event
+                    c=0
+                    for i in range(len(events)):
+                        if events[i].event_id==event.event_id:
+                            c=1
+                            events[i].count=events[i].count+1
+                            break
+                    if c==0:
+                        e=eventwise()
+                        e.event_id=event.event_id
+                        e.event_name=event.event_name
+                        e.count=1
+                        events.append(e)
+                args = {
+                            'events': events,
+                        }
+                print("")
+                print(events)
+            return render(request, 'events/campaigningData.html', args)
+        elif check=="2":
+            colleges = []
+            transactions=Transaction.objects.all()
+            for transaction in transactions:
+                if transaction.status=="Credit":
+                    college = transaction.team.user.user_coll
+                    c = 0
+                    for i in range(len(colleges)):
+                        if colleges[i].name == college.name:
+                            c = 1
+                            colleges[i].count = colleges[i].count + 1
+                            break
+                    if c == 0:
+                        c=collegewise()
+                        c.name = college.name
+                        c.count = 1
+                        colleges.append(c)
+                args = {
+                        'colleges': colleges,
+                        }
+                print("")
+                print(colleges)
+            return render(request, 'events/campaigningData.html', args)
+
+        elif check=="3":
+            volunteers=[]
+            roles=RoleAssignment.objects.all()
+            for role in roles:
+                if role.role.name=="Volunteer":
+                    volunteers.append(role.user)
+                    print(role.user)
+            colleges=College.objects.all()
+            volunteerData=Volunteer.objects.all()
+            args = {
+                'volunteers': volunteers,
+                'colleges':colleges,
+                'volunteerData':volunteerData
+            }
+            return render(request, 'events/campaignVolunteer.html', args)
+
+    else:
+        return  render(request,'events/campaignHead.html')
+
+
+
+
+class volunteerwise:
+    username=""
+    name=""
+    count=0
+
+class eventwise:
+    event_id=0
+    event_name=""
+    count=0
+
+class collegewise:
+    cid=""
+    name=""
+    count=0
+
+
+

@@ -175,7 +175,7 @@ class Team(models.Model):
     QRcode = models.ImageField(upload_to=QRcode_path, blank=True, null=True)
     receipt = models.ForeignKey(Receipt, on_delete=models.CASCADE)
     user = models.ForeignKey(MyUser, on_delete=models.PROTECT)
-
+    referral=models.CharField(max_length=30,null=True)
     # def __str__(self):
     # return self.team_name
 
@@ -225,3 +225,8 @@ class InstamojoCredential(models.Model):
     key = models.CharField(max_length=50)
     token = models.CharField(max_length=50)
     salt = models.CharField(max_length=50)
+
+class Volunteer(models.Model):
+    user=models.ForeignKey(MyUser,on_delete=models.PROTECT)
+    college=models.ForeignKey(College,on_delete=models.PROTECT)
+    date=models.DateField()

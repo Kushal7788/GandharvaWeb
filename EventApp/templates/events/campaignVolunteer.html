@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Volunteer</title>
+</head>
+<body>
+<form method="post" action="{% url 'AddVolunteer' %}">
+    {% csrf_token %}
+Name
+<select id="volunteers" name="volunteers" class="form-control" style="width: 100%;margin-left: 0">
+<option value="">---------------</option>
+{% for volunteer in volunteers %}
+<option value="{{ volunteer.pk }}">{{ volunteer.full_name }}</option>
+    {% endfor %}
+</select>
+<br>
+<br>
+College
+<select id="colleges" name="colleges" class="form-control" style="width: 100%;margin-left: 0">
+<option value="">---------------</option>
+{% for college in colleges %}
+<option value="{{ college.pk }}">{{ college.name }}</option>
+    {% endfor %}
+</select>
+<br>
+<br>
+Date
+<input type="date" name="campaignDate">
+<br>
+<br>
+    <button type="submit" class="btn Login_btn-primary" style="width:100px;height: auto;">Add Entry</button>
+</form>
+<br>
+<br>
+<table >
+  <tr>
+    <th>Volunteer Name</th>
+    <th>College Name</th>
+    <th>Date</th>
+  </tr>
+  {% for volunteer in volunteerData %}
+  <tr>
+    <td>{{ volunteer.user.full_name }}</td>
+    <td>{{ volunteer.college.name }}</td>
+    <td>{{ volunteer.date }}</td>
+  </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>
