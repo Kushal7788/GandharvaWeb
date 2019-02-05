@@ -17,7 +17,6 @@ html, body {
     border-radius: 12px;
 }
 
-
 .btn-primary {
     text-align: center;
     background-color: #1a73e8;
@@ -32,5 +31,16 @@ html, body {
     width: 180px;
 }
 
+#volunteer {
+    display: none;
+}
+
+#event {
+    display: none;
+}
+
+#college {
+    display: none;
+}
 
 
