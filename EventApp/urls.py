@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^success/$', views.success, name='success'),
     url(r'^profile/$', views.Profile, name='user_profile'),
     url(r'^eventsRegister/$', views.Registered_Events, name='eventsRegister'),
+    url(r'^cashPayment/$', views.cashPayment, name='cashPayment'),
     url(r'^paymentDetails/$', views.Payment_Details, name='paymentDetails'),
     url(r'^TeamDetails/$', views.TeamDetails, name='TeamDetails'),
     url(r'^auth/', include('social_django.urls', namespace='social')),
