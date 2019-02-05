@@ -173,9 +173,10 @@ class Receipt(models.Model):
 class Team(models.Model):
     # team_name = models.CharField(max_length=50)
     QRcode = models.ImageField(upload_to=QRcode_path, blank=True, null=True)
+    Refral_Code = models.CharField(max_length=10,blank=True)
     receipt = models.ForeignKey(Receipt, on_delete=models.CASCADE)
-    user = models.ForeignKey(MyUser, on_delete=models.PROTECT)
-    referral=models.CharField(max_length=30,null=True)
+    user = models.ForeignKey(MyUser, on_delete=models.PROTECT, related_name='participant')
+    referral=models.ForeignKey(MyUser,on_delete=models.PROTECT,blank=True, related_name='Refral_Volunteer',null=True)
     # def __str__(self):
     # return self.team_name
 
