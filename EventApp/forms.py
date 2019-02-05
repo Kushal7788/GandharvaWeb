@@ -59,3 +59,15 @@ class TeamDetailsForm(forms.ModelForm):
     class Meta:
         model = ContactUs
         fields = ['team_name', 'user',]
+
+class PaymentForm(forms.ModelForm):
+    first_name = forms.CharField(max_length=30, required=True)
+    last_name = forms.CharField(max_length=30, required=True)
+    email = forms.EmailField(max_length=100, required=True)
+    user_year = forms.ModelChoiceField(queryset=College_year.objects.all(), required=False)
+    user_coll = forms.ModelChoiceField(queryset=College.objects.all(), required=False)
+    user_phone = forms.CharField(max_length=10, required=True)
+
+    class Meta:
+        model = MyUser
+        fields = ['user_phone','first_name','last_name','email','user_coll','user_year','username']
