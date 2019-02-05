@@ -32,15 +32,21 @@ html, body {
 }
 
 #volunteer {
-    display: none;
+    display: block;
 }
 
 #event {
-    display: none;
+    display: block;
 }
 
 #college {
-    display: none;
+    display: block;
 }
 
+td {
+    text-align: center;
+}
 
+th {
+    text-align: center;
+}

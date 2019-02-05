@@ -6,77 +6,84 @@
 {% endblock %}
 {% block body %}
     <br><br><br><br><br>
-
-    {% if volunteers %}
-        <div id="volunteer" class="container" style="height: 100vh">
-            <div class="container-center">
-                <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
-                <h5 style="text-align: center;">Number of Entries</h5>
-                <table class="table">
-                    <thead class="thead-dark">
-                    <tr>
-                        <th>Volunteer Name</th>
-                        <th>Participant Count</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for volunteer in volunteers %}
+    <div class="container" style="height: 100vh">
+        {% if volunteers %}
+            <div id="volunteer" class="container">
+                <div class="container-center">
+                    <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
+                    <h5 style="text-align: center;">Number of Entries</h5>
+                    <br>
+                    <table class="table">
+                        <thead class="thead-dark">
                         <tr>
-                            <td>{{ volunteer.name }}</td>
-                            <td>{{ volunteer.count }}</td>
+                            <th>Volunteer Name</th>
+                            <th>Participant Count</th>
                         </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        {% for volunteer in volunteers %}
+                            <tr>
+                                <td>{{ volunteer.name }}</td>
+                                <td>{{ volunteer.count }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
 
-    {% elif events %}
+        {% elif events %}
 
-        <div id="event" class="container" style="height: 100vh">
-            <div class="container-center">
-                <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
-                <h5 style="text-align: center;">Eventwise Entries</h5>
-                <table class="table">
-                    <thead class="thead-dark">
-                    <tr>
-                        <th>Event Name</th>
-                        <th>Participant Count</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for event in events %}
+            <div id="event" class="container">
+                <div class="container-center">
+                    <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
+                    <h5 style="text-align: center;">Eventwise Entries</h5>
+                    <br>
+                    <table class="table">
+                        <thead class="thead-dark">
                         <tr>
-                            <td>{{ event.event_name }}</td>
-                            <td>{{ event.count }}</td>
+                            <th>Event Name</th>
+                            <th>Participant Count</th>
                         </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        {% for event in events %}
+                            <tr>
+                                <td>{{ event.event_name }}</td>
+                                <td>{{ event.count }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
 
-    {% elif colleges %}
-        <div id="college" class="container" style="height: 100vh">
-            <div class="container-center">
-                <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
-                <h5 style="text-align: center;">Collegewise Entries</h5>
-                <table class="table">
-                    <tr>
-                        <th>College Name</th>
-                        <th>Participant Count</th>
-                    </tr>
-                    {% for college in colleges %}
+        {% elif colleges %}
+            <div id="college" class="container">
+                <div class="container-center">
+                    <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
+                    <h5 style="text-align: center;">Collegewise Entries</h5>
+                    <br>
+                    <table class="table">
+                        <thead class="thead-dark">
                         <tr>
-                            <td>{{ college.name }}</td>
-                            <td>{{ college.count }}</td>
+                            <th>College Name</th>
+                            <th>Participant Count</th>
                         </tr>
-                    {% endfor %}
-                </table>
+                        </thead>
+                        <tbody>
+                        {% for college in colleges %}
+                            <tr>
+                                <td>{{ college.name }}</td>
+                                <td>{{ college.count }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-    {% endif %}
-
+        {% endif %}
+    </div>
     {% block scripts %}
         <script>
             {% if volunteers %}
