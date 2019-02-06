@@ -430,22 +430,42 @@ def activate_register_head(request, uidb64, token):
 
 
 def participantEventRegister(request):
-    event_id = request.GET.get('event_id')
     if request.method == 'POST':
-        email = request.GET.get('email')
+        otp = random.randint(100000, 999999)
+        useremail = request.POST.get('email')
+        eventId = request.POST.get('event_id')
+        message = 'OTP for email verification is->\n{0}'.format(otp)
+        mail_subject = 'OTP for email verification.'
+        email = EmailMessage(mail_subject, message, to=[useremail])
+        email.send()
+        print('2')
+        return render(request, 'events/participantEventRegister.html', {'email': useremail, 'otp': otp, 'event_id': eventId})
 
+    if request.method == 'GET':
+        dummy = request.GET.get('dummy')
+        if dummy == '1':
+            useremail = request.GET.get('useremail')
+            eventId = request.GET.get('event_id')
+            otpEntered = request.GET.get('otp')
+            originalotp = request.GET.get('originalotp')
+            if originalotp == otpEntered:
+                print('3')
+                return render(request, 'events/participantDetails.html', {'userEmail': useremail, 'event_id': eventId})
 
-
-
-
-    return render(request, 'events/participantEventRegister.html',{'event':event_id})
-
+    if request.method == 'GET':
+        dummy = request.GET.get('dummy')
+        event_id = request.GET.get('event_id')
+        if dummy == '0':
+            return render(request, 'events/participantEventRegister.html',  {'event_id': event_id, 'dummy': dummy})
 
 def participantDetails(request):
     coll = College.objects.all()
     year = College_year.objects.all()
     event_id = request.GET.get('event_id')
     participant_email = request.GET.get('userEmail')
+    print('asdasdasdas')
+    print(participant_email)
+
     if MyUser.objects.filter(email= participant_email).exists():
         ifuser = MyUser.objects.get(email= participant_email)
     else:
