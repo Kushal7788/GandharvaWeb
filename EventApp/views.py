@@ -23,7 +23,7 @@ from instamojo_wrapper import Instamojo
 from django.db import IntegrityError
 import datetime
 from django.core.exceptions import ObjectDoesNotExist
-import qrcode
+import qrcode,random
 import json
 
 
@@ -430,15 +430,28 @@ def activate_register_head(request, uidb64, token):
 
 
 def participantEventRegister(request):
-    event_id = request.GET.get('event_id')
-    if request.method == 'POST':
+    if request.method == 'GET':
+        otp = random.randint(100000, 999999)
         email = request.GET.get('email')
+        user = MyUser(email=email,token1 = otp)
+        user.save()
+        message = 'OTP for email verification is->\n{0}'.format(otp)
+        mail_subject = 'OTP for email verification.'
+        email = EmailMessage(mail_subject, message, to=[email])
+        email.send()
+        return render(request, 'events/participantEventRegister.html', {email: email})
 
 
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        eventId = request.POST.get('event_id')
+        user = MyUser.objects.get(email=email)
+        otpEntered = request.POST.get('otp')
 
-
-
-    return render(request, 'events/participantEventRegister.html',{'event':event_id})
+        if user.token1 == otpEntered:
+            return render(request, 'events/participantDetails.html', {'email': email, 'event_id': eventId})
+        
+    return render(request, 'events/participantEventRegister.html')
 
 
 def participantDetails(request):

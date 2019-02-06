@@ -7,7 +7,7 @@
 
 {% block body %}
 <br><br><br><br>
-    <form   name="participantDetails" method="post" action="">
+    <form   name="participantDetails" method="get">
         {% csrf_token %}
         <div class="form-group">
             <input id="email" type="email" class="form-control" name="email"
@@ -17,7 +17,11 @@
         <div class="form-group">
             <button type="submit" class="btn btn-primary pull-right">Send OTP</button>
         </div>
+    </form>
 
+
+
+    <form method="post">
         <div class="form-group">
             <input type="text" class="form-control" name="otp"
                    placeholder="OTP">
@@ -26,6 +30,8 @@
             <button type="submit" class="btn btn-primary pull-right">Verify OTP</button>
         </div>
     </form>
+
+
 
     <form method="GET" action="{% url 'participantDetails' %}">
         <div>
