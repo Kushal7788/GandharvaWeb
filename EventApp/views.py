@@ -437,15 +437,6 @@ def participantEventRegister(request):
 
 
 
-
-
-
-
-
-
-
-
-
     return render(request, 'events/participantEventRegister.html')
 
 
@@ -456,7 +447,7 @@ def participantDetails(request):
 
 
 
-    return render(request, 'event/participantDetails.html')
+    return render(request, 'events/participantDetails.html')
 
 
 
