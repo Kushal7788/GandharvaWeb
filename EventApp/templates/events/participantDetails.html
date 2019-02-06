@@ -25,8 +25,7 @@
                         <div class="form-group">
                             <label class="control-label">First Name:</label>
                             <input id="firstName" class="form-control" type="text"
-                                   name="first_name" placeholder="First name"
-                            >
+                                   name="first_name" placeholder="First name" value="{{ present_user.first_name }}">
                             <span id="firstNameErrors" class="errors"></span>
                             {{ form.first_name.errors }}
                         </div>
@@ -35,18 +34,11 @@
                         <div class="form-group">
                             <label class="control-label">Last Name:</label>
                             <input id="lastName" class="form-control" type="text"
-                                   name="last_name" placeholder="Last name"
+                                   name="last_name" placeholder="Last name" value="{{ present_user.last_name }}"
                             >
                             <span id="lastNameErrors" class="errors"></span>
                             {{ form.last_name.errors }}
                         </div>
-                    </div>
-                    <div class="form-group">
-                    <label class="control-label">User Name:</label>
-                    <input id="userName" class="form-control" type="text" name="username"
-                           placeholder="Username">
-                    <span id="userNameErrors" class="errors"></span>
-                    {{ form.username.errors }}
                     </div>
                     <div class="form-group">
                     <label class="control-label">Email:</label>
@@ -56,7 +48,7 @@
                     <div class="form-group">
                     <label class="control-label">Mobile:</label>
                     <input id="mobile" class="form-control" type="tel"
-                           name="user_phone" placeholder="Mobile Number"
+                           name="user_phone" placeholder="Mobile Number" value="{{ present_user.user_phone }}"
                     >
                     <span id="MobileErrors" class="errors"></span>
                     {{ form.user_phone.errors }}

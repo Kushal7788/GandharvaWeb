@@ -446,6 +446,10 @@ def participantDetails(request):
     year = College_year.objects.all()
     event_id = request.GET.get('event_id')
     participant_email = request.GET.get('userEmail')
+    if MyUser.objects.filter(email= participant_email).exists():
+        ifuser = MyUser.objects.get(email= participant_email)
+    else:
+        ifuser = None
     if request.method == 'POST':
         form = PaymentForm(request.POST)
         if form.is_valid():
@@ -455,21 +459,13 @@ def participantDetails(request):
             user.set_password = password
             user.is_active = False
             user.save()
-            receipt = Receipt()
-            receipt.event = EventMaster.objects.get(pk=event_id)
-            receipt.name = firstname
-            team = Team()
-            team.receipt = receipt
-            team.user = user
-            receipt.save()
-            team.save()
         else:
             print(form.errors)
 
     else:
         form = PaymentForm()
         event = EventMaster.objects.get(pk=event_id)
-    return render(request, 'events/participantDetails.html', {'form': form, 'event': event, 'colleges': coll, 'years': year,'email_participant':participant_email})
+    return render(request, 'events/participantDetails.html', {'form': form, 'event': event, 'colleges': coll, 'years': year,'email_participant':participant_email,'present_user':ifuser})
 
 def Profile(request):
     user = request.user
