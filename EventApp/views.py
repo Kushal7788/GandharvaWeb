@@ -429,6 +429,29 @@ def activate_register_head(request, uidb64, token):
         return HttpResponse('You have already confirmed your email id. Activation link is invalid!')
 
 
+def participantEventRegister(request):
+
+    # code for email verification
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    return render(request, 'events/participantEventRegister.html')
+
+
+
+
 def Profile(request):
     user = request.user
     if request.method == 'POST':

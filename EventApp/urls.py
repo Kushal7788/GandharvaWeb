@@ -36,4 +36,5 @@ urlpatterns = [
         views.reset_password_new, name='reset_password_new'),
     url(r'^campaignHead/$', views.campaign, name='campaign'),
     url(r'^AddVolunteer/$', views.AddVolunteer, name='AddVolunteer'),
+    url(r'participantEventRegister', views.participantEventRegister, name='participantEventRegister')
 ]
