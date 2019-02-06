@@ -627,6 +627,15 @@ def AddVolunteer(request):
         }
         return render(request, 'events/campaignVolunteer.html', args)
 
+def ourSponsors(request):
+    sponsors=SponsorMaster.objects.all()
+    args={
+        'sponsors':sponsors
+    }
+    return render(request,'gandharva/ourSponsors.html',args)
+
+def ourTeam(request):
+    return render(request,'gandharva/ourTeam.html')
 
 #Campaign Head Method
 @user_Campaign_head

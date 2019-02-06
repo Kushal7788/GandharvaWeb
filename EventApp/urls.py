@@ -36,6 +36,8 @@ urlpatterns = [
         views.reset_password_new, name='reset_password_new'),
     url(r'^campaignHead/$', views.campaign, name='campaign'),
     url(r'^AddVolunteer/$', views.AddVolunteer, name='AddVolunteer'),
-    url(r'participantEventRegister', views.participantEventRegister, name='participantEventRegister'),
-    url(r'participantDetails', views.participantDetails, name='participantDetails')
+url(r'participantEventRegister', views.participantEventRegister, name='participantEventRegister'),
+    url(r'participantDetails', views.participantDetails, name='participantDetails'),
+    url(r'^ourSponsors/$', views.ourSponsors, name='ourSponsors'),
+    url(r'^ourTeam/$', views.ourTeam, name='ourTeam')
 ]
