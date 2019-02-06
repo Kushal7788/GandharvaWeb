@@ -50,10 +50,8 @@
                     </div>
                     <div class="form-group">
                     <label class="control-label">Email:</label>
-                    <input id="EMail" class="form-control" name="email"
-                           placeholder="E-mail Id">
-                    <span id="EmailErrors" class="errors"></span>
-                    {{ form.email.errors }}
+                    <input readonly id="EMail" class="form-control" name="email"
+                           value="{{ email_participant }}">
                     </div>
                     <div class="form-group">
                     <label class="control-label">Mobile:</label>
@@ -82,10 +80,17 @@
                     {{ form.user_coll.errors }}
                     </div>
                     <div class="text-right">
-                    <button type="submit" class="btn Register_btn-primary">
-                        Submit
+                    <button type="submit" name="card_payment" class="btn Register_btn-primary">
+                        Pay By Card
                     </button>
+                        {% if request.user.is_staff %}
+                        <button type="submit" name="cash_payment" class="btn Register_btn-primary">
+                        Pay By Cash
+                    </button>
+                        {% endif %}
                     </div>
+
+  <h1>{{ event.event_name }}</h1>
   </div>
   </form>
 {% endblock %}

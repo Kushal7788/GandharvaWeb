@@ -469,7 +469,7 @@ def participantDetails(request):
     else:
         form = PaymentForm()
         event = EventMaster.objects.get(pk=event_id)
-    return render(request, 'events/participantDetails.html', {'form': form, 'event': event, 'colleges': coll, 'years': year})
+    return render(request, 'events/participantDetails.html', {'form': form, 'event': event, 'colleges': coll, 'years': year,'email_participant':participant_email})
 
 def Profile(request):
     user = request.user
