@@ -438,7 +438,6 @@ def participantEventRegister(request):
         mail_subject = 'OTP for email verification.'
         email = EmailMessage(mail_subject, message, to=[useremail])
         email.send()
-        print('2')
         return render(request, 'events/participantEventRegister.html', {'email': useremail, 'otp': otp, 'event_id': eventId})
 
     if request.method == 'GET':
@@ -449,7 +448,6 @@ def participantEventRegister(request):
             otpEntered = request.GET.get('otp')
             originalotp = request.GET.get('originalotp')
             if originalotp == otpEntered:
-                print('3')
                 return render(request, 'events/participantDetails.html', {'userEmail': useremail, 'event_id': eventId})
 
     if request.method == 'GET':
