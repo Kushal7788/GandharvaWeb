@@ -430,9 +430,8 @@ def activate_register_head(request, uidb64, token):
 
 
 def participantEventRegister(request):
-
-    # code for email verification
-
+    if request.method == 'POST':
+        email = request.GET.get('email')
 
 
 
@@ -448,6 +447,19 @@ def participantEventRegister(request):
 
 
     return render(request, 'events/participantEventRegister.html')
+
+
+def participantDetails(request):
+
+    # Kushal Write your code here
+
+
+
+
+    return render(request, 'event/participantDetails.html')
+
+
+
 
 
 
