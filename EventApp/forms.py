@@ -70,4 +70,4 @@ class PaymentForm(forms.ModelForm):
 
     class Meta:
         model = MyUser
-        fields = ['user_phone','first_name','last_name','email','user_coll','user_year','username']
+        fields = ['user_phone','first_name','last_name','email','user_coll','user_year']

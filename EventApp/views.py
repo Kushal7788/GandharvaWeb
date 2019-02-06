@@ -429,6 +429,48 @@ def activate_register_head(request, uidb64, token):
         return HttpResponse('You have already confirmed your email id. Activation link is invalid!')
 
 
+def participantEventRegister(request):
+    event_id = request.GET.get('event_id')
+    if request.method == 'POST':
+        email = request.GET.get('email')
+
+
+
+
+
+    return render(request, 'events/participantEventRegister.html',{'event':event_id})
+
+
+def participantDetails(request):
+    coll = College.objects.all()
+    year = College_year.objects.all()
+    event_id = request.GET.get('event_id')
+    participant_email = request.GET.get('userEmail')
+    if request.method == 'POST':
+        form = PaymentForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            firstname = form.cleaned_data.get('first_name')
+            password = None
+            user.set_password = password
+            user.is_active = False
+            user.save()
+            receipt = Receipt()
+            receipt.event = EventMaster.objects.get(pk=event_id)
+            receipt.name = firstname
+            team = Team()
+            team.receipt = receipt
+            team.user = user
+            receipt.save()
+            team.save()
+        else:
+            print(form.errors)
+
+    else:
+        form = PaymentForm()
+        event = EventMaster.objects.get(pk=event_id)
+    return render(request, 'events/participantDetails.html', {'form': form, 'event': event, 'colleges': coll, 'years': year,'email_participant':participant_email})
+
 def Profile(request):
     user = request.user
     if request.method == 'POST':
