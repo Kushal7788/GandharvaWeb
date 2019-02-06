@@ -1,0 +1,16 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}Cash Payment{% endblock %}
+{% block css %}
+    <link href="{% static 'events/css/login_signup.css' %}" rel="stylesheet">
+{% endblock %}
+
+
+{% block body %}
+    <br><br><br><br>
+<h1>heyyyyyyyy</h1>
+    <h2> the participant {{ participant.first_name }}</h2>
+    <form   method="get" action="{% url 'home' %}">
+    <button type="submit"> Back</button>
+    </form>
+{% endblock %}

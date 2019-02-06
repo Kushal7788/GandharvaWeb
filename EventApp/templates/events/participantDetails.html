@@ -54,35 +54,37 @@
                     {{ form.user_phone.errors }}
                     </div>
                     <div class="form-group">
-                    Year of Engineering:
-                    <select name="user_year" class="form-control">
-                        {% for year in years %}
-                            <option value="{{ year.pk }}">{{ year.title }}</option>
-                        {% endfor %}
-                    </select>
-                    {{ form.user_year.errors }}
-                  </div>
-                    <div class="form-group">
-                    College:
+                    {% if present_user.user_coll %}
+                     <label class="control-label">College:</label>
+                    <input readonly id="EMail" class="form-control" name="email"
+                           value="{{ present_user.user_coll }}">
+                    {% else %}
+                    College :
                     <select name="user_coll" class="form-control">
                         {% for college in colleges %}
                             <option value="{{ college.pk }}">{{ college.name }}</option>
                         {% endfor %}
                     </select>
                     {{ form.user_coll.errors }}
+                    {%  endif %}
                     </div>
-                    <div class="text-right">
-                    <button type="submit" name="card_payment" class="btn Register_btn-primary">
-                        Pay By Card
-                    </button>
-                        {% if request.user.is_staff %}
-                        <button type="submit" name="cash_payment" class="btn Register_btn-primary">
-                        Pay By Cash
-                    </button>
-                        {% endif %}
-                    </div>
-
   <h1>{{ event.event_name }}</h1>
   </div>
   </form>
+    </form>
+                        <form method="post" action="{% url 'participantEventRegister' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="event_id" value={{ event.event_id }}>
+                        <input type="hidden" name="userEmail" value={{ email_participant }}>
+                        <button type="submit" id="modal-btn" class="btn btn-primary eventButtons">Pay by Card</button>
+                        </form>
+    </form>
+    {% if request.user.is_staff %}
+                        <form method="post" action="{% url 'cashpayment' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="event_id" value={{ event.event_id}}>
+                        <input type="hidden" name="userEmail" value={{ email_participant }}>
+                        <button type="submit" id="modal-btn" class="btn btn-primary eventButtons">Pay By Cash</button>
+                        </form>
+    {% endif %}
 {% endblock %}

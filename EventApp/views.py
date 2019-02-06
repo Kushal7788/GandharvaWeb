@@ -329,7 +329,7 @@ def payment(request):
 
 
 # Head Login View only to be used for Heads
-# @user_passes_test(lambda u: u.is_superuser)
+ #@user_passes_test(lambda u: u.is_superuser)
 def RegisterHead(request):
     Roles = RoleMaster.objects.all()
     role_categories = Role_category.objects.all()
@@ -464,8 +464,28 @@ def participantDetails(request):
 
     else:
         form = PaymentForm()
-        event = EventMaster.objects.get(pk=event_id)
+        event = EventMaster.objects.get(event_id=event_id)
     return render(request, 'events/participantDetails.html', {'form': form, 'event': event, 'colleges': coll, 'years': year,'email_participant':participant_email,'present_user':ifuser})
+
+@user_passes_test(lambda u: u.is_superuser)
+def cashpayment(request):
+    event_id = request.POST.get('event_id')
+    participant_email = request.POST.get('userEmail')
+    m = request.user
+    print(event_id)
+    print("yesssssssssssssss")
+    user = MyUser.objects.get(email=m.email)
+    receipt = Receipt()
+    receipt.event = EventMaster.objects.get(event_id=event_id)
+    receipt.name = user.first_name
+    receipt.save()
+    team = Team()
+    team.receipt=receipt
+    team.user=user
+    team.referral= request.user
+    team.save()
+    return render(request, 'events/cashpayment.html', {'event': event_id,'participant':user})
+
 
 def Profile(request):
     user = request.user
@@ -487,37 +507,37 @@ def Registered_Events(request):
 
 def Payment_Details(request):
     return render(request, 'user/paymentDetails.html')
-def cashPayment(request):
-    coll = College.objects.all()
-    year = College_year.objects.all()
-    event_id = request.GET.get('event_id')
-    campaign_name = request.GET.get('userEmail')
-    if request.method == 'POST':
-        form = PaymentForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            firstname = form.cleaned_data.get('first_name')
-            username = form.cleaned_data.get('username')
-            password = None
-            user.set_password=password
-            user.is_active=False
-            user.save()
-            receipt = Receipt()
-            receipt.event = EventMaster.objects.get(pk=event_id)
-            receipt.name = firstname
-            team = Team()
-            team.receipt=receipt
-            team.user=user
-            team.referral= campaign_name
-            receipt.save()
-            team.save()
-        else:
-            print(form.errors)
-
-    else:
-        form = PaymentForm()
-        event = EventMaster.objects.get(pk=event_id)
-    return render(request, 'events/cashPayment.html',{'form':form,'event':event,'colleges':coll,'years':year})
+# def cashPayment(request):
+#     coll = College.objects.all()
+#     year = College_year.objects.all()
+#     event_id = request.GET.get('event_id')
+#     campaign_name = request.GET.get('userEmail')
+#     if request.method == 'POST':
+#         form = PaymentForm(request.POST)
+#         if form.is_valid():
+#             user = form.save(commit=False)
+#             firstname = form.cleaned_data.get('first_name')
+#             username = form.cleaned_data.get('username')
+#             password = None
+#             user.set_password=password
+#             user.is_active=False
+#             user.save()
+#             receipt = Receipt()
+#             receipt.event = EventMaster.objects.get(pk=event_id)
+#             receipt.name = firstname
+#             team = Team()
+#             team.receipt=receipt
+#             team.user=user
+#             team.referral= campaign_name
+#             receipt.save()
+#             team.save()
+#         else:
+#             print(form.errors)
+#
+#     else:
+#         form = PaymentForm()
+#         event = EventMaster.objects.get(pk=event_id)
+#     return render(request, 'events/cashPayment.html',{'form':form,'event':event,'colleges':coll,'years':year})
 
 def TeamDetails(request):
     event = request.GET.get('event')
