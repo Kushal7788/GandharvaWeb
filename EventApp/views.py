@@ -430,6 +430,7 @@ def activate_register_head(request, uidb64, token):
 
 
 def participantEventRegister(request):
+    event_id = request.GET.get('event_id')
     if request.method == 'POST':
         email = request.GET.get('email')
 
@@ -437,23 +438,38 @@ def participantEventRegister(request):
 
 
 
-    return render(request, 'events/participantEventRegister.html')
+    return render(request, 'events/participantEventRegister.html',{'event':event_id})
 
 
 def participantDetails(request):
+    coll = College.objects.all()
+    year = College_year.objects.all()
+    event_id = request.GET.get('event_id')
+    participant_email = request.GET.get('userEmail')
+    if request.method == 'POST':
+        form = PaymentForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            firstname = form.cleaned_data.get('first_name')
+            password = None
+            user.set_password = password
+            user.is_active = False
+            user.save()
+            receipt = Receipt()
+            receipt.event = EventMaster.objects.get(pk=event_id)
+            receipt.name = firstname
+            team = Team()
+            team.receipt = receipt
+            team.user = user
+            receipt.save()
+            team.save()
+        else:
+            print(form.errors)
 
-    # Kushal Write your code here
-
-
-
-
-    return render(request, 'events/participantDetails.html')
-
-
-
-
-
-
+    else:
+        form = PaymentForm()
+        event = EventMaster.objects.get(pk=event_id)
+    return render(request, 'events/participantDetails.html', {'form': form, 'event': event, 'colleges': coll, 'years': year})
 
 def Profile(request):
     user = request.user

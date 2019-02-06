@@ -48,6 +48,7 @@ def QRcode_path(instance, filename):
 
 # Abstract User , it is the extension of the base User model which can be customized
 class MyUser(AbstractUser):
+    username = models.CharField(max_length=100,blank=True,null=True,unique=True)
     email = models.EmailField(max_length=100)
     coll_email = models.EmailField(max_length=100, blank=True)
     user_coll = models.ForeignKey(College, on_delete=models.PROTECT, blank=True, null=True)

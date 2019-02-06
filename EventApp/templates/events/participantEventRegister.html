@@ -29,7 +29,7 @@
 
     <form method="GET" action="{% url 'participantDetails' %}">
         <div>
-            <input type= "hidden" name="event_id" value={{ event.event.event_id }}>
+            <input type= "hidden" name="event_id" value={{ event }}>
             <input type="hidden" name="userEmail" value={{ user.email }}>
             <button type="submit" class="btn btn-primary pull-right">Next</button>
         </div>
