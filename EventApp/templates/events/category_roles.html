@@ -1,5 +1,5 @@
 <select id="id_role" name="role" class="form-control" style="margin-left: 0;width: 90%">
-                        {% for selected_role in selected_roles %}
-                            <option value="{{ selected_role.role.id }}">{{ selected_role.role.name }}</option>
-                        {% endfor %}
+    {% for selected_role in selected_roles %}
+        <option value="{{ selected_role.role.id }}">{{ selected_role.role.name }}</option>
+    {% endfor %}
 </select>
