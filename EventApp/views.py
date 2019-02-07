@@ -477,6 +477,20 @@ def participantDetails(request):
             user.set_password = password
             user.is_active = False
             user.save()
+            if request.POST.get("online_payment"):
+                #for online payments
+                pass
+            elif request.POST.get("offline_payment"):
+                receipt = Receipt()
+                receipt.event = EventMaster.objects.get(event_id=event_id)
+                receipt.name = user.first_name
+                receipt.save()
+                team = Team()
+                team.receipt = receipt
+                team.user = user
+                team.referral = request.user
+                team.save()
+                return redirect('home')
         else:
             print(form.errors)
 
