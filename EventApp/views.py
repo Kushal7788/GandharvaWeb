@@ -25,6 +25,7 @@ import datetime
 from django.core.exceptions import ObjectDoesNotExist
 import qrcode
 import json
+import string
 
 
 # Create your views here.
@@ -105,13 +106,11 @@ def success(request):
         user = MyUser.objects.get(email=response2['payment_request']['email'])
         try:
             transaction2 = Transaction.objects.get(transaction_id=payment_id)
-            print("herereere")
-            print(transaction2)
         except(IntegrityError, ObjectDoesNotExist):
             transaction2 = None
-            print("here")
             # transaction2=Transaction.objects.get(transaction_id=payment_id)
             # print(transaction2)
+
         if transaction2 == None:
             receipt = Receipt()
             team = Team()
@@ -121,6 +120,9 @@ def success(request):
             receipt.save()
             team.receipt = receipt
             team.user = user
+            if request.GET.get('ref')!=0:
+                referral =MyUser.objects.get(username=request.GET.get('ref'))
+                team.referral=referral
             team.save()
             transaction.transaction_id = payment_id
             transaction.transaction_request_id = payment_request_id
@@ -144,7 +146,7 @@ def success(request):
                 team.QRcode.save('ticket-filename.jpg', File(thumb_io), save=False)
                 team.save()
 
-        teams = reversed(Team.objects.filter(user=request.user).reverse())
+        teams = reversed(Team.objects.filter(user=user).reverse())
         print(teams)
 
         return render(request, 'user/registeredEvents.html', {'teams': teams})
@@ -347,13 +349,9 @@ def RegisterHead(request):
             user.is_active = False
             user.full_name=user.first_name + " " +user.last_name
             user.save()
-            print("after user assign")
             roleassign = RoleAssignment()
             roleassign.user = user
             roleassign.role = roleform.cleaned_data.get('role')
-
-            print("after role assign")
-
             current_site = get_current_site(request)
             token1 = account_activation_token.make_token(user)
             message = render_to_string('user/acc_active_email_register_head.html', {
@@ -441,69 +439,131 @@ def participantEventRegister(request):
         return render(request, 'events/participantEventRegister.html', {'email': useremail, 'otp': otp, 'event_id': eventId})
 
     if request.method == 'GET':
-        dummy = request.GET.get('dummy')
-        if dummy == '1':
-            useremail = request.GET.get('useremail')
-            eventId = request.GET.get('event_id')
-            otpEntered = request.GET.get('otp')
-            originalotp = request.GET.get('originalotp')
-            if originalotp == otpEntered:
-                return render(request, 'events/participantDetails.html', {'userEmail': useremail, 'event_id': eventId})
-
-    if request.method == 'GET':
-        dummy = request.GET.get('dummy')
         event_id = request.GET.get('event_id')
-        if dummy == '0':
-            return render(request, 'events/participantEventRegister.html',  {'event_id': event_id, 'dummy': dummy})
+        return render(request, 'events/participantEventRegister.html',  {'event_id': event_id})
+
+
+def verifyOTP(request):
+    if request.method == 'POST':
+        userEmail = request.POST.get('useremail')
+        eventId = request.POST.get('event_id')
+        event=EventMaster.objects.get(pk=eventId)
+        otpEntered = request.POST.get('otp')
+        originalotp = request.POST.get('originalotp')
+        print("original otp",originalotp)
+        if originalotp == otpEntered:
+                print("sucess otp")
+                coll = College.objects.all()
+                if MyUser.objects.filter(email=userEmail).exists():
+                    ifuser = MyUser.objects.get(email=userEmail)
+                else:
+                    ifuser = None
+                return render(request, 'events/participantDetails.html', { 'event': event, 'colleges': coll,'email_participant':userEmail,'present_user':ifuser})
+        else:
+                error="Invalid OTP"
+                return render(request, 'events/participantEventRegister.html',{'error':error,'event_id':eventId,'otp':originalotp,'email':userEmail})
 
 def participantDetails(request):
-    coll = College.objects.all()
-    year = College_year.objects.all()
-    event_id = request.GET.get('event_id')
-    participant_email = request.GET.get('userEmail')
-    print('asdasdasdas')
-    print(participant_email)
-
-    if MyUser.objects.filter(email= participant_email).exists():
-        ifuser = MyUser.objects.get(email= participant_email)
-    else:
-        ifuser = None
-    if request.method == 'POST':
+    if request.method == "POST":
+        participant_email=request.POST.get('email')
+        event_id=request.POST.get('event_id')
+        print(event_id)
+        print("POst mail:",participant_email)
         form = PaymentForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
-            firstname = form.cleaned_data.get('first_name')
-            password = None
-            user.set_password = password
-            user.is_active = False
-            user.save()
+            try:
+                print(participant_email)
+                ifuser = MyUser.objects.get(email=participant_email)
+            except(IntegrityError,ObjectDoesNotExist):
+                ifuser = None
+            if ifuser==None:
+                user = form.save(commit=False)
+                firstname = form.cleaned_data.get('first_name')
+                password = None
+                user.set_password = password
+                user.username=participant_email
+                user.is_active = False
+                user.save()
+            event = EventMaster.objects.get(pk=event_id)
+            print("name",event.event_name)
+            user = MyUser.objects.get(email=participant_email)
+            if request.POST.get('card'):
+                print("towards Payment")
+                refer=request.POST.get('refer')
+                try:
+                    referral=MyUser.objects.get(username=refer)
+                except(IntegrityError,ObjectDoesNotExist):
+                    refer=0
+
+                insta = InstamojoCredential.objects.latest('key')
+                api = Instamojo(api_key=insta.key,
+                                auth_token=insta.token,
+                                endpoint='https://test.instamojo.com/api/1.1/')
+                response = api.payment_request_create(
+                    amount=event.entry_fee,
+                    purpose=event.event_name,
+                    send_email=False,
+                    send_sms=False,
+                    email=user.email,
+                    phone=user.user_phone,
+                    redirect_url="http://127.0.0.1:8000/success?eid=" + event_id+"&ref="+refer
+                )
+                # print the long URL of the payment request.
+                print(response['payment_request']['longurl'])
+                # print the unique ID(or payment request ID)
+                print(response['payment_request']['id'])
+                print(response['payment_request']['purpose'])
+                print(response['payment_request']['amount'])
+                return redirect(response['payment_request']['longurl'])
+            elif request.POST.get('cash'):
+                teams=cashpayment(event,user,request)
+                teams = reversed(Team.objects.filter(user=user).reverse())
+                print("CAAAAA")
+                return render(request, 'user/registeredEvents.html', {'teams': teams})
         else:
             print(form.errors)
 
-    else:
-        form = PaymentForm()
-        event = EventMaster.objects.get(event_id=event_id)
-    return render(request, 'events/participantDetails.html', {'form': form, 'event': event, 'colleges': coll, 'years': year,'email_participant':participant_email,'present_user':ifuser})
 
-@user_passes_test(lambda u: u.is_superuser)
-def cashpayment(request):
-    event_id = request.POST.get('event_id')
-    participant_email = request.POST.get('userEmail')
-    m = request.user
-    print(event_id)
-    print("yesssssssssssssss")
-    user = MyUser.objects.get(email=m.email)
+def cashpayment(event,user,request):
+    id=""
+    flag=0
+    while flag==0:
+        try:
+            id=''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(20))
+            transaction=Transaction.objects.get(transaction_id=id)
+        except(IntegrityError,ObjectDoesNotExist):
+            flag=1
     receipt = Receipt()
-    receipt.event = EventMaster.objects.get(event_id=event_id)
-    receipt.name = user.first_name
-    receipt.save()
     team = Team()
-    team.receipt=receipt
-    team.user=user
-    team.referral= request.user
+    transaction = Transaction()
+    receipt.name = user.first_name+" "+user.last_name
+    receipt.event = event
+    receipt.save()
+    team.receipt = receipt
+    team.user = user
+    team.referral=request.user
     team.save()
-    return render(request, 'events/cashpayment.html', {'event': event_id,'participant':user})
-
+    transaction.transaction_id=id
+    transaction.transaction_request_id=id
+    transaction.instrment_type = "Cash"
+    transaction.billing_instrument = "Cash"
+    transaction.status = "Cash"
+    transaction.receipt = receipt
+    transaction.date = datetime.date.today()
+    transaction.time = datetime.datetime.now().time()
+    transaction.team = team
+    transaction.save()
+        #Generate QR code if transaction is success full
+    if transaction.status == "Cash":
+        qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_M, box_size=10, border=4)
+        content = "event:" + event.event_name + ", user:" + user.username
+        qr.add_data(content)
+        img = qr.make_image(fill_color="black", back_color="white")
+        img.save(user.username + event.event_name + "png")
+        thumb_io = BytesIO()
+        img.save(thumb_io, format='JPEG')
+        team.QRcode.save('ticket-filename.jpg', File(thumb_io), save=False)
+        team.save()
 
 def Profile(request):
     user = request.user

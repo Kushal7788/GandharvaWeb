@@ -39,5 +39,6 @@ urlpatterns = [
 url(r'participantEventRegister', views.participantEventRegister, name='participantEventRegister'),
     url(r'participantDetails', views.participantDetails, name='participantDetails'),
     url(r'^ourSponsors/$', views.ourSponsors, name='ourSponsors'),
-    url(r'^ourTeam/$', views.ourTeam, name='ourTeam')
+    url(r'^ourTeam/$', views.ourTeam, name='ourTeam'),
+    url(r'^verifyOTP/$', views.verifyOTP, name='verifyOTP')
 ]
