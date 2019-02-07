@@ -1,11 +1,18 @@
 {% extends 'base/base.html' %}
 {% load static %}
 {% block title %}Participant Details{% endblock %}
-
+{% block css %}
+    <link href="{% static 'events/css/login_signup.css' %}" rel="stylesheet">
+{% endblock %}
 {% block body %}
-    <br><br><br><br>
-  <form method="post">
-   {% csrf_token %}
+    <br><br><br><br><br>
+    <div class="container">
+        <div class="col-sm-5 container-center">
+            <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
+            <h5 style="text-align: center;">Fill your details </h5>
+            <br>
+            <form method="post">
+                {% csrf_token %}
                 {% if form.non_field_errors %}
                     <ul>
                         {% for error in form.non_field_errors %}
@@ -20,7 +27,7 @@
                         {% endfor %}
                     </ul>
                 {% endif %}
-  <div class="col">
+                <div class="row">
                     <div class="col-sm-12  col-md-6">
                         <div class="form-group">
                             <label class="control-label">First Name:</label>
@@ -40,43 +47,58 @@
                             {{ form.last_name.errors }}
                         </div>
                     </div>
-                    <div class="form-group">
+                </div>
+                <div class="form-group">
                     <label class="control-label">Email:</label>
                     <input readonly id="EMail" class="form-control" name="email"
                            value="{{ email_participant }}">
-                    </div>
-                    <div class="form-group">
+                </div>
+                <div class="form-group">
                     <label class="control-label">Mobile:</label>
                     <input id="mobile" class="form-control" type="tel"
                            name="user_phone" placeholder="Mobile Number" value="{{ present_user.user_phone }}"
                     >
                     <span id="MobileErrors" class="errors"></span>
                     {{ form.user_phone.errors }}
-                    </div>
-                    <div class="form-group">
+                </div>
+                <div class="form-group">
                     {% if present_user.user_coll %}
-                     <label class="control-label">College:</label>
-                    <input readonly id="EMail" class="form-control" name="email"
-                           value="{{ present_user.user_coll }}">
+                        <label class="control-label">College:</label>
+                        <input readonly id="EMail" class="form-control" name="email"
+                               value="{{ present_user.user_coll }}">
                     {% else %}
-                    College :
-                    <select name="user_coll" class="form-control">
-                        {% for college in colleges %}
-                            <option value="{{ college.pk }}">{{ college.name }}</option>
-                        {% endfor %}
-                    </select>
-                    {{ form.user_coll.errors }}
-                    {%  endif %}
-                    </div>
-  <h1>{{ event.event_name }}</h1>
-  </div>
+                        College :
+                        <select name="user_coll" class="form-control">
+                            {% for college in colleges %}
+                                <option value="{{ college.pk }}">{{ college.name }}</option>
+                            {% endfor %}
+                        </select>
+                        {{ form.user_coll.errors }}
+                    {% endif %}
+                </div>
+                <br>
+                <h1>{{ event.event_name }}</h1>
+                <br>
+                <div class="text-right">
+                    <input type="hidden" name="event_id" value={{ event.event_id }}>
+                    <input type="hidden" name="userEmail" value={{ email_participant }}>
+                    <button type="submit" name="online_payment" id="modal-btn" formaction=""
+                            class="btn Login_btn-primary">
+                        Pay by Card
+                    </button>
+                    {% if request.user.is_staff %}
                         <input type="hidden" name="event_id" value={{ event.event_id }}>
                         <input type="hidden" name="userEmail" value={{ email_participant }}>
-                        <button type="submit" name="online_payment" id="modal-btn" formaction="" class="btn btn-primary eventButtons">Pay by Card</button>
-    {% if request.user.is_staff %}
-                        <input type="hidden" name="event_id" value={{ event.event_id}}>
-                        <input type="hidden" name="userEmail" value={{ email_participant }}>
-                        <button type="submit" name="offline_payment" id="modal-btn" class="btn btn-primary eventButtons">Pay By Cash</button>
-    {% endif %}
-  </form>
+                        <button type="submit" name="offline_payment" id="modal-btn" class="btn Login_btn-primary"
+                                style="margin-left: 6px">Pay
+                            By
+                            Cash
+                        </button>
+                    {% endif %}
+                </div>
+                <br>
+            </form>
+        </div>
+    </div>
+    <br><br>
 {% endblock %}
