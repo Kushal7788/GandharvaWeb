@@ -5,12 +5,19 @@
     <link href="{% static 'events/css/login_signup.css' %}" rel="stylesheet">
 {% endblock %}
 
-
 {% block body %}
     <br><br><br><br>
-<h1>heyyyyyyyy</h1>
-    <h2> the participant {{ participant.first_name }}</h2>
-    <form   method="get" action="{% url 'home' %}">
-    <button type="submit"> Back</button>
-    </form>
+    <div class="container" style="height: 100vh;">
+        <div class="col-sm-5 container-center">
+            <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
+            <h5 style="text-align: center;">Cash Payment </h5>
+            <br>
+            <h2> the participant {{ participant.first_name }}</h2>
+            <div class="text-left">
+                <form method="get" action="{% url 'home' %}">
+                    <button type="submit" class="btn Login_btn-primary" style="margin-left:0"> Back</button>
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock %}
