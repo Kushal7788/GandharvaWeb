@@ -1,4 +1,3 @@
-
 {% extends 'base/base.html' %}
 {% load static %}
 {% block title %}Participant Email Verification{% endblock %}
@@ -7,37 +6,49 @@
 {% endblock %}
 
 {% block body %}
-<br><br><br><br>
-
-
-    <form method="post" action="{% url 'participantEventRegister' %}">
-        {% csrf_token %}
-        <div class="form-group">
-            <input id="email" type="email" class="form-control" name="email" placeholder="Email" value="{{email}}">
-            {{ form.user_name.errors }}
+    <br><br><br><br>
+    <div class="container" style="height: 100vh">
+        <div class="col-sm-5 container-center">
+            <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
+            <h5 style="text-align: center;">Enter your email</h5>
+            <br>
+            <form method="post" action="{% url 'participantEventRegister' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input id="email" type="email" class="form-control" name="email" placeholder="Email"
+                           value="{{ email }}">
+                    <span style="color: red">
+                    {{ form.user_name.errors }}
+                    </span>
+                </div>
+                <div class="form-group">
+                    <input type="hidden" name="event_id" value={{ event_id }}>
+                    <div class="text-right">
+                        <button type="submit" class="btn Login_btn-primary" style="margin-left: 0">Send OTP</button>
+                    </div>
+                </div>
+            </form>
+            <form method="post" action="{% url 'verifyOTP' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="text" class="form-control" name="otp" placeholder="OTP">
+                    <span style="color: red">
+                    {% if error %}
+                        {{ error }}
+                    {% endif %}
+                    </span>
+                </div>
+                <div class="form-group">
+                    <input type="hidden" name="dummy" value='1'>
+                    <input type="hidden" name="originalotp" value={{ otp }}>
+                    <input type="hidden" name="event_id" value={{ event_id }}>
+                    <input type="hidden" name="useremail" value={{ email }}>
+                    <div class="text-right">
+                        <button type="submit" class="btn Login_btn-primary">Verify OTP</button>
+                    </div>
+                </div>
+            </form>
         </div>
-        <div class="form-group">
-            <input type= "hidden" name="event_id" value={{event_id}}>
-            <button type="submit" class="btn btn-primary pull-right">Send OTP</button>
-        </div>
-    </form>
-
-    <form method="post" action="{% url 'verifyOTP' %}">
-        {% csrf_token %}
-        <div class="form-group">
-            <input type="text" class="form-control" name="otp" placeholder="OTP">
-            {% if error %}
-            {{ error }}
-            {% endif %}
-        </div>
-        <div class="form-group">
-            <input type="hidden" name="dummy" value='1'>
-            <input type="hidden" name="originalotp" value={{otp}}>
-            <input type= "hidden" name="event_id" value={{event_id}}>
-            <input type="hidden" name="useremail" value={{email}}>
-            <button type="submit" class="btn btn-primary pull-right">Verify OTP</button>
-        </div>
-    </form>
-
-
+    </div>
+    <br><br>
 {% endblock %}

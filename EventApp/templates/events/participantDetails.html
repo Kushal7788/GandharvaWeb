@@ -2,10 +2,19 @@
 {% load static %}
 {% block title %}Participant Details{% endblock %}
 
+{% block css %}
+    <link href="{% static 'events/css/login_signup.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block body %}
-    <br><br><br><br>
-  <form method="post" action="{% url 'participantDetails' %}">
-   {% csrf_token %}
+    <br><br><br><br><br>
+    <div class="container">
+        <div class="col-sm-5 container-center">
+            <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
+            <h5 style="text-align: center;">Enter your details</h5>
+            <br>
+            <form method="post" action="{% url 'participantDetails' %}">
+                {% csrf_token %}
                 {% if form.non_field_errors %}
                     <ul>
                         {% for error in form.non_field_errors %}
@@ -20,14 +29,16 @@
                         {% endfor %}
                     </ul>
                 {% endif %}
-  <div class="col">
-                    <div class="col-sm-12  col-md-6">
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
                         <div class="form-group">
                             <label class="control-label">First Name:</label>
                             <input id="firstName" class="form-control" type="text"
                                    name="first_name" placeholder="First name" value="{{ present_user.first_name }}">
-                            <span id="firstNameErrors" class="errors"></span>
-                            {{ form.first_name.errors }}
+                            <span style="color:red;">
+                                {{ form.first_name.errors }}
+                            </span>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-6">
@@ -36,52 +47,64 @@
                             <input id="lastName" class="form-control" type="text"
                                    name="last_name" placeholder="Last name" value="{{ present_user.last_name }}"
                             >
-                            <span id="lastNameErrors" class="errors"></span>
-                            {{ form.last_name.errors }}
+                            <span style="color: red">
+                                {{ form.last_name.errors }}
+                            </span>
                         </div>
                     </div>
-                    <div class="form-group">
+                </div>
+                <div class="form-group">
                     <label class="control-label">Email:</label>
                     <input readonly id="EMail" class="form-control" name="email"
                            value="{{ email_participant }}">
-                    </div>
-                    <div class="form-group">
+                </div>
+                <div class="form-group">
                     <label class="control-label">Mobile:</label>
                     <input id="mobile" class="form-control" type="tel"
                            name="user_phone" placeholder="Mobile Number" value="{{ present_user.user_phone }}"
                     >
-                    <span id="MobileErrors" class="errors"></span>
-                    {{ form.user_phone.errors }}
-                    </div>
-                    <div class="form-group">
-
+                    <span style="color: red">
+                        {{ form.user_phone.errors }}
+                    </span>
+                </div>
+                <div class="form-group">
                     College :
                     <select name="user_coll" class="form-control" selected="selected">
                         {% if present_user.user_coll %}
-                          {{ present_user.user_coll }}
-                        {%  endif %}
+                            {{ present_user.user_coll }}
+                        {% endif %}
                         {% for college in colleges %}
                             <option value="{{ college.pk }}">{{ college.name }}</option>
                         {% endfor %}
                     </select>
+                    <span style="color: red">
                     {{ form.user_coll.errors }}
+                    </span>
+                </div>
+                <br>
+                <h2>{{ event.event_name }}</h2>
+                <br>
+                {% if not request.user.is_staff %}
+                    <input id="refer" class="form-control" type="text" name="refer" placeholder="Referral">
+                {% else %}
+                    <input name='refer' type="hidden" value={{ request.user.username }}>
+                {% endif %}
+                <input type="hidden" name="event_id" value={{ event.event_id }}>
 
-                    </div>
-  <h1>{{ event.event_name }}</h1>
-  {% if not request.user.is_staff %}
-      <input id="refer" class="form-control" type="text" name="refer" placeholder="Referral">
-  {% else %}
-      <input name='refer' type="hidden" value={{request.user.username}}>
-  {% endif %}
-      <input type="hidden" name="event_id" value={{ event.event_id }}>
-
-  </div>
-
-                        <button type="submit" id="modal-btn" name="card" value="card" class="btn btn-primary eventButtons">Pay by Card</button>
-      {% if request.user.is_staff %}
-      <button type="submit" id="modal-btn" name="cash" value="cash" class="btn btn-primary eventButtons">Pay By Cash</button>
-      {% endif %}
-
-  </form>
-
+                <div class="text-right">
+                    <br>
+                    <button type="submit" id="modal-btn" name="card" value="card" class="btn Login_btn-primary">Pay by
+                        Card
+                    </button>
+                    {% if request.user.is_staff %}
+                        <button type="submit" id="modal-btn" name="cash" value="cash" class="btn Login_btn-primary"
+                                style="margin-left: 6px">Pay By Cash
+                        </button>
+                    {% endif %}
+                </div>
+                <br>
+            </form>
+        </div>
+    </div>
+    <br><br>
 {% endblock %}
