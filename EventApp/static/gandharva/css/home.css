@@ -189,10 +189,16 @@ html, body {
 
     .mainTitle h3 {
         font-size: 20px;
+        margin-left: 40px;
     }
 
     .mainTitle h2 {
         font-size: 20px;
+    }
+
+     .mainTitle h4 {
+        font-size: 20px;
+         margin-left: 36px;
     }
 
     .mainTitle p {
