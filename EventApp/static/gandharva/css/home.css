@@ -196,9 +196,9 @@ html, body {
         font-size: 20px;
     }
 
-     .mainTitle h4 {
+    .mainTitle h4 {
         font-size: 20px;
-         margin-left: 36px;
+        margin-left: 36px;
     }
 
     .mainTitle p {
@@ -317,7 +317,7 @@ img {
     opacity: 1;
     z-index: 100;
     border-radius: 4px;
-    background-color: #5c00e6;
+    background-color: #1a73e8;
     border: none;
     color: #FFFFFF;
     text-align: center;

@@ -15,7 +15,7 @@
 {% block body %}
 
     <div class="container-fluid"
-         style="background:linear-gradient(45deg,rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url('{% static dept_choosen.banner_src %}');width: 100%;height:186px;background-size:cover;">
+         style="background:linear-gradient(45deg,rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url('{% static dept_choosen.banner_src %}');width: 100%;height:200px;background-size:cover;">
         <h1 class="title" data-sal="slide-up" data-sal-easing="ease-out-bounce"
             data-sal-delay="100" data-sal-duration="500">{{ pageTitle }}</h1>
     </div>
@@ -57,8 +57,9 @@
                             </button>
                         </form>
                         <form method="get" action="{% url 'participantEventRegister' %}">
-                        <input type="hidden" name="event_id" value={{ event.event.event_id }}>
-                        <button type="submit" id="modal-btn" class="btn btn-primary eventButtons">Register Now</button>
+                            <input type="hidden" name="event_id" value={{ event.event.event_id }}>
+                            <button type="submit" id="modal-btn" class="btn btn-primary eventButtons">Register Now
+                            </button>
                         </form>
                     </div>
                 </div>

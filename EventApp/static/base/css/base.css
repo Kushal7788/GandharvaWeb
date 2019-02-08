@@ -19,7 +19,7 @@ nav {
 
 .navbar {
     opacity: 1;
-    background-color: rgba(0, 78, 138, 0.4) !important;
+    background-color: rgba(0, 78, 138, 0.1) !important;
     padding-bottom: 0;
 }
 
@@ -65,9 +65,9 @@ nav li .active a {
 }
 
 @media only screen and (max-width: 800px) {
-.navbar{
-      background-color: #004E8A !important;
-}
+    .navbar {
+        background-color: #004E8A !important;
+    }
 
 }
 

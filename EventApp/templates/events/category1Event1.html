@@ -14,9 +14,9 @@
 {% endblock %}
 {% block body %}
     <div class="container-fluid"
-         style="background:linear-gradient(45deg,rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url('{% static dept.department.banner_src %}');width: 100%;height:186px;background-size:cover;">
+         style="background:linear-gradient(45deg,rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url('{% static dept.department.banner_src %}');width: 100%;height:200px;background-size:cover;">
         <h3 class="title" data-sal="slide-up" data-sal-easing="ease-out-bounce"
-             data-sal-duration="1000">{{ event.event_name }}</h3>
+            data-sal-duration="1000">{{ event.event_name }}</h3>
     </div>
     <br>
     <div class="container">
@@ -49,7 +49,7 @@
     <div class="container">
         <h3 class="colorlib-heading">Team and
             Fee Structure</h3>
-        <p data-sal="slide-up" data-sal-easing="ease-out-bounce"  data-sal-duration="1000"
+        <p data-sal="slide-up" data-sal-easing="ease-out-bounce" data-sal-duration="1000"
            style="margin-top: 12px">
             Max {{ event.team_size }}
             Participants per Team & ₹ {{ event.entry_fee }} per team.</p>
