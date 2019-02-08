@@ -120,9 +120,12 @@ def success(request):
             receipt.save()
             team.receipt = receipt
             team.user = user
-            if request.GET.get('ref')!=0:
-                referral =MyUser.objects.get(username=request.GET.get('ref'))
-                team.referral=referral
+            if request.GET.get('ref') != 0:
+                try:
+                    referral = MyUser.objects.get(username=request.GET.get('ref'))
+                    team.referral = referral
+                except:
+                    pass
             team.save()
             transaction.transaction_id = payment_id
             transaction.transaction_request_id = payment_request_id
@@ -145,7 +148,18 @@ def success(request):
                 img.save(thumb_io, format='JPEG')
                 team.QRcode.save('ticket-filename.jpg', File(thumb_io), save=False)
                 team.save()
-
+                
+                # Event Receipt Mail
+                mail_subject = 'You have registered for ' + event.event_name + ' using cash payment'
+                message = render_to_string('events/receiptCashPayment.html', {
+                    'user': user,
+                    'event': event,
+                    'team': team,
+                    'transaction': transaction,
+                })
+                email = EmailMessage(mail_subject, message, to=[user.email])
+                email.attach_file("media//" + str(team.QRcode))
+                email.send()
         teams = reversed(Team.objects.filter(user=user).reverse())
         print(teams)
 
@@ -517,7 +531,7 @@ def participantDetails(request):
                     send_sms=False,
                     email=user.email,
                     phone=user.user_phone,
-                    redirect_url="http://127.0.0.1:8000/success?eid=" + event_id+"&ref="+refer
+                    redirect_url="http://127.0.0.1:8000/success?eid=" + event_id+"&ref="+str(refer)
                 )
                 # print the long URL of the payment request.
                 print(response['payment_request']['longurl'])
