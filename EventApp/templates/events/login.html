@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block body %}
-    <br><br><br><br>
+    <br><br><br><br><br>
     <div class="container" style="height: 100vh">
         <div class="col-sm-5 container-center">
             <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
@@ -46,34 +46,35 @@
                 </div>
             </form>
 
-            <div class="row">
-                <div class="col-sm-12 col-md-7 col" style="margin-top: 8px">
-                    <h6>Not Signed Up?</h6>
-                </div>
-                <div class="col-sm-12 col-md-5 col">
-                    <form method="get" action="{% url 'register' %}">
-                        {% csrf_token %}
-                        <div class="text-right">
-                            <button type="submit" class="btn Login_btn-primary" style="width:100px;height: auto;">
-                                Register
-                            </button>
-                        </div>
+            {#            <div class="row">#}
+            {#                <div class="col-sm-12 col-md-7 col" style="margin-top: 8px">#}
+            {#                    <h6>Not Signed Up?</h6>#}
+            {#                </div>#}
+            {#                <div class="col-sm-12 col-md-5 col">#}
+            {#                    <form method="get" action="{% url 'register' %}">#}
+            {#                        {% csrf_token %}#}
+            {#                        <div class="text-right">#}
+            {#                            <button type="submit" class="btn Login_btn-primary" style="width:100px;height: auto;">#}
+            {#                                Register#}
+            {#                            </button>#}
+            {#                        </div>#}
+            {##}
+            {#                    </form>#}
+            {#                </div>#}
+            {#            </div>#}
 
-                    </form>
-                </div>
-            </div>
-
-            <hr>
-            <div class='g-sign-in-button'>
-                <div class=content-wrapper>
-                    <div class='logo-wrapper'>
-                        <img src='https://developers.google.com/identity/images/g-logo.png'>
-                    </div>
-                    <span class='text-container'>
-                    <a style="color: #fff" href="{% url 'social:begin' 'google-oauth2' %}">Sign in using Google</a>
-                 </span>
-                </div>
-            </div>
+            {#            <hr>#}
+            {#            <div class='g-sign-in-button'>#}
+            {#                <div class=content-wrapper>#}
+            {#                    <div class='logo-wrapper'>#}
+            {#                        <img src='https://developers.google.com/identity/images/g-logo.png'>#}
+            {#                    </div>#}
+            {#                    <span class='text-container'>#}
+            {#                    <a style="color: #fff" href="{% url 'social:begin' 'google-oauth2' %}">Sign in using Google</a>#}
+            {#                 </span>#}
+            {#                </div>#}
+            {#            </div>#}
+            <br>
         </div>
         <br>
     </div>
