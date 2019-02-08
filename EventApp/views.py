@@ -576,6 +576,17 @@ def cashpayment(event,user,request):
         team.QRcode.save('ticket-filename.jpg', File(thumb_io), save=False)
         team.save()
 
+        mail_subject = 'You have registered for ' + event.event_name + ' using cash payment'
+        message = render_to_string('events/receiptCashPayment.html', {
+            'user': user,
+            'event': event,
+            'team': team,
+            'transaction': transaction,
+        })
+        email = EmailMessage(mail_subject, message, to=[user.email])
+        email.send()
+
+
 def Profile(request):
     user = request.user
     if request.method == 'POST':
