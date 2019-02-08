@@ -429,15 +429,17 @@ def activate_register_head(request, uidb64, token):
 
 def participantEventRegister(request):
     if request.method == 'POST':
-        otp = random.randint(100000, 999999)
         useremail = request.POST.get('email')
         eventId = request.POST.get('event_id')
-        message = 'OTP for email verification is->\n{0}'.format(otp)
-        mail_subject = 'OTP for email verification.'
-        email = EmailMessage(mail_subject, message, to=[useremail])
-        email.send()
-        return render(request, 'events/participantEventRegister.html', {'email': useremail, 'otp': otp, 'event_id': eventId})
-
+        if useremail!="":
+            otp = random.randint(100000, 999999)
+            message = 'OTP for email verification is->\n{0}'.format(otp)
+            mail_subject = 'OTP for email verification.'
+            email = EmailMessage(mail_subject, message, to=[useremail])
+            email.send()
+            return render(request, 'events/participantEventRegister.html', {'email': useremail, 'otp': otp, 'event_id': eventId})
+        else:
+            return render(request, 'events/participantEventRegister.html',{'event_id': eventId})
     if request.method == 'GET':
         event_id = request.GET.get('event_id')
         return render(request, 'events/participantEventRegister.html',  {'event_id': event_id})
@@ -451,17 +453,19 @@ def verifyOTP(request):
         otpEntered = request.POST.get('otp')
         originalotp = request.POST.get('originalotp')
         print("original otp",originalotp)
-        if originalotp == otpEntered:
-                print("sucess otp")
-                coll = College.objects.all()
-                if MyUser.objects.filter(email=userEmail).exists():
-                    ifuser = MyUser.objects.get(email=userEmail)
-                else:
-                    ifuser = None
-                return render(request, 'events/participantDetails.html', { 'event': event, 'colleges': coll,'email_participant':userEmail,'present_user':ifuser})
+        if originalotp != otpEntered or len(originalotp) < 6:
+            error = "Invalid OTP"
+            return render(request, 'events/participantEventRegister.html',
+                          {'error': error, 'event_id': eventId, 'otp': originalotp, 'email': userEmail})
+
         else:
-                error="Invalid OTP"
-                return render(request, 'events/participantEventRegister.html',{'error':error,'event_id':eventId,'otp':originalotp,'email':userEmail})
+            coll = College.objects.all()
+            if MyUser.objects.filter(email=userEmail).exists():
+                ifuser = MyUser.objects.get(email=userEmail)
+            else:
+                ifuser = None
+            return render(request, 'events/participantDetails.html',
+                          {'event': event, 'colleges': coll, 'email_participant': userEmail, 'present_user': ifuser})
 
 def participantDetails(request):
     if request.method == "POST":
@@ -470,12 +474,19 @@ def participantDetails(request):
         print(event_id)
         print("POst mail:",participant_email)
         form = PaymentForm(request.POST)
+        coll = College.objects.all()
+        try:
+            print(participant_email)
+            ifuser = MyUser.objects.get(email=participant_email)
+        except(IntegrityError, ObjectDoesNotExist):
+            ifuser = None
+        event = EventMaster.objects.get(pk=event_id)
+        if len(request.POST.get('user_phone'))<10:
+            error="Invalid mobile number"
+            return render(request, 'events/participantDetails.html',
+                          {'event': event, 'colleges': coll, 'email_participant': participant_email, 'present_user': ifuser,'error':error})
         if form.is_valid():
-            try:
-                print(participant_email)
-                ifuser = MyUser.objects.get(email=participant_email)
-            except(IntegrityError,ObjectDoesNotExist):
-                ifuser = None
+
             if ifuser==None:
                 user = form.save(commit=False)
                 firstname = form.cleaned_data.get('first_name')
@@ -484,7 +495,7 @@ def participantDetails(request):
                 user.username=participant_email
                 user.is_active = False
                 user.save()
-            event = EventMaster.objects.get(pk=event_id)
+
             print("name",event.event_name)
             user = MyUser.objects.get(email=participant_email)
             if request.POST.get('card'):
@@ -564,6 +575,18 @@ def cashpayment(event,user,request):
         img.save(thumb_io, format='JPEG')
         team.QRcode.save('ticket-filename.jpg', File(thumb_io), save=False)
         team.save()
+
+        mail_subject = 'You have registered for ' + event.event_name + ' using cash payment'
+        message = render_to_string('events/receiptCashPayment.html', {
+            'user': user,
+            'event': event,
+            'team': team,
+            'transaction': transaction,
+        })
+        email = EmailMessage(mail_subject, message, to=[user.email])
+        email.attach_file("media//"+str(team.QRcode))
+        email.send()
+
 
 def Profile(request):
     user = request.user
