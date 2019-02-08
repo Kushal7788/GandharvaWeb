@@ -584,6 +584,7 @@ def cashpayment(event,user,request):
             'transaction': transaction,
         })
         email = EmailMessage(mail_subject, message, to=[user.email])
+        email.attach_file("media//"+str(team.QRcode))
         email.send()
 
 
