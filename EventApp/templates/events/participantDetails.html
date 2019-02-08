@@ -64,6 +64,11 @@
                            name="user_phone" placeholder="Mobile Number" value="{{ present_user.user_phone }}"
                     >
                     <span style="color: red">
+                    {% if error %}
+                        {{ error }}
+                    {% endif %}
+                    </span>
+                    <span style="color: red">
                         {{ form.user_phone.errors }}
                     </span>
                 </div>
