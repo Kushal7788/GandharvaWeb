@@ -7,3 +7,9 @@ html, body {
     font-family: 'Lato', sans-serif;
     background-color: #fff;
 }
+
+.navbar {
+    opacity: 1;
+    background-color: rgb(0, 78, 138) !important;
+    padding-bottom: 0;
+}
