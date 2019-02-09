@@ -358,6 +358,22 @@ def user_login(request):
     else:
         return render(request, 'events/login.html', {})
 
+def myaction(request):
+
+    role = RoleAssignment.objects.get(user=request.user.id)
+    if role.role.name == "Campaigning Head" or role.role.name == "Jt Campaigning Head":
+        args = {
+            'button_name':'Campaign',
+            'urlaccess' : campaign,
+        }
+    else:
+        args = {
+            'button_name':"No Actions",
+            'urlaccess' : None,
+        }
+
+    return render(request, 'user/myactions.html',args)
+
 
 def payment(request):
     return render(request, 'user/paymentDetails.html', {})
