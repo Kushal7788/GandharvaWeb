@@ -15,6 +15,10 @@ html, body {
 /*text-align: center;*/
 /*}*/
 
+.owl-stage{
+    margin: 0 auto;
+}
+
 .mainTitle {
     position: absolute;
     top: 24vh;
