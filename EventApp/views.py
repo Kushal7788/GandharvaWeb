@@ -17,7 +17,7 @@ from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.http import HttpResponse
 from django.contrib.sites.shortcuts import get_current_site
-from EventApp.decorators import user_Role_head,user_Campaign_head
+from EventApp.decorators import user_Role_head, user_Campaign_head
 from GandharvaWeb19 import settings
 from instamojo_wrapper import Instamojo
 from django.db import IntegrityError
@@ -28,26 +28,27 @@ import json
 import string
 import openpyxl
 
+
 def TabletoExcel(request):
-    volunteerData=Volunteer.objects.all()
+    volunteerData = Volunteer.objects.all()
     wb = openpyxl.Workbook()
     sheet = wb.active
-    i=2
+    i = 2
     c1 = sheet.cell(row=1, column=1)
-    c1.value="Volunteer Name"
+    c1.value = "Volunteer Name"
     c2 = sheet.cell(row=1, column=2)
     c2.value = "College Name"
     c1 = sheet.cell(row=1, column=3)
     c1.value = "Visiting Date"
     for v in volunteerData:
         c1 = sheet.cell(row=i, column=1)
-        c1.value = v.user.first_name+" "+v.user.last_name
+        c1.value = v.user.first_name + " " + v.user.last_name
         c2 = sheet.cell(row=i, column=2)
-        c2.value=v.college.name
+        c2.value = v.college.name
         c3 = sheet.cell(row=i, column=3)
-        c3.value=str(v.date)
-        i=i+1
-    pathw='http://127.0.0.1:8000/media/CampaignData.xlsx'
+        c3.value = str(v.date)
+        i = i + 1
+    pathw = 'http://127.0.0.1:8000/media/CampaignData.xlsx'
     wb.save("media/CampaignData.xlsx")
     arg = {
         'filename': pathw,
@@ -59,13 +60,13 @@ def TabletoExcel(request):
 
 # Home page Functionality
 def home(request):
-    userget=0
+    userget = 0
     if request.user:
-        roles=RoleAssignment.objects.all()
+        roles = RoleAssignment.objects.all()
         for role in roles:
-            if role.user==request.user:
-                if role.role.name=="Jt Campaigning Head" or role.role.name=="Campaigning Head":
-                    userget=1
+            if role.user == request.user:
+                if role.role.name == "Jt Campaigning Head" or role.role.name == "Campaigning Head":
+                    userget = 1
 
     args = {
         'events': Department.objects.all(),
@@ -73,7 +74,7 @@ def home(request):
         'carouselImage': Carousel.objects.all(),
         'gandharvaDate': GandharvaHome.objects.get(title__startswith="Date").data,
         'About': GandharvaHome.objects.get(title__startswith="About").data,
-        'role':userget
+        'role': userget
     }
 
     return render(request, 'gandharva/index.html', args)
@@ -166,7 +167,7 @@ def success(request):
                 img.save(thumb_io, format='JPEG')
                 team.QRcode.save('ticket-filename.jpg', File(thumb_io), save=False)
                 team.save()
-                
+
                 # Event Receipt Mail
                 mail_subject = 'You have registered for ' + event.event_name + ' using cash payment'
                 message = render_to_string('events/receiptCashPayment.html', {
@@ -328,10 +329,10 @@ def user_login(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         try:
-            usercheck=MyUser.objects.get(username=username)
+            usercheck = MyUser.objects.get(username=username)
         except(ObjectDoesNotExist):
-            usercheck=None
-        if usercheck!=None:
+            usercheck = None
+        if usercheck != None:
             if not usercheck.is_active:
                 print("your account is inactive")
                 messages.error(request, 'Email not verified, please verify your email to login')
@@ -358,13 +359,12 @@ def user_login(request):
         return render(request, 'events/login.html', {})
 
 
-
 def payment(request):
     return render(request, 'user/paymentDetails.html', {})
 
 
 # Head Login View only to be used for Heads
- #@user_passes_test(lambda u: u.is_superuser)
+# @user_passes_test(lambda u: u.is_superuser)
 def RegisterHead(request):
     Roles = RoleMaster.objects.all()
     role_categories = Role_category.objects.all()
@@ -380,7 +380,7 @@ def RegisterHead(request):
             password = userform.cleaned_data.get('password')
             user.set_password(password)
             user.is_active = False
-            user.full_name=user.first_name + " " +user.last_name
+            user.full_name = user.first_name + " " + user.last_name
             user.save()
             roleassign = RoleAssignment()
             roleassign.user = user
@@ -464,28 +464,29 @@ def participantEventRegister(request):
     if request.method == 'POST':
         useremail = request.POST.get('email')
         eventId = request.POST.get('event_id')
-        if useremail!="":
+        if useremail != "":
             otp = random.randint(100000, 999999)
             message = 'OTP for email verification is->\n{0}'.format(otp)
             mail_subject = 'OTP for email verification.'
             email = EmailMessage(mail_subject, message, to=[useremail])
             email.send()
-            return render(request, 'events/participantEventRegister.html', {'email': useremail, 'otp': otp, 'event_id': eventId})
+            return render(request, 'events/participantEventRegister.html',
+                          {'email': useremail, 'otp': otp, 'event_id': eventId})
         else:
-            return render(request, 'events/participantEventRegister.html',{'event_id': eventId})
+            return render(request, 'events/participantEventRegister.html', {'event_id': eventId})
     if request.method == 'GET':
         event_id = request.GET.get('event_id')
-        return render(request, 'events/participantEventRegister.html',  {'event_id': event_id})
+        return render(request, 'events/participantEventRegister.html', {'event_id': event_id})
 
 
 def verifyOTP(request):
     if request.method == 'POST':
         userEmail = request.POST.get('useremail')
         eventId = request.POST.get('event_id')
-        event=EventMaster.objects.get(pk=eventId)
+        event = EventMaster.objects.get(pk=eventId)
         otpEntered = request.POST.get('otp')
         originalotp = request.POST.get('originalotp')
-        print("original otp",originalotp)
+        print("original otp", originalotp)
         if originalotp != otpEntered or len(originalotp) < 6:
             error = "Invalid OTP"
             return render(request, 'events/participantEventRegister.html',
@@ -500,12 +501,13 @@ def verifyOTP(request):
             return render(request, 'events/participantDetails.html',
                           {'event': event, 'colleges': coll, 'email_participant': userEmail, 'present_user': ifuser})
 
+
 def participantDetails(request):
     if request.method == "POST":
-        participant_email=request.POST.get('email')
-        event_id=request.POST.get('event_id')
+        participant_email = request.POST.get('email')
+        event_id = request.POST.get('event_id')
         print(event_id)
-        print("POst mail:",participant_email)
+        print("POst mail:", participant_email)
         form = PaymentForm(request.POST)
         coll = College.objects.all()
         try:
@@ -514,29 +516,30 @@ def participantDetails(request):
         except(IntegrityError, ObjectDoesNotExist):
             ifuser = None
         event = EventMaster.objects.get(pk=event_id)
-        if len(request.POST.get('user_phone'))<10:
-            error="Invalid mobile number"
+        if len(request.POST.get('user_phone')) < 10:
+            error = "Invalid mobile number"
             return render(request, 'events/participantDetails.html',
-                          {'event': event, 'colleges': coll, 'email_participant': participant_email, 'present_user': ifuser,'error':error})
+                          {'event': event, 'colleges': coll, 'email_participant': participant_email,
+                           'present_user': ifuser, 'error': error})
         if form.is_valid():
-            if ifuser==None:
+            if ifuser == None:
                 user = form.save(commit=False)
                 firstname = form.cleaned_data.get('first_name')
                 password = None
                 user.set_password = password
-                user.username=participant_email
+                user.username = participant_email
                 user.is_active = False
                 user.save()
 
-            print("name",event.event_name)
+            print("name", event.event_name)
             user = MyUser.objects.get(email=participant_email)
             if request.POST.get('card'):
                 print("towards Payment")
-                refer=request.POST.get('refer')
+                refer = request.POST.get('refer')
                 try:
-                    referral=MyUser.objects.get(username=refer)
-                except(IntegrityError,ObjectDoesNotExist):
-                    refer="0"
+                    referral = MyUser.objects.get(username=refer)
+                except(IntegrityError, ObjectDoesNotExist):
+                    refer = "0"
 
                 insta = InstamojoCredential.objects.latest('key')
                 api = Instamojo(api_key=insta.key,
@@ -549,7 +552,7 @@ def participantDetails(request):
                     send_sms=False,
                     email=user.email,
                     phone=user.user_phone,
-                    redirect_url="http://127.0.0.1:8000/success?eid=" + event_id+"&ref="+str(refer)
+                    redirect_url="http://127.0.0.1:8000/success?eid=" + event_id + "&ref=" + str(refer)
                 )
                 # print the long URL of the payment request.
                 print(response['payment_request']['longurl'])
@@ -559,7 +562,7 @@ def participantDetails(request):
                 print(response['payment_request']['amount'])
                 return redirect(response['payment_request']['longurl'])
             elif request.POST.get('cash'):
-                cashpayment(event,user,request)
+                cashpayment(event, user, request)
                 teams = reversed(Team.objects.filter(user=user).reverse())
                 print("CAAAAA")
                 return render(request, 'user/registeredEvents.html', {'teams': teams})
@@ -567,27 +570,27 @@ def participantDetails(request):
             print(form.errors)
 
 
-def cashpayment(event,user,request):
-    id=""
-    flag=0
-    while flag==0:
+def cashpayment(event, user, request):
+    id = ""
+    flag = 0
+    while flag == 0:
         try:
-            id=''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(20))
-            transaction=Transaction.objects.get(transaction_id=id)
-        except(IntegrityError,ObjectDoesNotExist):
-            flag=1
+            id = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(20))
+            transaction = Transaction.objects.get(transaction_id=id)
+        except(IntegrityError, ObjectDoesNotExist):
+            flag = 1
     receipt = Receipt()
     team = Team()
     transaction = Transaction()
-    receipt.name = user.first_name+" "+user.last_name
+    receipt.name = user.first_name + " " + user.last_name
     receipt.event = event
     receipt.save()
     team.receipt = receipt
     team.user = user
-    team.referral=request.user
+    team.referral = request.user
     team.save()
-    transaction.transaction_id=id
-    transaction.transaction_request_id=id
+    transaction.transaction_id = id
+    transaction.transaction_request_id = id
     transaction.instrment_type = "Cash"
     transaction.billing_instrument = "Cash"
     transaction.status = "Cash"
@@ -596,7 +599,7 @@ def cashpayment(event,user,request):
     transaction.time = datetime.datetime.now().time()
     transaction.team = team
     transaction.save()
-        #Generate QR code if transaction is success full
+    # Generate QR code if transaction is success full
     if transaction.status == "Cash":
         qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_M, box_size=10, border=4)
         content = "event:" + event.event_name + ", user:" + user.username
@@ -616,7 +619,7 @@ def cashpayment(event,user,request):
             'transaction': transaction,
         })
         email = EmailMessage(mail_subject, message, to=[user.email])
-        email.attach_file("media//"+str(team.QRcode))
+        email.attach_file("media//" + str(team.QRcode))
         email.send()
 
 
@@ -640,6 +643,8 @@ def Registered_Events(request):
 
 def Payment_Details(request):
     return render(request, 'user/paymentDetails.html')
+
+
 # def cashPayment(request):
 #     coll = College.objects.all()
 #     year = College_year.objects.all()
@@ -746,24 +751,25 @@ def new_password(request):
 
     return render(request, 'user/new_password.html')
 
+
 ## Important Notes:
 # to get user role from models
 # userget = RoleAssignment.objects.get(user=request.user.id)
 #   print (userget.role)
 
 
-#Volunteer College Date Entry by Campaign Head
+# Volunteer College Date Entry by Campaign Head
 @user_Campaign_head
 def AddVolunteer(request):
-    if request.method=="POST":
-        uid=request.POST.get('volunteers')
-        cid=request.POST.get('colleges')
-        user=MyUser.objects.get(pk=uid)
-        college=College.objects.get(pk=cid)
-        volunteer=Volunteer()
-        volunteer.user=user
-        volunteer.college=college
-        volunteer.date=request.POST.get('campaignDate')
+    if request.method == "POST":
+        uid = request.POST.get('volunteers')
+        cid = request.POST.get('colleges')
+        user = MyUser.objects.get(pk=uid)
+        college = College.objects.get(pk=cid)
+        volunteer = Volunteer()
+        volunteer.user = user
+        volunteer.college = college
+        volunteer.date = request.POST.get('campaignDate')
         volunteer.save()
         volunteerData = Volunteer.objects.all()
         volunteers = []
@@ -780,24 +786,26 @@ def AddVolunteer(request):
         }
         return render(request, 'events/campaignVolunteer.html', args)
 
+
 def ourSponsors(request):
-    sponsors=SponsorMaster.objects.all()
-    args={
-        'sponsors':sponsors
+    sponsors = SponsorMaster.objects.all()
+    args = {
+        'sponsors': sponsors
     }
-    return render(request,'gandharva/ourSponsors.html',args)
+    return render(request, 'gandharva/ourSponsors.html', args)
+
 
 def ourTeam(request):
-    return render(request,'gandharva/ourTeam.html')
+    return render(request, 'gandharva/ourTeam.html')
 
 
-#upload file view
+# upload file view
 def files(request):
-    doc=fileDocument.objects.filter(user=request.user)
+    doc = fileDocument.objects.filter(user=request.user)
     if request.method == 'POST':
         form = fileForm(request.POST, request.FILES)
         if form.is_valid():
-            f = form.save(commit = False)
+            f = form.save(commit=False)
             f.user = request.user
             print(request.user)
             f.save()
@@ -813,33 +821,34 @@ def files(request):
         'documents': doc
     })
 
-#Campaign Head Method
+
+# Campaign Head Method
 @user_Campaign_head
 def campaign(request):
-    if request.method=="POST":
-        check=request.POST.get('criteria')
-        #volunteer wise
-        if check=="0":
-            volunteers=[]
-            transactions=Transaction.objects.all()
+    if request.method == "POST":
+        check = request.POST.get('criteria')
+        # volunteer wise
+        if check == "0":
+            volunteers = []
+            transactions = Transaction.objects.all()
             for transaction in transactions:
-                if transaction.status=="Credit":
-                    ref=transaction.team.referral
+                if transaction.status == "Credit" or "Cash":
+                    ref = transaction.team.referral
                     try:
-                        name=MyUser.objects.get(username=ref)
+                        name = MyUser.objects.get(username=ref)
                     except(ObjectDoesNotExist):
                         continue
-                    c=0
+                    c = 0
                     for i in range(len(volunteers)):
-                        if volunteers[i].username==ref:
-                            c=1
+                        if volunteers[i].username == ref:
+                            c = 1
                             volunteers[i].count = volunteers[i].count + 1
                             break
-                    if c==0:
-                        v=volunteerwise()
-                        v.username=ref
-                        v.name=name
-                        v.count=1
+                    if c == 0:
+                        v = volunteerwise()
+                        v.username = ref
+                        v.name = name
+                        v.count = 1
                         volunteers.append(v)
                 args = {
 
@@ -848,35 +857,35 @@ def campaign(request):
                 print("volunteer")
                 print(volunteers)
             return render(request, 'events/campaigningData.html', args)
-        elif check=="1":
-            events=[]
-            transactions=Transaction.objects.all()
+        elif check == "1":
+            events = []
+            transactions = Transaction.objects.all()
             for transaction in transactions:
-                if transaction.status=="Credit":
-                    event=transaction.team.receipt.event
-                    c=0
+                if transaction.status == "Credit":
+                    event = transaction.team.receipt.event
+                    c = 0
                     for i in range(len(events)):
-                        if events[i].event_id==event.event_id:
-                            c=1
-                            events[i].count=events[i].count+1
+                        if events[i].event_id == event.event_id:
+                            c = 1
+                            events[i].count = events[i].count + 1
                             break
-                    if c==0:
-                        e=eventwise()
-                        e.event_id=event.event_id
-                        e.event_name=event.event_name
-                        e.count=1
+                    if c == 0:
+                        e = eventwise()
+                        e.event_id = event.event_id
+                        e.event_name = event.event_name
+                        e.count = 1
                         events.append(e)
                 args = {
-                            'events': events,
-                        }
+                    'events': events,
+                }
                 print("")
                 print(events)
             return render(request, 'events/campaigningData.html', args)
-        elif check=="2":
+        elif check == "2":
             colleges = []
-            transactions=Transaction.objects.all()
+            transactions = Transaction.objects.all()
             for transaction in transactions:
-                if transaction.status=="Credit":
+                if transaction.status == "Credit":
                     college = transaction.team.user.user_coll
                     c = 0
                     for i in range(len(colleges)):
@@ -885,50 +894,50 @@ def campaign(request):
                             colleges[i].count = colleges[i].count + 1
                             break
                     if c == 0:
-                        c=collegewise()
+                        c = collegewise()
                         c.name = college.name
                         c.count = 1
                         colleges.append(c)
                 args = {
-                        'colleges': colleges,
-                        }
+                    'colleges': colleges,
+                }
                 print("")
                 print(colleges)
             return render(request, 'events/campaigningData.html', args)
 
-        elif check=="3":
-            volunteers=[]
-            roles=RoleAssignment.objects.all()
+        elif check == "3":
+            volunteers = []
+            roles = RoleAssignment.objects.all()
             for role in roles:
-                if role.role.name=="Volunteer":
+                if role.role.name == "Volunteer":
                     volunteers.append(role.user)
                     print(role.user)
-            colleges=College.objects.all()
-            volunteerData=Volunteer.objects.all()
+            colleges = College.objects.all()
+            volunteerData = Volunteer.objects.all()
             args = {
                 'volunteers': volunteers,
-                'colleges':colleges,
-                'volunteerData':volunteerData
+                'colleges': colleges,
+                'volunteerData': volunteerData
             }
             return render(request, 'events/campaignVolunteer.html', args)
 
     else:
-        return  render(request,'events/campaignHead.html')
-
-
+        return render(request, 'events/campaignHead.html')
 
 
 class volunteerwise:
-    username=""
-    name=""
-    count=0
+    username = ""
+    name = ""
+    count = 0
+
 
 class eventwise:
-    event_id=0
-    event_name=""
-    count=0
+    event_id = 0
+    event_name = ""
+    count = 0
+
 
 class collegewise:
-    cid=""
-    name=""
-    count=0
+    cid = ""
+    name = ""
+    count = 0
