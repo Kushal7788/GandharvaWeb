@@ -112,7 +112,7 @@
                             </form>
                         {% endif %}
 
-                        {% if role == 1 %}
+                        {% if user.is_staff  %}
                             <form method="get" action="{% url 'files' %}">
                                 {% csrf_token %}
                                 <button type="submit" class="dropdown-item dropdownStyle">File Upload</button>

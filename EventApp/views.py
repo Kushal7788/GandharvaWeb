@@ -810,7 +810,7 @@ def files(request):
             print(request.user)
             f.save()
             return render(request, 'events/fileExplorer.html', {
-                'form': form,
+                'form': fileForm,
                 'documents': doc
 
             })
