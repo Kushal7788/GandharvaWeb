@@ -1,0 +1,21 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}My Actions{% endblock %}
+{% block css %}
+    <link href="{% static 'user/css/paymentDetails.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+    <br><br><br><br>
+    <h1>My Actions</h1>
+    {% if button_name == "Campaign" %}
+    <form method="get" action="{% url 'campaign' %}">
+    <button type="submit" name="{{ button_name }}" class="btn btn-primary eventButtons" >
+        {{ button_name  }}
+    </button>
+    </form>
+        {% else %}
+        <h2> No actions For you</h2>
+    {%  endif %}
+
+{% endblock %}
