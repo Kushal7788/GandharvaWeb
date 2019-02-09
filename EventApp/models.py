@@ -228,6 +228,7 @@ def filePath(instance,filename):
     return fPath
 
 class fileDocument(models.Model):
+    fname = models.CharField(max_length=250)
     user = models.ForeignKey(MyUser, on_delete=models.PROTECT)
     document = models.FileField(upload_to=filePath)
     uploaded_at = models.DateTimeField(auto_now_add=True)

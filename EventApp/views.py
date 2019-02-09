@@ -823,7 +823,8 @@ def files(request):
         if form.is_valid():
             f = form.save(commit=False)
             f.user = request.user
-            print(request.user)
+            f.fname = request.FILES['document'].name
+            print(request.FILES['document'].name)
             f.save()
             return render(request, 'events/fileExplorer.html', {
                 'form': fileForm,
