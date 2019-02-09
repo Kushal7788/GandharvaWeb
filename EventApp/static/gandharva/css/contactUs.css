@@ -11,6 +11,9 @@ html, body {
     background-color: #fff;
     color: #fff;
 }
+ .navbar {
+        background-color: #004E8A !important;
+    }
 
 .contact-section {
     background-color: #135f89;
