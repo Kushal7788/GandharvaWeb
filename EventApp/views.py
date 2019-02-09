@@ -26,17 +26,35 @@ from django.core.exceptions import ObjectDoesNotExist
 import qrcode
 import json
 import string
-
-
-# Create your views here.
-import xlwt
+import openpyxl
 
 def TabletoExcel(request):
-    workbook = xlwt.Workbook()
-    sheet = workbook.add_sheet('Sheet_1')
-    cols = ["A", "B", "C", "D", "E"]
-    txt = "Row %s, Col %s"
-    workbook.save('my_file.xls')
+    volunteerData=Volunteer.objects.all()
+    wb = openpyxl.Workbook()
+    sheet = wb.active
+    i=2
+    c1 = sheet.cell(row=1, column=1)
+    c1.value="Volunteer Name"
+    c2 = sheet.cell(row=1, column=2)
+    c2.value = "College Name"
+    c1 = sheet.cell(row=1, column=3)
+    c1.value = "Visiting Date"
+    for v in volunteerData:
+        c1 = sheet.cell(row=i, column=1)
+        c1.value = v.user.first_name+" "+v.user.last_name
+        c2 = sheet.cell(row=i, column=2)
+        c2.value=v.college.name
+        c3 = sheet.cell(row=i, column=3)
+        c3.value=str(v.date)
+        i=i+1
+    pathw='http://127.0.0.1:8000/media/CampaignData.xlsx'
+    wb.save("media/CampaignData.xlsx")
+    arg = {
+        'filename': pathw,
+        'volunteerData': volunteerData
+
+    }
+    return render(request, 'user/TableToExcel.html', arg)
 
 
 # Home page Functionality
@@ -48,7 +66,7 @@ def home(request):
             if role.user==request.user:
                 if role.role.name=="Jt Campaigning Head" or role.role.name=="Campaigning Head":
                     userget=1
-                    print("userget1")
+
     args = {
         'events': Department.objects.all(),
         'sponsors': SponsorMaster.objects.all(),
@@ -120,7 +138,7 @@ def success(request):
             receipt.save()
             team.receipt = receipt
             team.user = user
-            if request.GET.get('ref') != 0:
+            if request.GET.get('ref') != "0":
                 try:
                     referral = MyUser.objects.get(username=request.GET.get('ref'))
                     team.referral = referral
@@ -500,7 +518,6 @@ def participantDetails(request):
             return render(request, 'events/participantDetails.html',
                           {'event': event, 'colleges': coll, 'email_participant': participant_email, 'present_user': ifuser,'error':error})
         if form.is_valid():
-
             if ifuser==None:
                 user = form.save(commit=False)
                 firstname = form.cleaned_data.get('first_name')
@@ -518,7 +535,7 @@ def participantDetails(request):
                 try:
                     referral=MyUser.objects.get(username=refer)
                 except(IntegrityError,ObjectDoesNotExist):
-                    refer=0
+                    refer="0"
 
                 insta = InstamojoCredential.objects.latest('key')
                 api = Instamojo(api_key=insta.key,
@@ -541,7 +558,7 @@ def participantDetails(request):
                 print(response['payment_request']['amount'])
                 return redirect(response['payment_request']['longurl'])
             elif request.POST.get('cash'):
-                teams=cashpayment(event,user,request)
+                cashpayment(event,user,request)
                 teams = reversed(Team.objects.filter(user=user).reverse())
                 print("CAAAAA")
                 return render(request, 'user/registeredEvents.html', {'teams': teams})
@@ -891,6 +908,3 @@ class collegewise:
     cid=""
     name=""
     count=0
-
-
-
