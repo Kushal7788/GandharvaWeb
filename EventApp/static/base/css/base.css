@@ -19,7 +19,7 @@ nav {
 
 .navbar {
     opacity: 1;
-    background-color: rgba(0, 78, 138, 0.1) !important;
+    background-color: rgba(0, 78, 138, 0) !important;
     padding-bottom: 0;
 }
 
