@@ -3,9 +3,9 @@
 
 {% block title %}Gandharva-Home{% endblock %}
 {% block css %}
-    <link href="{% static 'gandharva/css/slick.min.css' %}" rel="stylesheet">
+    {#    <link href="{% static 'gandharva/css/slick.min.css' %}" rel="stylesheet">#}
     <link href="{% static 'gandharva/css/responsive.css' %}" rel="stylesheet">
-    {#    <link href="{% static 'gandharva/css/owl.carousel.min.css' %}" rel="stylesheet">#}
+    <link href="{% static 'gandharva/css/owl.carousel.css' %}" rel="stylesheet">
     <link href="{% static 'gandharva/css/home.css' %}" rel="stylesheet">
 
     <script>var GandharvaDate = "{{gandharvaDate}}";</script>
@@ -136,55 +136,15 @@
     </section>
 
 
-    <section id="sponsorSection" class="orange-fade p-5 margin-top-xl pos-r parallax"
-             style="padding:0; background-image: url('{% static 'gandharva/img/p.jpg' %}');">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12">
-                    <br>
-                    <h2 class="text-center font-weight-bold text-white" style="padding-top: 6px;font-weight: 500"
-                        data-sal="slide-up"
-                        data-sal-easing="ease-out-bounce" data-sal-delay="100" data-sal-duration="500">Our
-                        Sponsors</h2>
-                    <p></p>
-                    <div class="mt-5 pos-r" data-sal="slide-up" data-sal-easing="ease-out-bounce"
-                         data-sal-delay="100"
-                         data-sal-duration="800">
-                        <div class="carousel-controls testimonial-carousel-controls">
-                            <div class="control prev"><i class="fa fa-chevron-left text-white">&nbsp;</i></div>
-                            <div class="control next"><i class="fa fa-chevron-right text-white">&nbsp;</i></div>
-                        </div>
-                        <div class="testimonial-carousel">
-                            {% for sponsor in sponsors %}
-                                <div class="one-slide white">
-                                    <div class="testimonial w-100 h-100 p-3 text-center">
-                                        <div class="brand"><img alt="logo"
-                                                                src="{% static sponsor.sponsor_logo %}"
-                                                                style="width:auto;height:100px;max-width:100px"/>
-                                        </div>
-                                        <div class="separator">&nbsp;</div>
-                                        <div class="message text-center text-gray">{{ sponsor.sponsor_name }}</div>
-                                        <p style="font-weight: 300;font-size: 0.9rem;">{{ sponsor.sponsor_type }}</p>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    {#    Owl Library#}
     {#    <section id="sponsorSection" class="orange-fade p-5 margin-top-xl pos-r parallax"#}
     {#             style="padding:0; background-image: url('{% static 'gandharva/img/p.jpg' %}');">#}
     {#        <div class="container">#}
     {#            <div class="row">#}
     {#                <div class="col-sm-12">#}
     {#                    <br>#}
-    {#                    <h2 class="text-center font-weight-bold text-white" style="padding-top: 6px" data-sal="slide-up"#}
-    {#                        data-sal-easing="ease-out-bounce" data-sal-delay="100" data-sal-duration="800">Our#}
+    {#                    <h2 class="text-center font-weight-bold text-white" style="padding-top: 6px;font-weight: 500"#}
+    {#                        data-sal="slide-up"#}
+    {#                        data-sal-easing="ease-out-bounce" data-sal-delay="100" data-sal-duration="500">Our#}
     {#                        Sponsors</h2>#}
     {#                    <p></p>#}
     {#                    <div class="mt-5 pos-r" data-sal="slide-up" data-sal-easing="ease-out-bounce"#}
@@ -194,7 +154,7 @@
     {#                            <div class="control prev"><i class="fa fa-chevron-left text-white">&nbsp;</i></div>#}
     {#                            <div class="control next"><i class="fa fa-chevron-right text-white">&nbsp;</i></div>#}
     {#                        </div>#}
-    {#                        <div class="owl-carousel" style="margin-right: auto;margin-left: auto">#}
+    {#                        <div class="testimonial-carousel">#}
     {#                            {% for sponsor in sponsors %}#}
     {#                                <div class="one-slide white">#}
     {#                                    <div class="testimonial w-100 h-100 p-3 text-center">#}
@@ -203,8 +163,7 @@
     {#                                                                style="width:auto;height:100px;max-width:100px"/>#}
     {#                                        </div>#}
     {#                                        <div class="separator">&nbsp;</div>#}
-    {#                                        <div class="message text-center text-gray"#}
-    {#                                             style="font-size: 1rem">{{ sponsor.sponsor_name }}</div>#}
+    {#                                        <div class="message text-center text-gray">{{ sponsor.sponsor_name }}</div>#}
     {#                                        <p style="font-weight: 300;font-size: 0.9rem;">{{ sponsor.sponsor_type }}</p>#}
     {#                                    </div>#}
     {#                                </div>#}
@@ -215,6 +174,47 @@
     {#            </div>#}
     {#        </div>#}
     {#    </section>#}
+
+
+    {#    Owl Library#}
+    <section id="sponsorSection" class="orange-fade p-5 margin-top-xl pos-r parallax"
+             style="padding:0; background-image: url('{% static 'gandharva/img/p.jpg' %}');">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <br>
+                    <h2 class="text-center font-weight-bold text-white" style="padding-top: 6px" data-sal="slide-up"
+                        data-sal-easing="ease-out-bounce" data-sal-delay="100" data-sal-duration="800">Our
+                        Sponsors</h2>
+                    <p></p>
+                    <div class="mt-5 pos-r" data-sal="slide-up" data-sal-easing="ease-out-bounce"
+                         data-sal-delay="100"
+                         data-sal-duration="800">
+                        <div class="carousel-controls testimonial-carousel-controls">
+                            <div class="control prev"><i class="fa fa-chevron-left text-white">&nbsp;</i></div>
+                            <div class="control next"><i class="fa fa-chevron-right text-white">&nbsp;</i></div>
+                        </div>
+                        <div class="owl-carousel">
+                            {% for sponsor in sponsors %}
+                                <div class="one-slide white">
+                                    <div class="testimonial w-100 h-100 p-3 text-center">
+                                        <div class="brand"><img alt="logo"
+                                                                src="{% static sponsor.sponsor_logo %}"
+                                                                style="width:auto;height:100px;max-width:100px"/>
+                                        </div>
+                                        <div class="separator">&nbsp;</div>
+                                        <div class="message text-center text-gray"
+                                             style="font-size: 1rem;word-wrap: break-word;">{{ sponsor.sponsor_name }}</div>
+                                        <p style="font-weight: 300;font-size: 0.9rem;">{{ sponsor.sponsor_type }}</p>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <section id="contact">
         <div class="map-responsive">
@@ -236,8 +236,9 @@
             // callback function
         });
     </script>
-    <script type="text/javascript" src="{% static 'gandharva/js/slick.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'gandharva/js/jquery.min.js' %}"></script>
+    {#    <script type="text/javascript" src="{% static 'gandharva/js/slick.min.js' %}"></script>#}
     <script type="text/javascript" src="{% static 'gandharva/js/particles.min.js' %}"></script>
-    {#    <script type="text/javascript" src="{% static 'gandharva/js/owl.carousel.min.js' %}"></script>#}
+    <script type="text/javascript" src="{% static 'gandharva/js/owl.carousel.js' %}"></script>
     <script type="text/javascript" src="{% static 'gandharva/js/home.js' %}"></script>
 {% endblock %}

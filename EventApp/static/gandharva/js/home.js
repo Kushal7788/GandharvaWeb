@@ -2,66 +2,65 @@ console.log('Hello');
 
 sal();
 
+$(document).ready( function () {
+// Owl
+    var owl = $('.owl-carousel');
 
-//Owl
-// var owl = $('.owl-carousel');
-//
-// $('.testimonial-carousel-controls .prev').click(function () {
-//     owl.trigger('prev.owl.carousel');
-// });
-//
-// $('.testimonial-carousel-controls .next').click(function () {
-//     owl.trigger('next.owl.carousel');
-// });
-//
-//
-// owl.owlCarousel({
-//     loop: false,
-//     margin: 10,
-//     navigation: false,
-//     responsiveClass: true,
-//     responsive: {
-//         0: {
-//             items: 1,
-//             loop: true
-//         },
-//         600: {
-//             items: 3,
-//         },
-//         1000: {
-//             items: 5,
-//         }
-//     }
-// });
+    $('.testimonial-carousel-controls .prev').click(function () {
+        owl.trigger('prev.owl.carousel');
+    });
 
+    $('.testimonial-carousel-controls .next').click(function () {
+        owl.trigger('next.owl.carousel');
+    });
 
-$(document).ready(function () {
-    $(".testimonial-carousel").slick({
-        infinite: !0,
-        slidesToShow: 4,
-        slidesToScroll: 1,
-        autoplay: !1,
-        arrows: true,
-        prevArrow: $(".testimonial-carousel-controls .prev"),
-        nextArrow: $(".testimonial-carousel-controls .next"),
-        responsive: [{
-            breakpoint: 1200,
-            settings: {
-                slidesToShow: 3
+    owl.owlCarousel({
+        loop: false,
+        margin: 10,
+        navigation: false,
+        responsiveClass: true,
+        responsive: {
+            0: {
+                items: 1,
+                loop: true
+            },
+            600: {
+                items: 3,
+            },
+            1000: {
+                items: 5,
             }
-        }, {
-            breakpoint: 992,
-            settings: {
-                slidesToShow: 2
-            }
-        }, {
-            breakpoint: 600,
-            settings: {
-                slidesToShow: 1
-            }
-        }]
+        }
     });
 });
+
+// $(document).ready(function () {
+//     $(".testimonial-carousel").slick({
+//         infinite: !0,
+//         slidesToShow: 4,
+//         slidesToScroll: 1,
+//         autoplay: !1,
+//         arrows: true,
+//         prevArrow: $(".testimonial-carousel-controls .prev"),
+//         nextArrow: $(".testimonial-carousel-controls .next"),
+//         responsive: [{
+//             breakpoint: 1200,
+//             settings: {
+//                 slidesToShow: 3
+//             }
+//         }, {
+//             breakpoint: 992,
+//             settings: {
+//                 slidesToShow: 2
+//             }
+//         }, {
+//             breakpoint: 600,
+//             settings: {
+//                 slidesToShow: 1
+//             }
+//         }]
+//     });
+// });
 
 particlesJS('particles-js',
 
