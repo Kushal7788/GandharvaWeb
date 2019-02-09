@@ -793,7 +793,22 @@ def ourTeam(request):
 
 #upload file view
 def files(request):
-    return render(request,'events/fileExplorer.html')
+    doc=fileDocument.objects.all()
+    if request.method == 'POST':
+        form = fileForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return render(request, 'events/fileExplorer.html', {
+                'form': form,
+                'documents' : doc
+
+            })
+    else:
+        form = fileForm()
+    return render(request, 'events/fileExplorer.html', {
+        'form': form,
+        'documents': doc
+    })
 
 #Campaign Head Method
 @user_Campaign_head
