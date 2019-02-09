@@ -8,7 +8,7 @@
     <br><br><br><br><br>
     <div class="container" style="height: 100vh">
         {% if volunteers %}
-            <div id="volunteer" class="container">
+            <div id="volunteer" class="container" style="display: flex;flex-direction: row;justify-items: center;align-items: center;overflow: auto">
                 <div class="container-center">
                     <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
                     <h5 style="text-align: center;">Number of Entries</h5>
@@ -35,7 +35,8 @@
 
         {% elif events %}
 
-            <div id="event" class="container">
+            <div id="event" class="container flexProp"
+                 style="display: flex;flex-direction: row;justify-items: center;align-items: center;overflow: auto">
                 <div class="container-center">
                     <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
                     <h5 style="text-align: center;">Eventwise Entries</h5>
@@ -60,7 +61,7 @@
             </div>
 
         {% elif colleges %}
-            <div id="college" class="container">
+            <div id="college" class="container" style="display: flex;flex-direction: row;justify-items: center;align-items: center;overflow: auto">
                 <div class="container-center">
                     <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
                     <h5 style="text-align: center;">Collegewise Entries</h5>

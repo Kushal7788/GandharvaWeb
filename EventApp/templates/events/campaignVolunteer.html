@@ -42,24 +42,28 @@
                 </div>
             </form>
             <br>
-            <table id="volTable" class="table table-responsive">
-                <thead class="thead-dark">
-                <tr>
-                    <th>Volunteer Name</th>
-                    <th>College Name</th>
-                    <th>Date</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for volunteer in volunteerData %}
+            <div class="container"
+                 style="display: flex;flex-direction: row;justify-items: center;align-items: center;overflow: auto">
+                <table class="table table-responsive volTable">
+                    <thead class="thead-dark">
                     <tr>
-                        <td>{{ volunteer.user.first_name }} {{ volunteer.user.last_name }}</td>
-                        <td>{{ volunteer.college.name }}</td>
-                        <td>{{ volunteer.date }}</td>
+                        <th>Volunteer Name</th>
+                        <th>College Name</th>
+                        <th>Date</th>
                     </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    {% for volunteer in volunteerData %}
+                        <tr>
+                            <td>{{ volunteer.user.first_name }} {{ volunteer.user.last_name }}</td>
+                            <td>{{ volunteer.college.name }}</td>
+                            <td>{{ volunteer.date }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
+    <br><br>
 {% endblock %}
