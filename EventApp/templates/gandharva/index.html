@@ -97,7 +97,7 @@
             <div class="col-sm-2 eventDiv"
                  style="background-image:url({% static event.img %}); background-repeat: no-repeat; background-size: cover; width: 480px;height: 240px"
                  data-sal="slide-up" data-sal-easing="ease-out-bounce" data-sal-delay="30" data-sal-duration="500">
-                <h3 class="eventTitle">{{ event.name }}</h3>
+                <h3 class="eventTitle userselect">{{ event.name }}</h3>
                 <form method="get" action={% url event.link_to %}>
                     <input type="hidden" name="dept" value={{ event.name }}>
                     <button type="submit" class="btn btn-primary eventButtons">Learn
