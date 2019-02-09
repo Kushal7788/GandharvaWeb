@@ -41,5 +41,5 @@ url(r'participantEventRegister', views.participantEventRegister, name='participa
     url(r'^ourSponsors/$', views.ourSponsors, name='ourSponsors'),
     url(r'^ourTeam/$', views.ourTeam, name='ourTeam'),
     url(r'^verifyOTP/$', views.verifyOTP, name='verifyOTP'),
-    url(r'^upload_file/$', views.files, name='files')
+    url(r'^excel/$', views.TabletoExcel, name='TableToExcel')
 ]

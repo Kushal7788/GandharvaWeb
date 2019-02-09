@@ -1,0 +1,46 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}Campaign Head{% endblock %}
+{% block css %}
+    <link href="{% static 'events/css/campaign.css' %}" rel="stylesheet">
+{% endblock %}
+{% block body %}
+    <br><br><br><br><br>
+    <div class="container" style="height:100vh">
+        <div class="col-sm-6 container-center">
+            <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
+            <br>
+            <div class="text-center">
+                <a href="{{ filename }}" download class="btn bg-primary">
+                    Download
+                </a>
+            </div>
+            <br><br>
+            <div class="container"
+                 style="display: flex;flex-direction: row;justify-items: center;align-items: center;overflow: auto">
+                <table class="table table-responsive">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>Volunteer Name</th>
+                        <th>College Name</th>
+                        <th>Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for volunteer in volunteerData %}
+                        <tr>
+                            <td>{{ volunteer.user.first_name }} {{ volunteer.user.last_name }}</td>
+                            <td>{{ volunteer.college.name }}</td>
+                            <td>{{ volunteer.date }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <br><br>
+{% endblock %}
+
+
+
