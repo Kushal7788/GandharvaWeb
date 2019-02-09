@@ -223,6 +223,15 @@ class Document(models.Model):
         return 'Category : ' + self.category.type + '/' + self.title
 
 
+def filePath(instance):
+    fPath="Doc/"+instance.user.username+"/"
+    return fPath
+
+class fileDocument(models.Model):
+    document = models.FileField(upload_to=filePath)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+
 class InstamojoCredential(models.Model):
     key = models.CharField(max_length=50)
     token = models.CharField(max_length=50)

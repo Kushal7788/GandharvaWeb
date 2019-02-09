@@ -1,7 +1,7 @@
 # include the various features to be used in forms here
 from django import forms
 from .models import *
-
+from EventApp.models import fileDocument
 
 class UserRegistration(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
@@ -71,3 +71,8 @@ class PaymentForm(forms.ModelForm):
     class Meta:
         model = MyUser
         fields = ['user_phone','first_name','last_name','email','user_coll','user_year']
+
+class fileForm(forms.ModelForm):
+    class Meta:
+        model = fileDocument
+        fields = ('document', )

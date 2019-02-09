@@ -6,7 +6,20 @@
 {% endblock %}
 {% block body %}
     <br><br><br><br><br>
+    <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Upload</button>
+  </form>
+    <p>Uploaded files:</p>
+    <ul>
+    {% for obj in documents %}
+      <li>
+        <a href="{{ obj.document.url }}">{{ obj.document.name }}</a>
+        <small>(Uploaded at: {{ obj.uploaded_at }})</small>
+      </li>
+    {% endfor %}
+  </ul>
 
 {% endblock %}
 
-s
