@@ -90,6 +90,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'contactus' %}">Contact Us</a>
             </li>
+
             {% if user.is_authenticated %}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
@@ -108,6 +109,13 @@
                             <form method="get" action="{% url 'campaign' %}">
                                 {% csrf_token %}
                                 <button type="submit" class="dropdown-item dropdownStyle">Campaign Data</button>
+                            </form>
+                        {% endif %}
+
+                        {% if role == 1 %}
+                            <form method="get" action="{% url 'files' %}">
+                                {% csrf_token %}
+                                <button type="submit" class="dropdown-item dropdownStyle">File Upload</button>
                             </form>
                         {% endif %}
 

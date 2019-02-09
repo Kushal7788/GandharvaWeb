@@ -772,6 +772,11 @@ def ourSponsors(request):
 def ourTeam(request):
     return render(request,'gandharva/ourTeam.html')
 
+
+#upload file view
+def files(request):
+    return render(request,'events/fileExplorer.html')
+
 #Campaign Head Method
 @user_Campaign_head
 def campaign(request):
