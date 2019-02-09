@@ -224,13 +224,16 @@ class Document(models.Model):
 
 
 def filePath(instance,filename):
-    fPath="Doc/"+instance.user.username+"/"+filename
+    fPath = "Doc/"+instance.user+"/"+filename
     return fPath
 
 class fileDocument(models.Model):
+    user = models.CharField(max_length=500)
     document = models.FileField(upload_to="doc/")
-
     uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return 'Username : ' + self.user
 
 
 

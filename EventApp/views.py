@@ -793,14 +793,17 @@ def ourTeam(request):
 
 #upload file view
 def files(request):
-    doc=fileDocument.objects.all()
+    doc=fileDocument.objects.filter(user=request.user)
     if request.method == 'POST':
         form = fileForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            f = form.save(commit = False)
+            f.user = request.user
+            print(request.user)
+            f.save()
             return render(request, 'events/fileExplorer.html', {
                 'form': form,
-                'documents' : doc
+                'documents': doc
 
             })
     else:
