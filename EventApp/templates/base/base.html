@@ -105,7 +105,7 @@
                                 <button type="submit" class="dropdown-item dropdownStyle">Register Heads</button>
                             </form>
                         {% endif %}
-                        {% if user.is_staff %}
+                        {% if role == 1 %}
                             <form method="get" action="{% url 'campaign' %}">
                                 {% csrf_token %}
                                 <button type="submit" class="dropdown-item dropdownStyle">Campaign Data</button>
