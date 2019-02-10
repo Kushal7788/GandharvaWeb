@@ -29,33 +29,40 @@ import openpyxl
 import sweetify
 
 
-def TabletoExcel(request):
-    transaction = Transaction.objects.all()
+def campaigning_excel(request):
+    transaction = Transaction.objects.filter(status='Credit')
     wb = openpyxl.Workbook()
     sheet = wb.active
-    i = 2
-    c1 = sheet.cell(row=1, column=1)
-    c1.value = "ParticipantName"
-    c3 = sheet.cell(row=1, column=2)
-    c3.value = "EventName"
-    c2 = sheet.cell(row=1, column=3)
-    c2.value = "College Name"
-    c1 = sheet.cell(row=1, column=4)
-    c1.value = "VisitingDate"
-    c1 = sheet.cell(row=1, column=5)
-    c1.value = "VisitingTime"
-    for t in transaction:
-        c1 = sheet.cell(row=i, column=1)
-        c1.value = t.team.user.first_name + " " + t.team.user.last_name
-        c2 = sheet.cell(row=i, column=2)
-        c2.value = t.receipt.event.event_name
-        c2 = sheet.cell(row=i, column=3)
-        c2.value = t.team.user.user_coll.name
-        c3 = sheet.cell(row=i, column=4)
-        c3.value = str(t.date)
-        c4 = sheet.cell(row=i, column=5)
-        c4.value = str(t.time)
-        i = i + 1
+    columns = ['Name', 'Event', 'College', 'Date']
+
+    heading_row_num = 1
+
+    for counter, each_column in enumerate(columns):
+        curr_cell = sheet.cell(row=heading_row_num, column=counter + 1)
+        curr_cell.value = each_column
+    # i = 2
+    # c1 = sheet.cell(row=1, column=1)
+    # c1.value = "ParticipantName"
+    # c3 = sheet.cell(row=1, column=2)
+    # c3.value = "EventName"
+    # c2 = sheet.cell(row=1, column=3)
+    # c2.value = "College Name"
+    # c1 = sheet.cell(row=1, column=4)
+    # c1.value = "VisitingDate"
+    # c1 = sheet.cell(row=1, column=5)
+    # c1.value = "VisitingTime"
+    # for t in transaction:
+    #     c1 = sheet.cell(row=i, column=1)
+    #     c1.value = t.team.user.first_name + " " + t.team.user.last_name
+    #     c2 = sheet.cell(row=i, column=2)
+    #     c2.value = t.receipt.event.event_name
+    #     c2 = sheet.cell(row=i, column=3)
+    #     c2.value = t.team.user.user_coll.name
+    #     c3 = sheet.cell(row=i, column=4)
+    #     c3.value = str(t.date)
+    #     c4 = sheet.cell(row=i, column=5)
+    #     c4.value = str(t.time)
+    #     i = i + 1
     pathw = 'http://127.0.0.1:8000/media/CampaignData.xlsx'
     wb.save("media/CampaignData.xlsx")
     arg = {
