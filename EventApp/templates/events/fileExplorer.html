@@ -16,7 +16,7 @@
                 {% csrf_token %}
                 <div class="text-center">
                     {{ form.as_p }}
-                    <button type="submit" class="btn btn-primary" style="margin-left: 0;width:auto;">Upload</button>
+                    <button type="submit" id="upload" class="btn btn-primary" style="margin-left: 0;width:auto;">Upload</button>
                 </div>
             </form>
             <div class="text-center">
@@ -34,5 +34,7 @@
         <br>
     </div>
     <br>
+
+
 {% endblock %}
 

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, PermissionsMixin
+from .validators import validate_file_size
 
 
 # Create your models here.
@@ -236,7 +237,7 @@ def filePath(instance,filename):
 class fileDocument(models.Model):
     fname = models.CharField(max_length=250)
     user = models.ForeignKey(MyUser, on_delete=models.PROTECT)
-    document = models.FileField(upload_to=filePath)
+    document = models.FileField(upload_to=filePath,validators=[validate_file_size])
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
