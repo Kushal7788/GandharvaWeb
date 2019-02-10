@@ -93,17 +93,14 @@
     <section id="eventSection">
         <img class="img-fluid" src="{% static 'gandharva/img/band.png' %}">
         <div class="container-fluid" style="background-color:#33888F">
-            <h1 style="text-align: center;padding-top:2vh;color:#fff;font-weight:500" data-sal="slide-up"
-                data-sal-easing="ease-out-bounce"
-                data-sal-delay="100" data-sal-duration="500">
+            <h1 style="text-align: center;padding-top:2vh;color:#fff;font-weight:500">
                 Events</h1>
 
             {% for event in events %}
                 {% if forloop.first %}
                     <div class="row">{% endif %}
             <div class="col-sm-2 eventDiv"
-                 style="background-image:url({% static event.img %}); background-repeat: no-repeat; background-size: cover; width: 480px;height: 240px"
-                 data-sal="slide-up" data-sal-easing="ease-out-bounce" data-sal-delay="30" data-sal-duration="500">
+                 style="background-image:url({% static event.img %}); background-repeat: no-repeat; background-size: cover; width: 480px;height: 240px">
                 <h3 class="eventTitle userselect">{{ event.name }}</h3>
                 <form method="get" action={% url event.link_to %}>
                     <input type="hidden" name="dept" value={{ event.name }}>
@@ -131,11 +128,9 @@
                          alt="guitar">
                 </div>
                 <div class="col-sm-6">
-                    <h2 style="margin-top: 2vh;text-align: center;font-weight: 500" data-sal="slide-up"
-                        data-sal-easing="ease-out-bounce" data-sal-delay="100" data-sal-duration="500">About
+                    <h2 style="margin-top: 2vh;text-align: center;font-weight: 500">About
                         Gandharva</h2>
-                    <p style="margin-top:2vh;text-align: center" data-sal="slide-up"
-                       data-sal-easing="ease-out-bounce" data-sal-delay="100" data-sal-duration="500">
+                    <p style="margin-top:2vh;text-align: center">
                         {{ About }}
                 </div>
             </div>
@@ -190,13 +185,10 @@
             <div class="row">
                 <div class="col-sm-12">
                     <br>
-                    <h2 class="text-center font-weight-bold text-white" style="padding-top: 6px" data-sal="slide-up"
-                        data-sal-easing="ease-out-bounce" data-sal-delay="100" data-sal-duration="800">Our
+                    <h2 class="text-center font-weight-bold text-white" style="padding-top: 6px">Our
                         Sponsors</h2>
                     <p></p>
-                    <div class="mt-5 pos-r" data-sal="slide-up" data-sal-easing="ease-out-bounce"
-                         data-sal-delay="100"
-                         data-sal-duration="800">
+                    <div class="mt-5 pos-r">
                         <div class="carousel-controls testimonial-carousel-controls">
                             <div class="control prev"><i class="fa fa-chevron-left text-white">&nbsp;</i></div>
                             <div class="control next"><i class="fa fa-chevron-right text-white">&nbsp;</i></div>
@@ -225,9 +217,7 @@
 
     <section id="contact">
         <div class="map-responsive">
-            <iframe data-sal="slide-left" data-sal-easing="ease-out-bounce" data-sal-delay="100"
-                    data-sal-duration="800"
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3784.5401738494324!2d73.8832296900385!3d18.45917563402179!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2eaf41ac81e59%3A0xeedc5be537570702!2sVIIT+College+Of+Engineering!5e0!3m2!1sen!2sin!4v1542291058693"
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3784.5401738494324!2d73.8832296900385!3d18.45917563402179!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2eaf41ac81e59%3A0xeedc5be537570702!2sVIIT+College+Of+Engineering!5e0!3m2!1sen!2sin!4v1542291058693"
                     frameborder="0" style="border:0;width:100%;height:100%" allowfullscreen></iframe>
         </div>
     </section>
