@@ -30,16 +30,28 @@ import sweetify
 
 
 def campaigning_excel(request):
-    transaction = Transaction.objects.filter(status='Credit')
+    all_transactions = Transaction.objects.filter(status='Credit')
     wb = openpyxl.Workbook()
     sheet = wb.active
-    columns = ['Name', 'Event', 'College', 'Date']
+    columns = ['Participant Name', 'Event', 'College', 'Date']
 
     heading_row_num = 1
+
+    data_starting_number = 3
 
     for counter, each_column in enumerate(columns):
         curr_cell = sheet.cell(row=heading_row_num, column=counter + 1)
         curr_cell.value = each_column
+
+    for row, each_transaction in enumerate(all_transactions):
+        values = [each_transaction.team.user.first_name + " " + each_transaction.team.user.last_name,
+                  each_transaction.receipt.event.event_name,
+                  each_transaction.team.user.user_coll.name,
+                  str(each_transaction.date)]
+        for col, each_value in enumerate(values):
+            curr_cell = sheet.cell(row=row + data_starting_number, column=col+1)
+            curr_cell.value = each_value
+
     # i = 2
     # c1 = sheet.cell(row=1, column=1)
     # c1.value = "ParticipantName"
@@ -67,7 +79,7 @@ def campaigning_excel(request):
     wb.save("media/CampaignData.xlsx")
     arg = {
         'filename': pathw,
-        'transaction': transaction
+        'transaction': all_transactions
 
     }
     return render(request, 'user/TableToExcel.html', arg)
