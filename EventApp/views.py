@@ -30,7 +30,7 @@ import sweetify
 
 
 def TabletoExcel(request):
-    transaction=Transaction.objects.all()
+    transaction = Transaction.objects.all()
     wb = openpyxl.Workbook()
     sheet = wb.active
     i = 2
@@ -84,7 +84,8 @@ def home(request):
         'About': GandharvaHome.objects.get(title__startswith="About").data,
         'role': userget
     }
-    sweetify.sweetalert(request, 'Westworld is awesome', text='Really... if you have the chance - watch it! persistent = I agree!')
+    sweetify.sweetalert(request, 'Westworld is awesome',
+                        text='Really... if you have the chance - watch it! persistent = I agree!')
     return render(request, 'gandharva/index.html', args)
 
 
@@ -377,21 +378,21 @@ def user_login(request):
     else:
         return render(request, 'events/login.html', {})
 
-def myaction(request):
 
+def myaction(request):
     role = RoleAssignment.objects.get(user=request.user.id)
     if role.role.name == "Campaigning Head" or role.role.name == "Jt Campaigning Head":
         args = {
-            'button_name':'Campaign',
-            'urlaccess' : campaign,
+            'button_name': 'Campaign',
+            'urlaccess': campaign,
         }
     else:
         args = {
-            'button_name':"No Actions",
-            'urlaccess' : None,
+            'button_name': "No Actions",
+            'urlaccess': None,
         }
 
-    return render(request, 'user/myactions.html',args)
+    return render(request, 'user/myactions.html', args)
 
 
 def payment(request):
@@ -533,9 +534,10 @@ def verifyOTP(request):
                 ifuser = MyUser.objects.get(email=userEmail)
             else:
                 ifuser = None
-            readm="readonly"
+            readm = "readonly"
             return render(request, 'events/participantDetails.html',
-                          {'event': event, 'colleges': coll, 'email_participant': userEmail, 'present_user': ifuser,'readm':readm})
+                          {'event': event, 'colleges': coll, 'email_participant': userEmail, 'present_user': ifuser,
+                           'readm': readm})
 
 
 def participantDetails(request):
@@ -608,6 +610,7 @@ def participantDetails(request):
             return render(request, 'events/participantDetails.html',
                           {'event': event, 'colleges': coll, 'email_participant': participant_email,
                            'present_user': ifuser, 'error': error})
+
 
 def cashpayment(event, user, request):
     id = ""
@@ -906,7 +909,7 @@ def campaign(request):
                         volunteers.append(v)
             args = {
 
-                    'volunteers': volunteers,
+                'volunteers': volunteers,
             }
             print("volunteer")
             print(volunteers)
