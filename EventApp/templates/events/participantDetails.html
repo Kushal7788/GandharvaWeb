@@ -91,7 +91,7 @@
                 </div>
 
                 {% if not request.user.is_staff %}
-                    <input id="refer" class="form-control" type="text" name="refer" placeholder="Referral">
+                    <input id="refer" class="form-control" type="text" name="refer" placeholder="Referral Code (if any)">
                 {% else %}
                     <input name='refer' type="hidden" value={{ request.user.username }}>
                 {% endif %}
