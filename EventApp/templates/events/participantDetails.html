@@ -13,6 +13,7 @@
             <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
             <h5 style="text-align: center;">Enter your details</h5>
             <br>
+
             <form method="post" action="{% url 'participantDetails' %}">
                 {% csrf_token %}
                 {% if form.non_field_errors %}
@@ -29,7 +30,8 @@
                         {% endfor %}
                     </ul>
                 {% endif %}
-
+                <h3 style="word-wrap: break-word">Event: {{ event.event_name }}</h3>
+                <br>
                 <div class="row">
                     <div class="col-sm-12 col-md-6">
                         <div class="form-group">
@@ -86,9 +88,7 @@
                     {{ form.user_coll.errors }}
                     </span>
                 </div>
-                <br>
-                <h2>{{ event.event_name }}</h2>
-                <br>
+
                 {% if not request.user.is_staff %}
                     <input id="refer" class="form-control" type="text" name="refer" placeholder="Referral">
                 {% else %}
@@ -98,8 +98,7 @@
 
                 <div class="text-right">
                     <br>
-                    <button type="submit" id="modal-btn" name="card" value="card" class="btn Login_btn-primary">Pay by
-                        Card
+                    <button type="submit" id="modal-btn" name="card" value="card" class="btn Login_btn-primary">Pay Now
                     </button>
                     {% if request.user.is_staff %}
                         <button type="submit" id="modal-btn" name="cash" value="cash" class="btn Login_btn-primary"
