@@ -915,7 +915,7 @@ def campaign(request):
             events = []
             transactions = Transaction.objects.all()
             for transaction in transactions:
-                if transaction.status == "Credit":
+                if transaction.status == "Credit" or transaction.status == "Cash":
                     event = transaction.team.receipt.event
                     c = 0
                     for i in range(len(events)):
@@ -939,7 +939,7 @@ def campaign(request):
             colleges = []
             transactions = Transaction.objects.all()
             for transaction in transactions:
-                if transaction.status == "Credit":
+                if transaction.status == "Credit" or transaction.status == "Cash":
                     college = transaction.team.user.user_coll
                     c = 0
                     for i in range(len(colleges)):
