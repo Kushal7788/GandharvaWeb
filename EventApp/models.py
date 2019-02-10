@@ -33,6 +33,10 @@ class Department(models.Model):
     def __str__(self):
         return self.name
 
+def rules_path(instance, filename):
+    ext = filename.split('.')[-1]
+    filename = '{}.{}'.format("Rules_doc/" + instance.event_name, ext)
+    return filename
 
 def prof_path(instance, filename):
     ext = filename.split('.')[-1]
@@ -104,6 +108,7 @@ class EventMaster(models.Model):
     tagline = models.CharField(max_length=100, blank=True)
     num_of_winners = models.IntegerField()
     team_size = models.IntegerField()
+    rules_file = models.FileField(upload_to=rules_path ,blank=True, default=None)
     entry_fee = models.IntegerField()
     objective = models.TextField(max_length=1000, blank=True)
     rounds = models.TextField(max_length=10000, blank=True)
