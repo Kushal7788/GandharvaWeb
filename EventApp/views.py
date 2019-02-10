@@ -201,7 +201,7 @@ def success(request):
         teams = reversed(Team.objects.filter(user=user).reverse())
         print(teams)
 
-        return render(request, 'user/registeredEvents.html', {'teams': teams})
+        return render(request, 'user/paymentSsuccess.html')
     else:
         print("ERROR")
 
