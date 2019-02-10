@@ -7,6 +7,7 @@
 
 {% block body %}
     <br><br><br><br>
+    <div class="loader"></div>
     <div class="container" style="height: 100vh">
         <div class="col-sm-5 container-center">
             <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
@@ -24,7 +25,9 @@
                 <div class="form-group">
                     <input type="hidden" name="event_id" value={{ event_id }}>
                     <div class="text-right">
-                        <button type="submit" class="btn Login_btn-primary" style="margin-left: 0">Send OTP</button>
+                        <button type="submit" id="sendOTPButton" class="btn Login_btn-primary" style="margin-left: 0">
+                            Send OTP
+                        </button>
                     </div>
                 </div>
             </form>
@@ -51,4 +54,19 @@
         </div>
     </div>
     <br><br>
+    {% block scripts %}
+        <script>
+            $(document).ready(function () {
+                $("#sendOTPButton").click(function () {
+                    $('.loader').addClass('displayLoader');
+                    myFunction(this);
+                });
+
+                function myFunction(div) {
+                    $(".loader").toggle();
+                    $(div).toggle();
+                }
+            });
+        </script>
+    {% endblock %}
 {% endblock %}
