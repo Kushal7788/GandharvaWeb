@@ -36,7 +36,7 @@ html, body {
 }
 
 .volTable {
-    margin:12px;
+    margin: 12px;
     width: 100%;
 }
 
@@ -70,7 +70,7 @@ html, body {
     margin-bottom: 20px;
     margin-top: 10px;
     word-wrap: break-word;
-    width: 180px;
+    width: 200px;
 }
 
 #volunteer {
@@ -91,4 +91,14 @@ td {
 
 th {
     text-align: center;
+}
+
+.DownloadButton {
+    background-color: #1a73e8;
+    color: #fff;
+}
+
+.DownloadButton:hover {
+    background-color: #1a73e8;
+    color: #fff;
 }
