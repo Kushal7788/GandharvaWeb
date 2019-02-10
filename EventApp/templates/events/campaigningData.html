@@ -6,9 +6,10 @@
 {% endblock %}
 {% block body %}
     <br><br><br><br><br>
-    <div class="container" style="height: 100vh">
+    <div class="container">
         {% if volunteers %}
-            <div id="volunteer" class="container" style="display: flex;flex-direction: row;justify-items: center;align-items: center;overflow: auto">
+            <div id="volunteer" class="container"
+                 style="display: flex;flex-direction: row;justify-items: center;align-items: center;overflow: auto">
                 <div class="container-center">
                     <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
                     <h5 style="text-align: center;">Number of Entries</h5>
@@ -61,7 +62,8 @@
             </div>
 
         {% elif colleges %}
-            <div id="college" class="container" style="display: flex;flex-direction: row;justify-items: center;align-items: center;overflow: auto">
+            <div id="college" class="container"
+                 style="display: flex;flex-direction: row;justify-items: center;align-items: center;overflow: auto">
                 <div class="container-center">
                     <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
                     <h5 style="text-align: center;">Collegewise Entries</h5>
@@ -84,8 +86,12 @@
                     </table>
                 </div>
             </div>
+
         {% endif %}
     </div>
+    <br>
+    <div style="height: 40vh"></div>
+
     {% block scripts %}
         <script>
             {% if volunteers %}
