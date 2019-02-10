@@ -55,14 +55,12 @@
     </div>
     <br><br>
     {% block scripts %}
-{#        loaderscript#}
         <script>
             $(document).ready(function () {
                 $("#sendOTPButton").click(function () {
                     $('.loader').addClass('displayLoader');
                     myFunction(this);
                 });
-
                 function myFunction(div) {
                     $(".loader").toggle();
                     $(div).toggle();
