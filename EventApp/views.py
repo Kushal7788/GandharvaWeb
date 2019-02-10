@@ -199,10 +199,12 @@ def success(request):
                 email = EmailMessage(mail_subject, message, to=[user.email])
                 email.attach_file("media//" + str(team.QRcode))
                 email.send()
+        if transaction.status == "Credit":
+            return render(request, 'user/paymentSsuccess.html')
+        elif transaction.status == "Failed":
+            return render(request, 'user/paymentFailed.html')
         teams = reversed(Team.objects.filter(user=user).reverse())
         print(teams)
-
-        return render(request, 'user/paymentSsuccess.html')
     else:
         print("ERROR")
 
