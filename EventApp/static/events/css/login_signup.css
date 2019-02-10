@@ -165,7 +165,11 @@ input {
     .g-sign-in-button .text-container {
         font-size: 17px;
     }
+}
 
+.ForgotPassword {
+    font-weight:bold;
+    color: #3673e8;
 }
 
 .btn-primary:hover {
