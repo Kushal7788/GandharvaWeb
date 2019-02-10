@@ -530,7 +530,7 @@ def participantEventRegister(request):
             return render(request, 'events/participantEventRegister.html',
                           {'email': useremail, 'otp': otp, 'event_id': eventId})
         else:
-            return render(request, 'events/participantEventRegister.html', {'event_id': eventId})
+            return render(request, 'events/participantEventRegister.html', {'event_id': eventId, 'email': useremail})
     if request.method == 'GET':
         event_id = request.GET.get('event_id')
         return render(request, 'events/participantEventRegister.html', {'event_id': event_id})
