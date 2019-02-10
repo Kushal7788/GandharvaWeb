@@ -101,6 +101,7 @@ class Category_assign(models.Model):
 class EventMaster(models.Model):
     event_id = models.IntegerField(primary_key=True)
     event_name = models.CharField(max_length=100)
+    tagline = models.CharField(max_length=100, blank=True)
     num_of_winners = models.IntegerField()
     team_size = models.IntegerField()
     entry_fee = models.IntegerField()

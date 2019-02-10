@@ -61,27 +61,22 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <form method="get" action="{% url 'events' %}">
-                        {% csrf_token %}
                         <input type="hidden" name="dept" value="Computer">
                         <button type="submit" class="dropdown-item dropdownStyle">Computer</button>
                     </form>
                     <form method="get" action="{% url 'events' %}">
-                        {% csrf_token %}
                         <input type="hidden" name="dept" value="IT">
                         <button type="submit" class="dropdown-item dropdownStyle">IT</button>
                     </form>
                     <form method="get" action="{% url 'events' %}">
-                        {% csrf_token %}
                         <input type="hidden" name="dept" value="ENTC">
                         <button type="submit" class="dropdown-item dropdownStyle">ENTC</button>
                     </form>
                     <form method="get" action="{% url 'events' %}">
-                        {% csrf_token %}
                         <input type="hidden" name="dept" value=Mechanical>
                         <button type="submit" class="dropdown-item dropdownStyle">Mechanical</button>
                     </form>
                     <form method="get" action="{% url 'events' %}">
-                        {% csrf_token %}
                         <input type="hidden" name="dept" value=Civil>
                         <button type="submit" class="dropdown-item dropdownStyle">Civil</button>
                     </form>
@@ -107,7 +102,6 @@
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                         {% if user.is_superuser %}
                             <form method="get" action="{% url 'RegisterHead' %}">
-                                {% csrf_token %}
                                 <input type="hidden" name="HeadRegister" value=>
                                 <button type="submit" class="dropdown-item dropdownStyle">Register Heads</button>
                             </form>
@@ -118,7 +112,7 @@
                                 <button type="submit" class="dropdown-item dropdownStyle">My Actions</button>
                             </form>
                             <form method="get" action="{% url 'files' %}">
-                                {% csrf_token %}
+
                                 <button type="submit" class="dropdown-item dropdownStyle">File Upload</button>
                             </form>
                         {% endif %}
@@ -129,7 +123,6 @@
                             <button type="submit" class="dropdown-item dropdownStyle">My Profile</button>
                         </form>
                         <form method="get" action="{% url 'eventsRegister' %}">
-                            {% csrf_token %}
                             <input type="hidden" name="EventRegister" value=>
                             <button type="submit" class="dropdown-item dropdownStyle">Register Events</button>
                         </form>
