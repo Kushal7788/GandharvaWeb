@@ -174,6 +174,17 @@ def success(request):
                 thumb_io = BytesIO()
                 img.save(thumb_io, format='JPEG')
                 team.QRcode.save('ticket-filename.jpg', File(thumb_io), save=False)
+
+                # While loop for generating a unique refral code for user
+                while True:
+                    try:
+                        Refral_Code = ''.join(random.choice(string.ascii_uppercase) for _ in range(3)) + str(
+                            random.randint(100, 999))
+                        Team.objects.get(Refral_Code=Refral_Code)
+                    except:
+                        break
+
+                team.Refral_Code = Refral_Code
                 team.save()
 
                 # Event Receipt Mail
@@ -638,6 +649,18 @@ def cashpayment(event, user, request):
         thumb_io = BytesIO()
         img.save(thumb_io, format='JPEG')
         team.QRcode.save('ticket-filename.jpg', File(thumb_io), save=False)
+
+        # While loop for generating a unique refral code for user
+        while True:
+            try:
+                Refral_Code = ''.join(random.choice(string.ascii_uppercase) for _ in range(3)) + str(
+                    random.randint(100, 999))
+                Team.objects.get(Refral_Code=Refral_Code)
+            except:
+                break
+
+        team.Refral_Code = Refral_Code
+
         team.save()
 
         mail_subject = 'You have registered for ' + event.event_name + ' using cash payment'
