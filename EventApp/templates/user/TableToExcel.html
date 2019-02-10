@@ -1,14 +1,15 @@
 {% extends 'base/base.html' %}
 {% load static %}
-{% block title %}Campaign Head{% endblock %}
+{% block title %}Participant Information{% endblock %}
 {% block css %}
     <link href="{% static 'events/css/campaign.css' %}" rel="stylesheet">
 {% endblock %}
 {% block body %}
-    <br><br><br><br><br>
-    <div class="container" style="height:100vh">
-        <div class="col-sm-6 container-center">
+    <br><br><br><br><br><br>
+    <div class="container">
+        <div class="col-sm-8 container-center">
             <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
+            <h5 style="text-align: center">Participant Information</h5>
             <br>
             <div class="text-center">
                 <a href="{{ filename }}" download class="btn bg-primary DownloadButton">
@@ -43,7 +44,8 @@
             </div>
         </div>
     </div>
-    <br><br><br><br><br><br>
+    <br><br>
+    <div style="height: 40vh"></div>
 {% endblock %}
 
 
