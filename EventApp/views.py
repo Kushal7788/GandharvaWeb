@@ -611,7 +611,9 @@ def participantDetails(request):
                     send_sms=False,
                     email=user.email,
                     phone=user.user_phone,
-                    redirect_url="http://127.0.0.1:8000/success?eid=" + event_id + "&ref=" + str(refer)
+                    # redirect_url="http://127.0.0.1:8000/success?eid=" + event_id + "&ref=" + str(refer)
+                    redirect_url=insta.redirect_url+"success?eid=" + event_id + "&ref=" + str(refer)+"success?eid=" + event_id + "&ref=" + str(refer)
+
                 )
                 # print the long URL of the payment request.
                 print(response['payment_request']['longurl'])
