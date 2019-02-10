@@ -21,17 +21,21 @@
                 <table class="table table-responsive">
                     <thead class="thead-dark">
                     <tr>
-                        <th>Volunteer Name</th>
+                        <th>Participant Name</th>
+                        <th>Event Name</th>
                         <th>College Name</th>
                         <th>Date</th>
+                        <th>Time</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {% for volunteer in volunteerData %}
+                    {% for t in transaction %}
                         <tr>
-                            <td>{{ volunteer.user.first_name }} {{ volunteer.user.last_name }}</td>
-                            <td>{{ volunteer.college.name }}</td>
-                            <td>{{ volunteer.date }}</td>
+                            <td>{{ t.team.user.first_name }} {{ t.team.user.last_name }}</td>
+                            <td>{{ t.receipt.event.event_name }}</td>
+                            <td>{{ t.team.user.user_coll.name }}</td>
+                            <td>{{ t.date }}</td>
+                            <td>{{ t.time }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>

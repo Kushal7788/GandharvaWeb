@@ -5,7 +5,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from io import BytesIO
 from django.core.files import File
-
 from EventApp.models import *
 from .forms import *
 from django.contrib import messages
@@ -27,32 +26,41 @@ import qrcode
 import json
 import string
 import openpyxl
+import sweetify
 
 
 def TabletoExcel(request):
-    volunteerData = Volunteer.objects.all()
+    transaction=Transaction.objects.all()
     wb = openpyxl.Workbook()
     sheet = wb.active
     i = 2
     c1 = sheet.cell(row=1, column=1)
-    c1.value = "Volunteer Name"
-    c2 = sheet.cell(row=1, column=2)
+    c1.value = "ParticipantName"
+    c3 = sheet.cell(row=1, column=2)
+    c3.value = "EventName"
+    c2 = sheet.cell(row=1, column=3)
     c2.value = "College Name"
-    c1 = sheet.cell(row=1, column=3)
-    c1.value = "Visiting Date"
-    for v in volunteerData:
+    c1 = sheet.cell(row=1, column=4)
+    c1.value = "VisitingDate"
+    c1 = sheet.cell(row=1, column=5)
+    c1.value = "VisitingTime"
+    for t in transaction:
         c1 = sheet.cell(row=i, column=1)
-        c1.value = v.user.first_name + " " + v.user.last_name
+        c1.value = t.team.user.first_name + " " + t.team.user.last_name
         c2 = sheet.cell(row=i, column=2)
-        c2.value = v.college.name
-        c3 = sheet.cell(row=i, column=3)
-        c3.value = str(v.date)
+        c2.value = t.receipt.event.event_name
+        c2 = sheet.cell(row=i, column=3)
+        c2.value = t.team.user.user_coll.name
+        c3 = sheet.cell(row=i, column=4)
+        c3.value = str(t.date)
+        c4 = sheet.cell(row=i, column=5)
+        c4.value = str(t.time)
         i = i + 1
     pathw = 'http://127.0.0.1:8000/media/CampaignData.xlsx'
     wb.save("media/CampaignData.xlsx")
     arg = {
         'filename': pathw,
-        'volunteerData': volunteerData
+        'transaction': transaction
 
     }
     return render(request, 'user/TableToExcel.html', arg)
@@ -76,7 +84,7 @@ def home(request):
         'About': GandharvaHome.objects.get(title__startswith="About").data,
         'role': userget
     }
-
+    sweetify.sweetalert(request, 'Westworld is awesome', text='Really... if you have the chance - watch it! persistent = I agree!')
     return render(request, 'gandharva/index.html', args)
 
 
@@ -86,7 +94,6 @@ def comingSoon(request):
         'carouselImage': Carousel.objects.all(),
         'gandharvaDate': 'March 20, 2019'
     }
-
     return render(request, 'gandharva/comingSoon.html', arg)
 
 
@@ -514,8 +521,9 @@ def verifyOTP(request):
                 ifuser = MyUser.objects.get(email=userEmail)
             else:
                 ifuser = None
+            readm="readonly"
             return render(request, 'events/participantDetails.html',
-                          {'event': event, 'colleges': coll, 'email_participant': userEmail, 'present_user': ifuser})
+                          {'event': event, 'colleges': coll, 'email_participant': userEmail, 'present_user': ifuser,'readm':readm})
 
 
 def participantDetails(request):
@@ -584,7 +592,10 @@ def participantDetails(request):
                 return render(request, 'user/registeredEvents.html', {'teams': teams})
         else:
             print(form.errors)
-
+            error = form.errors
+            return render(request, 'events/participantDetails.html',
+                          {'event': event, 'colleges': coll, 'email_participant': participant_email,
+                           'present_user': ifuser, 'error': error})
 
 def cashpayment(event, user, request):
     id = ""
@@ -850,7 +861,7 @@ def campaign(request):
             transactions = Transaction.objects.all()
             for transaction in transactions:
                 if transaction.status == "Credit" or "Cash":
-                    ref = transaction.team.referral
+                    ref = transaction.team.referral.username
                     try:
                         name = MyUser.objects.get(username=ref)
                     except(ObjectDoesNotExist):
@@ -867,12 +878,12 @@ def campaign(request):
                         v.name = name
                         v.count = 1
                         volunteers.append(v)
-                args = {
+            args = {
 
                     'volunteers': volunteers,
-                }
-                print("volunteer")
-                print(volunteers)
+            }
+            print("volunteer")
+            print(volunteers)
             return render(request, 'events/campaigningData.html', args)
         elif check == "1":
             events = []

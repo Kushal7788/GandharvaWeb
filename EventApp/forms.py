@@ -72,6 +72,7 @@ class PaymentForm(forms.ModelForm):
         model = MyUser
         fields = ['user_phone','first_name','last_name','email','user_coll','user_year']
 
+
 class fileForm(forms.ModelForm):
     class Meta:
         model = fileDocument

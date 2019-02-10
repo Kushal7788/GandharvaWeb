@@ -56,17 +56,11 @@
     </div>
     <br><br>
     <div class="container">
-        <form method="get"
-                {% if user.is_authenticated %}
-              action="{% url 'TeamDetails' %}" >
-                {% else %}
-                    action ="{% url 'user_login' %}">
-                {% endif %}
-        <input type="hidden" name="event" value="{{ event.event_name }}">
-        <button type="submit" class="btn btn-primary eventButtons">Register
-            Now
-        </button>
-        </form>
+        <form method="get" action="{% url 'participantEventRegister' %}">
+                            <input type="hidden" name="event_id" value={{ event.event_id }}>
+                            <button type="submit" id="modal-btn" class="btn btn-primary eventButtons">Register Now
+                            </button>
+                        </form>
     </div>
     <br>
 {% endblock %}
