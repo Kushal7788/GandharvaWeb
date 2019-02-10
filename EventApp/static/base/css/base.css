@@ -109,3 +109,22 @@ a:hover {
     -ms-user-select: none;
     user-select: none;
 }
+
+.topButton {
+    display: none;
+    position: fixed;
+    right: 12px;
+    bottom: 90px;
+    color: #fff;
+    margin-top: 12px;
+    z-index: 100;
+    opacity: 0.8;
+    background-color: #404040;
+}
+.topButton:hover{
+    opacity: 1;
+}
+
+.buttonDisplay{
+    display: block;
+}

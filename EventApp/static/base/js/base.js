@@ -8,6 +8,12 @@ $(document).ready(function () {
         } else {
             $('.navbar').removeClass('solid');
         }
+
+        if ($(this).scrollTop() > 500) {
+            $('.topButton').addClass('buttonDisplay');
+        } else {
+            $('.topButton').removeClass('buttonDisplay');
+        }
     });
 });
 
