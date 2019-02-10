@@ -8,6 +8,7 @@
 
 {% block body %}
     <br><br><br><br><br>
+    <div class="loader"></div>
     <div class="container">
         <div class="col-sm-5 container-center">
             <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
@@ -30,7 +31,7 @@
                         {% endfor %}
                     </ul>
                 {% endif %}
-                <h3 style="word-wrap: break-word">Event: {{ event.event_name }}</h3>
+                <h4 style="word-wrap: break-word">Event: {{ event.event_name }}</h4>
                 <br>
                 <div class="row">
                     <div class="col-sm-12 col-md-6">
@@ -101,7 +102,7 @@
                     <button type="submit" id="modal-btn" name="card" value="card" class="btn Login_btn-primary">Pay Now
                     </button>
                     {% if request.user.is_staff %}
-                        <button type="submit" id="modal-btn" name="cash" value="cash" class="btn Login_btn-primary"
+                        <button type="submit" id="cashButton" name="cash" value="cash" class="btn Login_btn-primary"
                                 style="margin-left: 6px">Pay By Cash
                         </button>
                     {% endif %}
@@ -111,4 +112,19 @@
         </div>
     </div>
     <br><br>
+    {% block scripts %}
+        <script>
+            $(document).ready(function () {
+                $("#cashButton").click(function () {
+                    $('.loader').addClass('displayLoader');
+                    myFunction(this);
+                });
+
+                function myFunction(div) {
+                    $(".loader").toggle();
+                    $(div).toggle();
+                }
+            });
+        </script>
+    {% endblock %}
 {% endblock %}

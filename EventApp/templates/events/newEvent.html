@@ -47,6 +47,11 @@
                             Structure:</h4>
                         <p>Max {{ event.event.team_size }} Participants per Team & ₹ {{ event.event.entry_fee }} per
                             team.</p>
+                        {% if event.event.rules_file.url != None %}
+
+                        <a href="{{ event.event.rules_file.url }}">{{ event.event.event_name }} rules pdf download</a>
+
+        {% endif %}
                     </div>
 
                     <div style="display: flex;flex-direction: row;justify-items: left;">
