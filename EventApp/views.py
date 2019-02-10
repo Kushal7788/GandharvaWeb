@@ -165,11 +165,12 @@ def success(request):
             transaction.save()
             # Generate QR code if transaction is success full
             if transaction.status == "Credit":
+                print("credit ...")
                 qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_M, box_size=10, border=4)
                 content = "event:" + event.event_name + ", user:" + user.username
                 qr.add_data(content)
                 img = qr.make_image(fill_color="black", back_color="white")
-                img.save(user.username + event.event_name + "png")
+                # img.save(user.username + event.event_name + "png")
                 thumb_io = BytesIO()
                 img.save(thumb_io, format='JPEG')
                 team.QRcode.save('ticket-filename.jpg', File(thumb_io), save=False)
@@ -628,11 +629,12 @@ def cashpayment(event, user, request):
     transaction.save()
     # Generate QR code if transaction is success full
     if transaction.status == "Cash":
+        print("cashhh")
         qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_M, box_size=10, border=4)
         content = "event:" + event.event_name + ", user:" + user.username
         qr.add_data(content)
         img = qr.make_image(fill_color="black", back_color="white")
-        img.save(user.username + event.event_name + "png")
+        # img.save(user.username + event.event_name + "png")
         thumb_io = BytesIO()
         img.save(thumb_io, format='JPEG')
         team.QRcode.save('ticket-filename.jpg', File(thumb_io), save=False)
@@ -861,10 +863,11 @@ def campaign(request):
             transactions = Transaction.objects.all()
             for transaction in transactions:
                 if transaction.status == "Credit" or "Cash":
-                    ref = transaction.team.referral.username
+
                     try:
+                        ref = transaction.team.referral.username
                         name = MyUser.objects.get(username=ref)
-                    except(ObjectDoesNotExist):
+                    except(Exception):
                         continue
                     c = 0
                     for i in range(len(volunteers)):
