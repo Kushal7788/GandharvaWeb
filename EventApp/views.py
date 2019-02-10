@@ -29,38 +29,57 @@ import openpyxl
 import sweetify
 
 
-def TabletoExcel(request):
-    transaction=Transaction.objects.all()
+def campaigning_excel(request):
+    all_transactions = Transaction.objects.filter(status='Credit')
     wb = openpyxl.Workbook()
     sheet = wb.active
-    i = 2
-    c1 = sheet.cell(row=1, column=1)
-    c1.value = "ParticipantName"
-    c3 = sheet.cell(row=1, column=2)
-    c3.value = "EventName"
-    c2 = sheet.cell(row=1, column=3)
-    c2.value = "College Name"
-    c1 = sheet.cell(row=1, column=4)
-    c1.value = "VisitingDate"
-    c1 = sheet.cell(row=1, column=5)
-    c1.value = "VisitingTime"
-    for t in transaction:
-        c1 = sheet.cell(row=i, column=1)
-        c1.value = t.team.user.first_name + " " + t.team.user.last_name
-        c2 = sheet.cell(row=i, column=2)
-        c2.value = t.receipt.event.event_name
-        c2 = sheet.cell(row=i, column=3)
-        c2.value = t.team.user.user_coll.name
-        c3 = sheet.cell(row=i, column=4)
-        c3.value = str(t.date)
-        c4 = sheet.cell(row=i, column=5)
-        c4.value = str(t.time)
-        i = i + 1
+    columns = ['Participant Name', 'Event', 'College', 'Date']
+
+    heading_row_num = 1
+
+    data_starting_number = 3
+
+    for counter, each_column in enumerate(columns):
+        curr_cell = sheet.cell(row=heading_row_num, column=counter + 1)
+        curr_cell.value = each_column
+
+    for row, each_transaction in enumerate(all_transactions):
+        values = [each_transaction.team.user.first_name + " " + each_transaction.team.user.last_name,
+                  each_transaction.receipt.event.event_name,
+                  each_transaction.team.user.user_coll.name,
+                  str(each_transaction.date)]
+        for col, each_value in enumerate(values):
+            curr_cell = sheet.cell(row=row + data_starting_number, column=col+1)
+            curr_cell.value = each_value
+
+    # i = 2
+    # c1 = sheet.cell(row=1, column=1)
+    # c1.value = "ParticipantName"
+    # c3 = sheet.cell(row=1, column=2)
+    # c3.value = "EventName"
+    # c2 = sheet.cell(row=1, column=3)
+    # c2.value = "College Name"
+    # c1 = sheet.cell(row=1, column=4)
+    # c1.value = "VisitingDate"
+    # c1 = sheet.cell(row=1, column=5)
+    # c1.value = "VisitingTime"
+    # for t in transaction:
+    #     c1 = sheet.cell(row=i, column=1)
+    #     c1.value = t.team.user.first_name + " " + t.team.user.last_name
+    #     c2 = sheet.cell(row=i, column=2)
+    #     c2.value = t.receipt.event.event_name
+    #     c2 = sheet.cell(row=i, column=3)
+    #     c2.value = t.team.user.user_coll.name
+    #     c3 = sheet.cell(row=i, column=4)
+    #     c3.value = str(t.date)
+    #     c4 = sheet.cell(row=i, column=5)
+    #     c4.value = str(t.time)
+    #     i = i + 1
     pathw = 'http://127.0.0.1:8000/media/CampaignData.xlsx'
     wb.save("media/CampaignData.xlsx")
     arg = {
         'filename': pathw,
-        'transaction': transaction
+        'transaction': all_transactions
 
     }
     return render(request, 'user/TableToExcel.html', arg)
@@ -84,7 +103,8 @@ def home(request):
         'About': GandharvaHome.objects.get(title__startswith="About").data,
         'role': userget
     }
-    sweetify.sweetalert(request, 'Westworld is awesome', text='Really... if you have the chance - watch it! persistent = I agree!')
+    sweetify.sweetalert(request, 'Westworld is awesome',
+                        text='Really... if you have the chance - watch it! persistent = I agree!')
     return render(request, 'gandharva/index.html', args)
 
 
@@ -379,21 +399,21 @@ def user_login(request):
     else:
         return render(request, 'events/login.html', {})
 
-def myaction(request):
 
+def myaction(request):
     role = RoleAssignment.objects.get(user=request.user.id)
     if role.role.name == "Campaigning Head" or role.role.name == "Jt Campaigning Head":
         args = {
-            'button_name':'Campaign',
-            'urlaccess' : campaign,
+            'button_name': 'Campaign',
+            'urlaccess': campaign,
         }
     else:
         args = {
-            'button_name':"No Actions",
-            'urlaccess' : None,
+            'button_name': "No Actions",
+            'urlaccess': None,
         }
 
-    return render(request, 'user/myactions.html',args)
+    return render(request, 'user/myactions.html', args)
 
 
 def payment(request):
@@ -535,9 +555,10 @@ def verifyOTP(request):
                 ifuser = MyUser.objects.get(email=userEmail)
             else:
                 ifuser = None
-            readm="readonly"
+            readm = "readonly"
             return render(request, 'events/participantDetails.html',
-                          {'event': event, 'colleges': coll, 'email_participant': userEmail, 'present_user': ifuser,'readm':readm})
+                          {'event': event, 'colleges': coll, 'email_participant': userEmail, 'present_user': ifuser,
+                           'readm': readm})
 
 
 def participantDetails(request):
@@ -590,7 +611,9 @@ def participantDetails(request):
                     send_sms=False,
                     email=user.email,
                     phone=user.user_phone,
-                    redirect_url="http://127.0.0.1:8000/success?eid=" + event_id + "&ref=" + str(refer)
+                    # redirect_url="http://127.0.0.1:8000/success?eid=" + event_id + "&ref=" + str(refer)
+                    redirect_url=insta.redirect_url+"success?eid=" + event_id + "&ref=" + str(refer)+"success?eid=" + event_id + "&ref=" + str(refer)
+
                 )
                 # print the long URL of the payment request.
                 print(response['payment_request']['longurl'])
@@ -610,6 +633,7 @@ def participantDetails(request):
             return render(request, 'events/participantDetails.html',
                           {'event': event, 'colleges': coll, 'email_participant': participant_email,
                            'present_user': ifuser, 'error': error})
+
 
 def cashpayment(event, user, request):
     id = ""
@@ -908,7 +932,7 @@ def campaign(request):
                         volunteers.append(v)
             args = {
 
-                    'volunteers': volunteers,
+                'volunteers': volunteers,
             }
             print("volunteer")
             print(volunteers)

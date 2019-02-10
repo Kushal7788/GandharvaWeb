@@ -248,6 +248,7 @@ class InstamojoCredential(models.Model):
     key = models.CharField(max_length=50)
     token = models.CharField(max_length=50)
     salt = models.CharField(max_length=50)
+    redirect_url=models.CharField(max_length=60,null=True)
 
 class Volunteer(models.Model):
     user=models.ForeignKey(MyUser,on_delete=models.PROTECT)
