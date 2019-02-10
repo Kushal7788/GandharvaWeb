@@ -75,7 +75,8 @@ def campaigning_excel(request):
     #     c4 = sheet.cell(row=i, column=5)
     #     c4.value = str(t.time)
     #     i = i + 1
-    pathw = 'http://127.0.0.1:8000/media/CampaignData.xlsx'
+    insta = InstamojoCredential.objects.latest('key')
+    pathw = insta.redirect_url+'media/CampaignData.xlsx'
     wb.save("media/CampaignData.xlsx")
     arg = {
         'filename': pathw,
@@ -246,7 +247,7 @@ def details(request):
             send_sms=False,
             email=user.email,
             phone=user.user_phone,
-            redirect_url="http://127.0.0.1:8000/success?eid=" + event_id
+            redirect_url=insta.redirect_url+"success?eid=" + event_id
         )
         # print the long URL of the payment request.
         print(response['payment_request']['longurl'])
@@ -699,6 +700,7 @@ def cashpayment(event, user, request):
         email = EmailMessage(mail_subject, message, to=[user.email])
         email.attach_file("media//" + str(team.QRcode))
         email.send()
+
 
 
 def Profile(request):
