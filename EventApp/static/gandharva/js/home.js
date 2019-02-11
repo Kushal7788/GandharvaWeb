@@ -1,6 +1,3 @@
-console.log('Hello');
-
-sal();
 
 // $(document).ready(function () {
 // // Owl

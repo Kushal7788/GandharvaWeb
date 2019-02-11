@@ -1,4 +1,3 @@
-sal();
 
 function SweetAlertSuccess() {
     swal({
