@@ -31,9 +31,9 @@
                         <img src={{ team.QRcode.url }} height="200" width="200">
                     {% endif %}
                 </div>
-                <div class="col-sm-12 col-md-4">
+                <div class="col-sm-12 col-md-4" style="margin-top: 24px">
                     <h1 class="colorlib-heading">{{ team.receipt.event.event_name }}</h1>
-                    <p style="font-weight: 500; margin-bottom: 0;font-size: 18px"> Event Details</p>
+                    <p style="font-weight: 500; margin-bottom: 0;font-size: 18px;margin-top: 14px"> Event Details</p>
                     {% if team.receipt.event.timings %}
                         <div class="con">
                             <p style="font-weight: 500;margin-right: 6px">Time:</p>
@@ -75,7 +75,7 @@
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-4" style="margin-top: 24px">
-                    <p style="font-weight: bold; margin-bottom: 0;font-size: 18px"> Payment Details</p>
+                    <p style="font-weight: 500; margin-bottom: 0;font-size: 18px"> Payment Details</p>
                     {% for transaction in team.transaction_set.all %}
                         <div class="paymentdetails">
                             <p><span style="font-weight: 500">Amount</span> : {{ team.receipt.event.entry_fee }}
@@ -84,8 +84,8 @@
                             <p><span style="font-weight: 500">Transaction ID</span>
                                 : {{ transaction.transaction_id }}
                             </p>
-                            <p><span style="font-weight: bold">Payment Date</span> : {{ transaction.date }}</p>
-                            <p><span style="font-weight: bold">Payment Time</span> : {{ transaction.time }}</p>
+                            <p><span style="font-weight: 500">Payment Date</span> : {{ transaction.date }}</p>
+                            <p><span style="font-weight: 500">Payment Time</span> : {{ transaction.time }}</p>
                             {#                    <p><span style="font-weight: bold">Name</span> : {{ user.first_name }}</p>#}
                             {#                    <p><span style="font-weight: bold">Event</span> : {{ team.receipt.event.event_name }}</p>#}
                             {#                    <p><span style="font-weight: bold">Phone</span> : {{ user.user_phone }}</p>#}
@@ -96,11 +96,11 @@
             </div>
             <hr>
         {% endfor %}
+        <br>
+        <div style="height: 40vh"></div>
     </div>
-
-
-
     <br>
+
     {% block scripts %}
         <script type="text/javascript" src="{% static 'user/js/registeredEvents.js' %}"></script>
     {% endblock %}

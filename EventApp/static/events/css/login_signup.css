@@ -167,8 +167,17 @@ input {
     }
 }
 
+.displayPage {
+    display: block;
+    opacity: 1;
+}
+
+.hidePage {
+    opacity: 0.3;
+}
+
 .ForgotPassword {
-    font-weight:bold;
+    font-weight: bold;
     color: #3673e8;
 }
 
@@ -183,11 +192,11 @@ input {
     position: absolute;
     left: 44%;
     top: 50%;
-    border: 8px solid #cccccc;
+    border: 8px solid #fff;
     border-radius: 50%;
-    border-top: 8px solid #004E8A;
-    width: 80px;
-    height: 80px;
+    border-top: 6px solid #004E8A;
+    width: 60px;
+    height: 60px;
     -webkit-animation: spin 2s linear infinite;
     animation: spin 2s linear infinite;
 }

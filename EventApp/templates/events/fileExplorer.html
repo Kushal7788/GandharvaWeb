@@ -4,6 +4,7 @@
 {% block css %}
     <link href="{% static 'events/css/campaign.css' %}" rel="stylesheet">
 {% endblock %}
+
 {% block body %}
     <br><br><br><br><br>
 
@@ -30,11 +31,37 @@
                     </li>
                 {% endfor %}
             </ul>
+        <br><br>
+        <label>Documents Uploaded By Other Users</label>
+        <br><br>
+         <ul>
+                {% for sub,val in dict.items %}
+                    <br>
+                    <label>{{ sub.first_name}} {{ sub.last_name }}</label>
+                    {% for obj in val %}
+                    <li>
+                        <a href="{{ obj.document.url }}">{{ obj.fname }}</a>
+                        <small>(Uploaded at: {{ obj.uploaded_at }})</small>
+                    </li>
+                {% endfor %}
+                {% endfor %}
+            </ul>
         </div>
         <br>
     </div>
     <br>
-
+{% block scripts %}
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="text/javascript">
+    let uploadField = document.getElementById("id_document");
+    uploadField.onchange = function() {
+        if(this.files[0].size > 25165824){
+        swal("Upload size limit is 25MB.");
+        this.value = "";
+        };
+};
+</script>
+{% endblock %}
 
 {% endblock %}
 

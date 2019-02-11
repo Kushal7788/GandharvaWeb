@@ -28,3 +28,15 @@ def user_Campaign_head(function):
     wrap.__doc__ = function.__doc__
     wrap.__name__ = function.__name__
     return wrap
+
+def staff_user(function):
+    def wrap(request, *args, **kwargs):
+        entry = RoleAssignment.objects.get(user=request.user.id)
+        if entry.user.is_staff:
+            return function(request, *args, **kwargs)
+        else:
+            raise PermissionDenied
+
+    wrap.__doc__ = function.__doc__
+    wrap.__name__ = function.__name__
+    return wrap
