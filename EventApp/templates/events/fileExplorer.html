@@ -35,7 +35,8 @@
         <br><br>
          <ul>
                 {% for sub,val in dict.items %}
-                    <label>{{ sub.email}}</label>
+                    <br>
+                    <label>{{ sub.first_name}} {{ sub.last_name }}</label>
                     {% for obj in val %}
                     <li>
                         <a href="{{ obj.document.url }}">{{ obj.fname }}</a>
