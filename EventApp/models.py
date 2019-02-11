@@ -78,15 +78,6 @@ class RoleMaster(models.Model):
         return self.name
 
 
-# RoleAssignment assigns the roles to the user
-class RoleAssignment(models.Model):
-    user = models.ForeignKey(MyUser, on_delete=models.CASCADE)
-    role = models.ForeignKey(RoleMaster, on_delete=models.PROTECT)
-
-    def __str__(self):
-        return self.role.name
-
-
 class Role_category(models.Model):
     category = models.CharField(max_length=100)
 
@@ -120,6 +111,16 @@ class EventMaster(models.Model):
 
     def __str__(self):
         return self.event_name
+
+
+# RoleAssignment assigns the roles to the user
+class RoleAssignment(models.Model):
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE)
+    role = models.ForeignKey(RoleMaster, on_delete=models.PROTECT)
+    event = models.ForeignKey(EventMaster, on_delete=models.PROTECT, blank=True, null=True)
+
+    def __str__(self):
+        return self.role.name
 
 
 # links the events with the departments
