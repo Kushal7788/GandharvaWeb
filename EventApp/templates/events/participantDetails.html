@@ -15,7 +15,7 @@
                 <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
                 <h5 style="text-align: center;">Enter your details</h5>
                 <br>
-                <form method="post" action="{% url 'participantDetails' %}">
+                <form method="post" action="{% url 'participantDetails' %}" onsubmit="return validate()">
                     {% csrf_token %}
                     {% if form.non_field_errors %}
                         <ul>
@@ -58,7 +58,7 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label">Email:</label>
-                        <input readonly id="EMail" class="form-control" name="email"
+                        <input readonly class="form-control" name="email"
                                value="{{ email_participant }}">
                     </div>
                     <div class="form-group">
@@ -100,11 +100,11 @@
 
                     <div class="text-right">
                         <br>
-                        <button type="submit" id="modal-btn" name="card" value="card" class="btn Login_btn-primary">Pay
+                        <button type="submit" id="cashButton" name="card" value="card" class="btn Login_btn-primary">Pay
                             Now
                         </button>
                         {% if request.user.is_staff %}
-                            <button type="submit" id="cashButton" name="cash" value="cash" class="btn Login_btn-primary"
+                            <button type="submit" id="cashButton1" name="cash" value="cash" class="btn Login_btn-primary"
                                     style="margin-left: 6px">Pay By Cash
                             </button>
                         {% endif %}
@@ -119,6 +119,11 @@
         <script>
             $(document).ready(function () {
                 $("#cashButton").click(function () {
+                    $('.loader').addClass('displayLoader');
+                    myFunction(this);
+                });
+
+                $("#cashButton1").click(function () {
                     $('.loader').addClass('displayLoader');
                     myFunction(this);
                 });

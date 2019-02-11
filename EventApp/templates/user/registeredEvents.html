@@ -31,9 +31,9 @@
                         <img src={{ team.QRcode.url }} height="200" width="200">
                     {% endif %}
                 </div>
-                <div class="col-sm-12 col-md-4">
+                <div class="col-sm-12 col-md-4" style="margin-top: 24px">
                     <h1 class="colorlib-heading">{{ team.receipt.event.event_name }}</h1>
-                    <p style="font-weight: 500; margin-bottom: 0;font-size: 18px"> Event Details</p>
+                    <p style="font-weight: 500; margin-bottom: 0;font-size: 18px;"> Event Details</p>
                     {% if team.receipt.event.timings %}
                         <div class="con">
                             <p style="font-weight: 500;margin-right: 6px">Time:</p>
@@ -96,11 +96,11 @@
             </div>
             <hr>
         {% endfor %}
+        <br>
+        <div style="height: 40vh"></div>
     </div>
-
-
-
     <br>
+
     {% block scripts %}
         <script type="text/javascript" src="{% static 'user/js/registeredEvents.js' %}"></script>
     {% endblock %}
