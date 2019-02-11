@@ -167,8 +167,24 @@ input {
     }
 }
 
+.displayPage {
+    display: block;
+}
+
+.hidePage {
+    display: none;
+}
+
+.HideBlankContainer {
+    display: none;
+}
+
+.displayBlankContainer {
+    display: block;
+}
+
 .ForgotPassword {
-    font-weight:bold;
+    font-weight: bold;
     color: #3673e8;
 }
 

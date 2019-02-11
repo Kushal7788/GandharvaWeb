@@ -9,48 +9,51 @@
     <br><br><br><br>
     <div class="loader"></div>
     <div class="container" style="height: 100vh">
-        <div class="col-sm-5 container-center">
-            <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
-            <h5 style="text-align: center;">Enter your email</h5>
-            <br>
-            <form method="post" action="{% url 'participantEventRegister' %}">
-                {% csrf_token %}
-                <div class="form-group">
-                    <input id="email" type="email" class="form-control" name="email" placeholder="Email"
-                           value="{{ email }}">
-                    <span style="color: red">
+        <div id="page" class="displayPage">
+            <div class="col-sm-5 container-center">
+                <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
+                <h5 style="text-align: center;">Enter your email</h5>
+                <br>
+                <form method="post" action="{% url 'participantEventRegister' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input id="email" type="email" class="form-control" name="email" placeholder="Email"
+                               value="{{ email }}">
+                        <span style="color: red">
                     {{ form.user_name.errors }}
                     </span>
-                </div>
-                <div class="form-group">
-                    <input type="hidden" name="event_id" value={{ event_id }}>
-                    <div class="text-right">
-                        <button type="submit" id="sendOTPButton" class="btn Login_btn-primary" style="margin-left: 0">
-                            Send OTP
-                        </button>
                     </div>
-                </div>
-            </form>
-            <form method="post" action="{% url 'verifyOTP' %}">
-                {% csrf_token %}
-                <div class="form-group">
-                    <input type="text" class="form-control" name="otp" placeholder="OTP">
-                    <span style="color: red">
+                    <div class="form-group">
+                        <input type="hidden" name="event_id" value={{ event_id }}>
+                        <div class="text-right">
+                            <button type="submit" id="sendOTPButton" class="btn Login_btn-primary"
+                                    style="margin-left: 0">
+                                Send OTP
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <form method="post" action="{% url 'verifyOTP' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="otp" placeholder="OTP">
+                        <span style="color: red">
                     {% if error %}
                         {{ error }}
                     {% endif %}
                     </span>
-                </div>
-                <div class="form-group">
-                    <input type="hidden" name="dummy" value='1'>
-                    <input type="hidden" name="originalotp" value={{ otp }}>
-                    <input type="hidden" name="event_id" value={{ event_id }}>
-                    <input type="hidden" name="useremail" value={{ email }}>
-                    <div class="text-right">
-                        <button type="submit" class="btn Login_btn-primary">Verify OTP</button>
                     </div>
-                </div>
-            </form>
+                    <div class="form-group">
+                        <input type="hidden" name="dummy" value='1'>
+                        <input type="hidden" name="originalotp" value={{ otp }}>
+                        <input type="hidden" name="event_id" value={{ event_id }}>
+                        <input type="hidden" name="useremail" value={{ email }}>
+                        <div class="text-right">
+                            <button type="submit" class="btn Login_btn-primary">Verify OTP</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
     <br><br>
@@ -61,7 +64,9 @@
                     $('.loader').addClass('displayLoader');
                     myFunction(this);
                 });
+
                 function myFunction(div) {
+                    $('#page').addClass('hidePage');
                     $(".loader").toggle();
                     $(div).toggle();
                 }
