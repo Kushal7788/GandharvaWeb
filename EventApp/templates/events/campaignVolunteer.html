@@ -1,52 +1,70 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Add Volunteer</title>
-</head>
-<body>
-<form method="post" action="{% url 'AddVolunteer' %}">
-    {% csrf_token %}
-Name
-<select id="volunteers" name="volunteers" class="form-control" style="width: 100%;margin-left: 0">
-<option value="">---------------</option>
-{% for volunteer in volunteers %}
-<option value="{{ volunteer.pk }}">{{ volunteer.full_name }}</option>
-    {% endfor %}
-</select>
-<br>
-<br>
-College
-<select id="colleges" name="colleges" class="form-control" style="width: 100%;margin-left: 0">
-<option value="">---------------</option>
-{% for college in colleges %}
-<option value="{{ college.pk }}">{{ college.name }}</option>
-    {% endfor %}
-</select>
-<br>
-<br>
-Date
-<input type="date" name="campaignDate">
-<br>
-<br>
-    <button type="submit" class="btn Login_btn-primary" style="width:100px;height: auto;">Add Entry</button>
-</form>
-<br>
-<br>
-<table border="1">
-  <tr>
-    <th>Volunteer Name</th>
-    <th>College Name</th>
-    <th>Date</th>
-  </tr>
-  {% for volunteer in volunteerData %}
-  <tr>
-    <td>{{ volunteer.user.full_name }}</td>
-    <td>{{ volunteer.college.name }}</td>
-    <td>{{ volunteer.date }}</td>
-  </tr>
-    {% endfor %}
-</table>
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}Campaign Head{% endblock %}
+{% block css %}
+    <link href="{% static 'events/css/campaign.css' %}" rel="stylesheet">
+{% endblock %}
+{% block body %}
+    <br><br><br><br><br>
+    <div class="container">
+        <div class="col-sm-6 container-center">
+            <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
+            <h5 style="text-align: center;">Campaign Volunteer</h5>
+            <form method="post" action="{% url 'AddVolunteer' %}">
+                {% csrf_token %}
 
-</body>
-</html>
+                <div class="form-group">
+                    Name
+                    <select id="volunteers" name="volunteers" class="form-control" style="width: 100%;margin-left: 0">
+                        <option value="">Select</option>
+                        {% for volunteer in volunteers %}
+                            <option value="{{ volunteer.pk }}">{{ volunteer.first_name }} {{ volunteer.last_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    College
+                    <select id="colleges" name="colleges" class="form-control" style="width: 100%;margin-left: 0">
+                        <option value="">Select</option>
+                        {% for college in colleges %}
+                            <option value="{{ college.pk }}">{{ college.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    Date
+                    <input type="date" name="campaignDate" class="form-control">
+                </div>
+                <div class="text-right">
+                    <button type="submit" class="btn btn-primary">Add Entry</button>
+                </div>
+            </form>
+            <br>
+            <div class="container"
+                 style="display: flex;flex-direction: row;justify-items: center;align-items: center;overflow: auto">
+                <table class="table table-responsive volTable">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>Volunteer Name</th>
+                        <th>College Name</th>
+                        <th>Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for volunteer in volunteerData %}
+                        <tr>
+                            <td>{{ volunteer.user.first_name }} {{ volunteer.user.last_name }}</td>
+                            <td>{{ volunteer.college.name }}</td>
+                            <td>{{ volunteer.date }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <br><br>
+    <div style="height: 40vh"></div>
+{% endblock %}

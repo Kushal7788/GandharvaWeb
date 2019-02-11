@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, PermissionsMixin
+from .validators import validate_file_size
 
 
 # Create your models here.
@@ -33,6 +34,10 @@ class Department(models.Model):
     def __str__(self):
         return self.name
 
+def rules_path(instance, filename):
+    ext = filename.split('.')[-1]
+    filename = '{}.{}'.format("Rules_doc/" + instance.event_name, ext)
+    return filename
 
 def prof_path(instance, filename):
     ext = filename.split('.')[-1]
@@ -48,6 +53,7 @@ def QRcode_path(instance, filename):
 
 # Abstract User , it is the extension of the base User model which can be customized
 class MyUser(AbstractUser):
+    username = models.CharField(max_length=100, blank=True, null=True, unique=True)
     email = models.EmailField(max_length=100)
     coll_email = models.EmailField(max_length=100, blank=True)
     user_coll = models.ForeignKey(College, on_delete=models.PROTECT, blank=True, null=True)
@@ -100,8 +106,10 @@ class Category_assign(models.Model):
 class EventMaster(models.Model):
     event_id = models.IntegerField(primary_key=True)
     event_name = models.CharField(max_length=100)
+    tagline = models.CharField(max_length=100, blank=True)
     num_of_winners = models.IntegerField()
     team_size = models.IntegerField()
+    rules_file = models.FileField(upload_to=rules_path ,blank=True, default=None)
     entry_fee = models.IntegerField()
     objective = models.TextField(max_length=1000, blank=True)
     rounds = models.TextField(max_length=10000, blank=True)
@@ -173,9 +181,10 @@ class Receipt(models.Model):
 class Team(models.Model):
     # team_name = models.CharField(max_length=50)
     QRcode = models.ImageField(upload_to=QRcode_path, blank=True, null=True)
+    Refral_Code = models.CharField(max_length=10,blank=True)
     receipt = models.ForeignKey(Receipt, on_delete=models.CASCADE)
-    user = models.ForeignKey(MyUser, on_delete=models.PROTECT)
-    referral=models.CharField(max_length=30,null=True)
+    user = models.ForeignKey(MyUser, on_delete=models.PROTECT, related_name='participant')
+    referral=models.ForeignKey(MyUser,on_delete=models.PROTECT,blank=True, related_name='Refral_Volunteer',null=True)
     # def __str__(self):
     # return self.team_name
 
@@ -221,10 +230,26 @@ class Document(models.Model):
         return 'Category : ' + self.category.type + '/' + self.title
 
 
+def filePath(instance,filename):
+    fPath = "Doc/"+instance.user.username+"/"+filename
+    return fPath
+
+class fileDocument(models.Model):
+    fname = models.CharField(max_length=250)
+    user = models.ForeignKey(MyUser, on_delete=models.PROTECT)
+    document = models.FileField(upload_to=filePath,validators=[validate_file_size])
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return 'Username : ' + self.user.username
+
+
+
 class InstamojoCredential(models.Model):
     key = models.CharField(max_length=50)
     token = models.CharField(max_length=50)
     salt = models.CharField(max_length=50)
+    redirect_url=models.CharField(max_length=60,null=True)
 
 class Volunteer(models.Model):
     user=models.ForeignKey(MyUser,on_delete=models.PROTECT)

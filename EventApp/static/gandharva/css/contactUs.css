@@ -11,6 +11,9 @@ html, body {
     background-color: #fff;
     color: #fff;
 }
+ .navbar {
+        background-color: #004E8A !important;
+    }
 
 .contact-section {
     background-color: #135f89;
@@ -27,7 +30,7 @@ html, body {
 #contact h3 {
     text-transform: inherit;
     color: #fff;
-    font-weight: bold;
+    font-weight: 500;
 }
 
 #contact-section h3 {

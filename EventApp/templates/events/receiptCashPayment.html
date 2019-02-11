@@ -1,0 +1,20 @@
+{% autoescape off %}
+    Hi {{ user.first_name }},
+
+    Payment Details:
+        Amount: {{event.entry_fee}}
+        Status : {{transaction.status}}
+        Transaction ID : {{ transaction.transaction_id }}
+        Payment Date : {{ transaction.date }}
+        Payment Time : {{ transaction.time }}
+
+    Event Details:
+        Name: {{event.event_name}}
+        Time: {{event.timings}}
+        Location: {{event.location}}
+        Team size: {{event.team_size}}
+
+    Your code: {{ team.Refral_Code }}
+
+    Thank you for registration.
+{% endautoescape %}

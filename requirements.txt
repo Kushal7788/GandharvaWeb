@@ -1,5 +1,9 @@
 django
+Pillow
 social-auth-app-django
 instamojo_wrapper
+qrcode
+openpyxl
+sweetify
 django-qrcode
 xlwt

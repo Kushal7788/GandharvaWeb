@@ -14,17 +14,15 @@
 {% endblock %}
 {% block body %}
     <div class="container-fluid"
-         style="background:linear-gradient(45deg,rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url('{% static dept.department.banner_src %}');width: 100%;height:186px;background-size:cover;">
-        <h3 class="title" data-sal="slide-up" data-sal-easing="ease-out-bounce"
-             data-sal-duration="1000">{{ event.event_name }}</h3>
+         style="background:linear-gradient(45deg,rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url('{% static dept.department.banner_src %}');width: 100%;height:200px;background-size:cover;">
+        <h3 class="title userselect">{{ event.event_name }}</h3>
     </div>
     <br>
     <div class="container">
         {% if event.objective %}
             <h3 class="colorlib-heading">
                 Objective</h3>
-            <p data-sal="slide-up" data-sal-easing="ease-out-bounce"
-               data-sal-duration="1000" style="margin-top: 12px">{{ event.objective }}</p>
+            <p style="margin-top: 12px">{{ event.objective }}</p>
         {% endif %}
     </div>
     <br>
@@ -32,8 +30,7 @@
         {% if event.rounds %}
             <h3 class="colorlib-heading">
                 Rounds</h3>
-            <pre data-sal="slide-up" data-sal-easing="ease-out-bounce" data-sal-duration="1000"
-                 style="margin-top: 12px">{{ event.rounds }}</pre>
+            <pre style="margin-top: 12px">{{ event.rounds }}</pre>
         {% endif %}
     </div>
     <br>
@@ -41,31 +38,28 @@
         {% if event.rules %}
             <h3 class="colorlib-heading">
                 Rules</h3>
-            <pre style="overflow:auto;margin-top: 12px" data-sal="slide-up" data-sal-easing="ease-out-bounce"
-                 data-sal-duration="1000">{{ event.rules }}</pre>
+            <pre style="overflow:auto;margin-top: 12px">{{ event.rules }}</pre>
         {% endif %}
     </div>
     <br>
     <div class="container">
         <h3 class="colorlib-heading">Team and
             Fee Structure</h3>
-        <p data-sal="slide-up" data-sal-easing="ease-out-bounce"  data-sal-duration="1000"
-           style="margin-top: 12px">
+        <p style="margin-top: 12px">
             Max {{ event.team_size }}
             Participants per Team & ₹ {{ event.entry_fee }} per team.</p>
+        {% if event.rules_file.url != None %}
+        <li>
+                        <a href="{{ event.rules_file.url }}">{{ event.event_name }} Rules</a>
+                    </li>
+        {% endif %}
     </div>
     <br><br>
     <div class="container">
-        <form method="get"
-                {% if user.is_authenticated %}
-              action="{% url 'TeamDetails' %}" >
-                {% else %}
-                    action ="{% url 'user_login' %}">
-                {% endif %}
-        <input type="hidden" name="event" value="{{ event.event_name }}">
-        <button type="submit" class="btn btn-primary eventButtons">Register
-            Now
-        </button>
+        <form method="get" action="{% url 'participantEventRegister' %}">
+            <input type="hidden" name="event_id" value={{ event.event_id }}>
+            <button type="submit" id="modal-btn" class="btn btn-primary eventButtons">Register Now
+            </button>
         </form>
     </div>
     <br>

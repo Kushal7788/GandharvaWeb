@@ -1,0 +1,52 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}Participant Information{% endblock %}
+{% block css %}
+    <link href="{% static 'events/css/campaign.css' %}" rel="stylesheet">
+{% endblock %}
+{% block body %}
+    <br><br><br><br><br><br>
+    <div class="container">
+        <div class="col-sm-8 container-center">
+            <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
+            <h5 style="text-align: center">Participant Information</h5>
+            <br>
+            <div class="text-center">
+                <a href="{{ filename }}" download class="btn bg-primary DownloadButton">
+                    Download
+                </a>
+            </div>
+            <br>
+            <div class="container"
+                 style="display: flex;flex-direction: row;justify-items: center;align-items: center;overflow: auto">
+                <table class="table table-responsive">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>Participant Name</th>
+                        <th>Event Name</th>
+                        <th>College Name</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for t in transaction %}
+                        <tr>
+                            <td>{{ t.team.user.first_name }} {{ t.team.user.last_name }}</td>
+                            <td>{{ t.receipt.event.event_name }}</td>
+                            <td>{{ t.team.user.user_coll.name }}</td>
+                            <td>{{ t.date }}</td>
+                            <td>{{ t.time }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <br><br>
+    <div style="height: 40vh"></div>
+{% endblock %}
+
+
+

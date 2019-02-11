@@ -1,7 +1,7 @@
 # include the various features to be used in forms here
 from django import forms
 from .models import *
-
+from EventApp.models import fileDocument
 
 class UserRegistration(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
@@ -19,7 +19,7 @@ class UserRegistration(forms.ModelForm):
 
     class Meta:
         model = MyUser
-        fields = ['username', 'email', 'password', 'user_dept', 'user_year', 'user_coll', 'coll_email','first_name','last_name','prof_img']
+        fields = ['username', 'email', 'password', 'user_dept', 'user_year', 'user_coll', 'coll_email','first_name','last_name','prof_img','user_phone']
 
     def clean(self):
         cleaned_data = super(UserRegistration, self).clean()
@@ -70,4 +70,10 @@ class PaymentForm(forms.ModelForm):
 
     class Meta:
         model = MyUser
-        fields = ['user_phone','first_name','last_name','email','user_coll','user_year','username']
+        fields = ['user_phone','first_name','last_name','email','user_coll','user_year']
+
+
+class fileForm(forms.ModelForm):
+    class Meta:
+        model = fileDocument
+        fields = ('document', )

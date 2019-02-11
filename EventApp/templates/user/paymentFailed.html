@@ -1,0 +1,18 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}Payment Failed{% endblock %}
+{% block css %}
+    <link href="{% static 'user/css/reset_password.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+    <br><br><br><br><br>
+    <div class="container" style="height: 100vh">
+        <div class="col-sm-6 container-center">
+            <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
+            <h5 style="text-align: center;">Payment Failed</h5>
+            <br>
+            <p>Payment Failed. Please retry again. If you have any issues then please contact us.</p>
+        </div>
+    </div>
+{% endblock %}

@@ -7,12 +7,12 @@
 {% block body %}
     <br><br><br><br><br>
     <div class="container" style="height:100vh">
-        <div class="col-sm-9 container-center">
+        <div class="col-sm-5 container-center">
             <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
             <h5 style="text-align: center;">Campaign Head</h5>
             <p style="text-align: center;">Select an option</p>
             <div class="row">
-                <div class="col-sm-12 col-md-3">
+                <div class="col-sm-12 col-md-12">
                     <div class="text-center">
                         <form method="post" action="{% url 'campaign' %}">
                             {% csrf_token %}
@@ -23,7 +23,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-3">
+                <div class="col-sm-12 col-md-12">
                     <div class="text-center">
                         <form method="post" action="{% url 'campaign' %}">
                             {% csrf_token %}
@@ -34,7 +34,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-3">
+                <div class="col-sm-12 col-md-12">
                     <div class="text-center">
                         <form method="post" action="{% url 'campaign' %}">
                             {% csrf_token %}
@@ -45,12 +45,21 @@
                         </form>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-3">
+                <div class="col-sm-12 col-md-12">
                     <div class="text-center">
                         <form method="post" action="{% url 'campaign' %}">
                             {% csrf_token %}
                             <input type="hidden" name="criteria" value="3">
                             <button type="submit" class="btn btn-primary">Add Volunteer
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12">
+                    <div class="text-center">
+                        <form method="post" action="{% url 'TableToExcel' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary">Participant Information
                             </button>
                         </form>
                     </div>

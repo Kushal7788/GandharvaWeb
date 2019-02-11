@@ -15,9 +15,8 @@
 {% block body %}
 
     <div class="container-fluid"
-         style="background:linear-gradient(45deg,rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url('{% static dept_choosen.banner_src %}');width: 100%;height:186px;background-size:cover;">
-        <h1 class="title" data-sal="slide-up" data-sal-easing="ease-out-bounce"
-            data-sal-delay="100" data-sal-duration="500">{{ pageTitle }}</h1>
+         style="background:linear-gradient(45deg,rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url('{% static dept_choosen.banner_src %}');width: 100%;height:200px;background-size:cover;">
+        <h1 class="title userselect">{{ pageTitle }}</h1>
     </div>
     <br>
     <div class="container">
@@ -28,12 +27,11 @@
                     <div id="eventImageTitle" style="margin:20px;height:300px;">
                         <div
                                 style="background:linear-gradient(45deg,rgba(0,0,0,0.5),rgba(0,0,0,0.5));height: inherit;text-align: center">
-                            <h2 style="color:#fff;word-wrap: break-word;padding-top:12vh">{{ event.event.event_name }}</h2>
+                            <h3 class="userselect" style="color:#fff;word-wrap: break-word;padding-top:12vh">{{ event.event.tagline }}</h3>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-6" data-sal="slide-up" data-sal-easing="ease-out-bounce"
-                     data-sal-delay="100" data-sal-duration="500">
+                <div class="col-sm-12 col-md-6">
                     <h1 class="colorlib-heading">{{ event.event.event_name }}</h1>
                     <p class="eventDescription" style="margin-top: 12px">
                         {{ event.event.objective }}
@@ -44,10 +42,15 @@
                     {#                        <p>Sanul : 123456789</p>#}
                     {#                    </div>#}
                     <div class="team">
-                        <h4 style="color: #000;font-weight: 500">Team and Fee
-                            Structure:</h4>
+                        <h5 style="color: #000;font-weight: 500">Team and Fee
+                            Structure:</h5>
                         <p>Max {{ event.event.team_size }} Participants per Team & ₹ {{ event.event.entry_fee }} per
                             team.</p>
+                        {% if event.event.rules_file.url != None %}
+
+                        <a href="{{ event.event.rules_file.url }}">{{ event.event.event_name }} rules pdf download</a>
+
+        {% endif %}
                     </div>
 
                     <div style="display: flex;flex-direction: row;justify-items: left;">
@@ -56,25 +59,10 @@
                             <button type="submit" class="btn btn-primary eventButtons">Rules
                             </button>
                         </form>
-                        <form
-                                {% if user.is_authenticated %} method="post" action="{% url 'details' %}">
-                                {% else %}
-                                    method="get" action ={% url 'user_login' %}>
-                                {% endif %}
-                        {% csrf_token %}
-                        <input type="hidden" name="event_id" value={{ event.event.event_id }}>
-                        <input type="hidden" name="userEmail" value={{ user.email }}>
-                        <button type="submit" id="modal-btn" class="btn btn-primary eventButtons">Register Now</button>
-                        </form>
-                        <form
-                                {% if user.is_authenticated %} method="get" action="{% url 'cashPayment' %}">
-                                {% else %}
-                                    method="get" action ={% url 'user_login' %}>
-                                {% endif %}
-                        {% csrf_token %}
-                        <input type="hidden" name="event_id" value={{ event.event.event_id }}>
-                        <input type="hidden" name="userEmail" value={{ user.username }}>
-                        <button type="submit" id="modal-btn" class="btn btn-primary eventButtons">Pay With Cash</button>
+                        <form method="get" action="{% url 'participantEventRegister' %}">
+                            <input type="hidden" name="event_id" value={{ event.event.event_id }}>
+                            <button type="submit" id="modal-btn" class="btn btn-primary eventButtons">Register Now
+                            </button>
                         </form>
                     </div>
                 </div>

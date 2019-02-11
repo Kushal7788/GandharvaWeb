@@ -1,0 +1,30 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}My Actions{% endblock %}
+{% block css %}
+    <link href="{% static 'user/css/myactions.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+    <br><br><br><br><br>
+    <div class="container" style="height:100vh">
+        <div class="col-sm-7 container-center">
+            <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
+            <h5 style="text-align: center;">My Actions</h5>
+            <br>
+            {% if button_name == "Campaign" %}
+                <form method="get" action="{% url 'campaign' %}">
+                    <div class="text-center">
+                        <button type="submit" name="{{ button_name }}" class="btn btn-primary"
+                                style="margin-left: 0">{{ button_name }}</button>
+                    </div>
+                </form>
+            {% else %}
+                <div class="text-center">
+                    <p> No actions For you</p>
+                </div>
+            {% endif %}
+        </div>
+        <br>
+    </div>
+{% endblock %}

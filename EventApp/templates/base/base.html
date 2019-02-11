@@ -16,26 +16,34 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
           integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Lato|Lobster" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
             crossorigin="anonymous"></script>
+
+    {#    <script src="https://code.jquery.com/jquery-3.3.1.js"#}
+    {#            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="#}
+    {#            crossorigin="anonymous"></script>#}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
             integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
             crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"
-            integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"
-            crossorigin="anonymous"></script>
+    {#    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"#}
+    {#            integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"#}
+    {#            crossorigin="anonymous"></script>#}
+    <script type="text/javascript" src="{% static 'gandharva/js/bootstrap.js' %}"></script>
+
     <link rel="stylesheet" type="text/css" href="{% static 'base/css/base.css' %}">
     {% block css %}
     {% endblock %}
     <link href="{% static 'gandharva/css/sal.css' %}" rel="stylesheet">
     <link href="{% static 'gandharva/manifest.json' %}" rel="manifest">
 
+
 </head>
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-    <a class="navbar-brand" href="{% url 'home' %}" style="font-family: 'Lobster', cursive;font-size: 30px;color: #fff">Gandharva
+    <a class="navbar-brand" href="{% url 'home' %}" style="font-family: 'Lobster', cursive;font-size: 30px;color: #fff">Gandharva'
         19
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
@@ -54,39 +62,38 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <form method="get" action="{% url 'events' %}">
-                        {% csrf_token %}
                         <input type="hidden" name="dept" value="Computer">
                         <button type="submit" class="dropdown-item dropdownStyle">Computer</button>
                     </form>
                     <form method="get" action="{% url 'events' %}">
-                        {% csrf_token %}
                         <input type="hidden" name="dept" value="IT">
                         <button type="submit" class="dropdown-item dropdownStyle">IT</button>
                     </form>
                     <form method="get" action="{% url 'events' %}">
-                        {% csrf_token %}
                         <input type="hidden" name="dept" value="ENTC">
                         <button type="submit" class="dropdown-item dropdownStyle">ENTC</button>
                     </form>
                     <form method="get" action="{% url 'events' %}">
-                        {% csrf_token %}
                         <input type="hidden" name="dept" value=Mechanical>
                         <button type="submit" class="dropdown-item dropdownStyle">Mechanical</button>
                     </form>
                     <form method="get" action="{% url 'events' %}">
-                        {% csrf_token %}
                         <input type="hidden" name="dept" value=Civil>
                         <button type="submit" class="dropdown-item dropdownStyle">Civil</button>
                     </form>
                 </div>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'home' %}#sponsorSection">Sponsors</a>
-            </li>
+            {#            <li class="nav-item">#}
+            {#                <a class="nav-link" href="{% url 'ourSponsors' %}">Sponsors</a>#}
+            {#            </li>#}
+            {#            <li class="nav-item">#}
+            {#                <a class="nav-link" href="{% url 'ourTeam' %}">Our Team</a>#}
+            {#            </li>#}
 
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'contactus' %}">Contact Us</a>
             </li>
+
             {% if user.is_authenticated %}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
@@ -96,15 +103,18 @@
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                         {% if user.is_superuser %}
                             <form method="get" action="{% url 'RegisterHead' %}">
-                                {% csrf_token %}
                                 <input type="hidden" name="HeadRegister" value=>
                                 <button type="submit" class="dropdown-item dropdownStyle">Register Heads</button>
                             </form>
                         {% endif %}
-                        {% if role == 1 %}
-                            <form method="get" action="{% url 'campaign' %}">
+                        {% if user.is_staff %}
+                            <form method="get" action="{% url 'myactions' %}">
                                 {% csrf_token %}
-                                <button type="submit" class="dropdown-item dropdownStyle">Campaign Data</button>
+                                <button type="submit" class="dropdown-item dropdownStyle">My Actions</button>
+                            </form>
+                            <form method="get" action="{% url 'files' %}">
+
+                                <button type="submit" class="dropdown-item dropdownStyle">File Upload</button>
                             </form>
                         {% endif %}
 
@@ -114,7 +124,6 @@
                             <button type="submit" class="dropdown-item dropdownStyle">My Profile</button>
                         </form>
                         <form method="get" action="{% url 'eventsRegister' %}">
-                            {% csrf_token %}
                             <input type="hidden" name="EventRegister" value=>
                             <button type="submit" class="dropdown-item dropdownStyle">Register Events</button>
                         </form>
@@ -134,11 +143,8 @@
 </nav>
 {% block body %}
 {% endblock %}
-<div style="height: 60px">
-        <button class="btn bg-primary"
-                style="position: absolute;right: 12px;color: #fff;margin-top: 12px"
-                onclick="goToTop()"><i class="fas fa-arrow-up"></i></button>
-    </div>
+<button class="btn topButton"
+        onclick="goToTop()"><i class="fas fa-arrow-up"></i></button>
 <footer id="footer">
     <div class="container">
         <div class="text-center">
