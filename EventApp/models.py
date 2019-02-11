@@ -201,6 +201,8 @@ class Transaction(models.Model):
     receipt = models.ForeignKey(Receipt, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.PROTECT, blank=True, null=True)
 
+    def __str__(self):
+        return self.transaction_id
 
 class Document_type(models.Model):
     type = models.CharField(max_length=100)

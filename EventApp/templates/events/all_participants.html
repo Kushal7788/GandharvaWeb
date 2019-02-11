@@ -1,0 +1,21 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}All Participants{% endblock %}
+{% block css %}
+
+{% endblock %}
+
+{% block body %}
+    <br><br><br><br><br>
+
+    <div>
+        <h2>People participated in your event are</h2>
+        <ul>
+            {% for participant in participants %}
+                <li>name=  {{participant.team.user.first_name}}   ,email = {{participant.team.user.email}} </li>
+            {% endfor %}
+        </ul>
+
+    </div>
+
+{% endblock %}

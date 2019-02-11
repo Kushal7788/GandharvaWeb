@@ -229,6 +229,21 @@ def success(request):
         print("ERROR")
 
 
+def all_participanrs(request):
+    role = RoleAssignment.objects.get(user=request.user.id)
+    if role.role.name == 'Event Head':
+        eventid = role.event.event_id
+        print(eventid)
+        #receipt = Receipt.objects.filter(event=eventid)
+        #receipt.event.event_id = event_id
+        participants = Transaction.objects.all()
+        print(participants)
+        arg = {
+        'participants': participants,
+        }
+        return render(request, 'events/all_participants.html', arg)
+
+
 # Details of Individual Events
 def details(request):
     if request.method == 'POST':
@@ -408,12 +423,15 @@ def myaction(request):
             'button_name': 'Campaign',
             'urlaccess': campaign,
         }
+    if role.role.name == 'Event Head':
+        args = {
+            'button_name': 'All Participants',
+        }
     else:
         args = {
             'button_name': "No Actions",
             'urlaccess': None,
         }
-
     return render(request, 'user/myactions.html', args)
 
 
