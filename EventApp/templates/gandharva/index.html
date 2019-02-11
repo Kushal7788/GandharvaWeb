@@ -3,18 +3,18 @@
 
 {% block title %}Gandharva-Home{% endblock %}
 {% block css %}
-    {#    <link href="{% static 'gandharva/css/slick.min.css' %}" rel="stylesheet">#}
+    {#        <link href="{% static 'gandharva/css/slick.min.css' %}" rel="stylesheet">#}
     <link href="{% static 'gandharva/css/responsive.css' %}" rel="stylesheet">
     <link href="{% static 'gandharva/css/owl.carousel.css' %}" rel="stylesheet">
     <link href="{% static 'gandharva/css/home.css' %}" rel="stylesheet">
     <script>var GandharvaDate = "{{gandharvaDate}}";</script>
     <style>
-    #footer{
-    background-image: url("../../static/gandharva/images/footer-bg.jpg");
-    background-position: center bottom;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
+        #footer {
+            background-image: url("../../static/gandharva/images/footer-bg.jpg");
+            background-position: center bottom;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
     </style>
 {% endblock %}
 
@@ -99,22 +99,27 @@
             {% for event in events %}
                 {% if forloop.first %}
                     <div class="row">{% endif %}
-            <div class="col-sm-2 eventDiv"
+            <div class="col-sm-2 eventDiv" onclick="document.forms['{{ event.name }}_form'].submit();"
                  style="background-image:url({% static event.img %}); background-repeat: no-repeat; background-size: cover; width: 480px;height: 240px">
                 <h3 class="eventTitle userselect">{{ event.name }}</h3>
-                <form method="get" action={% url event.link_to %}>
+                <form method="get" name="{{ event.name }}_form" action={% url event.link_to %}>
                     <input type="hidden" name="dept" value={{ event.name }}>
                     <button type="submit" class="btn btn-primary eventButtons">Learn
                         More
                     </button>
                 </form>
             </div>
+
             {% if forloop.counter|divisibleby:5 %}
                 </div>
                 <div class="row">{% endif %}
             {% if forloop.last %}
+
                 </div>
             {% endif %}
+
+
+
             {% endfor %}
         </div>
         <img class="img-fluid" src="{% static 'gandharva/img/party.png' %}">
