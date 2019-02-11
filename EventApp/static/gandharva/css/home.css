@@ -15,8 +15,12 @@ html, body {
 /*text-align: center;*/
 /*}*/
 
-.owl-stage{
-    margin: 0 auto;
+/*.owl-stage{*/
+/*margin: 0 auto;*/
+/*}*/
+
+.slick-track {
+    margin: auto;
 }
 
 .mainTitle {
@@ -409,7 +413,7 @@ img {
 
 .text-gray {
     color: #363636;
-    font-weight: bold;
+    font-weight: 500;
     font-size: 12px;
     word-wrap: break-word;
 }

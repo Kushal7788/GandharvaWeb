@@ -4,8 +4,9 @@
 {% block title %}Gandharva-Home{% endblock %}
 {% block css %}
     <link href="{% static 'gandharva/css/responsive.css' %}" rel="stylesheet">
-    <link href="{% static 'gandharva/css/owl.carousel.css' %}" rel="stylesheet">
-    <link href="{% static 'gandharva/css/owl.theme.default.css' %}" rel="stylesheet">
+{#    <link href="{% static 'gandharva/css/owl.carousel.css' %}" rel="stylesheet">#}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" rel="stylesheet">
+{#    <link href="{% static 'gandharva/css/owl.theme.default.css' %}" rel="stylesheet">#}
     <link href="{% static 'gandharva/css/home.css' %}" rel="stylesheet">
     <script>var GandharvaDate = "{{gandharvaDate}}";</script>
     <style>
@@ -140,47 +141,6 @@
     </section>
 
 
-    {#    <section id="sponsorSection" class="orange-fade p-5 margin-top-xl pos-r parallax"#}
-    {#             style="padding:0; background-image: url('{% static 'gandharva/img/p.jpg' %}');">#}
-    {#        <div class="container">#}
-    {#            <div class="row">#}
-    {#                <div class="col-sm-12">#}
-    {#                    <br>#}
-    {#                    <h2 class="text-center font-weight-bold text-white" style="padding-top: 6px;font-weight: 500"#}
-    {#                        data-sal="slide-up"#}
-    {#                        data-sal-easing="ease-out-bounce" data-sal-delay="100" data-sal-duration="500">Our#}
-    {#                        Sponsors</h2>#}
-    {#                    <p></p>#}
-    {#                    <div class="mt-5 pos-r" data-sal="slide-up" data-sal-easing="ease-out-bounce"#}
-    {#                         data-sal-delay="100"#}
-    {#                         data-sal-duration="800">#}
-    {#                        <div class="carousel-controls testimonial-carousel-controls">#}
-    {#                            <div class="control prev"><i class="fa fa-chevron-left text-white">&nbsp;</i></div>#}
-    {#                            <div class="control next"><i class="fa fa-chevron-right text-white">&nbsp;</i></div>#}
-    {#                        </div>#}
-    {#                        <div class="testimonial-carousel">#}
-    {#                            {% for sponsor in sponsors %}#}
-    {#                                <div class="one-slide white">#}
-    {#                                    <div class="testimonial w-100 h-100 p-3 text-center">#}
-    {#                                        <div class="brand"><img alt="logo"#}
-    {#                                                                src="{% static sponsor.sponsor_logo %}"#}
-    {#                                                                style="width:auto;height:100px;max-width:100px"/>#}
-    {#                                        </div>#}
-    {#                                        <div class="separator">&nbsp;</div>#}
-    {#                                        <div class="message text-center text-gray">{{ sponsor.sponsor_name }}</div>#}
-    {#                                        <p style="font-weight: 300;font-size: 0.9rem;">{{ sponsor.sponsor_type }}</p>#}
-    {#                                    </div>#}
-    {#                                </div>#}
-    {#                            {% endfor %}#}
-    {#                        </div>#}
-    {#                    </div>#}
-    {#                </div>#}
-    {#            </div>#}
-    {#        </div>#}
-    {#    </section>#}
-
-
-    {#        Owl Library#}
     <section id="sponsorSection" class="orange-fade p-5 margin-top-xl pos-r parallax"
              style="padding:0; background-image: url('{% static 'gandharva/img/p.jpg' %}');">
         <div class="container">
@@ -195,7 +155,7 @@
                             <div class="control prev"><i class="fa fa-chevron-left text-white">&nbsp;</i></div>
                             <div class="control next"><i class="fa fa-chevron-right text-white">&nbsp;</i></div>
                         </div>
-                        <div class="owl-carousel">
+                        <div class="testimonial-carousel">
                             {% for sponsor in sponsors %}
                                 <div class="one-slide white">
                                     <div class="testimonial w-100 h-100 p-3 text-center">
@@ -204,8 +164,7 @@
                                                                 style="width:auto;height:100px;max-width:100px"/>
                                         </div>
                                         <div class="separator">&nbsp;</div>
-                                        <div class="message text-center text-gray"
-                                             style="font-size: 1rem;word-wrap: break-word;">{{ sponsor.sponsor_name }}</div>
+                                        <div class="message text-center text-gray">{{ sponsor.sponsor_name }}</div>
                                         <p style="font-weight: 300;font-size: 0.9rem;">{{ sponsor.sponsor_type }}</p>
                                     </div>
                                 </div>
@@ -216,6 +175,44 @@
             </div>
         </div>
     </section>
+
+
+    {#        Owl Library#}
+    {#    <section id="sponsorSection" class="orange-fade p-5 margin-top-xl pos-r parallax"#}
+    {#             style="padding:0; background-image: url('{% static 'gandharva/img/p.jpg' %}');">#}
+    {#        <div class="container">#}
+    {#            <div class="row">#}
+    {#                <div class="col-sm-12">#}
+    {#                    <br>#}
+    {#                    <h2 class="text-center text-white" style="padding-top: 6px;font-weight: 500">Our#}
+    {#                        Sponsors</h2>#}
+    {#                    <p></p>#}
+    {#                    <div class="mt-5 pos-r">#}
+    {#                        <div class="carousel-controls testimonial-carousel-controls">#}
+    {#                            <div class="control prev"><i class="fa fa-chevron-left text-white">&nbsp;</i></div>#}
+    {#                            <div class="control next"><i class="fa fa-chevron-right text-white">&nbsp;</i></div>#}
+    {#                        </div>#}
+    {#                        <div class="owl-carousel">#}
+    {#                            {% for sponsor in sponsors %}#}
+    {#                                <div class="one-slide white">#}
+    {#                                    <div class="testimonial w-100 h-100 p-3 text-center">#}
+    {#                                        <div class="brand"><img alt="logo"#}
+    {#                                                                src="{% static sponsor.sponsor_logo %}"#}
+    {#                                                                style="width:auto;height:100px;max-width:100px"/>#}
+    {#                                        </div>#}
+    {#                                        <div class="separator">&nbsp;</div>#}
+    {#                                        <div class="message text-center text-gray"#}
+    {#                                             style="font-size: 1rem;word-wrap: break-word;">{{ sponsor.sponsor_name }}</div>#}
+    {#                                        <p style="font-weight: 300;font-size: 0.9rem;">{{ sponsor.sponsor_type }}</p>#}
+    {#                                    </div>#}
+    {#                                </div>#}
+    {#                            {% endfor %}#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#        </div>#}
+    {#    </section>#}
 
     <section id="contact">
         <div class="map-responsive">
@@ -235,8 +232,8 @@
             // callback function
         });
     </script>
-    <script src="https://code.jquery.com/jquery-3.3.1.js"
-            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
     <script type="text/javascript" src="{% static 'gandharva/js/particles.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'gandharva/js/owl.carousel.js' %}"></script>
     <script type="text/javascript" src="{% static 'gandharva/js/highlight.js' %}"></script>
