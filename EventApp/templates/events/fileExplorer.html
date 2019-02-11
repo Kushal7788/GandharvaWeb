@@ -49,7 +49,17 @@
         <br>
     </div>
     <br>
-
+{% block scripts %}
+    <script type="text/javascript">
+    let uploadField = document.getElementById("id_document");
+    uploadField.onchange = function() {
+        if(this.files[0].size > 25165824){
+        alert("Upload size limit is 25MB.");
+        this.value = "";
+        };
+};
+</script>
+{% endblock %}
 
 {% endblock %}
 
