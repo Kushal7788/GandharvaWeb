@@ -881,7 +881,12 @@ def ourTeam(request):
 
 # upload file view
 def files(request):
-    doc = fileDocument.objects.filter(user=request.user)
+    current_doc = fileDocument.objects.filter(user=request.user)
+    dictonary ={}
+    juniors = AssignSub.objects.filter(rootuser=request.user)
+    for junior in juniors:
+        doc_list = fileDocument.objects.filter(user = junior.subuser)
+        dictonary[junior.subuser]= doc_list
     if request.method == 'POST':
         form = fileForm(request.POST, request.FILES)
         if form.is_valid():
@@ -892,14 +897,16 @@ def files(request):
             f.save()
             return render(request, 'events/fileExplorer.html', {
                 'form': fileForm,
-                'documents': doc
+                'dict': dictonary,
+                'documents': current_doc
 
             })
     else:
         form = fileForm()
     return render(request, 'events/fileExplorer.html', {
         'form': form,
-        'documents': doc
+        'dict': dictonary,
+        'documents': current_doc
     })
 
 

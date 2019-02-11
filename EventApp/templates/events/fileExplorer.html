@@ -30,6 +30,20 @@
                     </li>
                 {% endfor %}
             </ul>
+        <br><br>
+        <label>Documents Uploaded By Other Users</label>
+        <br><br>
+         <ul>
+                {% for sub,val in dict.items %}
+                    <label>{{ sub.email}}</label>
+                    {% for obj in val %}
+                    <li>
+                        <a href="{{ obj.document.url }}">{{ obj.fname }}</a>
+                        <small>(Uploaded at: {{ obj.uploaded_at }})</small>
+                    </li>
+                {% endfor %}
+                {% endfor %}
+            </ul>
         </div>
         <br>
     </div>
