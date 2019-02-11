@@ -3,9 +3,9 @@
 
 {% block title %}Gandharva-Home{% endblock %}
 {% block css %}
-    {#        <link href="{% static 'gandharva/css/slick.min.css' %}" rel="stylesheet">#}
     <link href="{% static 'gandharva/css/responsive.css' %}" rel="stylesheet">
     <link href="{% static 'gandharva/css/owl.carousel.css' %}" rel="stylesheet">
+    <link href="{% static 'gandharva/css/owl.theme.default.css' %}" rel="stylesheet">
     <link href="{% static 'gandharva/css/home.css' %}" rel="stylesheet">
     <script>var GandharvaDate = "{{gandharvaDate}}";</script>
     <style>
@@ -117,9 +117,6 @@
 
                 </div>
             {% endif %}
-
-
-
             {% endfor %}
         </div>
         <img class="img-fluid" src="{% static 'gandharva/img/party.png' %}">
@@ -183,7 +180,7 @@
     {#    </section>#}
 
 
-    {#    Owl Library#}
+    {#        Owl Library#}
     <section id="sponsorSection" class="orange-fade p-5 margin-top-xl pos-r parallax"
              style="padding:0; background-image: url('{% static 'gandharva/img/p.jpg' %}');">
         <div class="container">
@@ -200,7 +197,7 @@
                         </div>
                         <div class="owl-carousel">
                             {% for sponsor in sponsors %}
-                                <div class="one-slide white item">
+                                <div class="one-slide white">
                                     <div class="testimonial w-100 h-100 p-3 text-center">
                                         <div class="brand"><img alt="logo"
                                                                 src="{% static sponsor.sponsor_logo %}"
@@ -238,8 +235,8 @@
             // callback function
         });
     </script>
-    {#    <script type="text/javascript" src="{% static 'gandharva/js/jquery.min.js' %}"></script>#}
-    {#    <script type="text/javascript" src="{% static 'gandharva/js/slick.min.js' %}"></script>#}
+    <script src="https://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="{% static 'gandharva/js/particles.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'gandharva/js/owl.carousel.js' %}"></script>
     <script type="text/javascript" src="{% static 'gandharva/js/highlight.js' %}"></script>

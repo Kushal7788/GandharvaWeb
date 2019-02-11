@@ -2,7 +2,7 @@ console.log('Hello');
 
 sal();
 
-$(document).ready( function () {
+$(document).ready(function () {
 // Owl
     var owl = $('.owl-carousel');
 
@@ -33,6 +33,7 @@ $(document).ready( function () {
         }
     });
 });
+
 
 // $(document).ready(function () {
 //     $(".testimonial-carousel").slick({
