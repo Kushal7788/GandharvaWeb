@@ -16,7 +16,7 @@ from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.http import HttpResponse
 from django.contrib.sites.shortcuts import get_current_site
-from EventApp.decorators import user_Role_head, user_Campaign_head
+from EventApp.decorators import *
 from GandharvaWeb19 import settings
 from instamojo_wrapper import Instamojo
 from django.db import IntegrityError
@@ -28,7 +28,7 @@ import string
 import openpyxl
 import sweetify
 
-
+@staff_user
 def campaigning_excel(request):
     all_transactions = Transaction.objects.filter(status='Credit')
     wb = openpyxl.Workbook()
@@ -400,7 +400,7 @@ def user_login(request):
     else:
         return render(request, 'events/login.html', {})
 
-
+@staff_user
 def myaction(request):
     role = RoleAssignment.objects.get(user=request.user.id)
     if role.role.name == "Campaigning Head" or role.role.name == "Jt Campaigning Head":
@@ -422,7 +422,7 @@ def payment(request):
 
 
 # Head Login View only to be used for Heads
-# @user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(lambda u: u.is_superuser)
 def RegisterHead(request):
     Roles = RoleMaster.objects.all()
     role_categories = Role_category.objects.all()
@@ -635,7 +635,7 @@ def participantDetails(request):
                           {'event': event, 'colleges': coll, 'email_participant': participant_email,
                            'present_user': ifuser, 'error': error})
 
-
+@staff_user
 def cashpayment(event, user, request):
     id = ""
     flag = 0
@@ -702,7 +702,7 @@ def cashpayment(event, user, request):
         email.send()
 
 
-
+@staff_user
 def Profile(request):
     user = request.user
     if request.method == 'POST':
@@ -715,7 +715,7 @@ def Profile(request):
         user.save()
     return render(request, 'user/userProfile.html')
 
-
+@staff_user
 def Registered_Events(request):
     teams = Team.objects.filter(user=request.user)
     return render(request, 'user/registeredEvents.html', {'teams': teams})
@@ -866,7 +866,7 @@ def AddVolunteer(request):
         }
         return render(request, 'events/campaignVolunteer.html', args)
 
-
+@staff_user
 def ourSponsors(request):
     sponsors = SponsorMaster.objects.all()
     args = {
@@ -874,12 +874,13 @@ def ourSponsors(request):
     }
     return render(request, 'gandharva/ourSponsors.html', args)
 
-
+@staff_user
 def ourTeam(request):
     return render(request, 'gandharva/ourTeam.html')
 
 
 # upload file view
+@staff_user
 def files(request):
     current_doc = fileDocument.objects.filter(user=request.user)
     dictonary ={}
