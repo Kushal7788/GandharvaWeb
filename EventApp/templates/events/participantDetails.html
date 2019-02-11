@@ -9,7 +9,6 @@
 {% block body %}
     <br><br><br><br><br>
     <div class="loader"></div>
-    <div id="blankCon" class="container HideBlankContainer" style="height: 100vh;"></div>
     <div class="container">
         <div id="page" class="displayPage">
             <div class="col-sm-5 container-center">
@@ -126,7 +125,6 @@
 
                 function myFunction(div) {
                     $('#page').addClass('hidePage');
-                    $('#blankCon').addClass('displayBlankContainer');
                     $(".loader").toggle();
                     $(div).toggle();
                 }

@@ -169,18 +169,11 @@ input {
 
 .displayPage {
     display: block;
+    opacity: 1;
 }
 
 .hidePage {
-    display: none;
-}
-
-.HideBlankContainer {
-    display: none;
-}
-
-.displayBlankContainer {
-    display: block;
+    opacity: 0.3;
 }
 
 .ForgotPassword {
