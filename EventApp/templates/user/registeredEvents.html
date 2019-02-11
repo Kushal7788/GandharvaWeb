@@ -33,22 +33,22 @@
                 </div>
                 <div class="col-sm-12 col-md-4">
                     <h1 class="colorlib-heading">{{ team.receipt.event.event_name }}</h1>
-                    <p style="font-weight: bold; margin-bottom: 0;font-size: 18px"> Event Details</p>
+                    <p style="font-weight: 500; margin-bottom: 0;font-size: 18px"> Event Details</p>
                     {% if team.receipt.event.timings %}
                         <div class="con">
-                            <p style="font-weight: bold;margin-right: 6px">Time:</p>
+                            <p style="font-weight: 500;margin-right: 6px">Time:</p>
                             <p> {{ team.receipt.event.timings }}</p>
                         </div>
                     {% endif %}
                     {% if team.receipt.event.location %}
                         <div class="con">
-                            <p style="font-weight: bold;margin-right: 6px">Location:</p>
+                            <p style="font-weight: 500;margin-right: 6px">Location:</p>
                             <p>{{ team.receipt.event.location }}</p>
                         </div>
                     {% endif %}
                     {% if team.receipt.event.team_size %}
                         <div class="con">
-                            <p style="font-weight: bold;margin-right: 6px">Team:</p>
+                            <p style="font-weight:500;margin-right: 6px">Team:</p>
                             <p>{{ team.receipt.event.team_size }}</p>
                         </div>
                     {% endif %}
@@ -78,10 +78,10 @@
                     <p style="font-weight: bold; margin-bottom: 0;font-size: 18px"> Payment Details</p>
                     {% for transaction in team.transaction_set.all %}
                         <div class="paymentdetails">
-                            <p><span style="font-weight: bold">Amount</span> : {{ team.receipt.event.entry_fee }}
+                            <p><span style="font-weight: 500">Amount</span> : {{ team.receipt.event.entry_fee }}
                             </p>
-                            <p><span style="font-weight: bold">Status</span> : {{ transaction.status }}</p>
-                            <p><span style="font-weight: bold">Transaction ID</span>
+                            <p><span style="font-weight: 500">Status</span> : {{ transaction.status }}</p>
+                            <p><span style="font-weight: 500">Transaction ID</span>
                                 : {{ transaction.transaction_id }}
                             </p>
                             <p><span style="font-weight: bold">Payment Date</span> : {{ transaction.date }}</p>
