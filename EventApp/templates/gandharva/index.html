@@ -8,6 +8,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" rel="stylesheet">
 {#    <link href="{% static 'gandharva/css/owl.theme.default.css' %}" rel="stylesheet">#}
     <link href="{% static 'gandharva/css/home.css' %}" rel="stylesheet">
+{#    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>#}
     <script>var GandharvaDate = "{{gandharvaDate}}";</script>
     <style>
         #footer {
@@ -139,6 +140,7 @@
             </div>
         </div>
     </section>
+{#    <button onclick=swal("hello")>hello</button>#}
 
 
     <section id="sponsorSection" class="orange-fade p-5 margin-top-xl pos-r parallax"
@@ -223,6 +225,10 @@
 
 {% endblock %}
 {% block scripts %}
+    function myfunction(){
+        swal("hello")
+    }
+
     <script type="text/javascript" src="{% static 'gandharva/js/coundown-timer.js' %}"></script>
     <script>$("#countdown").countdown({
             date: "10 july 2014 12:00:00",
