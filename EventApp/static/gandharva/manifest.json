@@ -1,8 +1,8 @@
 {
   "name": "Gandharva19",
   "short_name": "Gandharva19",
-  "theme_color": "#7FDBFF",
-  "background_color": "#7FDBFF",
+  "theme_color": "#004E8A",
+  "background_color": "#004E8A",
   "display": "standalone",
   "Scope": "/",
   "start_url": "/",
