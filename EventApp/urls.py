@@ -45,5 +45,4 @@ url(r'participantEventRegister', views.participantEventRegister, name='participa
     url(r'^file_upload/$', views.files, name='files'),
     url(r'^myactions/$', views.myaction, name='myactions'),
     url(r'all-participants',views.all_participanrs, name='all_participanrs'),
-    url(r'^mail-participants', views.mail_participants, name='mail-participants'),
 ]

@@ -10,15 +10,11 @@
 
     <div>
         <h2>People participated in your event are</h2>
-
-        <form action="{% url 'mail-participants' %}" method="get">
+        <ul>
             {% for participant in participants %}
-            <input type="checkbox" name="email" value={{participant.team.user.email}}>
-            name= {{participant.team.user.first_name}},email ={{participant.team.user.email}}<br>
+                <li>name=  {{participant.team.user.first_name}}   ,email = {{participant.team.user.email}} </li>
             {% endfor %}
-            <input type="submit" value="Email">
-        </form>
-
+        </ul>
 
     </div>
 
