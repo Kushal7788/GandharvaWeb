@@ -7,7 +7,7 @@
 {% block body %}
     <br><br><br><br><br>
 
-    <div class="container" style="height: 100vh">
+    <div class="container">
         <div class="col-sm-6 container-center">
             <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
             <h5 style="text-align: center;">File Upload</h5>
@@ -16,7 +16,9 @@
                 {% csrf_token %}
                 <div class="text-center">
                     {{ form.as_p }}
-                    <button type="submit" id="upload" class="btn btn-primary" style="margin-left: 0;width:auto;">Upload</button>
+                    <button type="submit" id="upload" class="btn btn-primary" style="margin-left: 0;width:auto;">
+                        Upload
+                    </button>
                 </div>
             </form>
             <div class="text-center">
@@ -33,8 +35,7 @@
         </div>
         <br>
     </div>
-    <br>
-
-
+    <br><br>
+    <div style="height: 40vh"></div>
 {% endblock %}
 
