@@ -189,7 +189,7 @@ input {
 .loader {
     display: none;
     z-index: 1000;
-    position: absolute;
+    position: fixed;
     left: 44%;
     top: 50%;
     border: 8px solid #fff;
