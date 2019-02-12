@@ -8,7 +8,7 @@
 {% block body %}
     <br><br><br><br><br>
 
-    <div class="container" style="height: 100vh">
+    <div class="container">
         <div class="col-sm-6 container-center">
             <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
             <h5 style="text-align: center;">File Upload</h5>
@@ -17,7 +17,9 @@
                 {% csrf_token %}
                 <div class="text-center">
                     {{ form.as_p }}
-                    <button type="submit" id="upload" class="btn btn-primary" style="margin-left: 0;width:auto;">Upload</button>
+                    <button type="submit" id="upload" class="btn btn-primary" style="margin-left: 0;width:auto;">
+                        Upload
+                    </button>
                 </div>
             </form>
             <div class="text-center">
@@ -31,37 +33,42 @@
                     </li>
                 {% endfor %}
             </ul>
-        <br><br>
-        <label>Documents Uploaded By Other Users</label>
-        <br><br>
-         <ul>
+            <br><br>
+            <div class="text-center">
+                <label>Documents Uploaded By Other Users</label>
+            </div>
+            <br>
+            <ul>
                 {% for sub,val in dict.items %}
                     <br>
-                    <label>{{ sub.first_name}} {{ sub.last_name }}</label>
+                    <label>{{ sub.first_name }} {{ sub.last_name }}</label>
                     {% for obj in val %}
-                    <li>
-                        <a href="{{ obj.document.url }}">{{ obj.fname }}</a>
-                        <small>(Uploaded at: {{ obj.uploaded_at }})</small>
-                    </li>
-                {% endfor %}
+                        <li>
+                            <a href="{{ obj.document.url }}">{{ obj.fname }}</a>
+                            <small>(Uploaded at: {{ obj.uploaded_at }})</small>
+                        </li>
+                    {% endfor %}
                 {% endfor %}
             </ul>
         </div>
         <br>
     </div>
     <br>
-{% block scripts %}
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script type="text/javascript">
-    let uploadField = document.getElementById("id_document");
-    uploadField.onchange = function() {
-        if(this.files[0].size > 25165824){
-        swal("Upload size limit is 25MB.");
-        this.value = "";
-        };
-};
-</script>
-{% endblock %}
+    <br><br>
+    <div style="height: 40vh"></div>
+    {% block scripts %}
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script type="text/javascript">
+            let uploadField = document.getElementById("id_document");
+            uploadField.onchange = function () {
+                if (this.files[0].size > 25165824) {
+                    swal("Upload size limit is 25MB.");
+                    this.value = "";
+                }
+                ;
+            };
+        </script>
+    {% endblock %}
 
 {% endblock %}
 
