@@ -201,6 +201,8 @@ class Transaction(models.Model):
     receipt = models.ForeignKey(Receipt, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.PROTECT, blank=True, null=True)
 
+    def __str__(self):
+        return self.transaction_id
 
 class Document_type(models.Model):
     type = models.CharField(max_length=100)
@@ -247,6 +249,9 @@ class fileDocument(models.Model):
 class AssignSub (models.Model):
     rootuser = models.ForeignKey(MyUser,on_delete=models.CASCADE, related_name='root')
     subuser = models.ForeignKey(MyUser,on_delete=models.PROTECT,related_name='subordinate')
+
+    def __str__(self):
+        return 'Username : ' + self.rootuser.first_name
 
 class InstamojoCredential(models.Model):
     key = models.CharField(max_length=50)

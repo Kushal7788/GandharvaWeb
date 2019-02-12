@@ -16,7 +16,7 @@ from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.http import HttpResponse
 from django.contrib.sites.shortcuts import get_current_site
-from EventApp.decorators import user_Role_head, user_Campaign_head
+from EventApp.decorators import *
 from GandharvaWeb19 import settings
 from instamojo_wrapper import Instamojo
 from django.db import IntegrityError
@@ -28,7 +28,7 @@ import string
 import openpyxl
 import sweetify
 
-
+@staff_user
 def campaigning_excel(request):
     all_transactions = Transaction.objects.filter(status='Credit')
     wb = openpyxl.Workbook()
@@ -229,6 +229,21 @@ def success(request):
         print("ERROR")
 
 
+def all_participanrs(request):
+    role = RoleAssignment.objects.get(user=request.user.id)
+    if role.role.name == 'Event Head':
+        eventid = role.event.event_id
+        print(eventid)
+        #receipt = Receipt.objects.filter(event=eventid)
+        #receipt.event.event_id = event_id
+        participants = Transaction.objects.all()
+        print(participants)
+        arg = {
+        'participants': participants,
+        }
+        return render(request, 'events/all_participants.html', arg)
+
+
 # Details of Individual Events
 def details(request):
     if request.method == 'POST':
@@ -400,7 +415,7 @@ def user_login(request):
     else:
         return render(request, 'events/login.html', {})
 
-
+@staff_user
 def myaction(request):
     role = RoleAssignment.objects.get(user=request.user.id)
     if role.role.name == "Campaigning Head" or role.role.name == "Jt Campaigning Head":
@@ -408,12 +423,15 @@ def myaction(request):
             'button_name': 'Campaign',
             'urlaccess': campaign,
         }
+    if role.role.name == 'Event Head':
+        args = {
+            'button_name': 'All Participants',
+        }
     else:
         args = {
             'button_name': "No Actions",
             'urlaccess': None,
         }
-
     return render(request, 'user/myactions.html', args)
 
 
@@ -422,7 +440,7 @@ def payment(request):
 
 
 # Head Login View only to be used for Heads
-# @user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(lambda u: u.is_superuser)
 def RegisterHead(request):
     Roles = RoleMaster.objects.all()
     role_categories = Role_category.objects.all()
@@ -635,7 +653,7 @@ def participantDetails(request):
                           {'event': event, 'colleges': coll, 'email_participant': participant_email,
                            'present_user': ifuser, 'error': error})
 
-
+@staff_user
 def cashpayment(event, user, request):
     id = ""
     flag = 0
@@ -702,7 +720,7 @@ def cashpayment(event, user, request):
         email.send()
 
 
-
+@staff_user
 def Profile(request):
     user = request.user
     if request.method == 'POST':
@@ -715,7 +733,7 @@ def Profile(request):
         user.save()
     return render(request, 'user/userProfile.html')
 
-
+@staff_user
 def Registered_Events(request):
     teams = Team.objects.filter(user=request.user)
     return render(request, 'user/registeredEvents.html', {'teams': teams})
@@ -866,7 +884,7 @@ def AddVolunteer(request):
         }
         return render(request, 'events/campaignVolunteer.html', args)
 
-
+@staff_user
 def ourSponsors(request):
     sponsors = SponsorMaster.objects.all()
     args = {
@@ -874,14 +892,20 @@ def ourSponsors(request):
     }
     return render(request, 'gandharva/ourSponsors.html', args)
 
-
+@staff_user
 def ourTeam(request):
     return render(request, 'gandharva/ourTeam.html')
 
 
 # upload file view
+@staff_user
 def files(request):
-    doc = fileDocument.objects.filter(user=request.user)
+    current_doc = fileDocument.objects.filter(user=request.user)
+    dictonary ={}
+    juniors = AssignSub.objects.filter(rootuser=request.user)
+    for junior in juniors:
+        doc_list = fileDocument.objects.filter(user = junior.subuser)
+        dictonary[junior.subuser]= doc_list
     if request.method == 'POST':
         form = fileForm(request.POST, request.FILES)
         if form.is_valid():
@@ -892,14 +916,16 @@ def files(request):
             f.save()
             return render(request, 'events/fileExplorer.html', {
                 'form': fileForm,
-                'documents': doc
+                'dict': dictonary,
+                'documents': current_doc
 
             })
     else:
         form = fileForm()
     return render(request, 'events/fileExplorer.html', {
         'form': form,
-        'documents': doc
+        'dict': dictonary,
+        'documents': current_doc
     })
 
 
