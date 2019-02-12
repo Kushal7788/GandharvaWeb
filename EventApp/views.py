@@ -28,6 +28,7 @@ import string
 import openpyxl
 import sweetify
 
+
 @staff_user
 def campaigning_excel(request):
     all_transactions = Transaction.objects.filter(status='Credit')
@@ -49,7 +50,7 @@ def campaigning_excel(request):
                   each_transaction.team.user.user_coll.name,
                   str(each_transaction.date)]
         for col, each_value in enumerate(values):
-            curr_cell = sheet.cell(row=row + data_starting_number, column=col+1)
+            curr_cell = sheet.cell(row=row + data_starting_number, column=col + 1)
             curr_cell.value = each_value
 
     # i = 2
@@ -76,7 +77,7 @@ def campaigning_excel(request):
     #     c4.value = str(t.time)
     #     i = i + 1
     insta = InstamojoCredential.objects.latest('key')
-    pathw = insta.redirect_url+'media/CampaignData.xlsx'
+    pathw = insta.redirect_url + 'media/CampaignData.xlsx'
     wb.save("media/CampaignData.xlsx")
     arg = {
         'filename': pathw,
@@ -84,6 +85,10 @@ def campaigning_excel(request):
 
     }
     return render(request, 'user/TableToExcel.html', arg)
+
+
+def offline(request):
+    return render(request, 'gandharva/offline.html',{})
 
 
 # Home page Functionality
@@ -247,7 +252,7 @@ def details(request):
             send_sms=False,
             email=user.email,
             phone=user.user_phone,
-            redirect_url=insta.redirect_url+"success?eid=" + event_id
+            redirect_url=insta.redirect_url + "success?eid=" + event_id
         )
         # print the long URL of the payment request.
         print(response['payment_request']['longurl'])
@@ -399,6 +404,7 @@ def user_login(request):
             return render(request, 'events/login.html', {})
     else:
         return render(request, 'events/login.html', {})
+
 
 @staff_user
 def myaction(request):
@@ -613,7 +619,8 @@ def participantDetails(request):
                     email=user.email,
                     phone=user.user_phone,
                     # redirect_url="http://127.0.0.1:8000/success?eid=" + event_id + "&ref=" + str(refer)
-                    redirect_url=insta.redirect_url+"success?eid=" + event_id + "&ref=" + str(refer)+"success?eid=" + event_id + "&ref=" + str(refer)
+                    redirect_url=insta.redirect_url + "success?eid=" + event_id + "&ref=" + str(
+                        refer) + "success?eid=" + event_id + "&ref=" + str(refer)
 
                 )
                 # print the long URL of the payment request.
@@ -634,6 +641,7 @@ def participantDetails(request):
             return render(request, 'events/participantDetails.html',
                           {'event': event, 'colleges': coll, 'email_participant': participant_email,
                            'present_user': ifuser, 'error': error})
+
 
 @staff_user
 def cashpayment(event, user, request):
@@ -714,6 +722,7 @@ def Profile(request):
         user.user_phone = user_phone
         user.save()
     return render(request, 'user/userProfile.html')
+
 
 @staff_user
 def Registered_Events(request):
@@ -866,6 +875,7 @@ def AddVolunteer(request):
         }
         return render(request, 'events/campaignVolunteer.html', args)
 
+
 @staff_user
 def ourSponsors(request):
     sponsors = SponsorMaster.objects.all()
@@ -873,6 +883,7 @@ def ourSponsors(request):
         'sponsors': sponsors
     }
     return render(request, 'gandharva/ourSponsors.html', args)
+
 
 @staff_user
 def ourTeam(request):
@@ -883,11 +894,11 @@ def ourTeam(request):
 @staff_user
 def files(request):
     current_doc = fileDocument.objects.filter(user=request.user).order_by("uploaded_at").reverse()
-    dictonary ={}
+    dictonary = {}
     juniors = AssignSub.objects.filter(rootuser=request.user)
     for junior in juniors:
-        doc_list = fileDocument.objects.filter(user = junior.subuser).order_by("uploaded_at").reverse()
-        dictonary[junior.subuser]= doc_list
+        doc_list = fileDocument.objects.filter(user=junior.subuser).order_by("uploaded_at").reverse()
+        dictonary[junior.subuser] = doc_list
 
     if request.method == 'POST':
         form = fileForm(request.POST, request.FILES)
