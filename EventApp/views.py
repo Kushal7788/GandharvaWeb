@@ -27,6 +27,7 @@ import json
 import string
 import openpyxl
 import sweetify
+import re
 
 @staff_user
 def campaigning_excel(request):
@@ -234,14 +235,41 @@ def all_participanrs(request):
     if role.role.name == 'Event Head':
         eventid = role.event.event_id
         print(eventid)
-        #receipt = Receipt.objects.filter(event=eventid)
-        #receipt.event.event_id = event_id
-        participants = Transaction.objects.all()
+        receipts = Receipt.objects.filter(event=eventid)
+        print(receipts)
+
+        """participants = []
+        for receipt in receipts:
+            user = receipt.transaction_set.all()
+            participants.append(user)
+        print("----------------------------")
         print(participants)
+        for participant in participants:
+            print(participant)
+        """
+
+        participants = Transaction.objects.all()
         arg = {
         'participants': participants,
         }
         return render(request, 'events/all_participants.html', arg)
+
+
+def mail_participants(request):
+    if request.method == 'GET':
+        emails = request.GET.getlist('email')
+        return render(request, 'events/mail_participants.html', {'emails': emails})
+
+    if request.method == 'POST':
+        subject = request.POST.get('subject')
+        message = request.POST.get('message')
+
+        # regular expression to convert string to list
+        to_email = re.findall(r'[\w\.-]+@[\w\.-]+', request.POST.get('emails'))
+
+        email = EmailMessage(subject, message, to=to_email)
+        email.send()
+        return render(request, 'events/mail_response.html')
 
 
 # Details of Individual Events
