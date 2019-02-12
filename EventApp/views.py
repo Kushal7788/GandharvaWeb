@@ -262,6 +262,7 @@ def details(request):
             send_sms=False,
             email=user.email,
             phone=user.user_phone,
+            buyer_name=user.first_name +" "+user.last_name,
             redirect_url=insta.redirect_url+"success?eid=" + event_id
         )
         # print the long URL of the payment request.
@@ -630,6 +631,7 @@ def participantDetails(request):
                     send_sms=False,
                     email=user.email,
                     phone=user.user_phone,
+                    buyer_name=user.first_name +" "+user.last_name,
                     # redirect_url="http://127.0.0.1:8000/success?eid=" + event_id + "&ref=" + str(refer)
                     redirect_url=insta.redirect_url+"success?eid=" + event_id + "&ref=" + str(refer)+"success?eid=" + event_id + "&ref=" + str(refer)
 
