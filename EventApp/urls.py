@@ -2,6 +2,7 @@ from django.conf.urls import url, include
 from . import views
 from django.views.generic.base import TemplateView
 
+
 # Url defined here, can access the page related to the url by adding the path
 urlpatterns = [
     url(r'^$', views.home, name='home'),
@@ -45,7 +46,9 @@ urlpatterns = [
     url(r'^myactions/$', views.myaction, name='myactions'),
     url(r'all-participants', views.all_participants, name='all_participanrs'),
     url(r'^mail-participants', views.mail_participants, name='mail-participants'),
-    # url(r'^myactions/$', views.myaction, name='myactions'),
+    url(r'^myactions/$', views.myaction, name='myactions'),
     url(r'^offline/$', views.offline, name='offline'),
+    url(r'^terms-and-conditions/$', views.terms, name='terms'),
+    url(r'^privacy-policy/$', views.policy, name='policy'),
 
 ]

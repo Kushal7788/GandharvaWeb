@@ -21,19 +21,32 @@ class College_year(models.Model):
     def __str__(self):
         return self.title
 
+def department_path(instance, filename):
+    ext = filename.split('.')[-1]
+    filename = '{}.{}'.format("Department_images/" + instance.name , ext)
+    return filename
 
 # model for Department
 class Department(models.Model):
     dep_id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=30)
     description = models.TextField()
-    img = models.CharField(max_length=200)
+    img = models.ImageField(upload_to=department_path,blank=True)
     link_to = models.CharField(max_length=200)
     banner_src = models.CharField(max_length=500, blank=True)
 
     def __str__(self):
         return self.name
 
+def sponsor_path(instance, filename):
+    ext = filename.split('.')[-1]
+    filename = '{}.{}'.format("Sponsor_images/" + instance.sponsor_name , ext)
+    return filename
+
+def carousel_path(instance, filename):
+    ext = filename.split('.')[-1]
+    filename = '{}.{}'.format("Carousel_images/" , ext)
+    return filename
 
 def rules_path(instance, filename):
     ext = filename.split('.')[-1]
@@ -145,7 +158,7 @@ class EventDepartment(models.Model):
 # sponsors model
 class SponsorMaster(models.Model):
     sponsor_name = models.CharField(max_length=30)
-    sponsor_logo = models.CharField(max_length=200)
+    sponsor_logo = models.ImageField(upload_to=sponsor_path,blank=True)
     sponsor_info = models.CharField(max_length=200, default='No Info. Available')
     sponsor_type = models.CharField(max_length=30, blank=True)
 
@@ -155,8 +168,8 @@ class SponsorMaster(models.Model):
 
 # contains media for front-end
 class Carousel(models.Model):
-    src = models.CharField(max_length=200)
-
+    src = models.CharField(max_length=200,blank=True)
+    images = models.ImageField(upload_to='Carousel_images/', blank=True)
 
 # ContactUs contains fields for user Services to contact to admin (Foreign Key to Dept)
 class ContactUs(models.Model):
@@ -279,3 +292,7 @@ class Volunteer(models.Model):
     user = models.ForeignKey(MyUser, on_delete=models.PROTECT)
     college = models.ForeignKey(College, on_delete=models.PROTECT)
     date = models.DateField()
+
+class TermsConditons(models.Model):
+    terms = models.TextField(max_length=2000)
+    policy = models.TextField(max_length=2000)
