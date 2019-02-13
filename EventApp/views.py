@@ -353,7 +353,7 @@ def contactus(request):
                 'id': user_email,
                 'msg': msg,
             })
-            email = EmailMessage(mail_subject, message, to=['viitgandharva3@gmail.com'])
+            email = EmailMessage(mail_subject, message, to=['hello@viitgandharva.com'])
             email.send()
 
         else:
