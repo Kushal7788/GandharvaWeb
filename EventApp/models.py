@@ -131,7 +131,6 @@ class Domain(models.Model):
     def __str__(self):
         return self.domain_name
 
-
 # links the events with the departments
 
 class EventDepartment(models.Model):

@@ -472,6 +472,7 @@ def user_login(request):
 @staff_user
 def myaction(request):
     role = RoleAssignment.objects.get(user=request.user.id)
+    role = RoleAssignment.objects.get(user=request.user.id)
     if role.role.name == "Campaigning Head" or role.role.name == "Jt Campaigning Head":
         args = {
             'button_name': 'Campaign',
