@@ -1,6 +1,6 @@
 <html>{#{% autoescape off %}#}
 <body style="color:#000;">
-<h3 style="color:#000;text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
+<h1 style="color:#000;text-align: right;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h1>
 <h4>Greetings from Gandharva</h4>
 Hi {{ user.first_name }},
 <h2>Payment Details:</h2>
@@ -22,6 +22,20 @@ Team size: {{ event.team_size }}
 Thank you for registration.
 <br>
 <p style="font-weight: 300">*If event is cancelled in any case, money will be refunded</p>
+<footer id="footer">
+    <div class="container">
+        <div class="text-center">
+            {% for footer in footers %}
+            <a class="fb-ic" href="{{ footer.src }}" target="_blank">
+                <i class="{{ footer.cls }}"
+                   style="color: #fff;font-size: 26px;margin-right:2vw"></i>
+            </a>
+            {% endfor %}
+            <p style="font-size:14px;color:#fff"> Copyright &copy;2019 Gandharva. All Rights Reserved.</p>
+        </div>
+    </div>
+</footer>
+
 {#{% endautoescape %}#}
 </body>
 </html>
