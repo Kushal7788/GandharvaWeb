@@ -621,7 +621,7 @@ def participant_event_register(request):
             send_email(useremail,mail_subject,message)
 
             return render(request, 'events/participantEventRegister.html',
-                          {'email': useremail, 'otp': otp, 'event_id': eventId})
+                          {'email': useremail, 'otp': otp, 'event_id': eventId,'btndisable': True})
         else:
             return render(request, 'events/participantEventRegister.html', {'event_id': eventId, 'email': useremail})
     if request.method == 'GET':
