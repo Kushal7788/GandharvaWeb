@@ -7,7 +7,7 @@ html, body {
     margin: 0px;
     padding: 0px;
     scroll-behavior: smooth;
-    font-family: 'Lato', sans-serif;
+    font-family: 'Roboto', sans-serif;
     background-color: #fff;
     color: #fff;
 }
@@ -31,7 +31,7 @@ html, body {
 #contact h3 {
     text-transform: inherit;
     color: #fff;
-    font-weight: 500;
+    /*font-weight: 500;*/
 }
 
 #contact-section h3 {
@@ -39,7 +39,7 @@ html, body {
 }
 
 #contact address {
-    font-size: 18px;
+    font-size: 14px;
     color: #fff;
     word-wrap: break-word;
 }
@@ -54,7 +54,7 @@ html, body {
     box-shadow: none;
     outline: 0 none;
     border-radius: 0;
-    font-size: 18px;
+    font-size: 14px;
 }
 
 #contact-section .form-control:focus {
@@ -74,8 +74,8 @@ html, body {
     background-color: #373737;
     color: #fff;
     border: none;
-    font-size: 24px;
-    padding: 6px 42px;
+    font-size: 15px;
+    padding: 6px 20px;
     margin-bottom: 20px;
     margin-top: 10px
 }
@@ -83,4 +83,18 @@ html, body {
 #contact-section .btn-primary:hover {
     background-color: #212020;
     color: #fff
+}
+
+.sendButton{
+    text-align: center;
+    color: #fff;
+    border: none;
+    font-size: 14px;
+    padding-right: 15px;
+    padding-top: 5px;
+    padding-left: 15px;
+    padding-bottom: 5px;
+    margin-bottom: 4px;
+    margin-top: 4px;
+    height: auto;
 }

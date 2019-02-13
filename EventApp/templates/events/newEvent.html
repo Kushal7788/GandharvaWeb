@@ -13,7 +13,6 @@
     </style>
 {% endblock %}
 {% block body %}
-
     <div class="container-fluid"
          style="background:linear-gradient(45deg,rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url('{% static dept_choosen.banner_src %}');width: 100%;height:200px;background-size:cover;">
         <h1 class="title userselect">{{ pageTitle }}</h1>
@@ -28,13 +27,13 @@
                         <div
                                 style="background:linear-gradient(45deg,rgba(0,0,0,0.5),rgba(0,0,0,0.5));height: inherit;text-align: center">
                             <h3 class="userselect"
-                                style="color:#fff;word-wrap: break-word;padding-top:12vh">{{ event.event.tagline }}</h3>
+                                style="color:#fff;word-wrap: break-word;padding-top:12vh;font-weight: 400;">{{ event.event.tagline }}</h3>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-6">
                     <h1 class="colorlib-heading">{{ event.event.event_name }}</h1>
-                    <p class="eventDescription" style="margin-top: 12px">
+                    <p class="eventDescription" style="margin-top: 12px;font-size: 14px">
                         {{ event.event.objective }}
                     </p>
                     {#                    <div class="contact">#}
@@ -43,13 +42,22 @@
                     {#                        <p>Sanul : 123456789</p>#}
                     {#                    </div>#}
                     <div class="team">
-                        <h5 style="color: #000;font-weight: 500">Team and Fee
-                            Structure:</h5>
-                        <p>Max {{ event.event.team_size }} Participants per Team & ₹ {{ event.event.entry_fee }} per
-                            team.</p>
+                        {#                        <h5 style="color: #000;font-weight: 500">Team and Fee#}
+                        {#                            Structure:</h5>#}
+                        {#                        <p>Max {{ event.event.team_size }} Participants per Team & ₹ {{ event.event.entry_fee }} per#}
+                        {#                            team.</p>#}
+                        <h6 style="font-weight: 400"> Team: <span
+                                style="font-family: Verdana, Geneva, sans-serif;
+    font-weight: 300;
+    font-size: 14px;"> Max {{ event.event.team_size }} Participants per Team</span>
+                        </h6>
+                        <h6 style="font-weight: 400"> Fee Structure: <span style="font-family: Verdana, Geneva, sans-serif;
+    font-weight: 300;
+    font-size: 14px;"> ₹ {{ event.event.entry_fee }} per
+                        team</span></h6>
                         {% if event.event.rules_file.url != None %}
 
-                            <a href="{{ event.event.rules_file.url }}">{{ event.event.event_name }} rules pdf
+                            <a style="font-size: 14px" href="{{ event.event.rules_file.url }}">{{ event.event.event_name }} rules pdf
                                 download</a>
 
                         {% endif %}

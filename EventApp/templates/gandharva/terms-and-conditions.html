@@ -1,0 +1,25 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}Terms and Conditions{% endblock %}
+
+{% block css %}
+    <link href="{% static 'events/css/login_signup.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+    <br><br><br><br><br>
+    <div class="container">
+        <div class="col-sm-6 container-center">
+            <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
+            <h5 style="text-align: center;">Terms and Conditions</h5>
+            <br>
+            <span style="font-size: 14px">
+            {% for term in terms %}
+                {{ term.terms }}
+            {% endfor %}
+        </span>
+            <br><br><br>
+        </div>
+    </div>
+    <div style="height: 20vh"></div>
+{% endblock %}
