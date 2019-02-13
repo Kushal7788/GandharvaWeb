@@ -244,7 +244,7 @@ def success(request):
                     'transaction': transaction,
                 })
 
-                send_email(user.email, mail_subject, message, ["media/" + str(team.QRcode)])
+                send_email(user.email, mail_subject, message, [team.QRcode.path])
 
             if transaction.status == "Credit":
                 return render(request, 'user/paymentSsuccess.html')
