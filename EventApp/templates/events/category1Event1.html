@@ -49,9 +49,9 @@
             Max {{ event.team_size }}
             Participants per Team & ₹ {{ event.entry_fee }} per team.</p>
         {% if event.rules_file.url != None %}
-        <li>
-                        <a href="{{ event.rules_file.url }}">{{ event.event_name }} Rules</a>
-                    </li>
+            <li>
+                <a href="{{ event.rules_file.url }}">{{ event.event_name }} Rules</a>
+            </li>
         {% endif %}
     </div>
     <br><br>

@@ -6,7 +6,6 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('EventApp', '0016_auto_20190205_1356'),
     ]
@@ -20,11 +19,13 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='team',
             name='referral',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, related_name='Refral_Volunteer', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT,
+                                    related_name='Refral_Volunteer', to=settings.AUTH_USER_MODEL),
         ),
         migrations.AlterField(
             model_name='team',
             name='user',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='participant', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='participant',
+                                    to=settings.AUTH_USER_MODEL),
         ),
     ]

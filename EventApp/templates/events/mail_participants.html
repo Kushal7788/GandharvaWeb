@@ -8,17 +8,17 @@
 {% block body %}
     <br><br><br><br><br>
 
-<form action="{% url 'mail-participants' %}" method="post">
-    {% csrf_token %}
-    Subject:<br>
-    <input type="text" name="subject" value="">
-    <br>
-    Message:<br>
-    <input type="text" name="message" value="">
-    <input type="hidden" name="emails" value="{{ emails }}">
-    <br><br>
-    <input type="submit" value="Submit">
-</form>
+    <form action="{% url 'mail-participants' %}" method="post">
+        {% csrf_token %}
+        Subject:<br>
+        <input type="text" name="subject" value="">
+        <br>
+        Message:<br>
+        <input type="text" name="message" value="">
+        <input type="hidden" name="emails" value="{{ emails }}">
+        <br><br>
+        <input type="submit" value="Submit">
+    </form>
 
 
 {% endblock %}

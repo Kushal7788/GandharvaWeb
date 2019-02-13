@@ -4,7 +4,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('EventApp', '0028_auto_20190211_1517'),
         ('EventApp', '0029_roleassignment_event'),

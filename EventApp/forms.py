@@ -3,6 +3,7 @@ from django import forms
 from .models import *
 from EventApp.models import fileDocument
 
+
 class UserRegistration(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
     confirm_password = forms.CharField(widget=forms.PasswordInput())
@@ -16,10 +17,10 @@ class UserRegistration(forms.ModelForm):
     last_name = forms.CharField(max_length=30, required=True)
     prof_img = forms.ImageField(required=False)
 
-
     class Meta:
         model = MyUser
-        fields = ['username', 'email', 'password', 'user_dept', 'user_year', 'user_coll', 'coll_email','first_name','last_name','prof_img','user_phone']
+        fields = ['username', 'email', 'password', 'user_dept', 'user_year', 'user_coll', 'coll_email', 'first_name',
+                  'last_name', 'prof_img', 'user_phone']
 
     def clean(self):
         cleaned_data = super(UserRegistration, self).clean()
@@ -30,6 +31,7 @@ class UserRegistration(forms.ModelForm):
             raise forms.ValidationError(
                 "password and confirm_password does not match"
             )
+
 
 class ContactUsForm(forms.ModelForm):
     user_name = forms.CharField(required=True)
@@ -44,6 +46,7 @@ class ContactUsForm(forms.ModelForm):
 
 class RoleMasterForm(forms.ModelForm):
     category = forms.ModelChoiceField(queryset=Role_category.objects.all(), required=False)
+
     class Meta:
         model = Category_assign
         fields = ['role']
@@ -52,13 +55,15 @@ class RoleMasterForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         # self.fields['category'].queryset = RoleMaster.objects.none()
 
+
 class TeamDetailsForm(forms.ModelForm):
     team_name = forms.CharField(required=True)
     user = forms.CharField(required=True)
 
     class Meta:
         model = ContactUs
-        fields = ['team_name', 'user',]
+        fields = ['team_name', 'user', ]
+
 
 class PaymentForm(forms.ModelForm):
     first_name = forms.CharField(max_length=30, required=True)
@@ -70,10 +75,10 @@ class PaymentForm(forms.ModelForm):
 
     class Meta:
         model = MyUser
-        fields = ['user_phone','first_name','last_name','email','user_coll','user_year']
+        fields = ['user_phone', 'first_name', 'last_name', 'email', 'user_coll', 'user_year']
 
 
 class fileForm(forms.ModelForm):
     class Meta:
         model = fileDocument
-        fields = ('document', )
+        fields = ('document',)

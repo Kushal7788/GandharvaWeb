@@ -13,8 +13,8 @@
 
         <form action="{% url 'mail-participants' %}" method="get">
             {% for participant in participants %}
-            <input type="checkbox" name="email" value={{participant.team.user.email}}>
-            name= {{participant.team.user.first_name}},email ={{participant.team.user.email}}<br>
+                <input type="checkbox" name="email" value={{ participant.team.user.email }}>
+                name= {{ participant.team.user.first_name }},email ={{ participant.team.user.email }}<br>
             {% endfor %}
             <input type="submit" value="Email">
         </form>

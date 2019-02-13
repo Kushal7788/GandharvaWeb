@@ -29,6 +29,7 @@ import openpyxl
 import sweetify
 import re
 
+
 @staff_user
 def campaigning_excel(request):
     all_transactions = Transaction.objects.filter(status='Credit')
@@ -89,18 +90,21 @@ def campaigning_excel(request):
 
 
 def offline(request):
-    return render(request, 'gandharva/offline.html',{})
+    return render(request, 'gandharva/offline.html', {})
 
 
 # Home page Functionality
 def home(request):
     userget = 0
-    if request.user:
-        roles = RoleAssignment.objects.all()
-        for role in roles:
-            if role.user == request.user:
-                if role.role.name == "Jt Campaigning Head" or role.role.name == "Campaigning Head":
-                    userget = 1
+    if request.user and (not request.user.is_anonymous):
+        user = request.user
+        role = user.roleassignment_set.all()
+        if len(role) > 1:
+            return HttpResponse('Multiple Role')
+        else:
+            role = role[0]
+            if role.role.name == "Jt Campaigning Head" or role.role.name == "Campaigning Head":
+                userget = 1
 
     args = {
         'events': Department.objects.all(),
@@ -468,6 +472,7 @@ def user_login(request):
 @staff_user
 def myaction(request):
     role = RoleAssignment.objects.get(user=request.user.id)
+    role = RoleAssignment.objects.get(user=request.user.id)
     if role.role.name == "Campaigning Head" or role.role.name == "Jt Campaigning Head":
         args = {
             'button_name': 'Campaign',
@@ -490,7 +495,7 @@ def payment(request):
 
 
 # Head Login View only to be used for Heads
-@user_passes_test(lambda u: u.is_superuser)
+# @user_passes_test(lambda u: u.is_superuser)
 def RegisterHead(request):
     Roles = RoleMaster.objects.all()
     role_categories = Role_category.objects.all()
@@ -570,7 +575,7 @@ def activate_register_head(request, uidb64, token):
 
     except(TypeError, ValueError, OverflowError, user.DoesNotExist):
         user = None
-    if (user is not None):
+    if user is not None:
         if user.token1 == token:
             user.token1 = None
         if user.token2 == token:
@@ -686,7 +691,7 @@ def participantDetails(request):
                     send_sms=False,
                     email=user.email,
                     phone=user.user_phone,
-                    buyer_name=user.first_name +" "+user.last_name,
+                    buyer_name=user.first_name + " " + user.last_name,
                     # redirect_url="http://127.0.0.1:8000/success?eid=" + event_id + "&ref=" + str(refer)
                     redirect_url=head + current_site.domain + "/" + "success?eid=" + event_id + "&ref=" + str(
                         refer) + "success?eid=" + event_id + "&ref=" + str(refer)
@@ -713,7 +718,6 @@ def participantDetails(request):
                            'present_user': ifuser, 'error': error})
     else:
         return redirect('/')
-
 
 
 @staff_user

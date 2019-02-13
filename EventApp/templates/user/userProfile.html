@@ -14,112 +14,112 @@
             <div class="col-md-3">
                 <form class="form-horizontal" role="form" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
-                <div class="text-center">
-                    {% if user.prof_img  %}
-                    <img src={{ user.prof_img.url }} alt="profileImg" height="150" width="170">
-                    <h6>Upload a different photo...</h6>
-                    {% endif %}
+                    <div class="text-center">
+                        {% if user.prof_img %}
+                            <img src={{ user.prof_img.url }} alt="profileImg" height="150" width="170">
+                            <h6>Upload a different photo...</h6>
+                        {% endif %}
 
-                    <input type="file" class="form-control" name="prof_img">
-                </div>
+                        <input type="file" class="form-control" name="prof_img">
+                    </div>
             </div>
             <div class="col-md-9 personal-info">
                 <h3 style="margin-top: 14px">Personal info</h3>
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label">First name:</label>
-                        <div class="col-lg-8">
-                            <input readonly class="form-control" type="text" value="{{ user.first_name }}">
-                        </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">First name:</label>
+                    <div class="col-lg-8">
+                        <input readonly class="form-control" type="text" value="{{ user.first_name }}">
                     </div>
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label">Last name:</label>
-                        <div class="col-lg-8">
-                            <input readonly class="form-control" type="text" value="{{ user.last_name }}">
-                        </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Last name:</label>
+                    <div class="col-lg-8">
+                        <input readonly class="form-control" type="text" value="{{ user.last_name }}">
                     </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Username:</label>
-                        <div class="col-md-8">
-                            <input readonly class="form-control" type="text" value="{{ user.username }}">
-                        </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Username:</label>
+                    <div class="col-md-8">
+                        <input readonly class="form-control" type="text" value="{{ user.username }}">
                     </div>
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label">Mobile:</label>
-                        <div class="col-lg-8">
-                            <input class="form-control" type="text" name="user_phone" value="{{ user.user_phone }}">
-                        </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Mobile:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" type="text" name="user_phone" value="{{ user.user_phone }}">
                     </div>
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label">Email:</label>
-                        <div class="col-lg-8">
-                            <input readonly class="form-control" type="text" value="{{ user.email }}">
-                        </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Email:</label>
+                    <div class="col-lg-8">
+                        <input readonly class="form-control" type="text" value="{{ user.email }}">
                     </div>
-                    {#                    <div class="form-group">#}
-                    {#                        <label class="col-lg-3 control-label">Time Zone:</label>#}
-                    {#                        <div class="col-lg-8">#}
-                    {#                            <div class="ui-select">#}
-                    {#                                <select id="user_time_zone" class="form-control">#}
-                    {#                                    <option value="Hawaii">(GMT-10:00) Hawaii</option>#}
-                    {#                                    <option value="Alaska">(GMT-09:00) Alaska</option>#}
-                    {#                                    <option value="Pacific Time (US &amp; Canada)">(GMT-08:00) Pacific Time (US &amp;#}
-                    {#                                        Canada)#}
-                    {#                                    </option>#}
-                    {#                                    <option value="Arizona">(GMT-07:00) Arizona</option>#}
-                    {#                                    <option value="Mountain Time (US &amp; Canada)">(GMT-07:00) Mountain Time (US &amp;#}
-                    {#                                        Canada)#}
-                    {#                                    </option>#}
-                    {#                                    <option value="Central Time (US &amp; Canada)" selected="selected">(GMT-06:00)#}
-                    {#                                        Central Time (US &amp; Canada)#}
-                    {#                                    </option>#}
-                    {#                                    <option value="Eastern Time (US &amp; Canada)">(GMT-05:00) Eastern Time (US &amp;#}
-                    {#                                        Canada)#}
-                    {#                                    </option>#}
-                    {#                                    <option value="Indiana (East)">(GMT-05:00) Indiana (East)</option>#}
-                    {#                                </select>#}
-                    {#                            </div>#}
-                    {#                        </div>#}
-                    {#                    </div>#}
+                </div>
+                {#                    <div class="form-group">#}
+                {#                        <label class="col-lg-3 control-label">Time Zone:</label>#}
+                {#                        <div class="col-lg-8">#}
+                {#                            <div class="ui-select">#}
+                {#                                <select id="user_time_zone" class="form-control">#}
+                {#                                    <option value="Hawaii">(GMT-10:00) Hawaii</option>#}
+                {#                                    <option value="Alaska">(GMT-09:00) Alaska</option>#}
+                {#                                    <option value="Pacific Time (US &amp; Canada)">(GMT-08:00) Pacific Time (US &amp;#}
+                {#                                        Canada)#}
+                {#                                    </option>#}
+                {#                                    <option value="Arizona">(GMT-07:00) Arizona</option>#}
+                {#                                    <option value="Mountain Time (US &amp; Canada)">(GMT-07:00) Mountain Time (US &amp;#}
+                {#                                        Canada)#}
+                {#                                    </option>#}
+                {#                                    <option value="Central Time (US &amp; Canada)" selected="selected">(GMT-06:00)#}
+                {#                                        Central Time (US &amp; Canada)#}
+                {#                                    </option>#}
+                {#                                    <option value="Eastern Time (US &amp; Canada)">(GMT-05:00) Eastern Time (US &amp;#}
+                {#                                        Canada)#}
+                {#                                    </option>#}
+                {#                                    <option value="Indiana (East)">(GMT-05:00) Indiana (East)</option>#}
+                {#                                </select>#}
+                {#                            </div>#}
+                {#                        </div>#}
+                {#                    </div>#}
 
-                    {#                    <div class="form-group">#}
-                    {#                        <label class="col-md-3 control-label">Password:</label>#}
-                    {#                        <div class="col-md-8">#}
-                    {#                            <input class="form-control" type="password" value="11111122333">#}
-                    {#                        </div>#}
-                    {#                    </div>#}
-                    {#                    <div class="form-group">#}
-                    {#                        <label class="col-md-3 control-label">Confirm password:</label>#}
-                    {#                        <div class="col-md-8">#}
-                    {#                            <input class="form-control" type="password" value="11111122333">#}
-                    {#                        </div>#}
-                    {#                    </div>#}
+                {#                    <div class="form-group">#}
+                {#                        <label class="col-md-3 control-label">Password:</label>#}
+                {#                        <div class="col-md-8">#}
+                {#                            <input class="form-control" type="password" value="11111122333">#}
+                {#                        </div>#}
+                {#                    </div>#}
+                {#                    <div class="form-group">#}
+                {#                        <label class="col-md-3 control-label">Confirm password:</label>#}
+                {#                        <div class="col-md-8">#}
+                {#                            <input class="form-control" type="password" value="11111122333">#}
+                {#                        </div>#}
+                {#                    </div>#}
 
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label">College</label>
-                        <div class="col-lg-8">
-                            <input readonly class="form-control" type="text" value="{{ user.user_coll }}">
-                        </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">College</label>
+                    <div class="col-lg-8">
+                        <input readonly class="form-control" type="text" value="{{ user.user_coll }}">
                     </div>
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label">Department</label>
-                        <div class="col-lg-8">
-                            <input readonly class="form-control" type="text" value="{{ user.user_dept }}">
-                        </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Department</label>
+                    <div class="col-lg-8">
+                        <input readonly class="form-control" type="text" value="{{ user.user_dept }}">
                     </div>
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label">Year</label>
-                        <div class="col-lg-8">
-                            <input readonly class="form-control" type="text" value="{{ user.user_year }}">
-                        </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Year</label>
+                    <div class="col-lg-8">
+                        <input readonly class="form-control" type="text" value="{{ user.user_year }}">
                     </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label"></label>
-                        <div class="col-md-8">
-                            <input type="submit" class="btn btn-primary" value="Save Changes">
-                            <span></span>
-                            <input type="reset" class="btn btn-default" value="Cancel">
-                        </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label"></label>
+                    <div class="col-md-8">
+                        <input type="submit" class="btn btn-primary" value="Save Changes">
+                        <span></span>
+                        <input type="reset" class="btn btn-default" value="Cancel">
                     </div>
+                </div>
                 </form>
             </div>
         </div>
