@@ -6,7 +6,7 @@ from django.views.generic.base import TemplateView
 # Url defined here, can access the page related to the url by adding the path
 urlpatterns = [
     url(r'^$', views.home, name='home'),
-    url(r'^events/$', views.event, name='events'),
+    url(r'^events/$', views.event_register, name='events'),
     url(r'^events/details/$', views.details, name='details'),
     url(r'^contactus/$', views.contactus, name='contactus'),
     url(r'^login/register/$', views.register, name='register'),
