@@ -342,8 +342,22 @@ def contactus(request):
     if request.method == 'POST':
         form = ContactUsForm(request.POST)
         if form.is_valid():
+            msg = request.POST.get('user_message')
+            name = request.POST.get('user_name')
+            user_email = request.POST.get('user_id')
+            category = request.POST.get('category')
             form.save()
             success_form = True
+            mail_subject = 'The person' + name + ' has contacted us'
+            message = render_to_string('gandharva/contact-us-mail.html', {
+                'user': name,
+                'category': category,
+                'id': user_email,
+                'msg': msg,
+            })
+            email = EmailMessage(mail_subject, message, to=['viitgandharva3@gmail.com'])
+            email.send()
+
         else:
             print(form.errors)
     else:
