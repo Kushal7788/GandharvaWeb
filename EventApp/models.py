@@ -296,3 +296,9 @@ class Volunteer(models.Model):
 class TermsConditons(models.Model):
     terms = models.TextField(max_length=2000)
     policy = models.TextField(max_length=2000)
+
+class SocialMedia(models.Model):
+    name = models.CharField(max_length=100,blank=True)
+    src = models.CharField(max_length=200)
+    cls = models.CharField(max_length=300,blank=True)
+
