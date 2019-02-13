@@ -624,7 +624,7 @@ def verifyOTP(request):
                           {'error': error, 'event_id': eventId, 'otp': originalotp, 'email': userEmail})
 
         else:
-            coll = College.objects.all()
+            coll = College.objects.all().order_by('name')
             if MyUser.objects.filter(email=userEmail).exists():
                 ifuser = MyUser.objects.get(email=userEmail)
             else:
@@ -642,7 +642,8 @@ def participantDetails(request):
         print(event_id)
         print("POst mail:", participant_email)
         form = PaymentForm(request.POST)
-        coll = College.objects.all().order_by('title')
+        coll = College.objects.all().order_by('name')
+
         try:
             print(participant_email)
             ifuser = MyUser.objects.get(email=participant_email)
