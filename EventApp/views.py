@@ -348,7 +348,7 @@ def details(request):
 
 # ContactUs View (Form created)
 def contactus(request):
-    success_form = False
+    success_form = 2
     if request.method == 'POST':
         form = ContactUsForm(request.POST)
         if form.is_valid():
@@ -357,7 +357,7 @@ def contactus(request):
             user_email = request.POST.get('user_id')
             category = request.POST.get('category')
             form.save()
-            success_form = True
+            success_form = 1
             mail_subject = 'The person' + name + ' has contacted us'
             message = render_to_string('gandharva/contact-us-mail.html', {
                 'user': name,
@@ -369,6 +369,7 @@ def contactus(request):
 
         else:
             print(form.errors)
+            success_form = 0
     else:
         form = ContactUsForm()
 

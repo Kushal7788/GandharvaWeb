@@ -100,7 +100,10 @@
     <script>
         //Write your logic here...
         //You can call functions directly as below:
-        // SweetAlertSuccess();
-        // SweetAlertFailure();
+        {% if success_form == 1 %}
+         SweetAlertSuccess();
+        {% elif success_form == 0 %}
+          SweetAlertFailure();
+        {% endif %}
     </script>
 {% endblock %}
