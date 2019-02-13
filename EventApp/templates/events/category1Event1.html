@@ -20,31 +20,31 @@
     <br>
     <div class="container">
         {% if event.objective %}
-            <h3 class="colorlib-heading">
-                Objective</h3>
+            <h4 class="colorlib-heading">
+                Objective</h4>
             <p style="margin-top: 12px">{{ event.objective }}</p>
         {% endif %}
     </div>
     <br>
     <div class="container">
         {% if event.rounds %}
-            <h3 class="colorlib-heading">
-                Rounds</h3>
+            <h4 class="colorlib-heading">
+                Rounds</h4>
             <pre style="margin-top: 12px">{{ event.rounds }}</pre>
         {% endif %}
     </div>
     <br>
     <div class="container">
         {% if event.rules %}
-            <h3 class="colorlib-heading">
-                Rules</h3>
+            <h4 class="colorlib-heading">
+                Rules</h4>
             <pre style="overflow:auto;margin-top: 12px">{{ event.rules }}</pre>
         {% endif %}
     </div>
     <br>
     <div class="container">
-        <h3 class="colorlib-heading">Team and
-            Fee Structure</h3>
+        <h4 class="colorlib-heading">Team and
+            Fee Structure</h4>
         <p style="margin-top: 12px">
             Max {{ event.team_size }}
             Participants per Team & ₹ {{ event.entry_fee }} per team.</p>

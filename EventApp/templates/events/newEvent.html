@@ -33,7 +33,7 @@
                 </div>
                 <div class="col-sm-12 col-md-6">
                     <h1 class="colorlib-heading">{{ event.event.event_name }}</h1>
-                    <p class="eventDescription" style="margin-top: 12px">
+                    <p class="eventDescription" style="margin-top: 12px;font-size: 14px">
                         {{ event.event.objective }}
                     </p>
                     {#                    <div class="contact">#}
@@ -42,10 +42,19 @@
                     {#                        <p>Sanul : 123456789</p>#}
                     {#                    </div>#}
                     <div class="team">
-                        <h5 style="color: #000;font-weight: 500">Team and Fee
-                            Structure:</h5>
-                        <p>Max {{ event.event.team_size }} Participants per Team & ₹ {{ event.event.entry_fee }} per
-                            team.</p>
+                        {#                        <h5 style="color: #000;font-weight: 500">Team and Fee#}
+                        {#                            Structure:</h5>#}
+                        {#                        <p>Max {{ event.event.team_size }} Participants per Team & ₹ {{ event.event.entry_fee }} per#}
+                        {#                            team.</p>#}
+                        <h6 style="font-weight: 400"> Team: <span
+                                style="font-family: Verdana, Geneva, sans-serif;
+    font-weight: 300;
+    font-size: 14px;"> Max {{ event.event.team_size }} Participants per Team</span>
+                        </h6>
+                        <h6 style="font-weight: 400"> Fee Structure: <span style="font-family: Verdana, Geneva, sans-serif;
+    font-weight: 300;
+    font-size: 14px;"> ₹ {{ event.event.entry_fee }} per
+                        team</span></h6>
                         {% if event.event.rules_file.url != None %}
 
                             <a href="{{ event.event.rules_file.url }}">{{ event.event.event_name }} rules pdf
