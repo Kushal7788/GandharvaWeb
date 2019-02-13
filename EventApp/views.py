@@ -2,10 +2,8 @@
 
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from django.urls import reverse
 from io import BytesIO
 from django.core.files import File
-from EventApp.models import *
 from .forms import *
 from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test
@@ -77,7 +75,6 @@ def campaigning_excel(request):
     #     c4 = sheet.cell(row=i, column=5)
     #     c4.value = str(t.time)
     #     i = i + 1
-    insta = InstamojoCredential.objects.latest('pk')
     current_site = get_current_site(request)
     pathw = current_site.domain + 'media/CampaignData.xlsx'
     wb.save("media/CampaignData.xlsx")
@@ -120,7 +117,7 @@ def home(request):
 
 
 # ComingSoon Page
-def comingSoon(request):
+def coming_soon(request):
     arg = {
         'carouselImage': Carousel.objects.all(),
         'gandharvaDate': 'March 20, 2019'
@@ -254,7 +251,6 @@ def all_participants(request):
         print(eventid)
         # receipt = Receipt.objects.filter(event=eventid)
         # receipt.event.event_id = event_id
-        participants = Transaction.objects.all()
         receipts = Receipt.objects.filter(event=eventid)
         print(receipts)
 
@@ -486,7 +482,6 @@ def user_login(request):
 @staff_user
 def myaction(request):
     role = RoleAssignment.objects.get(user=request.user.id)
-    role = RoleAssignment.objects.get(user=request.user.id)
     if role.role.name == "Campaigning Head" or role.role.name == "Jt Campaigning Head":
         args = {
             'button_name': 'Campaign',
@@ -510,7 +505,7 @@ def payment(request):
 
 # Head Login View only to be used for Heads
 # @user_passes_test(lambda u: u.is_superuser)
-def RegisterHead(request):
+def register_head(request):
     Roles = RoleMaster.objects.all()
     role_categories = Role_category.objects.all()
     dept = Department.objects.all()
@@ -521,7 +516,6 @@ def RegisterHead(request):
         roleform = RoleMasterForm(request.POST)
         if userform.is_valid() and roleform.is_valid():
             user = userform.save(commit=False)
-            username = userform.cleaned_data.get('username')
             password = userform.cleaned_data.get('password')
             user.set_password(password)
             user.is_active = False
@@ -649,7 +643,7 @@ def verifyOTP(request):
                            'readm': readm})
 
 
-def participantDetails(request):
+def participant_details(request):
     if request.method == "POST":
         participant_email = request.POST.get('email')
         event_id = request.POST.get('event_id')
@@ -817,7 +811,7 @@ def Profile(request):
 
 
 @staff_user
-def Registered_Events(request):
+def registered_events(request):
     teams = Team.objects.filter(user=request.user)
     return render(request, 'user/registeredEvents.html', {'teams': teams})
 
@@ -858,7 +852,7 @@ def Payment_Details(request):
 #         event = EventMaster.objects.get(pk=event_id)
 #     return render(request, 'events/cashPayment.html',{'form':form,'event':event,'colleges':coll,'years':year})
 
-def TeamDetails(request):
+def team_details(request):
     event = request.GET.get('event')
     event_choose = EventMaster.objects.get(event_name=event)
     if request.method == 'GET':
