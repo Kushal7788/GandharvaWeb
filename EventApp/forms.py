@@ -72,6 +72,7 @@ class PaymentForm(forms.ModelForm):
     user_year = forms.ModelChoiceField(queryset=College_year.objects.all(), required=False)
     user_coll = forms.ModelChoiceField(queryset=College.objects.all(), required=False)
     user_phone = forms.CharField(max_length=10, required=True)
+    button_state = forms.BooleanField(required=True)
 
     class Meta:
         model = MyUser
