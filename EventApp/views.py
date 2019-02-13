@@ -656,6 +656,7 @@ def verifyOTP(request):
 
 def participant_details(request):
     if request.method == "POST":
+
         participant_email = request.POST.get('email')
         event_id = request.POST.get('event_id')
         print(event_id)
@@ -674,6 +675,13 @@ def participant_details(request):
             return render(request, 'events/participantDetails.html',
                           {'event': event_new, 'colleges': coll, 'email_participant': participant_email,
                            'present_user': ifuser, 'error': error})
+        if request.POST.get('button_state')=="on":
+            pass
+        else:
+            error = "You need to accept"
+            return render(request, 'events/participantDetails.html',
+                          {'event': event_new, 'colleges': coll, 'email_participant': participant_email,
+                           'present_user': ifuser,'error': error})
         if form.is_valid():
             if ifuser is None:
                 user = form.save(commit=False)
