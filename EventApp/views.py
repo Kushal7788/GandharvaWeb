@@ -156,7 +156,7 @@ def event_register(request):
 # Payment success
 def success(request):
     if request.method == 'GET':
-        print("Enter success")
+        # print("Enter success")
         payment_id = request.GET.get('payment_id')
         payment_status = request.GET.get('payment_status')
         payment_request_id = request.GET.get('payment_request_id')
