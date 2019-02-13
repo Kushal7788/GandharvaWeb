@@ -6,6 +6,7 @@ html, body {
     scroll-behavior: smooth;
     font-family: 'Roboto', sans-serif;
     background-color: #fff;
+    font-size: 15px;
 }
 
 .navbar {
@@ -127,6 +128,7 @@ input {
     padding-bottom: 5px;
     margin-bottom: 4px;
     margin-top: 4px;
+    height: auto;
 }
 
 .Register_btn-primary {
@@ -193,7 +195,7 @@ input {
 
 .loader {
     display: none;
-    z-index: 1000;
+    z-index: 1500;
     position: fixed;
     left: 44%;
     top: 50%;
@@ -226,4 +228,27 @@ input {
     100% {
         transform: rotate(360deg);
     }
+}
+
+.disableScroll {
+    overflow: hidden;
+}
+
+.overlay {
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1100;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.displayOverlay {
+    display: block;
+}
+
+.form-control {
+    font-size: 14px;
 }

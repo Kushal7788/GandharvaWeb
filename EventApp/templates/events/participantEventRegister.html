@@ -7,8 +7,9 @@
 
 {% block body %}
     <br><br><br><br>
+    <div id="over" class="overlay"></div>
     <div class="loader"></div>
-    <div class="container" style="height: 100vh">
+    <div class="container" style="height: 100vh" id="wrapper">
         <div id="page" class="displayPage">
             <div class="col-sm-5 container-center">
                 <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
@@ -69,6 +70,9 @@
                     $('#page').addClass('hidePage');
                     $('.navbar').addClass('hidePage');
                     $('#footer').addClass('hidePage');
+                    $('#over').addClass('displayOverlay');
+                    document.querySelector('html').style.overflow = "hidden";
+                    document.querySelector('body').style.overflow = "hidden";
                     $(".loader").toggle();
                     $(div).toggle();
                 }
