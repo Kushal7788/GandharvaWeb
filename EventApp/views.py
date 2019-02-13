@@ -1,31 +1,33 @@
 # inlcude the various features which are to be used in Views here
 
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
+import datetime
+import json
+import re
+import string
 from io import BytesIO
-from django.core.files import File
-from .forms import *
+
+import openpyxl
+import qrcode
+import sweetify
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import user_passes_test
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.exceptions import ObjectDoesNotExist
+from django.core.files import File
 from django.core.mail import EmailMessage
-from .token import *
+from django.db import IntegrityError
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.http import HttpResponse
-from django.contrib.sites.shortcuts import get_current_site
+from instamojo_wrapper import Instamojo
+
 from EventApp.decorators import *
 from GandharvaWeb19 import settings
-from instamojo_wrapper import Instamojo
-from django.db import IntegrityError
-import datetime
-from django.core.exceptions import ObjectDoesNotExist
-import qrcode
-import json
-import string
-import openpyxl
-import sweetify
-import re
+from .forms import *
+from .token import *
 
 
 @staff_user
@@ -163,7 +165,7 @@ def success(request):
             # transaction2=Transaction.objects.get(transaction_id=payment_id)
             # print(transaction2)
 
-        if transaction2 == None:
+        if transaction2 is None:
             receipt = Receipt()
             team = Team()
             transaction = Transaction()
@@ -378,10 +380,10 @@ def register(request):
         except:
             old_user = None
 
-        if old_user != None and old_user.is_active == False:
+        if old_user is not None and old_user.is_active is False:
             old_user.delete()
 
-        elif old_user != None and old_user.is_active == True:
+        elif old_user is not None and old_user.is_active is True:
             args = {
                 'error': "You have already registered and your email is verified too. Enter email to reset your password."
             }
@@ -390,7 +392,6 @@ def register(request):
         if form.is_valid():
             user = form.save(commit=False)
             user.is_active = False
-            username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             user.set_password(password)
             user.user_phone = form.cleaned_data.get('user_phone')
@@ -452,7 +453,7 @@ def user_login(request):
             usercheck = MyUser.objects.get(username=username)
         except(ObjectDoesNotExist):
             usercheck = None
-        if usercheck != None:
+        if usercheck is not None:
             if not usercheck.is_active:
                 print("your account is inactive")
                 messages.error(request, 'Email not verified, please verify your email to login')
@@ -487,10 +488,12 @@ def myaction(request):
             'button_name': 'Campaign',
             'urlaccess': campaign,
         }
+        return render(request, 'user/myactions.html', args)
     if role.role.name == 'Event Head':
         args = {
             'button_name': 'All Participants',
         }
+        return render(request, 'user/myactions.html', args)
     else:
         args = {
             'button_name': "No Actions",
@@ -558,8 +561,6 @@ def register_head(request):
         else:
             print(userform.errors)
             print(roleform.errors)
-
-
     else:
         userform = UserRegistration()
         roleform = RoleMasterForm
@@ -588,7 +589,7 @@ def activate_register_head(request, uidb64, token):
             user.token1 = None
         if user.token2 == token:
             user.token2 = None
-        if user.token1 == None and user.token2 == None:
+        if user.token1 is None and user.token2 is None:
             user.is_active = True
             user.is_staff = True
         user.save()
@@ -599,7 +600,7 @@ def activate_register_head(request, uidb64, token):
         return HttpResponse('You have already confirmed your email id. Activation link is invalid!')
 
 
-def participantEventRegister(request):
+def participant_event_register(request):
     if request.method == 'POST':
         useremail = request.POST.get('email')
         eventId = request.POST.get('event_id')
@@ -664,9 +665,8 @@ def participant_details(request):
                           {'event': event_new, 'colleges': coll, 'email_participant': participant_email,
                            'present_user': ifuser, 'error': error})
         if form.is_valid():
-            if ifuser == None:
+            if ifuser is None:
                 user = form.save(commit=False)
-                firstname = form.cleaned_data.get('first_name')
                 password = None
                 user.set_password = password
                 user.username = participant_email
@@ -927,7 +927,7 @@ def new_password(request):
     return render(request, 'user/new_password.html')
 
 
-## Important Notes:
+# Important Notes:
 # to get user role from models
 # userget = RoleAssignment.objects.get(user=request.user.id)
 #   print (userget.role)
@@ -1112,15 +1112,18 @@ def campaign(request):
     else:
         return render(request, 'events/campaignHead.html')
 
+
 def terms(request):
     terms = TermsConditons.objects.all()
 
     return render(request, 'gandharva/terms-and-conditions.html', {'terms': terms})
 
+
 def policy(request):
     policy = TermsConditons.objects.all()
 
     return render(request, 'gandharva/privacy-policy.html', {'policys': policy})
+
 
 class volunteerwise:
     username = ""
