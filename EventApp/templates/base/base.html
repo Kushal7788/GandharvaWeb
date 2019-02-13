@@ -59,26 +59,12 @@
                     Events
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    {% for testme in testmes %}
                     <form method="get" action="{% url 'events' %}">
-                        <input type="hidden" name="dept" value="Coding">
-                        <button type="submit" class="dropdown-item dropdownStyle">Coding</button>
+                        <input type="hidden" name="dept" value="{{ testme.name }}">
+                        <button type="submit" class="dropdown-item dropdownStyle">{{ testme.name }}</button>
                     </form>
-                    <form method="get" action="{% url 'events' %}">
-                        <input type="hidden" name="dept" value="Gaming">
-                        <button type="submit" class="dropdown-item dropdownStyle">Gaming</button>
-                    </form>
-                    <form method="get" action="{% url 'events' %}">
-                        <input type="hidden" name="dept" value="Robotics">
-                        <button type="submit" class="dropdown-item dropdownStyle">Robotics</button>
-                    </form>
-                    <form method="get" action="{% url 'events' %}">
-                        <input type="hidden" name="dept" value=Mechanical>
-                        <button type="submit" class="dropdown-item dropdownStyle">Mechanical</button>
-                    </form>
-                    <form method="get" action="{% url 'events' %}">
-                        <input type="hidden" name="dept" value=Civil>
-                        <button type="submit" class="dropdown-item dropdownStyle">Civil</button>
-                    </form>
+                    {% endfor %}
                 </div>
             </li>
             {#            <li class="nav-item">#}
@@ -150,23 +136,12 @@
 <footer id="footer">
     <div class="container">
         <div class="text-center">
-            <a class="fb-ic" href="https://www.facebook.com/viitgandharva/" target="_blank">
-                <i class="fab fa-facebook-f white-text  fa-2x"
+            {% for footer in footers %}
+            <a class="fb-ic" href="{{ footer.src }}" target="_blank">
+                <i class="{{ footer.cls }}"
                    style="color: #fff;font-size: 26px;margin-right:2vw"></i>
             </a>
-            <a class="tw-ic" href="https://mobile.twitter.com/gandharva_18" target="_blank">
-                <i class="fab fa-twitter fa-lg white-text fa-2x"
-                   style="color: #fff;font-size: 26px;margin-right:2vw"> </i>
-            </a>
-            <a class="ins-ic" href="https://www.instagram.com/viitgandharva/" target="_blank">
-                <i class="fab fa-instagram fa-lg white-text fa-2x"
-                   style="color:#fff;font-size: 26px;margin-right:2vw"> </i>
-            </a>
-            <a class="pin-ic" href="https://www.youtube.com/channel/UCdtq-lCC25RpJIjSPCIR9Nw/featured"
-               target="_blank">
-                <i class="fab fa-youtube fa-lg white-text fa-2x"
-                   style="color: #fff;font-size: 26px;margin-right:2vw"> </i>
-            </a>
+            {% endfor %}
             <p style="font-size:14px;color:#fff"> Copyright &copy;2019 Gandharva. All Rights Reserved.</p>
         </div>
     </div>

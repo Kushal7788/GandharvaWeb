@@ -26,6 +26,11 @@ def department_path(instance, filename):
     filename = '{}.{}'.format("Department_images/" + instance.name , ext)
     return filename
 
+def departmentbanner_path(instance, filename):
+    ext = filename.split('.')[-1]
+    filename = '{}.{}'.format("Department_images/" + "Banner_images/" + instance.name , ext)
+    return filename
+
 # model for Department
 class Department(models.Model):
     dep_id = models.IntegerField(primary_key=True)
@@ -33,7 +38,7 @@ class Department(models.Model):
     description = models.TextField()
     img = models.ImageField(upload_to=department_path,blank=True)
     link_to = models.CharField(max_length=200)
-    banner_src = models.CharField(max_length=500, blank=True)
+    banner_src = models.ImageField(upload_to=departmentbanner_path, blank=True)
 
     def __str__(self):
         return self.name
@@ -296,3 +301,9 @@ class Volunteer(models.Model):
 class TermsConditons(models.Model):
     terms = models.TextField(max_length=2000)
     policy = models.TextField(max_length=2000)
+
+class SocialMedia(models.Model):
+    name = models.CharField(max_length=100,blank=True)
+    src = models.CharField(max_length=200)
+    cls = models.CharField(max_length=300,blank=True)
+

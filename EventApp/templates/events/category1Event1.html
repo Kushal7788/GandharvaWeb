@@ -14,7 +14,7 @@
 {% endblock %}
 {% block body %}
     <div class="container-fluid"
-         style="background:linear-gradient(45deg,rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url('{% static dept.department.banner_src %}');width: 100%;height:200px;background-size:cover;">
+         style="background:linear-gradient(45deg,rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url('{{ dept.department.banner_src.url }}');width: 100%;height:200px;background-size:cover;">
         <h3 class="title userselect">{{ event.event_name }}</h3>
     </div>
     <br>
@@ -50,7 +50,7 @@
             Participants per Team & ₹ {{ event.entry_fee }} per team.</p>
         {% if event.rules_file.url != None %}
             <li>
-                <a href="{{ event.rules_file.url }}">{{ event.event_name }} Rules</a>
+                <a href="{{ event.rules_file.url }}">{{ event.event_name }} rules pdf download </a>
             </li>
         {% endif %}
     </div>

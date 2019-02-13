@@ -1,23 +1,33 @@
 # inlcude the various features which are to be used in Views here
 
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
-from django.urls import reverse
+import datetime
+import json
+import re
+import string
 from io import BytesIO
-from django.core.files import File
-from EventApp.models import *
-from .forms import *
+
+import openpyxl
+import qrcode
+import sweetify
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import user_passes_test
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.exceptions import ObjectDoesNotExist
+from django.core.files import File
 from django.core.mail import EmailMessage
-from .token import *
+from django.db import IntegrityError
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.http import HttpResponse
-from django.contrib.sites.shortcuts import get_current_site
+from instamojo_wrapper import Instamojo
+
 from EventApp.decorators import *
 from GandharvaWeb19 import settings
+from .forms import *
+from .token import *
 from instamojo_wrapper import Instamojo
 from django.db import IntegrityError
 import datetime
@@ -121,7 +131,7 @@ def home(request):
 
 
 # ComingSoon Page
-def comingSoon(request):
+def coming_soon(request):
     arg = {
         'carouselImage': Carousel.objects.all(),
         'gandharvaDate': 'March 20, 2019'
@@ -167,7 +177,7 @@ def success(request):
             # transaction2=Transaction.objects.get(transaction_id=payment_id)
             # print(transaction2)
 
-        if transaction2 == None:
+        if transaction2 is None:
             receipt = Receipt()
             team = Team()
             transaction = Transaction()
@@ -225,7 +235,7 @@ def success(request):
                 team.save()
 
                 # Event Receipt Mail
-                '''
+
                 mail_subject = 'You have registered for ' + event.event_name + ' using cash payment'
                 message = render_to_string('events/receiptCashPayment.html', {
                     'user': user,
@@ -233,11 +243,8 @@ def success(request):
                     'team': team,
                     'transaction': transaction,
                 })
-                email = EmailMessage(mail_subject, message, to=[user.email])
-                email.attach_file("media//" + str(team.QRcode))
-                email.send()
-                '''
 
+                send_email(user.email, mail_subject, message, ["media//" + str(team.QRcode)])
 
             if transaction.status == "Credit":
                 return render(request, 'user/paymentSsuccess.html')
@@ -259,7 +266,6 @@ def all_participants(request):
         print(eventid)
         # receipt = Receipt.objects.filter(event=eventid)
         # receipt.event.event_id = event_id
-        participants = Transaction.objects.all()
         receipts = Receipt.objects.filter(event=eventid)
         print(receipts)
 
@@ -292,8 +298,7 @@ def mail_participants(request):
         # regular expression to convert string to list
         to_email = re.findall(r'[\w\.-]+@[\w\.-]+', request.POST.get('emails'))
 
-        email = EmailMessage(subject, message, to=to_email)
-        email.send()
+        send_email(to_email, subject, message)
         return render(request, 'events/mail_response.html')
 
 
@@ -347,8 +352,21 @@ def contactus(request):
     if request.method == 'POST':
         form = ContactUsForm(request.POST)
         if form.is_valid():
+            msg = request.POST.get('user_message')
+            name = request.POST.get('user_name')
+            user_email = request.POST.get('user_id')
+            category = request.POST.get('category')
             form.save()
             success_form = True
+            mail_subject = 'The person' + name + ' has contacted us'
+            message = render_to_string('gandharva/contact-us-mail.html', {
+                'user': name,
+                'category': category,
+                'id': user_email,
+                'msg': msg,
+            })
+            send_email(user_email, mail_subject, message)
+
         else:
             print(form.errors)
     else:
@@ -373,10 +391,10 @@ def register(request):
         except:
             old_user = None
 
-        if old_user != None and old_user.is_active == False:
+        if old_user is not None and old_user.is_active is False:
             old_user.delete()
 
-        elif old_user != None and old_user.is_active == True:
+        elif old_user is not None and old_user.is_active is True:
             args = {
                 'error': "You have already registered and your email is verified too. Enter email to reset your password."
             }
@@ -385,7 +403,6 @@ def register(request):
         if form.is_valid():
             user = form.save(commit=False)
             user.is_active = False
-            username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             user.set_password(password)
             user.user_phone = form.cleaned_data.get('user_phone')
@@ -402,8 +419,7 @@ def register(request):
             user.save()
             mail_subject = 'Activate your account to continue.'
             to_email = form.cleaned_data.get('email')
-            email = EmailMessage(mail_subject, message, to=[to_email])
-            email.send()
+            send_email(to_email, mail_subject, message)
             return render(request, 'user/AccountConfirm.html')
         else:
             print(form.errors, "heere")
@@ -445,9 +461,9 @@ def user_login(request):
         password = request.POST.get('password')
         try:
             usercheck = MyUser.objects.get(username=username)
-        except(ObjectDoesNotExist):
+        except ObjectDoesNotExist:
             usercheck = None
-        if usercheck != None:
+        if usercheck is not None:
             if not usercheck.is_active:
                 print("your account is inactive")
                 messages.error(request, 'Email not verified, please verify your email to login')
@@ -477,16 +493,17 @@ def user_login(request):
 @staff_user
 def myaction(request):
     role = RoleAssignment.objects.get(user=request.user.id)
-    role = RoleAssignment.objects.get(user=request.user.id)
     if role.role.name == "Campaigning Head" or role.role.name == "Jt Campaigning Head":
         args = {
             'button_name': 'Campaign',
             'urlaccess': campaign,
         }
+        return render(request, 'user/myactions.html', args)
     if role.role.name == 'Event Head':
         args = {
             'button_name': 'All Participants',
         }
+        return render(request, 'user/myactions.html', args)
     else:
         args = {
             'button_name': "No Actions",
@@ -501,7 +518,7 @@ def payment(request):
 
 # Head Login View only to be used for Heads
 # @user_passes_test(lambda u: u.is_superuser)
-def RegisterHead(request):
+def register_head(request):
     Roles = RoleMaster.objects.all()
     role_categories = Role_category.objects.all()
     dept = Department.objects.all()
@@ -512,7 +529,6 @@ def RegisterHead(request):
         roleform = RoleMasterForm(request.POST)
         if userform.is_valid() and roleform.is_valid():
             user = userform.save(commit=False)
-            username = userform.cleaned_data.get('username')
             password = userform.cleaned_data.get('password')
             user.set_password(password)
             user.is_active = False
@@ -543,10 +559,8 @@ def RegisterHead(request):
             mail_subject = 'Activate your account to continue.'
             to_email_one = userform.cleaned_data.get('email')
             to_email_two = userform.cleaned_data.get('coll_email')
-            email = EmailMessage(mail_subject, message, to=[to_email_one])
-            email.send()
-            email = EmailMessage(mail_subject, message2, to=[to_email_two])
-            email.send()
+            send_email(to_email_one, mail_subject, message)
+            send_email(to_email_two, mail_subject, message2)
             return render(request, 'user/AccountConfirm.html')
 
             #       group = Group.objects.get(name='groupname')
@@ -555,8 +569,6 @@ def RegisterHead(request):
         else:
             print(userform.errors)
             print(roleform.errors)
-
-
     else:
         userform = UserRegistration()
         roleform = RoleMasterForm
@@ -585,7 +597,7 @@ def activate_register_head(request, uidb64, token):
             user.token1 = None
         if user.token2 == token:
             user.token2 = None
-        if user.token1 == None and user.token2 == None:
+        if user.token1 is None and user.token2 is None:
             user.is_active = True
             user.is_staff = True
         user.save()
@@ -596,7 +608,7 @@ def activate_register_head(request, uidb64, token):
         return HttpResponse('You have already confirmed your email id. Activation link is invalid!')
 
 
-def participantEventRegister(request):
+def participant_event_register(request):
     if request.method == 'POST':
         useremail = request.POST.get('email')
         eventId = request.POST.get('event_id')
@@ -641,7 +653,7 @@ def verifyOTP(request):
                            'readm': readm})
 
 
-def participantDetails(request):
+def participant_details(request):
     if request.method == "POST":
         participant_email = request.POST.get('email')
         event_id = request.POST.get('event_id')
@@ -662,9 +674,8 @@ def participantDetails(request):
                           {'event': event_new, 'colleges': coll, 'email_participant': participant_email,
                            'present_user': ifuser, 'error': error})
         if form.is_valid():
-            if ifuser == None:
+            if ifuser is None:
                 user = form.save(commit=False)
-                firstname = form.cleaned_data.get('first_name')
                 password = None
                 user.set_password = password
                 user.username = participant_email
@@ -789,9 +800,8 @@ def cashpayment(request, event_new, user):
             'team': team,
             'transaction': transaction,
         })
-        email = EmailMessage(mail_subject, message, to=[user.email])
-        email.attach_file("media//" + str(team.QRcode))
-        email.send()
+        send_email(user.email, mail_subject, message, ["media//" + str(team.QRcode)])
+
 
 
 @staff_user
@@ -809,7 +819,7 @@ def Profile(request):
 
 
 @staff_user
-def Registered_Events(request):
+def registered_events(request):
     teams = Team.objects.filter(user=request.user)
     return render(request, 'user/registeredEvents.html', {'teams': teams})
 
@@ -850,7 +860,7 @@ def Payment_Details(request):
 #         event = EventMaster.objects.get(pk=event_id)
 #     return render(request, 'events/cashPayment.html',{'form':form,'event':event,'colleges':coll,'years':year})
 
-def TeamDetails(request):
+def team_details(request):
     event = request.GET.get('event')
     event_choose = EventMaster.objects.get(event_name=event)
     if request.method == 'GET':
@@ -886,7 +896,7 @@ def reset_password(request):
 
         mail_subject = 'Reset Password'
         email = EmailMessage(mail_subject, message, to=[user.email])
-        email.send()
+        send_email(user.email, mail_subject, message)
         return HttpResponse("Mail has been send. Click on the email link to reset password")
     else:
         return render(request, "user/reset_password.html")
@@ -925,7 +935,7 @@ def new_password(request):
     return render(request, 'user/new_password.html')
 
 
-## Important Notes:
+# Important Notes:
 # to get user role from models
 # userget = RoleAssignment.objects.get(user=request.user.id)
 #   print (userget.role)
@@ -1022,7 +1032,7 @@ def campaign(request):
                     try:
                         ref = transaction.team.referral.username
                         name = MyUser.objects.get(username=ref)
-                    except(Exception):
+                    except Exception:
                         continue
                     c = 0
                     for i in range(len(volunteers)):
@@ -1031,7 +1041,7 @@ def campaign(request):
                             volunteers[i].count = volunteers[i].count + 1
                             break
                     if c == 0:
-                        v = volunteerwise()
+                        v = Volunteerwise()
                         v.username = ref
                         v.name = name
                         v.count = 1
@@ -1056,7 +1066,7 @@ def campaign(request):
                             events[i].count = events[i].count + 1
                             break
                     if c == 0:
-                        e = eventwise()
+                        e = Eventwise()
                         e.event_id = event.event_id
                         e.event_name = event.event_name
                         e.count = 1
@@ -1080,7 +1090,7 @@ def campaign(request):
                             colleges[i].count = colleges[i].count + 1
                             break
                     if c == 0:
-                        c = collegewise()
+                        c = Collegewise()
                         c.name = college.name
                         c.count = 1
                         colleges.append(c)
@@ -1110,29 +1120,32 @@ def campaign(request):
     else:
         return render(request, 'events/campaignHead.html')
 
+
 def terms(request):
     terms = TermsConditons.objects.all()
 
     return render(request, 'gandharva/terms-and-conditions.html', {'terms': terms})
+
 
 def policy(request):
     policy = TermsConditons.objects.all()
 
     return render(request, 'gandharva/privacy-policy.html', {'policys': policy})
 
-class volunteerwise:
+
+class Volunteerwise:
     username = ""
     name = ""
     count = 0
 
 
-class eventwise:
+class Eventwise:
     event_id = 0
     event_name = ""
     count = 0
 
 
-class collegewise:
+class Collegewise:
     cid = ""
     name = ""
     count = 0
