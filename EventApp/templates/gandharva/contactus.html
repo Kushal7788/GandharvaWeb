@@ -14,14 +14,16 @@
                 <div class=" col-md-3 ear-piece">
                     <img class="img-fluid" src="{% static 'gandharva/img/ear-piece.png' %}" alt="">
                 </div>
+
+
                 <div class="col-md-3 col-sm-5" data-sal="slide-left" data-sal-easing="ease-out-bounce"
                      data-sal-delay="100"
                      data-sal-duration="800">
                     <div class="contact-text">
-                        <h3 style="margin-top:4vh">Contact</h3>
-                        <address>
-                            Email : gandharva@viit.ac.in
-                        </address>
+                        <h4 style="margin-top:4vh;font-weight: 400;font-size: 16px">Drop us an Email at</h4>
+                        <h4 style="font-weight: 400;font-size: 16px">
+                            Email : hello@viitgandharva.com
+                        </h4>
                     </div>
                     <div class="contact-address">
                         <address>
@@ -32,12 +34,16 @@
                         </address>
                     </div>
                 </div>
+
+
                 <div class="col-sm-1"></div>
+
+
                 <div class="col-sm-5 col-md-4" data-sal="slide-right" data-sal-easing="ease-out-bounce"
                      data-sal-delay="100"
                      data-sal-duration="800" style="padding-bottom:10vh">
                     <div id="contact-section">
-                        <h3 style="margin-top:4vh">Send a message</h3>
+                        <h5 style="margin-top:4vh;font-weight: 400">Send a message</h5>
                         <div class="status alert alert-success" style="display: none"></div>
                         <form id="main-contact-form" class="contact-form" name="contact-form" method="post"
                               action="">
@@ -66,18 +72,7 @@
                                        placeholder="Email">
                                 {{ form.user_id.errors }}
                             </div>
-                            <div class="form-group">
-                                Category :
-                                <select name="category" class="form-control">
-                                    <option value="1">COMPUTER</option>
-                                    <option value="2">IT</option>
-                                    <option value="3">ENTC</option>
-                                    <option value="4">MECHANICAL</option>
-                                    <option value="5">CIVIL</option>
-                                    <option value="">OHTER</option>
-                                </select>
-                                {{ form.category.errors }}
-                            </div>
+
                             <div class="form-group">
                                     <textarea name="user_message" rows="10" cols="30" class="form-control"
                                               placeholder="Message"></textarea>
