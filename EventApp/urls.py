@@ -18,7 +18,7 @@ urlpatterns = [
     url(r'^paymentDetails/$', views.Payment_Details, name='paymentDetails'),
     url(r'^TeamDetails/$', views.TeamDetails, name='TeamDetails'),
     url(r'^auth/', include('social_django.urls', namespace='social')),
-    url(r'^RegisterHead/Gandharva19/Cultural$', views.RegisterHead, name='RegisterHead'),
+    url(r'^register-head$', views.RegisterHead, name='RegisterHead'),
     url(r'^ajax/load-roles/', views.load_roles, name='ajax_load_roles'),
     url(r'^login/reset_password$', views.reset_password, name='reset_password'),
     url(r'new_password', views.new_password, name='new_password'),
@@ -45,7 +45,7 @@ urlpatterns = [
     url(r'^myactions/$', views.myaction, name='myactions'),
     url(r'all-participants', views.all_participants, name='all_participanrs'),
     url(r'^mail-participants', views.mail_participants, name='mail-participants'),
-    url(r'^myactions/$', views.myaction, name='myactions'),
+    # url(r'^myactions/$', views.myaction, name='myactions'),
     url(r'^offline/$', views.offline, name='offline'),
 
 ]

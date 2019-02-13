@@ -490,7 +490,7 @@ def payment(request):
 
 
 # Head Login View only to be used for Heads
-@user_passes_test(lambda u: u.is_superuser)
+# @user_passes_test(lambda u: u.is_superuser)
 def RegisterHead(request):
     Roles = RoleMaster.objects.all()
     role_categories = Role_category.objects.all()
