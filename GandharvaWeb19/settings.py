@@ -163,7 +163,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 # EMAIL_HOST_PASSWORD = 'GandharvaViitPune@19'http://127.0.0.1:8000/
 EMAIL_PORT = 587
 
-MEDIA_URL = '/'
-MEDIA_ROOT = os.path.join(BASE_DIR, '')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 USE_HTTPS = False
