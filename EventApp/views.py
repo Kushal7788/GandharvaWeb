@@ -88,6 +88,10 @@ def campaigning_excel(request):
     return render(request, 'user/TableToExcel.html', arg)
 
 
+def offline(request):
+    return render(request, 'gandharva/offline.html',{})
+
+
 # Home page Functionality
 def home(request):
     userget = 0
@@ -707,6 +711,7 @@ def participantDetails(request):
                            'present_user': ifuser, 'error': error})
     else:
         return redirect('/')
+
 
 
 @staff_user
