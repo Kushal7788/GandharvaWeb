@@ -28,6 +28,7 @@ import string
 import openpyxl
 import sweetify
 import re
+from .email_sender import send_email
 
 
 @staff_user
@@ -224,6 +225,7 @@ def success(request):
                 team.save()
 
                 # Event Receipt Mail
+                '''
                 mail_subject = 'You have registered for ' + event.event_name + ' using cash payment'
                 message = render_to_string('events/receiptCashPayment.html', {
                     'user': user,
@@ -234,6 +236,9 @@ def success(request):
                 email = EmailMessage(mail_subject, message, to=[user.email])
                 email.attach_file("media//" + str(team.QRcode))
                 email.send()
+                '''
+
+
             if transaction.status == "Credit":
                 return render(request, 'user/paymentSsuccess.html')
             elif transaction.status == "Failed":
@@ -599,8 +604,9 @@ def participantEventRegister(request):
             otp = random.randint(100000, 999999)
             message = 'OTP for email verification is->\n{0}'.format(otp)
             mail_subject = 'OTP for email verification.'
-            email = EmailMessage(mail_subject, message, to=[useremail])
-            email.send()
+
+            send_email(useremail,mail_subject,message)
+
             return render(request, 'events/participantEventRegister.html',
                           {'email': useremail, 'otp': otp, 'event_id': eventId})
         else:
