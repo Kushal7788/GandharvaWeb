@@ -62,17 +62,19 @@
     <br><br>
     {% block scripts %}
         <script>
-            {% if btndisable %}
-                document.getElementById('verifyButton').disabled = true;
-                setTimeout(function () {
-                    document.getElementById('verifyButton').disabled = false;
-                }, 15000);
-
-                {#            {% else  %}#}
-                {#                setTimeout(function () {#}
-                {#                }, 15000);#}
-            {% endif %}
             $(document).ready(function () {
+
+                {% if btndisable %}
+                    document.getElementById('sendOTPButton').disabled = true;
+                    document.getElementById('sendOTPButton').innerText = "Please wait";
+
+                    setTimeout(function () {
+                        document.getElementById('sendOTPButton').disabled = false;
+                        document.getElementById('sendOTPButton').innerText = "Verify OTP";
+
+                    }, 10000);
+                {% endif %}
+
                 $("#sendOTPButton").click(function () {
                     $('.loader').addClass('displayLoader');
                     myFunction(this);
