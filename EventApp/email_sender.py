@@ -5,7 +5,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.application import MIMEApplication
 
 
-def send_email(to_email, subject= None, message = None, attach = None):
+def send_email(to_email, subject= None, message = None, attach = None,otp=0):
     # Define from
     sender = 'sunilupare@zoho.com'
 
@@ -14,8 +14,10 @@ def send_email(to_email, subject= None, message = None, attach = None):
     msg['Subject'] = subject
     msg['From'] = sender
     msg['To'] = to_email
-    msg.attach(MIMEText(message))
-
+    if otp==0:
+        msg.attach(MIMEText(message,'html'))
+    else:
+        msg.attach(MIMEText(message))
     # Attach File
     for f in attach or []:
         with open(f, "rb") as fil:
