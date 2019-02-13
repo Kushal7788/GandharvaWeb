@@ -1,26 +1,27 @@
-<h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
+<html>{#{% autoescape off %}#}
+<body style="color:#000;">
+<h3 style="color:#000;text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
 <h4>Greetings from Gandharva</h4>
-
-
-{% autoescape off %}
-    Hi {{ user.first_name }},
-
-    Payment Details:
-    Amount: {{ event.entry_fee }}
-    Status : {{ transaction.status }}
-    Transaction ID : {{ transaction.transaction_id }}
-    Payment Date : {{ transaction.date }}
+Hi {{ user.first_name }},
+<h2>Payment Details:</h2>
+<p style="color:#000;">Amount: {{ event.entry_fee }}<br/>
+    Status : {{ transaction.status }}<br/>
+    Transaction ID : {{ transaction.transaction_id }}<br/>
+    Payment Date : {{ transaction.date }}<br/>
     Payment Time : {{ transaction.time }}
+</p>
+<p>
+<h2>Event Details:</h2>
+Name: {{ event.event_name }}<br/>
+{#Time: {{ event.timings }}<br/>#}
+{#Location: {{ event.location }}<br/>#}
+Team size: {{ event.team_size }}
+</p>
 
-    Event Details:
-    Name: {{ event.event_name }}
-    Time: {{ event.timings }}
-    Location: {{ event.location }}
-    Team size: {{ event.team_size }}
-
-    Your code: {{ team.Refral_Code }}
-
-    Thank you for registration.
-{% endautoescape %}
-
-<p>If event is cancelled in any case, money will be refunded</p>
+<h2>Your code: {{ team.Refral_Code }}</h2>
+Thank you for registration.
+<br>
+<p style="font-weight: 300">*If event is cancelled in any case, money will be refunded</p>
+{#{% endautoescape %}#}
+</body>
+</html>

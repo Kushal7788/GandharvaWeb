@@ -618,7 +618,7 @@ def participant_event_register(request):
             message = 'OTP for email verification is->\n{0}'.format(otp)
             mail_subject = 'OTP for email verification.'
 
-            send_email(useremail,mail_subject,message)
+            send_email(useremail,mail_subject,message,otp=1)
 
             return render(request, 'events/participantEventRegister.html',
                           {'email': useremail, 'otp': otp, 'event_id': eventId,'btndisable': True})
@@ -905,7 +905,7 @@ def reset_password(request):
 
         mail_subject = 'Reset Password'
         email = EmailMessage(mail_subject, message, to=[user.email])
-        send_email(user.email, mail_subject, message)
+        send_email(user.email, mail_subject, message,otp=1)
         return HttpResponse("Mail has been send. Click on the email link to reset password")
     else:
         return render(request, "user/reset_password.html")
