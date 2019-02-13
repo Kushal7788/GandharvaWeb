@@ -8,8 +8,8 @@
 {% block body %}
     <br><br><br><br><br>
 
-    <div class="container" style="height: 100vh">
-        <div class="col-sm-6 container-center">
+    <div class="container">
+        <div class="col-sm-8 container-center">
             <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
             <h5 style="text-align: center;">File Upload</h5>
             <br>
@@ -17,51 +17,92 @@
                 {% csrf_token %}
                 <div class="text-center">
                     {{ form.as_p }}
-                    <button type="submit" id="upload" class="btn btn-primary" style="margin-left: 0;width:auto;">Upload</button>
+                    <button type="submit" id="upload" class="btn btn-primary" style="margin-left: 0;width:auto;">
+                        Upload
+                    </button>
                 </div>
             </form>
-            <div class="text-center">
-                <p>Uploaded files:</p>
-            </div>
-            <ul>
-                {% for obj in documents %}
-                    <li>
-                        <a href="{{ obj.document.url }}">{{ obj.fname }}</a>
-                        <small>(Uploaded at: {{ obj.uploaded_at }})</small>
-                    </li>
-                {% endfor %}
-            </ul>
-        <br><br>
-        <label>Documents Uploaded By Other Users</label>
-        <br><br>
-         <ul>
-                {% for sub,val in dict.items %}
-                    <br>
-                    <label>{{ sub.first_name}} {{ sub.last_name }}</label>
-                    {% for obj in val %}
-                    <li>
-                        <a href="{{ obj.document.url }}">{{ obj.fname }}</a>
-                        <small>(Uploaded at: {{ obj.uploaded_at }})</small>
-                    </li>
-                {% endfor %}
-                {% endfor %}
-            </ul>
-        </div>
         <br>
+            <div class="text-center">
+                <p style="font-weight: bold">Uploaded files:</p>
+            </div>
+
+            {#                {% for obj in documents %}#}
+            {#                    <li>#}
+            {#                        <a href="{{ obj.document.url }}">{{ obj.fname }}</a>#}
+            {#                        <small>(Uploaded at: {{ obj.uploaded_at }})</small>#}
+            {#                    </li>#}
+            {#                {% endfor %}#}
+
+            <table class="table table-responsive">
+                <thead class="thead-dark">
+                <tr>
+                    <th>File Name</th>
+                    <th> Upload Time</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for obj in documents %}
+                    <tr>
+                        <td><a href="{{ obj.document.url }}">{{ obj.fname }}</a></td>
+                        <td>
+                            <small>(Uploaded at: {{ obj.uploaded_at }})</small>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <hr>
+            <div class="text-center">
+                <label style="font-weight:bold">Documents Uploaded By Other Users</label>
+            </div>
+
+            {% for sub,val in dict.items %}
+                <br>
+                <label> Name: {{ sub.first_name }} {{ sub.last_name }}</label>
+                {#                    {% for obj in val %}#}
+                {#                        <li>#}
+                {#                            <a href="{{ obj.document.url }}">{{ obj.fname }}</a>#}
+                {#                            <small>(Uploaded at: {{ obj.uploaded_at }})</small>#}
+                {#                        </li>#}
+
+                <table class="table table-responsive">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>File Name</th>
+                        <th> Upload Time</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for obj in val %}
+                        <tr>
+                            <td><a href="{{ obj.document.url }}">{{ obj.fname }}</a></td>
+                            <td>
+                                <small>(Uploaded at: {{ obj.uploaded_at }})</small>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endfor %}
+        </div>
+        <br><br>
     </div>
-    <br>
-{% block scripts %}
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script type="text/javascript">
-    let uploadField = document.getElementById("id_document");
-    uploadField.onchange = function() {
-        if(this.files[0].size > 25165824){
-        swal("Upload size limit is 25MB.");
-        this.value = "";
-        };
-};
-</script>
-{% endblock %}
+    <br><br>
+    <div style="height: 40vh"></div>
+    {% block scripts %}
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script type="text/javascript">
+            let uploadField = document.getElementById("id_document");
+            uploadField.onchange = function () {
+                if (this.files[0].size > 25165824) {
+                    swal("Upload size limit is 25MB.");
+                    this.value = "";
+                }
+                ;
+            };
+        </script>
+    {% endblock %}
 
 {% endblock %}
 

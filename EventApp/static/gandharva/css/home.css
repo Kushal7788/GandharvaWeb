@@ -295,6 +295,7 @@ img {
     margin-right: 1.5vw;
     opacity: 0.84;
     border-radius: 8px;
+    cursor: pointer;
 }
 
 .eventTitle {
