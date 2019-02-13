@@ -21,13 +21,17 @@ class College_year(models.Model):
     def __str__(self):
         return self.title
 
+def department_path(instance, filename):
+    ext = filename.split('.')[-1]
+    filename = '{}.{}'.format("Department_images/" + instance.name , ext)
+    return filename
 
 # model for Department
 class Department(models.Model):
     dep_id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=30)
     description = models.TextField()
-    img = models.CharField(max_length=200)
+    img = models.ImageField(upload_to=department_path,blank=True)
     link_to = models.CharField(max_length=200)
     banner_src = models.CharField(max_length=500, blank=True)
 

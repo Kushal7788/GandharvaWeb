@@ -637,7 +637,7 @@ def participantDetails(request):
         print(event_id)
         print("POst mail:", participant_email)
         form = PaymentForm(request.POST)
-        coll = College.objects.all()
+        coll = College.objects.all().order_by('title')
         try:
             print(participant_email)
             ifuser = MyUser.objects.get(email=participant_email)
