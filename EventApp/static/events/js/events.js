@@ -1,4 +1,3 @@
-
 $(document).ready(function () {
     // Transition effect for navbar
     $(window).scroll(function () {
@@ -24,17 +23,17 @@ window.addEventListener('click', outsideClick);
 
 // Open
 function openModal() {
-  modal.style.display = 'block';
+    modal.style.display = 'block';
 }
 
 // Close
 function closeModal() {
-  modal.style.display = 'none';
+    modal.style.display = 'none';
 }
 
 // Close If Outside Click
 function outsideClick(e) {
-  if (e.target == modal) {
-    modal.style.display = 'none';
-  }
+    if (e.target == modal) {
+        modal.style.display = 'none';
+    }
 }

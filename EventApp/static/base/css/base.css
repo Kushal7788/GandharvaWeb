@@ -121,10 +121,11 @@ a:hover {
     opacity: 0.8;
     background-color: #222222;
 }
-.topButton:hover{
+
+.topButton:hover {
     opacity: 1;
 }
 
-.buttonDisplay{
+.buttonDisplay {
     display: block;
 }

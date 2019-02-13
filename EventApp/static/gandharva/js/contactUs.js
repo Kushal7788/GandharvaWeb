@@ -1,4 +1,3 @@
-
 function SweetAlertSuccess() {
     swal({
         title: "Success!",

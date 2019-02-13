@@ -107,13 +107,13 @@
                         {% endif %}
                         {% if user.is_staff %}
                             {% if role == 1 %}
-                            <form method="get" action="{% url 'campaign' %}">
+                                <form method="get" action="{% url 'campaign' %}">
                             {% else %}
-                            <form method="get" action="{% url 'myactions' %}">
+                                <form method="get" action="{% url 'myactions' %}">
                             {% endif %}
 
-                                <button type="submit" class="dropdown-item dropdownStyle">My Actions</button>
-                            </form>
+                        <button type="submit" class="dropdown-item dropdownStyle">My Actions</button>
+                        </form>
                             <form method="get" action="{% url 'files' %}">
 
                                 <button type="submit" class="dropdown-item dropdownStyle">File Upload</button>
@@ -125,10 +125,10 @@
                             <input type="hidden" name="profile" value=>
                             <button type="submit" class="dropdown-item dropdownStyle">My Profile</button>
                         </form>
-{#                        <form method="get" action="{% url 'eventsRegister' %}">#}
-{#                            <input type="hidden" name="EventRegister" value=>#}
-{#                            <button type="submit" class="dropdown-item dropdownStyle">Registered Events</button>#}
-{#                        </form>#}
+                        {#                        <form method="get" action="{% url 'eventsRegister' %}">#}
+                        {#                            <input type="hidden" name="EventRegister" value=>#}
+                        {#                            <button type="submit" class="dropdown-item dropdownStyle">Registered Events</button>#}
+                        {#                        </form>#}
                         <form method="get" action="{% url 'user_logout' %}">
 
                             <input type="hidden" name="dept" value=>

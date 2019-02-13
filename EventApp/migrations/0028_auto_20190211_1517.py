@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('EventApp', '0027_instamojocredential_redirect_url'),
     ]
@@ -15,6 +14,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='filedocument',
             name='document',
-            field=models.FileField(upload_to=EventApp.models.filePath, validators=[EventApp.validators.validate_file_size]),
+            field=models.FileField(upload_to=EventApp.models.filePath,
+                                   validators=[EventApp.validators.validate_file_size]),
         ),
     ]

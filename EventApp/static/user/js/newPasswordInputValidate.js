@@ -1,6 +1,6 @@
 var password1 = document.getElementById('password1');
 var password2 = document.getElementById('password2');
-var  pass1 = 0, pass2 = 0;
+var pass1 = 0, pass2 = 0;
 
 function validatePassword1() {
 
