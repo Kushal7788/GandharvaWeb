@@ -1033,7 +1033,7 @@ def campaign(request):
                             volunteers[i].count = volunteers[i].count + 1
                             break
                     if c == 0:
-                        v = volunteerwise()
+                        v = Volunteerwise()
                         v.username = ref
                         v.name = name
                         v.count = 1
@@ -1058,7 +1058,7 @@ def campaign(request):
                             events[i].count = events[i].count + 1
                             break
                     if c == 0:
-                        e = eventwise()
+                        e = Eventwise()
                         e.event_id = event.event_id
                         e.event_name = event.event_name
                         e.count = 1
@@ -1082,7 +1082,7 @@ def campaign(request):
                             colleges[i].count = colleges[i].count + 1
                             break
                     if c == 0:
-                        c = collegewise()
+                        c = Collegewise()
                         c.name = college.name
                         c.count = 1
                         colleges.append(c)
@@ -1125,19 +1125,19 @@ def policy(request):
     return render(request, 'gandharva/privacy-policy.html', {'policys': policy})
 
 
-class volunteerwise:
+class Volunteerwise:
     username = ""
     name = ""
     count = 0
 
 
-class eventwise:
+class Eventwise:
     event_id = 0
     event_name = ""
     count = 0
 
 
-class collegewise:
+class Collegewise:
     cid = ""
     name = ""
     count = 0
