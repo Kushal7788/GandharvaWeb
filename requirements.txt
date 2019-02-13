@@ -5,5 +5,5 @@ instamojo_wrapper
 qrcode
 openpyxl
 sweetify
-django-qrcode
+qrcode
 xlwt

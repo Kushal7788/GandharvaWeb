@@ -19,7 +19,7 @@
             {% if forloop.first %}
                 <div class="row">{% endif %}
         <div class="col-sm-2 eventDiv hvr-bounce-to-top"
-             style="background:linear-gradient(45deg,rgba(0,0,0,0.4),rgba(0,0,0,0.4)),url({% static event.event.container_src %}); background-repeat: no-repeat; background-size: cover; width: 100%;height:auto"
+             style="background:linear-gradient(45deg,rgba(0,0,0,0.4),rgba(0,0,0,0.4)),url({% event.event.container_src.path %}); background-repeat: no-repeat; background-size: cover; width: 100%;height:auto"
              data-sal="slide-up" data-sal-easing="ease-out-bounce" data-sal-delay="300" data-sal-duration="1100">
             <h4 class="eventTitle">{{ event.event.event_name }}</h4>
             <p class="eventDescription">

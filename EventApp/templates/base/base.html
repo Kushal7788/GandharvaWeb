@@ -60,16 +60,16 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <form method="get" action="{% url 'events' %}">
-                        <input type="hidden" name="dept" value="Computer">
-                        <button type="submit" class="dropdown-item dropdownStyle">Computer</button>
+                        <input type="hidden" name="dept" value="Coding">
+                        <button type="submit" class="dropdown-item dropdownStyle">Coding</button>
                     </form>
                     <form method="get" action="{% url 'events' %}">
-                        <input type="hidden" name="dept" value="IT">
-                        <button type="submit" class="dropdown-item dropdownStyle">IT</button>
+                        <input type="hidden" name="dept" value="Gaming">
+                        <button type="submit" class="dropdown-item dropdownStyle">Gaming</button>
                     </form>
                     <form method="get" action="{% url 'events' %}">
-                        <input type="hidden" name="dept" value="ENTC">
-                        <button type="submit" class="dropdown-item dropdownStyle">ENTC</button>
+                        <input type="hidden" name="dept" value="Robotics">
+                        <button type="submit" class="dropdown-item dropdownStyle">Robotics</button>
                     </form>
                     <form method="get" action="{% url 'events' %}">
                         <input type="hidden" name="dept" value=Mechanical>
@@ -111,7 +111,7 @@
                             {% else %}
                             <form method="get" action="{% url 'myactions' %}">
                             {% endif %}
-                                {% csrf_token %}
+
                                 <button type="submit" class="dropdown-item dropdownStyle">My Actions</button>
                             </form>
                             <form method="get" action="{% url 'files' %}">
@@ -121,16 +121,16 @@
                         {% endif %}
 
                         <form method="get" action="{% url 'user_profile' %}">
-                            {% csrf_token %}
+
                             <input type="hidden" name="profile" value=>
                             <button type="submit" class="dropdown-item dropdownStyle">My Profile</button>
                         </form>
-                        <form method="get" action="{% url 'eventsRegister' %}">
-                            <input type="hidden" name="EventRegister" value=>
-                            <button type="submit" class="dropdown-item dropdownStyle">Register Events</button>
-                        </form>
+{#                        <form method="get" action="{% url 'eventsRegister' %}">#}
+{#                            <input type="hidden" name="EventRegister" value=>#}
+{#                            <button type="submit" class="dropdown-item dropdownStyle">Registered Events</button>#}
+{#                        </form>#}
                         <form method="get" action="{% url 'user_logout' %}">
-                            {% csrf_token %}
+
                             <input type="hidden" name="dept" value=>
                             <button type="submit" class="dropdown-item dropdownStyle">Log Out</button>
                         </form>

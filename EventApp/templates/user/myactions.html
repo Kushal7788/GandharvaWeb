@@ -20,18 +20,18 @@
                     </div>
                 </form>
             {% endif %}
-            {% if button_name == "All Participants" %}
-                <form method="get" action="{% url 'all_participanrs' %}">
-                    <div class="text-center">
-                        <button type="submit" name="{{ button_name }}" class="btn btn-primary"
-                                style="margin-left: 0">{{ button_name }}</button>
-                    </div>
-                </form>
-            {% else %}
+{#            {% if button_name == "All Participants" %}#}
+{#                <form method="get" action="{% url 'all_participanrs' %}">#}
+{#                    <div class="text-center">#}
+{#                        <button type="submit" name="{{ button_name }}" class="btn btn-primary"#}
+{#                                style="margin-left: 0">{{ button_name }}</button>#}
+{#                    </div>#}
+{#                </form>#}
+{#            {% else %}#}
                 <div class="text-center">
-                    <p> No actions For you</p>
+                    <p> No actions are yet assigned to you</p>
                 </div>
-            {% endif %}
+{#            {% endif %}#}
         </div>
         <br>
     </div>

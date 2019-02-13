@@ -28,6 +28,7 @@ import string
 import openpyxl
 import sweetify
 
+
 @staff_user
 def campaigning_excel(request):
     all_transactions = Transaction.objects.filter(status='Credit')
@@ -49,7 +50,7 @@ def campaigning_excel(request):
                   each_transaction.team.user.user_coll.name,
                   str(each_transaction.date)]
         for col, each_value in enumerate(values):
-            curr_cell = sheet.cell(row=row + data_starting_number, column=col+1)
+            curr_cell = sheet.cell(row=row + data_starting_number, column=col + 1)
             curr_cell.value = each_value
 
     # i = 2
@@ -75,8 +76,9 @@ def campaigning_excel(request):
     #     c4 = sheet.cell(row=i, column=5)
     #     c4.value = str(t.time)
     #     i = i + 1
-    insta = InstamojoCredential.objects.latest('key')
-    pathw = insta.redirect_url+'media/CampaignData.xlsx'
+    insta = InstamojoCredential.objects.latest('pk')
+    current_site = get_current_site(request)
+    pathw = current_site.domain + 'media/CampaignData.xlsx'
     wb.save("media/CampaignData.xlsx")
     arg = {
         'filename': pathw,
@@ -119,18 +121,17 @@ def comingSoon(request):
 
 
 # Events page of all Departments
-def event(request):
+def event_register(request):
     if request.GET:
         dept = request.GET.get('dept')
         dept_choose = Department.objects.get(name=dept)
-    else:
-        dept = 'All Events'
-    args1 = {
-        'pageTitle': dept,
-        'events': EventDepartment.objects.filter(department=dept_choose),
-        'dept_choosen': dept_choose
-    }
-    return render(request, 'events/newEvent.html', args1)
+
+        args1 = {
+            'pageTitle': dept,
+            'events': EventDepartment.objects.filter(department=dept_choose),
+            'dept_choosen': dept_choose
+        }
+        return render(request, 'events/newEvent.html', args1)
 
 
 # Payment success
@@ -140,12 +141,11 @@ def success(request):
         payment_id = request.GET.get('payment_id')
         payment_status = request.GET.get('payment_status')
         payment_request_id = request.GET.get('payment_request_id')
-        insta = InstamojoCredential.objects.latest('key')
+        insta = InstamojoCredential.objects.latest('pk')
         api2 = Instamojo(api_key=insta.key,
-                         auth_token=insta.token,
-                         endpoint='https://test.instamojo.com/api/1.1/')
+                         auth_token=insta.token)
         response2 = api2.payment_request_payment_status(payment_request_id, payment_id)
-
+        print(response2)
         print(response2['payment_request']['purpose'])  # Purpose of Payment Request
         print(response2['payment_request']['payment']['status'])  # Payment status
         eid = request.GET.get("eid")
@@ -188,24 +188,31 @@ def success(request):
             if transaction.status == "Credit":
                 print("credit ...")
                 qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_M, box_size=10, border=4)
-                content = "event:" + event.event_name + ", user:" + user.username
-                qr.add_data(content)
+                # content = "event:" + event.event_name + ", user:" + user.username
+
+                # While loop for generating a unique refral code for user
+                unique_event_code = ''
+                while True:
+                    try:
+                        unique_event_code = ''.join(random.choice(string.ascii_uppercase) for _ in range(3)) + str(
+                            random.randint(100, 999))
+                        Team.objects.get(Refral_Code=unique_event_code)
+                    except:
+                        break
+                content = {
+                    'event': event.event_name,
+                    'username': user.username,
+                    'name': receipt.name,
+                    'unique_event_code': unique_event_code
+                }
+                qr.add_data(json.dumps(content))
                 img = qr.make_image(fill_color="black", back_color="white")
                 # img.save(user.username + event.event_name + "png")
                 thumb_io = BytesIO()
                 img.save(thumb_io, format='JPEG')
                 team.QRcode.save('ticket-filename.jpg', File(thumb_io), save=False)
 
-                # While loop for generating a unique refral code for user
-                while True:
-                    try:
-                        Refral_Code = ''.join(random.choice(string.ascii_uppercase) for _ in range(3)) + str(
-                            random.randint(100, 999))
-                        Team.objects.get(Refral_Code=Refral_Code)
-                    except:
-                        break
-
-                team.Refral_Code = Refral_Code
+                team.Refral_Code = unique_event_code
                 team.save()
 
                 # Event Receipt Mail
@@ -219,27 +226,30 @@ def success(request):
                 email = EmailMessage(mail_subject, message, to=[user.email])
                 email.attach_file("media//" + str(team.QRcode))
                 email.send()
-        if transaction.status == "Credit":
-            return render(request, 'user/paymentSsuccess.html')
-        elif transaction.status == "Failed":
-            return render(request, 'user/paymentFailed.html')
-        teams = reversed(Team.objects.filter(user=user).reverse())
-        print(teams)
+            if transaction.status == "Credit":
+                return render(request, 'user/paymentSsuccess.html')
+            elif transaction.status == "Failed":
+                return render(request, 'user/paymentFailed.html')
+            teams = reversed(Team.objects.filter(user=user).reverse())
+            print(teams)
+        else:
+            return redirect('/')
     else:
         print("ERROR")
 
 
-def all_participanrs(request):
+@staff_user
+def all_participants(request):
     role = RoleAssignment.objects.get(user=request.user.id)
     if role.role.name == 'Event Head':
         eventid = role.event.event_id
         print(eventid)
-        #receipt = Receipt.objects.filter(event=eventid)
-        #receipt.event.event_id = event_id
+        # receipt = Receipt.objects.filter(event=eventid)
+        # receipt.event.event_id = event_id
         participants = Transaction.objects.all()
         print(participants)
         arg = {
-        'participants': participants,
+            'participants': participants,
         }
         return render(request, 'events/all_participants.html', arg)
 
@@ -247,14 +257,17 @@ def all_participanrs(request):
 # Details of Individual Events
 def details(request):
     if request.method == 'POST':
-        insta = InstamojoCredential.objects.latest('key')
+        insta = InstamojoCredential.objects.latest('pk')
         api = Instamojo(api_key=insta.key,
-                        auth_token=insta.token,
-                        endpoint='https://test.instamojo.com/api/1.1/')
+                        auth_token=insta.token, )
         event_id = request.POST.get('event_id')
         userEmail = request.POST.get('userEmail')
         event = EventMaster.objects.get(pk=event_id)
         user = MyUser.objects.get(email=userEmail)
+        current_site = get_current_site(request)
+        head = 'http://'
+        if settings.USE_HTTPS:
+            head = 'https://'
         response = api.payment_request_create(
             amount=event.entry_fee,
             purpose=event.event_name,
@@ -262,7 +275,7 @@ def details(request):
             send_sms=False,
             email=user.email,
             phone=user.user_phone,
-            redirect_url=insta.redirect_url+"success?eid=" + event_id
+            redirect_url=head + current_site.domain + "success?eid=" + event_id
         )
         # print the long URL of the payment request.
         print(response['payment_request']['longurl'])
@@ -414,6 +427,7 @@ def user_login(request):
             return render(request, 'events/login.html', {})
     else:
         return render(request, 'events/login.html', {})
+
 
 @staff_user
 def myaction(request):
@@ -593,11 +607,11 @@ def participantDetails(request):
             ifuser = MyUser.objects.get(email=participant_email)
         except(IntegrityError, ObjectDoesNotExist):
             ifuser = None
-        event = EventMaster.objects.get(pk=event_id)
+        event_new = EventMaster.objects.get(pk=event_id)
         if len(request.POST.get('user_phone')) < 10:
             error = "Invalid mobile number"
             return render(request, 'events/participantDetails.html',
-                          {'event': event, 'colleges': coll, 'email_participant': participant_email,
+                          {'event': event_new, 'colleges': coll, 'email_participant': participant_email,
                            'present_user': ifuser, 'error': error})
         if form.is_valid():
             if ifuser == None:
@@ -609,32 +623,40 @@ def participantDetails(request):
                 user.is_active = False
                 user.save()
 
-            print("name", event.event_name)
+            print("name", event_new.event_name)
             user = MyUser.objects.get(email=participant_email)
             if request.POST.get('card'):
                 print("towards Payment")
+                current_site = get_current_site(request)
+                print("here", current_site.domain)
                 refer = request.POST.get('refer')
                 try:
                     referral = MyUser.objects.get(username=refer)
                 except(IntegrityError, ObjectDoesNotExist):
                     refer = "0"
 
-                insta = InstamojoCredential.objects.latest('key')
+                insta = InstamojoCredential.objects.latest('pk')
+                print(insta.key, insta.token, insta.salt)
                 api = Instamojo(api_key=insta.key,
-                                auth_token=insta.token,
-                                endpoint='https://test.instamojo.com/api/1.1/')
+                                auth_token=insta.token, )
+                head = 'http://'
+                if settings.USE_HTTPS:
+                    head = 'https://'
+
                 response = api.payment_request_create(
-                    amount=event.entry_fee,
-                    purpose=event.event_name,
+                    amount=event_new.entry_fee,
+                    purpose=event_new.event_name,
                     send_email=False,
                     send_sms=False,
                     email=user.email,
                     phone=user.user_phone,
                     # redirect_url="http://127.0.0.1:8000/success?eid=" + event_id + "&ref=" + str(refer)
-                    redirect_url=insta.redirect_url+"success?eid=" + event_id + "&ref=" + str(refer)+"success?eid=" + event_id + "&ref=" + str(refer)
+                    redirect_url=head + current_site.domain + "/" + "success?eid=" + event_id + "&ref=" + str(
+                        refer) + "success?eid=" + event_id + "&ref=" + str(refer)
 
                 )
                 # print the long URL of the payment request.
+                print(response)
                 print(response['payment_request']['longurl'])
                 # print the unique ID(or payment request ID)
                 print(response['payment_request']['id'])
@@ -642,7 +664,7 @@ def participantDetails(request):
                 print(response['payment_request']['amount'])
                 return redirect(response['payment_request']['longurl'])
             elif request.POST.get('cash'):
-                cashpayment(event, user, request)
+                cashpayment(request, event_new, user)
                 teams = reversed(Team.objects.filter(user=user).reverse())
                 print("CAAAAA")
                 return render(request, 'user/registeredEvents.html', {'teams': teams})
@@ -650,11 +672,14 @@ def participantDetails(request):
             print(form.errors)
             error = form.errors
             return render(request, 'events/participantDetails.html',
-                          {'event': event, 'colleges': coll, 'email_participant': participant_email,
+                          {'event': event_new, 'colleges': coll, 'email_participant': participant_email,
                            'present_user': ifuser, 'error': error})
+    else:
+        return redirect('/')
+
 
 @staff_user
-def cashpayment(event, user, request):
+def cashpayment(request, event_new, user):
     id = ""
     flag = 0
     while flag == 0:
@@ -667,7 +692,7 @@ def cashpayment(event, user, request):
     team = Team()
     transaction = Transaction()
     receipt.name = user.first_name + " " + user.last_name
-    receipt.event = event
+    receipt.event = event_new
     receipt.save()
     team.receipt = receipt
     team.user = user
@@ -687,7 +712,7 @@ def cashpayment(event, user, request):
     if transaction.status == "Cash":
         print("cashhh")
         qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_M, box_size=10, border=4)
-        content = "event:" + event.event_name + ", user:" + user.username
+        content = "event:" + event_new.event_name + ", user:" + user.username
         qr.add_data(content)
         img = qr.make_image(fill_color="black", back_color="white")
         # img.save(user.username + event.event_name + "png")
@@ -708,10 +733,10 @@ def cashpayment(event, user, request):
 
         team.save()
 
-        mail_subject = 'You have registered for ' + event.event_name + ' using cash payment'
+        mail_subject = 'You have registered for ' + event_new.event_name + ' using cash payment'
         message = render_to_string('events/receiptCashPayment.html', {
             'user': user,
-            'event': event,
+            'event': event_new,
             'team': team,
             'transaction': transaction,
         })
@@ -732,6 +757,7 @@ def Profile(request):
         user.user_phone = user_phone
         user.save()
     return render(request, 'user/userProfile.html')
+
 
 @staff_user
 def Registered_Events(request):
@@ -884,6 +910,7 @@ def AddVolunteer(request):
         }
         return render(request, 'events/campaignVolunteer.html', args)
 
+
 @staff_user
 def ourSponsors(request):
     sponsors = SponsorMaster.objects.all()
@@ -891,6 +918,7 @@ def ourSponsors(request):
         'sponsors': sponsors
     }
     return render(request, 'gandharva/ourSponsors.html', args)
+
 
 @staff_user
 def ourTeam(request):
@@ -901,11 +929,11 @@ def ourTeam(request):
 @staff_user
 def files(request):
     current_doc = fileDocument.objects.filter(user=request.user).order_by("uploaded_at").reverse()
-    dictonary ={}
+    dictonary = {}
     juniors = AssignSub.objects.filter(rootuser=request.user)
     for junior in juniors:
-        doc_list = fileDocument.objects.filter(user = junior.subuser).order_by("uploaded_at").reverse()
-        dictonary[junior.subuser]= doc_list
+        doc_list = fileDocument.objects.filter(user=junior.subuser).order_by("uploaded_at").reverse()
+        dictonary[junior.subuser] = doc_list
 
     if request.method == 'POST':
         form = fileForm(request.POST, request.FILES)
