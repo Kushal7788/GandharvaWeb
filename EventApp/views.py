@@ -309,6 +309,8 @@ def details(request):
             send_sms=False,
             email=user.email,
             phone=user.user_phone,
+            buyer_name=user.first_name + " " + user.last_name,
+
             redirect_url=head + current_site.domain + "success?eid=" + event_id
         )
         # print the long URL of the payment request.
