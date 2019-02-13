@@ -7,7 +7,7 @@ from email.mime.application import MIMEApplication
 
 def send_email(to_email, subject= None, message = None, attach = None,otp=0):
     # Define from
-    sender = 'sunilupare@zoho.com'
+    sender = 'hello@viitgandharva.com'
 
     # Create message
     msg = MIMEMultipart()
@@ -33,6 +33,6 @@ def send_email(to_email, subject= None, message = None, attach = None,otp=0):
     server = smtplib.SMTP_SSL('smtp.zoho.com', 465)
 
     # Perform operations via server
-    server.login('sunilupare@yahoo.com', '2019@gandharva')
+    server.login('hello@viitgandharva.com', 'Gandharva@19hello')
     server.sendmail(sender, to_email, msg.as_string())
     server.quit()
