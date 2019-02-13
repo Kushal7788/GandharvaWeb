@@ -809,7 +809,7 @@ def cashpayment(request, event_new, user):
             'team': team,
             'transaction': transaction,
         })
-        send_email(user.email, mail_subject, [message, team.QRcode.url])
+        send_email(user.email, mail_subject, message, [team.QRcode.url])
 
 
 @staff_user
