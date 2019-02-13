@@ -119,11 +119,13 @@ input {
     background-color: #1a73e8;
     color: #fff;
     border: none;
-    font-size: 18px;
-    padding-right: 18px;
-    padding-top: 4px;
-    padding-left: 18px;
-    margin-bottom: 2px;
+    font-size: 16px;
+    padding-right: 22px;
+    font-weight: 500;
+    padding-top: 5px;
+    padding-left: 22px;
+    padding-bottom: 5px;
+    margin-bottom: 4px;
     margin-top: 4px;
 }
 
@@ -132,12 +134,15 @@ input {
     background-color: #1a73e8;
     color: #fff;
     border: none;
-    font-size: 18px;
-    padding-right: 18px;
-    padding-top: 4px;
-    padding-left: 18px;
+    font-size: 16px;
+    padding-right: 22px;
+    font-weight: 500;
+    padding-top: 5px;
+    padding-left: 22px;
+    padding-bottom: 5px;
     margin-bottom: 2px;
     margin-top: 4px;
+    height: auto;
 }
 
 @media only screen and (min-width: 600px) {
@@ -177,7 +182,7 @@ input {
 }
 
 .ForgotPassword {
-    font-weight: bold;
+    font-weight: 500;
     color: #3673e8;
 }
 
