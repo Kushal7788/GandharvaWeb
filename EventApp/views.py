@@ -244,7 +244,7 @@ def success(request):
                     'transaction': transaction,
                 })
 
-                send_email(user.email, mail_subject, message, ["media//" + str(team.QRcode)])
+                send_email(user.email, mail_subject, message, ["media/" + str(team.QRcode)])
 
             if transaction.status == "Credit":
                 return render(request, 'user/paymentSsuccess.html')
@@ -809,7 +809,7 @@ def cashpayment(request, event_new, user):
             'team': team,
             'transaction': transaction,
         })
-        send_email(user.email, mail_subject, message, ["media//" + str(team.QRcode)])
+        send_email(user.email, mail_subject, message, ["media/" + str(team.QRcode)])
 
 
 
