@@ -451,7 +451,7 @@ def user_login(request):
         password = request.POST.get('password')
         try:
             usercheck = MyUser.objects.get(username=username)
-        except(ObjectDoesNotExist):
+        except ObjectDoesNotExist:
             usercheck = None
         if usercheck is not None:
             if not usercheck.is_active:
@@ -1024,7 +1024,7 @@ def campaign(request):
                     try:
                         ref = transaction.team.referral.username
                         name = MyUser.objects.get(username=ref)
-                    except(Exception):
+                    except Exception:
                         continue
                     c = 0
                     for i in range(len(volunteers)):
