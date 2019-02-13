@@ -34,6 +34,11 @@ class Department(models.Model):
     def __str__(self):
         return self.name
 
+def sponsor_path(instance, filename):
+    ext = filename.split('.')[-1]
+    filename = '{}.{}'.format("Sponsor_images/" + instance.sponsor_name , ext)
+    return filename
+
 def carousel_path(instance, filename):
     ext = filename.split('.')[-1]
     filename = '{}.{}'.format("Carousel_images/" , ext)
@@ -149,7 +154,7 @@ class EventDepartment(models.Model):
 # sponsors model
 class SponsorMaster(models.Model):
     sponsor_name = models.CharField(max_length=30)
-    sponsor_logo = models.CharField(max_length=200)
+    sponsor_logo = models.ImageField(upload_to=sponsor_path,blank=True)
     sponsor_info = models.CharField(max_length=200, default='No Info. Available')
     sponsor_type = models.CharField(max_length=30, blank=True)
 
