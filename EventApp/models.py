@@ -34,6 +34,10 @@ class Department(models.Model):
     def __str__(self):
         return self.name
 
+def carousel_path(instance, filename):
+    ext = filename.split('.')[-1]
+    filename = '{}.{}'.format("Carousel_images/" , ext)
+    return filename
 
 def rules_path(instance, filename):
     ext = filename.split('.')[-1]
@@ -155,8 +159,8 @@ class SponsorMaster(models.Model):
 
 # contains media for front-end
 class Carousel(models.Model):
-    src = models.CharField(max_length=200)
-
+    src = models.CharField(max_length=200,blank=True)
+    images = models.ImageField(upload_to='Carousel_images/', blank=True)
 
 # ContactUs contains fields for user Services to contact to admin (Foreign Key to Dept)
 class ContactUs(models.Model):

@@ -29,7 +29,7 @@
                             {% for carouselImg in carouselImage %}
                                 {% if forloop.first %}
                                     <div class="carousel-item active" style="object-fit: cover">
-                                        <img class="d-block w-100 img-fluid" src="{% static carouselImg.src %}"
+                                        <img class="d-block w-100 img-fluid" src="{{ carouselImg.images.url }}"
                                              alt="carouselImages" style="height: 100vh;object-fit: cover">
                                     </div>
                                 {% else %}
