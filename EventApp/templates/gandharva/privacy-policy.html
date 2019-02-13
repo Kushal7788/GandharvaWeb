@@ -1,0 +1,16 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}Privacy Policies{% endblock %}
+
+{% block css %}
+    <link href="{% static 'events/css/login_signup.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+    <h1>
+    <br><br><br><br>
+    {% for policy in policys %}
+    {{ policy.policy }}
+    {% endfor %}
+    </h1>
+{%  endblock %}

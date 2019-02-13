@@ -1,0 +1,16 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}Terms and Conditions{% endblock %}
+
+{% block css %}
+    <link href="{% static 'events/css/login_signup.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+    <h1>
+    <br><br><br><br>
+    {% for term in terms %}
+    {{ term.terms }}
+    {% endfor %}
+    </h1>
+{%  endblock %}

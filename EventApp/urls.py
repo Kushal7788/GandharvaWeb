@@ -48,5 +48,7 @@ url(r'participantEventRegister', views.participantEventRegister, name='participa
     url(r'^mail-participants', views.mail_participants, name='mail-participants'),
     url(r'^myactions/$', views.myaction, name='myactions'),
     url(r'^offline/$', views.offline, name='offline'),
+    url(r'^terms-and-conditions/$', views.terms, name='terms'),
+    url(r'^privacy-policy/$', views.policy, name='policy'),
 
 ]

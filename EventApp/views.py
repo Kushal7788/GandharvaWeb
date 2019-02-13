@@ -1099,6 +1099,15 @@ def campaign(request):
     else:
         return render(request, 'events/campaignHead.html')
 
+def terms(request):
+    terms = TermsConditons.objects.all()
+
+    return render(request, 'gandharva/terms-and-conditions.html', {'terms': terms})
+
+def policy(request):
+    policy = TermsConditons.objects.all()
+
+    return render(request, 'gandharva/privacy-policy.html', {'policys': policy})
 
 class volunteerwise:
     username = ""

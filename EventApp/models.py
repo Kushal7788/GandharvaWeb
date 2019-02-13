@@ -288,3 +288,7 @@ class Volunteer(models.Model):
     user = models.ForeignKey(MyUser, on_delete=models.PROTECT)
     college = models.ForeignKey(College, on_delete=models.PROTECT)
     date = models.DateField()
+
+class TermsConditons(models.Model):
+    terms = models.TextField(max_length=2000)
+    policy = models.TextField(max_length=2000)

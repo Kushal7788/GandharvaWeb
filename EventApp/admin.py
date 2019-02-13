@@ -28,5 +28,6 @@ admin.site.register(Category_assign)
 admin.site.register(Volunteer)
 admin.site.register(AssignSub)
 admin.site.register(Domain)
+admin.site.register(TermsConditons)
 
 
