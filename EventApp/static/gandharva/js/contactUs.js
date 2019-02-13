@@ -10,7 +10,7 @@ function SweetAlertSuccess() {
 function SweetAlertFailure() {
     swal({
         title: "Failure",
-        text: "Message sent successfully",
+        text: "Message not sent",
         icon: "error",
         button: "Ok",
     });
