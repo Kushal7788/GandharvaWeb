@@ -568,7 +568,7 @@ def activate_register_head(request, uidb64, token):
 
     except(TypeError, ValueError, OverflowError, user.DoesNotExist):
         user = None
-    if (user is not None):
+    if user is not None:
         if user.token1 == token:
             user.token1 = None
         if user.token2 == token:
