@@ -527,32 +527,43 @@ def register_head(request):
     coll = College.objects.all()
     year = College_year.objects.all()
     if request.method == 'POST':
-        userform = UserRegistration(request.POST, request.FILES)
-        roleform = RoleMasterForm(request.POST)
 
-        try:
-            old_user = MyUser.objects.get(email=userform.email)
+
+        # try:
+        #     old_user = MyUser.objects.get(email=userform.email)
+        #     print(old_user)
+        # except:
+        #     old_user = None
+        # try:
+        #     old_user2 = MyUser.objects.get(coll_email=userform.coll_email)
+        # except:
+        #     old_user2 = None
+        #
+        # print(old_user2)
+        # print(old_user)
+        if MyUser.objects.filter(email=request.POST.get('email')).count() == 0:
+            old_user=None
             print(old_user)
-        except:
-            old_user = None
-        try:
-            old_user2 = MyUser.objects.get(coll_email=userform.coll_email)
-        except:
+        else:
+            old_user = MyUser.objects.get(email=request.POST.get('email'))
+            print(old_user)
+        if MyUser.objects.filter(coll_email=request.POST.get('coll__email')).count() == 0:
             old_user2 = None
-
-        print(old_user2)
-        print(old_user)
-
+            print(old_user2)
+        else:
+            old_user2 = MyUser.objects.get(coll_email=request.POST.get('coll__email'))
+            print(old_user2)
         if old_user is not None and old_user.is_active is False:
             old_user.delete()
-        elif old_user2 is not None and old_user2.is_active is False:
+        elif old_user2 is not None and old_user2.is_active is False and old_user is None:
             old_user2.delete()
         elif (old_user is not None and old_user.is_active is True) or (old_user2 is not None and old_user2.is_active is True):
             args = {
                 'error': "You have already registered and your email is verified too. Enter email to reset your password."
             }
             return render(request, "user/reset_password.html", args)
-
+        userform = UserRegistration(request.POST, request.FILES)
+        roleform = RoleMasterForm(request.POST)
         if userform.is_valid() and roleform.is_valid():
             user = userform.save(commit=False)
             password = userform.cleaned_data.get('password')
