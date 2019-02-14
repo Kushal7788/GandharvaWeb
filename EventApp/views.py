@@ -117,13 +117,20 @@ def home(request):
             if role.role.name == "Jt Campaigning Head" or role.role.name == "Campaigning Head":
                 userget = 1
 
+
+    global_objects = EventDepartment.objects.filter(department=6)
+    event_name = []
+    for global_object in global_objects:
+        event_name.append(global_object.event.event_name)
+
     args = {
         'events': Department.objects.all(),
         'sponsors': SponsorMaster.objects.all(),
         'carouselImage': Carousel.objects.all(),
         'gandharvaDate': GandharvaHome.objects.get(title__startswith="Date").data,
         'About': GandharvaHome.objects.get(title__startswith="About").data,
-        'role': userget
+        'role': userget,
+        'global_events': event_name
     }
     sweetify.sweetalert(request, 'Westworld is awesome',
                         text='Really... if you have the chance - watch it! persistent = I agree!')

@@ -95,6 +95,7 @@
             <h1 style="text-align: center;padding-top:2vh;color:#fff;font-weight:500">
                 Events</h1>
             {% for event in events %}
+            {% if event.name != 'Global' %}
                 {% if forloop.first %}
                     <div class="row">{% endif %}
             <div class="col-sm-2 eventDiv" onclick="document.forms['{{ event.name }}_form'].submit();"
@@ -114,7 +115,22 @@
 
                 </div>
             {% endif %}
+            {% endif %}
             {% endfor %}
+            <br><br><br><br>
+
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">
+                Global Events
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                {% for global_event in global_events %}
+                    <form method="get" action="{% url 'details' %}">
+                        <input type="hidden" name="event" value= "{{ global_event }}">
+                        <button type="submit" class="dropdown-item dropdownStyle">{{ global_event }}</button>
+                    </form>
+                {% endfor %}
+
         </div>
 
 {#        <div style="background-color:#348a91">#}
