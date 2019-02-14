@@ -293,12 +293,9 @@ img {
     margin-bottom: 6vh;
     margin-left: 1.5vw;
     margin-right: 1.5vw;
-    opacity: 0.84;
     border-radius: 8px;
     cursor: pointer;
 }
-
-
 
 .eventTitle {
     z-index: 100;
@@ -310,7 +307,6 @@ img {
     opacity: 1;
     word-wrap: break-word;
     hyphens: auto;
-    text-shadow: 1px 1px #000000;
 }
 
 .eventDescription {
