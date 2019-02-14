@@ -45,7 +45,12 @@
                         {#                        <h5 style="color: #000;font-weight: 500">Team and Fee#}
                         {#                            Structure:</h5>#}
                         {#                        <p>Max {{ event.event.team_size }} Participants per Team & ₹ {{ event.event.entry_fee }} per#}
-                        {#                            team.</p>#}
+                        {#                                  team.</p>#}
+                        <h6 style="font-weight: 400"> Prizes: <pre
+                                style="font-family: Verdana, Geneva, sans-serif;
+    font-weight: 300;
+    font-size: 14px;">{{ event.event.prize }} </pre>
+                        </h6>
                         <h6 style="font-weight: 400"> Team: <span
                                 style="font-family: Verdana, Geneva, sans-serif;
     font-weight: 300;
@@ -57,7 +62,8 @@
                         team</span></h6>
                         {% if event.event.rules_file.url != None %}
 
-                            <a style="font-size: 14px" href="{{ event.event.rules_file.url }}">{{ event.event.event_name }} rules pdf
+                            <a style="font-size: 14px"
+                               href="{{ event.event.rules_file.url }}">{{ event.event.event_name }} rules pdf
                                 download</a>
 
                         {% endif %}

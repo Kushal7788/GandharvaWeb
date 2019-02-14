@@ -2,8 +2,6 @@
 *.iml
 *.xml
 *.pyc
-db.sqlite3
 /GandharvaWeb19/__pycache__
-*.sqlite3
 venv
 venv/*
