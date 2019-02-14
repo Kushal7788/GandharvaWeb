@@ -1,0 +1,40 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}New Password{% endblock %}
+{% block css %}
+    <link href="{% static 'user/css/reset_password.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+    <br><br><br><br><br>
+    <div class="container" style="height:100vh">
+        <div class="col-sm-6 container-center">
+            <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
+            <h5 style="text-align: center;">Email-Id</h5>
+            <br>
+            {% if status == -1 %}
+            <h2>The email id does not exist in the database. Please contact the support</h2>
+            {% elif status == 1 %}
+            <h2>Email is sent successfully. Please check the email for username</h2>
+            {% endif %}
+            <form method="post"  onsubmit="return validate()">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label class="control-label">Your Emial Id:</label>
+                    <input id="email" class="form-control" style="margin: 0;width: 100%" type="email"
+                           name="user-email"
+                           placeholder="Email Id">
+                    <span id="oldpasswordErrors" class="errors"></span>
+                </div>
+                <div class="text-center">
+                    <input type="submit" class="btn newPasswordButton" style="margin-left: 0" value="Submit">
+                </div>
+            </form>
+        </div>
+    </div>
+    <br>
+    {% block scripts %}
+        <script type="text/javascript" src="{% static 'user/js/newPasswordInputValidate.js' %}"></script>
+    {% endblock %}
+
+{% endblock %}
