@@ -1,26 +1,91 @@
-<!DOCTYPE html>
+{% extends 'base/base.html' %}
 {% load static %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Sponsors</title>
-</head>
-<body>
-{% for s in sponsors %}
-    <h2>Name:{{ s.sponsor_name }}</h2>
-    <img alt="logo" src="{% static s.sponsor_logo %}" style="width:auto;height:100px;max-width:100px"/>
-    <h5>Info:{{ s.sponsor_info }}</h5>
-    <h5>Type:{{ s.sponsor_type }}</h5>
+{% block title %}Our Sponsors{% endblock %}
+{% block css %}
+    <link href="{% static 'gandharva/css/ourSponsor.css' %}" rel="stylesheet">
+{% endblock %}
 
-{% endfor %}
-Partners
-{% for p in partners %}
-    <h2>Name:{{ p.sponsor_name }}</h2>
-    <img alt="logo" src="{% static s.sponsor_logo %}" style="width:auto;height:100px;max-width:100px"/>
-    <h5>Info:{{ p.sponsor_info }}</h5>
-    <h5>Type:{{ p.sponsor_type }}</h5>
+{% block body %}
+    <br><br><br><br><br>
+    <div class="container">
 
-{% endfor %}
+        <h2 class="text-center">Our Sponsors</h2>
+        <br>
+        {% for s in sponsors %}
+            {% if forloop.first %}
+                <div class="row">{% endif %}
 
-</body>
-</html>
+        <div class="col-sm-3" style="margin-bottom: 20px">
+            <div class="one-slide white">
+                <div class="testimonial w-100 h-100 p-3 text-center">
+                    <div class="brand"><img alt="logo"
+                                            src="{% static 'gandharva/img/sponsors/pythonAnywhere.png' %}"
+                                            style="width:auto;height:100px;max-width:100px"/>
+                    </div>
+                    <div class="separator">&nbsp;</div>
+                    <div class="message text-center text-gray">{{ s.sponsor_name }}</div>
+                    <p style="font-weight: 300;font-size: 0.9rem;">{{ s.sponsor_type }}</p>
+                </div>
+            </div>
+        </div>
+
+        {% if forloop.counter|divisibleby:5 %}
+            </div>
+            <div class="row">{% endif %}
+        {% if forloop.last %}
+            </div>
+        {% endif %}
+        {% endfor %}
+
+
+        <br><br>
+        <h2 class="text-center">Our Partners</h2>
+        <br>
+        {% for p in partners %}
+            {% if forloop.first %}
+                <div class="row">{% endif %}
+
+        <div class="col-sm-3" style="margin-bottom: 20px">
+            <div class="one-slide white">
+                <div class="testimonial w-100 h-100 p-3 text-center">
+                    <div class="brand"><img alt="logo"
+                                            src="{% static 'gandharva/img/sponsors/pythonAnywhere.png' %}"
+                                            style="width:auto;height:100px;max-width:100px"/>
+                    </div>
+                    <div class="separator">&nbsp;</div>
+                    <div class="message text-center text-gray">{{ p.sponsor_name }}</div>
+                    <p style="font-weight: 300;font-size: 0.9rem;">{{ p.sponsor_type }}</p>
+                </div>
+            </div>
+        </div>
+
+        {% if forloop.counter|divisibleby:5 %}
+            </div>
+            <div class="row">{% endif %}
+        {% if forloop.last %}
+            </div>
+        {% endif %}
+        {% endfor %}
+
+    </div>
+    <div style="height: 20vh"></div>
+    <br><br><br>
+{% endblock %}
+
+
+
+
+
+{#{% for s in sponsors %}#}
+{#    <h2>Name:{{ s.sponsor_name }}</h2>#}
+{#    <img alt="logo" src="{% static s.sponsor_logo %}" style="width:auto;height:100px;max-width:100px"/>#}
+{#    <h5>Info:{{ s.sponsor_info }}</h5>#}
+{#    <h5>Type:{{ s.sponsor_type }}</h5>#}
+{##}
+{#{% endfor %}#}
+{#Partners#}
+{#{% for p in partners %}#}
+{#    <h2>Name:{{ p.sponsor_name }}</h2>#}
+{#    <img alt="logo" src="{% static s.sponsor_logo %}" style="width:auto;height:100px;max-width:100px"/>#}
+{#    <h5>Info:{{ p.sponsor_info }}</h5>#}
+{#    <h5>Type:{{ p.sponsor_type }}</h5>#}
