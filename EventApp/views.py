@@ -498,17 +498,20 @@ def myaction(request):
         args = {
             'button_name': 'Campaign',
             'urlaccess': campaign,
+            'roles': role.role
         }
         return render(request, 'user/myactions.html', args)
     if role.role.name == 'Event Head':
         args = {
             'button_name': 'All Participants',
+            'roles': role.role
         }
         return render(request, 'user/myactions.html', args)
     else:
         args = {
             'button_name': "No Actions",
             'urlaccess': None,
+            'roles': role.role
         }
     return render(request, 'user/myactions.html', args)
 
@@ -1078,6 +1081,7 @@ def ourTeam(request):
 # upload file view
 @staff_user
 def files(request):
+    glbdoc = Document.objects.get(category=Document_type.objects.get(type="Global"))
     current_doc = fileDocument.objects.filter(user=request.user).order_by("uploaded_at").reverse()
     dictonary = {}
     juniors = AssignSub.objects.filter(rootuser=request.user)
@@ -1096,7 +1100,8 @@ def files(request):
             return render(request, 'events/fileExplorer.html', {
                 'form': fileForm,
                 'dict': dictonary,
-                'documents': current_doc
+                'documents': current_doc,
+                'global': glbdoc
 
             })
     else:
@@ -1104,7 +1109,8 @@ def files(request):
     return render(request, 'events/fileExplorer.html', {
         'form': form,
         'dict': dictonary,
-        'documents': current_doc
+        'documents': current_doc,
+        'global': glbdoc
     })
 
 
