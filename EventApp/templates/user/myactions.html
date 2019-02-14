@@ -12,13 +12,14 @@
             <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
             <h5 style="text-align: center;">My Actions</h5>
             <br>
-            <div class="text-center">
-                <h4 style="font-weight: 400"> Roles assigned to you are:-</h4>
-                <h2 style="font-weight: 400">{{ roles.name }}</h2>
-                <br>
-                <h4 style="font-weight: 400">Work Expected from you</h4>
-                <h2 style="font-weight: 400">{{ roles.assigned_work }}</h2>
+            <div class="text-right">
+                <h5> {{ roles.name }}</h5>
             </div>
+            <br>
+
+            <h4 style="font-weight: 400;font-size: 22px">Roles:</h4>
+            <h2 style="font-weight: 400;font-size: 20px">{{ roles.assigned_work }}</h2>
+
 
             {% if button_name == "Campaign" %}
                 <form method="get" action="{% url 'campaign' %}">
@@ -36,9 +37,7 @@
             {#                    </div>#}
             {#                </form>#}
             {#            {% else %}#}
-            <div class="text-center">
-                <p> No actions are yet assigned to you</p>
-            </div>
+
             {#            {% endif %}#}
         </div>
         <br>
