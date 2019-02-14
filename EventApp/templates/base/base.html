@@ -63,6 +63,8 @@
                     Events
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    {% for testme in testmes  %}
+                    {% if testme.name != 'Global'%}
                     <form method="get" action="{% url 'events' %}">
                         <input type="hidden" name="dept" value="{{ testme.name }}">
                         <button type="submit" class="dropdown-item dropdownStyle">{{ testme.name }}</button>
