@@ -63,12 +63,24 @@
                     Events
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    {% for testme in testmes %}
                     <form method="get" action="{% url 'events' %}">
                         <input type="hidden" name="dept" value="{{ testme.name }}">
                         <button type="submit" class="dropdown-item dropdownStyle">{{ testme.name }}</button>
                     </form>
+                    {% endif %}
                     {% endfor %}
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        Global Events
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        {% for global_event in global_events %}
+                            <form method="get" action="{% url 'details' %}">
+                                <input type="hidden" name="event" value= "{{ global_event }}">
+                                <button type="submit" class="dropdown-item dropdownStyle">{{ global_event }}</button>
+                            </form>
+                        {% endfor %}
+                    </div>
                 </div>
             </li>
             {#            <li class="nav-item">#}
