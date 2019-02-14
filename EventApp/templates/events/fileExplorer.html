@@ -28,15 +28,8 @@
             </form>
             <br>
             <div class="text-center">
-                <p style="font-weight: bold">Uploaded files:</p>
+                <p>Uploaded files:</p>
             </div>
-
-            {#                {% for obj in documents %}#}
-            {#                    <li>#}
-            {#                        <a href="{{ obj.document.url }}">{{ obj.fname }}</a>#}
-            {#                        <small>(Uploaded at: {{ obj.uploaded_at }})</small>#}
-            {#                    </li>#}
-            {#                {% endfor %}#}
 
             <table class="table table-responsive">
                 <thead class="thead-dark">
@@ -58,17 +51,12 @@
             </table>
             <hr>
             <div class="text-center">
-                <label style="font-weight:bold">Documents Uploaded By Other Users</label>
+                <label>Documents Uploaded By Other Users</label>
             </div>
 
             {% for sub,val in dict.items %}
                 <br>
                 <label> Name: {{ sub.first_name }} {{ sub.last_name }}</label>
-                {#                    {% for obj in val %}#}
-                {#                        <li>#}
-                {#                            <a href="{{ obj.document.url }}">{{ obj.fname }}</a>#}
-                {#                            <small>(Uploaded at: {{ obj.uploaded_at }})</small>#}
-                {#                        </li>#}
 
                 <table class="table table-responsive">
                     <thead class="thead-dark">
