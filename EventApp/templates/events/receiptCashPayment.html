@@ -160,12 +160,12 @@
                                     <div style="height: 39px; line-height: 39px; font-size: 37px;">&nbsp;</div>
 
                                     <a class="navbar-brand" href="/"
-                                       style="font-family: 'Lobster', cursive;font-size: 50em;color: #000; text-decoration: none">Gandharva
+                                       style="font-size: 30px;color: #000; text-decoration: none">Gandharva
                                         '19</a>
                                     <br>
 
                                     <p style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; font-size: 15em;">
-                                        <strong>13th MARCH - 16th MARCH</strong></p>
+                                        <strong style="color: #000">13th MARCH - 16th MARCH</strong></p>
                                     <div style="height: 50px; line-height: 50px; font-size: 71px;">&nbsp;</div>
                                 </td>
                             </tr>
@@ -190,7 +190,7 @@
                                     <font face="'Source Sans Pro', sans-serif" color="#585858"
                                           style="font-size: 24px; line-height: 32px;">
                                         <p style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #585858; font-size: 24px; line-height: 32px;">
-                                            <span style="font-weight: bold">Payment Details:</span><br>
+                                            <span style="font-weight: bold;font-size: 18px">Payment Details:</span><br>
                                             Amount: {{ event.entry_fee }} <br>
                                             Status : {{ transaction.status }}<br>
                                             Transaction ID : {{ transaction.transaction_id }}<br>
@@ -201,8 +201,10 @@
                                     <div style="height: 33px; line-height: 33px; font-size: 31px;">&nbsp;</div>
                                     <font face="'Source Sans Pro', sans-serif" color="#585858"
                                           style="font-size: 24px; line-height: 32px;">
-                              <span style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #585858; font-size: 24px; line-height: 32px;"><span
-                                      style="font-weight: bold;">Event Details:</span><br>
+                              <span style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #585858; font-size: 18px; line-height: 32px;">
+                                  <span
+                                          style="font-weight: bold; font-size: 24px">Event Details:</span>
+                                  <br>
                                 Name: {{ event.event_name }}<br>Team size: {{ event.team_size }}<br>
                               </span></font>
 
@@ -210,20 +212,19 @@
                                     <h5 style="text-align: center;">
                                         <font face="'Source Sans Pro', sans-serif" color="#1a1a1a"
                                               style="font-size: 10em; line-height: 2em; letter-spacing: -1.5px; align-content: center;">
-                                            <span style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #1a1a1a; font-size: 3em; line-height: 2em; letter-spacing: -1.5px; font-weight: normal;">Your&nbsp; Code</span>
+                                            <span style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #1a1a1a; font-size: 24px; line-height: 2em; letter-spacing: -1.5px; font-weight: normal;">Your&nbsp; Code</span>
                                         </font></h5>
 
                                     <h3 style="text-align: center;">
                                         <font face="'Source Sans Pro', sans-serif" color="#1a1a1a"
-                                              style="font-size: 52px; line-height: 60px; font-weight: bold; letter-spacing: -1.5px; align-content: center;">
+                                              style="font-size: 26px; line-height: 60px; font-weight: bold; letter-spacing: -1.5px; align-content: center;">
                                             <span style="font-family: 'Source Sans Pro', Arial, Tahoma, Geneva, sans-serif; color: #1a1a1a; font-size: 52px; line-height: 60px; font-weight: bold; letter-spacing: -1.5px;">{{ team.Refral_Code }}</span>
                                         </font>
                                     </h3>
 
                                     <div>
-                                        <p style="font-weight: 300">If event is cancelled in any case, money will be
+                                        <p style="font-weight: 300;font-size: 16px">If event is cancelled in any case, money will be
                                             refunded</p>
-
                                     </div>
                                     {#                                    <div style="text-align: center">#}
                                     {#                                        <img src="https://store-images.s-microsoft.com/image/apps.33967.13510798887182917.246b0a3d-c3cc-46fc-9cea-021069d15c09.392bf5f5-ade4-4b36-aa63-bb15d5c3817a?mode=scale&q=90&h=270&w=270&background=%230078D7"#}
@@ -279,33 +280,38 @@
 
                                                         <a class="fb-ic" href="https://www.youtube.com/gandharvaviit"
                                                            target="_blank">
-                                                            <i class="fab fa-youtube fa-lg white-text fa-2x"
-                                                               style="color: #000;font-size: 26px;margin-right:2vw"></i>
+                                                            <img src="https://cdn3.iconfinder.com/data/icons/unicons-vector-icons-pack/32/youtube-512.png"
+                                                                 alt="viitgandharva" height="30" width="30"
+                                                                 style="margin: 6px">
                                                         </a>
 
                                                         <a class="fb-ic" href="https://www.instagram.com/viitgandharva"
                                                            target="_blank">
-                                                            <i class="fab fa-instagram fa-lg white-text fa-2x"
-                                                               style="color: #000;font-size: 26px;margin-right:2vw"></i>
+                                                            <img src="https://cdn4.iconfinder.com/data/icons/picons-social/57/38-instagram-2-512.png"
+                                                                 alt="viitgandharva" height="30" width="30"
+                                                                 style="margin: 6px">
                                                         </a>
 
                                                         <a class="fb-ic" href="https://www.twitter.com/gandharvaviit"
                                                            target="_blank">
-                                                            <i class="fab fa-twitter fa-lg white-text fa-2x"
-                                                               style="color: #000;font-size: 26px;margin-right:2vw"></i>
+                                                            <img src="https://cdn3.iconfinder.com/data/icons/picons-social/57/03-twitter-512.png"
+                                                                 alt="viitgandharva" height="30" width="30"
+                                                                 style="margin: 6px">
                                                         </a>
-
                                                         <a class="fb-ic" href="https://www.facebook.com/viitgandharva"
                                                            target="_blank">
-                                                            <i class="fab fa-facebook-f white-text  fa-2x"
-                                                               style="color: #000;font-size: 26px;margin-right:2vw"></i>
+                                                            <img src="https://cdn3.iconfinder.com/data/icons/picons-social/57/06-facebook-512.png"
+                                                                 alt="viitgandharva" height="30" width="30"
+                                                                 style="margin: 6px">
                                                         </a>
-
+                                                        <a class="fb-ic" href="https://www.viitgandharva.com/"
+                                                           target="_blank">
+                                                            <img src="https://cdn1.iconfinder.com/data/icons/material-core/20/language-512.png"
+                                                                 alt="viitgandharva" height="30" width="30"
+                                                                 style="margin: 6px">
+                                                        </a>
                                                     </div>
-
-
                                                 </td>
-
                                             </tr>
                                         </table>
 
