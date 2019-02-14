@@ -21,37 +21,44 @@ class College_year(models.Model):
     def __str__(self):
         return self.title
 
+
 def department_path(instance, filename):
     ext = filename.split('.')[-1]
-    filename = '{}.{}'.format("Department_images/" + instance.name , ext)
+    filename = '{}.{}'.format("Department_images/" + instance.name, ext)
     return filename
+
 
 def departmentbanner_path(instance, filename):
     ext = filename.split('.')[-1]
-    filename = '{}.{}'.format("Department_images/" + "Banner_images/" + instance.name , ext)
+    filename = '{}.{}'.format("Department_images/" + "Banner_images/" + instance.name, ext)
     return filename
+
 
 # model for Department
 class Department(models.Model):
+    rank = models.IntegerField(default=1)
     dep_id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=30)
     description = models.TextField()
-    img = models.ImageField(upload_to=department_path,blank=True)
+    img = models.ImageField(upload_to=department_path, blank=True)
     link_to = models.CharField(max_length=200)
     banner_src = models.ImageField(upload_to=departmentbanner_path, blank=True)
 
     def __str__(self):
         return self.name
 
+
 def sponsor_path(instance, filename):
     ext = filename.split('.')[-1]
-    filename = '{}.{}'.format("Sponsor_images/" + instance.sponsor_name , ext)
+    filename = '{}.{}'.format("Sponsor_images/" + instance.sponsor_name, ext)
     return filename
+
 
 def carousel_path(instance, filename):
     ext = filename.split('.')[-1]
-    filename = '{}.{}'.format("Carousel_images/" , ext)
+    filename = '{}.{}'.format("Carousel_images/", ext)
     return filename
+
 
 def rules_path(instance, filename):
     ext = filename.split('.')[-1]
@@ -115,6 +122,7 @@ class Category_assign(models.Model):
 
 # EventMaster to handle the events section
 class EventMaster(models.Model):
+    rank = models.IntegerField(default=1)
     event_id = models.IntegerField(primary_key=True)
     event_name = models.CharField(max_length=100)
     tagline = models.CharField(max_length=100, blank=True)
@@ -163,7 +171,7 @@ class EventDepartment(models.Model):
 # sponsors model
 class SponsorMaster(models.Model):
     sponsor_name = models.CharField(max_length=30)
-    sponsor_logo = models.ImageField(upload_to=sponsor_path,blank=True)
+    sponsor_logo = models.ImageField(upload_to=sponsor_path, blank=True)
     sponsor_info = models.CharField(max_length=200, default='No Info. Available')
     sponsor_type = models.CharField(max_length=30, blank=True)
 
@@ -173,8 +181,9 @@ class SponsorMaster(models.Model):
 
 # contains media for front-end
 class Carousel(models.Model):
-    src = models.CharField(max_length=200,blank=True)
+    src = models.CharField(max_length=200, blank=True)
     images = models.ImageField(upload_to='Carousel_images/', blank=True)
+
 
 # ContactUs contains fields for user Services to contact to admin (Foreign Key to Dept)
 class ContactUs(models.Model):
@@ -298,12 +307,13 @@ class Volunteer(models.Model):
     college = models.ForeignKey(College, on_delete=models.PROTECT)
     date = models.DateField()
 
+
 class TermsConditons(models.Model):
     terms = models.TextField(max_length=2000)
     policy = models.TextField(max_length=2000)
 
-class SocialMedia(models.Model):
-    name = models.CharField(max_length=100,blank=True)
-    src = models.CharField(max_length=200)
-    cls = models.CharField(max_length=300,blank=True)
 
+class SocialMedia(models.Model):
+    name = models.CharField(max_length=100, blank=True)
+    src = models.CharField(max_length=200)
+    cls = models.CharField(max_length=300, blank=True)

@@ -147,7 +147,7 @@ def event_register(request):
 
         args1 = {
             'pageTitle': dept,
-            'events': EventDepartment.objects.filter(department=dept_choose),
+            'events': EventDepartment.objects.filter(department=dept_choose).order_by('event__rank'),
             'dept_choosen': dept_choose
         }
         return render(request, 'events/newEvent.html', args1)
