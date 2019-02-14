@@ -646,10 +646,14 @@ def verifyOTP(request):
         else:
             request.session['otp'] = ""
             coll = College.objects.all().order_by('name')
-            if MyUser.objects.filter(email=userEmail).exists():
-                ifuser = MyUser.objects.get(email=userEmail)
+            if MyUser.objects.filter(email=userEmail).count() == 0:
+                if MyUser.objects.filter(coll_email=userEmail).count() == 0:
+                    ifuser = None
+
+                else:
+                    ifuser = MyUser.objects.get(coll_email=userEmail)
             else:
-                ifuser = None
+                ifuser = MyUser.objects.get(email=userEmail)
             readm = "readonly"
             return render(request, 'events/participantDetails.html',
                           {'event': event, 'colleges': coll, 'email_participant': userEmail, 'present_user': ifuser,
