@@ -617,11 +617,11 @@ def participant_event_register(request):
             otp = random.randint(100000, 999999)
             message = 'OTP for email verification is->\n{0}'.format(otp)
             mail_subject = 'OTP for email verification.'
-
+            request.session['otp']=otp
             send_email(useremail, mail_subject, message, otp=1)
 
             return render(request, 'events/participantEventRegister.html',
-                          {'email': useremail, 'otp': otp, 'event_id': eventId, 'btndisable': True})
+                          {'email': useremail, 'event_id': eventId, 'btndisable': True})
         else:
             return render(request, 'events/participantEventRegister.html', {'event_id': eventId, 'email': useremail})
     if request.method == 'GET':
@@ -635,14 +635,16 @@ def verifyOTP(request):
         eventId = request.POST.get('event_id')
         event = EventMaster.objects.get(pk=eventId)
         otpEntered = request.POST.get('otp')
-        originalotp = request.POST.get('originalotp')
+        originalotp = str(request.session.get('otp'))
+        #print(originalotp)
         # print("original otp", originalotp)
         if originalotp != otpEntered or len(originalotp) < 6:
             error = "Invalid OTP"
             return render(request, 'events/participantEventRegister.html',
-                          {'error': error, 'event_id': eventId, 'otp': originalotp, 'email': userEmail})
+                          {'error': error, 'event_id': eventId, 'email': userEmail})
 
         else:
+            request.session['otp']=""
             coll = College.objects.all().order_by('name')
             if MyUser.objects.filter(email=userEmail).exists():
                 ifuser = MyUser.objects.get(email=userEmail)
