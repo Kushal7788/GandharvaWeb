@@ -7,6 +7,10 @@ html, body {
     font-family: 'Roboto', sans-serif;
     background-color: #f2f2f2;
 }
+@font-face {
+  font-family: Amarillo;
+  src: url(../../../static/gandharva/fonts/Amarillo.woff) format('woff');
+}
 
 /*************************
 ******Navbar CSS****
@@ -18,7 +22,7 @@ nav {
 .navbar {
     opacity: 1;
     background-color: rgba(0, 78, 138, 0) !important;
-    padding-bottom: 0;
+    padding-bottom: 10px;
 }
 
 nav .navbar-nav li a {

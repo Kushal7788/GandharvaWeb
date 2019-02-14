@@ -9,17 +9,20 @@
     <br><br><br><br><br>
     <div class="container" style="height:100vh">
         <div class="col-sm-6 container-center">
-            <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
+            <h3 style="text-align: center;padding-bottom:10px;padding-top: 30px;font-family: Amarillo;">
+                Gandharva'19</h3>
             <h5 style="text-align: center;">Email-Id</h5>
             <br>
             {% if status == -1 %}
-            <h5 style="text-align: center;">The email id does not exist in the database. Please contact the support</h5>
+                <h5 style="text-align: center;">The email id does not exist in the database. Please contact the
+                    support</h5>
             {% elif status == 1 %}
-            <h5 style="text-align: center;">Email is sent successfully. Please check the email for username</h5>
-                {% elif status == 3 %}
-            <h5 style="text-align: center;">You have not completed the registration process. Please avoid futile efforts</h5>
+                <h5 style="text-align: center;">Email is sent successfully. Please check the email for username</h5>
+            {% elif status == 3 %}
+                <h5 style="text-align: center;">You have not completed the registration process. Please avoid futile
+                    efforts</h5>
             {% endif %}
-            <form method="post"  onsubmit="return validate()">
+            <form method="post" onsubmit="return validate()">
                 {% csrf_token %}
                 <div class="form-group">
                     <label class="control-label">Your Emial Id:</label>
