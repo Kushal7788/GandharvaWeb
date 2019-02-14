@@ -654,10 +654,12 @@ def participant_event_register(request):
         eventId = request.POST.get('event_id')
         if useremail != "":
             otp = random.randint(100000, 999999)
-            message = render_to_string('user/username-email-sent.html')
+            message = render_to_string('user/OTP.html' ,{
+                'otp': otp
+            })
             mail_subject = 'OTP for email verification.'
             request.session['otp'] = otp
-            send_email(useremail, mail_subject, message, otp=1)
+            send_email(useremail, mail_subject, message)
 
             return render(request, 'events/participantEventRegister.html',
                           {'email': useremail, 'event_id': eventId, 'btndisable': True})
