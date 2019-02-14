@@ -654,7 +654,7 @@ def participant_event_register(request):
         eventId = request.POST.get('event_id')
         if useremail != "":
             otp = random.randint(100000, 999999)
-            message = 'OTP for email verification is->\n{0}'.format(otp)
+            message = render_to_string('user/username-email-sent.html')
             mail_subject = 'OTP for email verification.'
             request.session['otp'] = otp
             send_email(useremail, mail_subject, message, otp=1)
@@ -1006,15 +1006,22 @@ def send_username(request):
     status = 0
     if request.method == 'POST':
         user_email = request.POST.get('user-email')
-        user = MyUser.objects.filter(email = user_email).count()
-        if user:
-            current_site = get_current_site(request)
-            message = render_to_string('user/username-email-sent.html')
-            mail_subject = 'Activate your account to continue.'
-            to_email = user_email
-            send_email(to_email, mail_subject, message)
-            status = 1
-            return render(request, 'user/send-username.html', {'status': status})
+        count = MyUser.objects.filter(email = user_email).count()
+        if count:
+            user = MyUser.objects.get(email = user_email)
+            if user.is_active:
+                message = render_to_string('user/username-email-sent.html',
+                {
+                    'user': user,
+                })
+                mail_subject = 'Activate your account to continue.'
+                to_email = user_email
+                send_email(to_email, mail_subject, message)
+                status = 1
+                return render(request, 'user/send-username.html', {'status': status})
+            else:
+                status = 3
+                return render(request, 'user/send-username.html', {'status': status})
         else:
             status = -1
             return render(request, 'user/send-username.html', {'status': status})
