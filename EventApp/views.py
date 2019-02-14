@@ -520,6 +520,7 @@ def payment(request):
 # Head Login View only to be used for Heads
 # @user_passes_test(lambda u: u.is_superuser)
 def register_head(request):
+    print("enter")
     Roles = RoleMaster.objects.all()
     role_categories = Role_category.objects.all()
     dept = Department.objects.all()
@@ -528,6 +529,30 @@ def register_head(request):
     if request.method == 'POST':
         userform = UserRegistration(request.POST, request.FILES)
         roleform = RoleMasterForm(request.POST)
+
+        try:
+            old_user = MyUser.objects.get(email=userform.email)
+            print(old_user)
+        except:
+            old_user = None
+        try:
+            old_user2 = MyUser.objects.get(coll_email=userform.coll_email)
+        except:
+            old_user2 = None
+
+        print(old_user2)
+        print(old_user)
+
+        if old_user is not None and old_user.is_active is False:
+            old_user.delete()
+        elif old_user2 is not None and old_user2.is_active is False:
+            old_user2.delete()
+        elif (old_user is not None and old_user.is_active is True) or (old_user2 is not None and old_user2.is_active is True):
+            args = {
+                'error': "You have already registered and your email is verified too. Enter email to reset your password."
+            }
+            return render(request, "user/reset_password.html", args)
+
         if userform.is_valid() and roleform.is_valid():
             user = userform.save(commit=False)
             password = userform.cleaned_data.get('password')
