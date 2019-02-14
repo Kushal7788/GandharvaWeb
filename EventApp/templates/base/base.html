@@ -11,6 +11,7 @@
     <meta name="author" content="">
     <meta name="theme-color" content="#004E8A">
     <title>{% block title %}Home{% endblock %}</title>
+    <link rel="icon" href="{% static 'gandharva/img/png_favicon.png' %}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
           integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
@@ -51,7 +52,9 @@
     <div class="collapse navbar-collapse " id="navbarNavDropdown">
         <ul class="nav navbar-nav ml-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="{{ rulebook.file.url }}" download>Rule Book <i style="margin-left: 2px" class="fas fa-file-download"></i> <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{{ rulebook.file.url }}" download>Rule Book <i style="margin-left: 2px"
+                                                                                         class="fas fa-file-download"></i>
+                    <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
@@ -62,13 +65,13 @@
                     Events
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    {% for testme in testmes  %}
-                    {% if testme.name != 'Global'%}
-                    <form method="get" action="{% url 'events' %}">
-                        <input type="hidden" name="dept" value="{{ testme.name }}">
-                        <button type="submit" class="dropdown-item dropdownStyle">{{ testme.name }}</button>
-                    </form>
-                    {% endif %}
+                    {% for testme in testmes %}
+                        {% if testme.name != 'Global' %}
+                            <form method="get" action="{% url 'events' %}">
+                                <input type="hidden" name="dept" value="{{ testme.name }}">
+                                <button type="submit" class="dropdown-item dropdownStyle">{{ testme.name }}</button>
+                            </form>
+                        {% endif %}
                     {% endfor %}
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
@@ -77,7 +80,7 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         {% for global_event in global_events %}
                             <form method="get" action="{% url 'details' %}">
-                                <input type="hidden" name="event" value= "{{ global_event }}">
+                                <input type="hidden" name="event" value="{{ global_event }}">
                                 <button type="submit" class="dropdown-item dropdownStyle">{{ global_event }}</button>
                             </form>
                         {% endfor %}
@@ -154,10 +157,10 @@
     <div class="container">
         <div class="text-center">
             {% for footer in footers %}
-            <a class="fb-ic" href="{{ footer.src }}" target="_blank">
-                <i class="{{ footer.cls }}"
-                   style="color: #fff;font-size: 26px;margin-right:2vw"></i>
-            </a>
+                <a class="fb-ic" href="{{ footer.src }}" target="_blank">
+                    <i class="{{ footer.cls }}"
+                       style="color: #fff;font-size: 26px;margin-right:2vw"></i>
+                </a>
             {% endfor %}
             <p style="font-size:14px;color:#fff"> Copyright &copy;2019 Gandharva. All Rights Reserved.</p>
         </div>
