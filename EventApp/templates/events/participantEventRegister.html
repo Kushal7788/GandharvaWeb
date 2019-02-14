@@ -37,7 +37,7 @@
                 <form method="post" action="{% url 'verifyOTP' %}">
                     {% csrf_token %}
                     <div class="form-group">
-                        <input type="text" class="form-control" name="otp" placeholder="OTP">
+                        <input id="Otp" type="text" class="form-control" name="otp" placeholder="OTP">
                         <span style="color: red">
                     {% if error %}
                         {{ error }}
@@ -66,6 +66,7 @@
                 {% if btndisable %}
                     document.getElementById('sendOTPButton').disabled = true;
                     document.getElementById('sendOTPButton').innerText = "Please wait";
+                    document.getElementById('Otp').focus();
 
                     setTimeout(function () {
                         document.getElementById('sendOTPButton').disabled = false;
