@@ -1081,6 +1081,7 @@ def ourTeam(request):
 # upload file view
 @staff_user
 def files(request):
+    glbdoc = Document.objects.get(category=Document_type.objects.get(type="Global"))
     current_doc = fileDocument.objects.filter(user=request.user).order_by("uploaded_at").reverse()
     dictonary = {}
     juniors = AssignSub.objects.filter(rootuser=request.user)
@@ -1099,7 +1100,8 @@ def files(request):
             return render(request, 'events/fileExplorer.html', {
                 'form': fileForm,
                 'dict': dictonary,
-                'documents': current_doc
+                'documents': current_doc,
+                'global': glbdoc
 
             })
     else:
@@ -1107,7 +1109,8 @@ def files(request):
     return render(request, 'events/fileExplorer.html', {
         'form': form,
         'dict': dictonary,
-        'documents': current_doc
+        'documents': current_doc,
+        'global': glbdoc
     })
 
 
