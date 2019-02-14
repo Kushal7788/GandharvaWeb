@@ -858,7 +858,7 @@ def cashpayment(request, event_new, user):
 def Profile(request):
     user = request.user
     if request.method == 'POST':
-        if request.method == 'POST' and request.FILES['prof_img']:
+        if request.method == 'POST' and len(request.FILES) == 1:
             prof_img = request.FILES['prof_img']
             # print(request.FILES['prof_img'])
             user.prof_img = prof_img
@@ -984,6 +984,19 @@ def new_password(request):
 
     return render(request, 'user/new_password.html')
 
+def change_password(request):
+    status=True
+    if request.method == 'POST':
+        old_password = request.POST.get('old_password')
+        user = authenticate(username = request.user.username, password=old_password)
+        if user is not None:
+            status = True
+            return render(request, 'user/new_password.html', {'status':status})
+        else:
+            status = False
+            messages.error(request,"Invalid Password",{'status':status})
+
+    return render(request, 'user/change-password.html',{'status':status})
 
 # Important Notes:
 # to get user role from models
