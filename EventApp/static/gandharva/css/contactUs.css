@@ -86,7 +86,7 @@ html, body {
     color: #fff
 }
 
-.sendButton{
+.sendButton {
     text-align: center;
     color: #fff;
     border: none;
@@ -98,4 +98,23 @@ html, body {
     margin-bottom: 4px;
     margin-top: 4px;
     height: auto;
+}
+
+.topHeight {
+    height: 10vh;
+}
+
+.bottomHeight {
+    height: 20vh;
+}
+
+@media only screen and (max-width: 500px) {
+
+.topHeight {
+    height: 2vh;
+}
+
+.bottomHeight {
+    height: 5vh;
+}
 }
