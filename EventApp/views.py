@@ -118,7 +118,7 @@ def home(request):
                 userget = 1
 
     args = {
-        'events': Department.objects.all(),
+        'events': Department.objects.all().order_by("rank"),
         'sponsors': SponsorMaster.objects.all(),
         'carouselImage': Carousel.objects.all(),
         'gandharvaDate': GandharvaHome.objects.get(title__startswith="Date").data,
