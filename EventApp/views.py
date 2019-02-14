@@ -422,7 +422,7 @@ def register(request):
             to_email = form.cleaned_data.get('email')
             send_email(to_email, mail_subject, message)
             return render(request, 'user/AccountConfirm.html')
-        # else:
+            # else:
             # print(form.errors, "heere")
     else:
         form = UserRegistration()
@@ -567,7 +567,7 @@ def register_head(request):
             #       group = Group.objects.get(name='groupname')
             #      user.groups.add(group)
             # login(request, user, backend='social_core.backends.google.GoogleOAuth2')
-        # else:
+            # else:
             # print(userform.errors)
             # print(roleform.errors)
     else:
@@ -617,7 +617,7 @@ def participant_event_register(request):
             otp = random.randint(100000, 999999)
             message = 'OTP for email verification is->\n{0}'.format(otp)
             mail_subject = 'OTP for email verification.'
-            request.session['otp']=otp
+            request.session['otp'] = otp
             send_email(useremail, mail_subject, message, otp=1)
 
             return render(request, 'events/participantEventRegister.html',
@@ -636,7 +636,7 @@ def verifyOTP(request):
         event = EventMaster.objects.get(pk=eventId)
         otpEntered = request.POST.get('otp')
         originalotp = str(request.session.get('otp'))
-        #print(originalotp)
+        # print(originalotp)
         # print("original otp", originalotp)
         if originalotp != otpEntered or len(originalotp) < 6:
             error = "Invalid OTP"
@@ -644,7 +644,7 @@ def verifyOTP(request):
                           {'error': error, 'event_id': eventId, 'email': userEmail})
 
         else:
-            request.session['otp']=""
+            request.session['otp'] = ""
             coll = College.objects.all().order_by('name')
             if MyUser.objects.filter(email=userEmail).exists():
                 ifuser = MyUser.objects.get(email=userEmail)
@@ -666,11 +666,15 @@ def participant_details(request):
         form = PaymentForm(request.POST)
         coll = College.objects.all().order_by('name')
 
-        try:
-            # print(participant_email)
+        if MyUser.objects.filter(email=participant_email).count() == 0:
+            if MyUser.objects.filter(coll_email=participant_email).count() == 0:
+                ifuser = None
+
+            else:
+                ifuser = MyUser.objects.get(coll_email=participant_email)
+        else:
             ifuser = MyUser.objects.get(email=participant_email)
-        except(IntegrityError, ObjectDoesNotExist):
-            ifuser = None
+
         event_new = EventMaster.objects.get(pk=event_id)
         if len(request.POST.get('user_phone')) < 10:
             error = "Invalid mobile number"
@@ -879,7 +883,7 @@ def team_details(request):
         form = TeamDetailsForm(request.POST)
         if form.is_valid():
             form.save()
-        # else:
+            # else:
             # print(form.errors)
 
     return render(request, 'events/TeamDetails.html', {'form': form, 'event': event_choose})

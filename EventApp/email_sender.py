@@ -34,5 +34,6 @@ def send_email(to_email, subject= None, message = None, attach = None,otp=0):
 
     # Perform operations via server
     server.login('hello@viitgandharva.com', 'Gandharva@19hello')
-    server.sendmail(sender, to_email, msg.as_string())
+    x=server.sendmail(sender, to_email, msg.as_string())
+    print("Return value",x)
     server.quit()
