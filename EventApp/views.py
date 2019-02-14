@@ -529,6 +529,7 @@ def register_head(request):
     dept = Department.objects.all()
     coll = College.objects.all()
     year = College_year.objects.all()
+    events = EventMaster.objects.all()
     if request.method == 'POST':
 
 
@@ -616,7 +617,7 @@ def register_head(request):
     # print(selected_roles)
     return render(request, 'events/RegisterHead.html',
                   {'userform': userform, 'roleform': roleform, 'roles': Roles, 'depts': dept, 'colleges': coll,
-                   'years': year, 'categories': role_categories, 'selected_roles': selected_roles})
+                   'years': year, 'categories': role_categories, 'selected_roles': selected_roles,'events': events})
 
 
 def load_roles(request):
