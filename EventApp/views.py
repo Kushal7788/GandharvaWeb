@@ -984,6 +984,7 @@ def new_password(request):
 
     return render(request, 'user/new_password.html')
 
+@staff_user
 def change_password(request):
     status=True
     if request.method == 'POST':
@@ -998,6 +999,23 @@ def change_password(request):
 
     return render(request, 'user/change-password.html',{'status':status})
 
+def send_username(request):
+    status = 0
+    if request.method == 'POST':
+        user_email = request.POST.get('user-email')
+        user = MyUser.objects.filter(email = user_email).count()
+        if user:
+            current_site = get_current_site(request)
+            message = render_to_string('user/username-email-sent.html')
+            mail_subject = 'Activate your account to continue.'
+            to_email = user_email
+            send_email(to_email, mail_subject, message)
+            status = 1
+            return render(request, 'user/send-username.html', {'status': status})
+        else:
+            status = -1
+            return render(request, 'user/send-username.html', {'status': status})
+    return render(request, 'user/send-username.html', {'status': status})
 # Important Notes:
 # to get user role from models
 # userget = RoleAssignment.objects.get(user=request.user.id)

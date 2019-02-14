@@ -51,5 +51,6 @@ urlpatterns = [
     url(r'^terms-and-conditions/$', views.terms, name='terms'),
     url(r'^privacy-policy/$', views.policy, name='policy'),
     url(r'^change-password/$', views.change_password, name='change-password'),
+    url(r'^send-username/$', views.send_username, name='send-username'),
 
 ]
