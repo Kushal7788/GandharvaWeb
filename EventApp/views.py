@@ -1035,8 +1035,18 @@ def AddVolunteer(request):
 
 @staff_user
 def ourSponsors(request):
-    sponsors = SponsorMaster.objects.all()
+    Sponsors = SponsorMaster.objects.all()
+    sponsors=[]
+    partners=[]
+    for s in Sponsors:
+        if 'partner' in s.sponsor_type.lower():
+            print(s)
+            partners.append(s)
+        elif 'sponsor' in s.sponsor_type.lower():
+            print(s)
+            sponsors.append(s)
     args = {
+        'partners':partners,
         'sponsors': sponsors
     }
     return render(request, 'gandharva/ourSponsors.html', args)

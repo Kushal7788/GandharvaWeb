@@ -13,6 +13,14 @@
     <h5>Type:{{ s.sponsor_type }}</h5>
 
 {% endfor %}
+Partners
+{% for p in partners %}
+    <h2>Name:{{ p.sponsor_name }}</h2>
+    <img alt="logo" src="{% static s.sponsor_logo %}" style="width:auto;height:100px;max-width:100px"/>
+    <h5>Info:{{ p.sponsor_info }}</h5>
+    <h5>Type:{{ p.sponsor_type }}</h5>
+
+{% endfor %}
 
 </body>
 </html>
