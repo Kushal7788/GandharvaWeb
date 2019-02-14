@@ -252,3 +252,7 @@ input {
 .form-control {
     font-size: 14px;
 }
+
+.newEvent{
+    display: none;
+}

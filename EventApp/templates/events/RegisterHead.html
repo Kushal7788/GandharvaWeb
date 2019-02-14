@@ -169,6 +169,17 @@
                     </select>
                     {{ roleform.name.errors }}
                 </div>
+
+                <div id="events" class="form-group newEvent">
+                    Events :
+                    <select id="event" name="event" class="form-control" style="width: 100%;margin-left: 0;">
+                        {% for event in events %}
+                            <option value="{{ event.event_id }}">{{ event.event_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+
                 {#                <div class="input-group">#}
                 {#                    <div class="input-group-prepend">#}
                 {#                        <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>#}
@@ -190,30 +201,51 @@
         </div>
         <br>
     </div>
-    <script type="text/javascript">
-
-        function Myfunction() {
-            alert("here");
-            var obj = document.getElementById("id_category");
-            var d = {{ dict|safe }};
-            console.log(d);
-            console.log(obj);
-            var new_values = d[obj.options[obj.selectedIndex].textContent];
-            console.log(new_values);
-
-
-            var obj2 = document.getElementById("id_role");
-            $("#id_role").empty();
-            for (var i = 0; i < new_values.length; i++) {
-                var option = document.createElement("option");
-                option.value = new_values[i];
-                option.text = new_values[i];
-                obj2.appendChild(option);
-            }
-
-        }
-    </script>
+    {#    <script type="text/javascript">#}
+    {##}
+    {#    $('#id_role').change(function () {#}
+    {#        alert("here");#}
+    {#                if (document.getElementById("id_role").value == "Event Head") {#}
+    {#                    alert("check");#}
+    {#                    document.getElementById("events").style.display = "block";#}
+    {#                } else {#}
+    {#                    document.getElementById("events").style.display = "none";#}
+    {#                }#}
+    {#    });#}
+    {#            function displayEvents(that) {#}
+    {#            alert("here")#}
+    {#                if (that.value == "Event Head") {#}
+    {#                    alert("check");#}
+    {#                    document.getElementById("events").style.display = "block";#}
+    {#                } else {#}
+    {#                    document.getElementById("events").style.display = "none";#}
+    {#                }#}
+    {#            }#}
+    {##}
+    {##}
+    {#function Myfunction() {#}
+    {#    alert("here");#}
+    {#    var obj = document.getElementById("id_category");#}
+    {#    var d = {{ dict|safe }};#}
+    {#    console.log(d);#}
+    {#    console.log(obj);#}
+    {#    var new_values = d[obj.options[obj.selectedIndex].textContent];#}
+    {#    console.log(new_values);#}
+    {##}
+    {##}
+    {#    var obj2 = document.getElementById("id_role");#}
+    {#    $("#id_role").empty();#}
+    {#    for (var i = 0; i < new_values.length; i++) {#}
+    {#        var option = document.createElement("option");#}
+    {#        option.value = new_values[i];#}
+    {#        option.text = new_values[i];#}
+    {#        obj2.appendChild(option);#}
+    {#    }#}
+    {##}
+    {##}
+    {#    </script>#}
     {% block scripts %}
+
         <script type="text/javascript" src="{% static 'events/js/HeadInputValidate.js' %}"></script>
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         {#        <script>#}
@@ -231,6 +263,12 @@
         {#                });#}
         {#            });#}
         {#        </script>#}
+
+        <script>
+            $('#event').change(function () {
+                document.getElementById('events').style.display = "block";
+            });
+        </script>
         <script type="application/javascript">
             $('input[type="file"]').change(function (e) {
                 var fileName = e.target.files[0].name;

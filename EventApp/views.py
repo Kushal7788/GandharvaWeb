@@ -498,17 +498,20 @@ def myaction(request):
         args = {
             'button_name': 'Campaign',
             'urlaccess': campaign,
+            'roles': role.role
         }
         return render(request, 'user/myactions.html', args)
     if role.role.name == 'Event Head':
         args = {
             'button_name': 'All Participants',
+            'roles': role.role
         }
         return render(request, 'user/myactions.html', args)
     else:
         args = {
             'button_name': "No Actions",
             'urlaccess': None,
+            'roles': role.role
         }
     return render(request, 'user/myactions.html', args)
 
@@ -520,12 +523,49 @@ def payment(request):
 # Head Login View only to be used for Heads
 # @user_passes_test(lambda u: u.is_superuser)
 def register_head(request):
+    print("enter")
     Roles = RoleMaster.objects.all()
     role_categories = Role_category.objects.all()
     dept = Department.objects.all()
     coll = College.objects.all()
     year = College_year.objects.all()
+    events = EventMaster.objects.all()
     if request.method == 'POST':
+
+
+        # try:
+        #     old_user = MyUser.objects.get(email=userform.email)
+        #     print(old_user)
+        # except:
+        #     old_user = None
+        # try:
+        #     old_user2 = MyUser.objects.get(coll_email=userform.coll_email)
+        # except:
+        #     old_user2 = None
+        #
+        # print(old_user2)
+        # print(old_user)
+        if MyUser.objects.filter(email=request.POST.get('email')).count() == 0:
+            old_user=None
+            print(old_user)
+        else:
+            old_user = MyUser.objects.get(email=request.POST.get('email'))
+            print(old_user)
+        if MyUser.objects.filter(coll_email=request.POST.get('coll__email')).count() == 0:
+            old_user2 = None
+            print(old_user2)
+        else:
+            old_user2 = MyUser.objects.get(coll_email=request.POST.get('coll__email'))
+            print(old_user2)
+        if old_user is not None and old_user.is_active is False:
+            old_user.delete()
+        elif old_user2 is not None and old_user2.is_active is False and old_user is None:
+            old_user2.delete()
+        elif (old_user is not None and old_user.is_active is True) or (old_user2 is not None and old_user2.is_active is True):
+            args = {
+                'error': "You have already registered and your email is verified too. Enter email to reset your password."
+            }
+            return render(request, "user/reset_password.html", args)
         userform = UserRegistration(request.POST, request.FILES)
         roleform = RoleMasterForm(request.POST)
         if userform.is_valid() and roleform.is_valid():
@@ -577,7 +617,7 @@ def register_head(request):
     # print(selected_roles)
     return render(request, 'events/RegisterHead.html',
                   {'userform': userform, 'roleform': roleform, 'roles': Roles, 'depts': dept, 'colleges': coll,
-                   'years': year, 'categories': role_categories, 'selected_roles': selected_roles})
+                   'years': year, 'categories': role_categories, 'selected_roles': selected_roles,'events': events})
 
 
 def load_roles(request):
@@ -615,10 +655,12 @@ def participant_event_register(request):
         eventId = request.POST.get('event_id')
         if useremail != "":
             otp = random.randint(100000, 999999)
-            message = 'OTP for email verification is->\n{0}'.format(otp)
+            message = render_to_string('user/OTP.html' ,{
+                'otp': otp
+            })
             mail_subject = 'OTP for email verification.'
             request.session['otp'] = otp
-            send_email(useremail, mail_subject, message, otp=1)
+            send_email(useremail, mail_subject, message)
 
             return render(request, 'events/participantEventRegister.html',
                           {'email': useremail, 'event_id': eventId, 'btndisable': True})
@@ -826,7 +868,7 @@ def cashpayment(request, event_new, user):
 def Profile(request):
     user = request.user
     if request.method == 'POST':
-        if request.method == 'POST' and request.FILES['prof_img']:
+        if request.method == 'POST' and len(request.FILES) == 1:
             prof_img = request.FILES['prof_img']
             # print(request.FILES['prof_img'])
             user.prof_img = prof_img
@@ -952,7 +994,45 @@ def new_password(request):
 
     return render(request, 'user/new_password.html')
 
+@staff_user
+def change_password(request):
+    status=True
+    if request.method == 'POST':
+        old_password = request.POST.get('old_password')
+        user = authenticate(username = request.user.username, password=old_password)
+        if user is not None:
+            status = True
+            return render(request, 'user/new_password.html', {'status':status})
+        else:
+            status = False
+            messages.error(request,"Invalid Password",{'status':status})
 
+    return render(request, 'user/change-password.html',{'status':status})
+
+def send_username(request):
+    status = 0
+    if request.method == 'POST':
+        user_email = request.POST.get('user-email')
+        count = MyUser.objects.filter(email = user_email).count()
+        if count:
+            user = MyUser.objects.get(email = user_email)
+            if user.is_active:
+                message = render_to_string('user/username-email-sent.html',
+                {
+                    'user': user,
+                })
+                mail_subject = 'Activate your account to continue.'
+                to_email = user_email
+                send_email(to_email, mail_subject, message)
+                status = 1
+                return render(request, 'user/send-username.html', {'status': status})
+            else:
+                status = 3
+                return render(request, 'user/send-username.html', {'status': status})
+        else:
+            status = -1
+            return render(request, 'user/send-username.html', {'status': status})
+    return render(request, 'user/send-username.html', {'status': status})
 # Important Notes:
 # to get user role from models
 # userget = RoleAssignment.objects.get(user=request.user.id)
@@ -990,8 +1070,18 @@ def AddVolunteer(request):
 
 @staff_user
 def ourSponsors(request):
-    sponsors = SponsorMaster.objects.all()
+    Sponsors = SponsorMaster.objects.all()
+    sponsors=[]
+    partners=[]
+    for s in Sponsors:
+        if 'partner' in s.sponsor_type.lower():
+            print(s)
+            partners.append(s)
+        elif 'sponsor' in s.sponsor_type.lower():
+            print(s)
+            sponsors.append(s)
     args = {
+        'partners':partners,
         'sponsors': sponsors
     }
     return render(request, 'gandharva/ourSponsors.html', args)
@@ -1005,6 +1095,7 @@ def ourTeam(request):
 # upload file view
 @staff_user
 def files(request):
+    glbdoc = Document.objects.get(category=Document_type.objects.get(type="Global"))
     current_doc = fileDocument.objects.filter(user=request.user).order_by("uploaded_at").reverse()
     dictonary = {}
     juniors = AssignSub.objects.filter(rootuser=request.user)
@@ -1023,7 +1114,8 @@ def files(request):
             return render(request, 'events/fileExplorer.html', {
                 'form': fileForm,
                 'dict': dictonary,
-                'documents': current_doc
+                'documents': current_doc,
+                'global': glbdoc
 
             })
     else:
@@ -1031,7 +1123,8 @@ def files(request):
     return render(request, 'events/fileExplorer.html', {
         'form': form,
         'dict': dictonary,
-        'documents': current_doc
+        'documents': current_doc,
+        'global': glbdoc
     })
 
 

@@ -1,7 +1,7 @@
 {% extends 'base/base.html' %}
 {% load static %}
 
-{% block title %}Gandharva-Home{% endblock %}
+{% block title %}Gandharva | Techno-Cultural Fest {% endblock %}
 {% block css %}
     <link href="{% static 'gandharva/css/responsive.css' %}" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" rel="stylesheet">
@@ -94,7 +94,6 @@
         <div class="container-fluid" style="background-color:#33888F">
             <h1 style="text-align: center;padding-top:2vh;color:#fff;font-weight:500">
                 Events</h1>
-
             {% for event in events %}
                 {% if forloop.first %}
                     <div class="row">{% endif %}
@@ -108,7 +107,6 @@
                     </button>
                 </form>
             </div>
-
             {% if forloop.counter|divisibleby:5 %}
                 </div>
                 <div class="row">{% endif %}
@@ -118,6 +116,32 @@
             {% endif %}
             {% endfor %}
         </div>
+
+{#        <div style="background-color:#348a91">#}
+{#            <h1 style="text-align: center;padding-top:2vh;color:#fff;font-weight:500">#}
+{#                Global Events</h1>#}
+{#            {% for event in events %}#}
+{#                {% if forloop.first %}#}
+{#                    <div class="row">{% endif %}#}
+{#            <div class="col-sm-2 eventDiv" onclick="document.forms['{{ event.name }}_form'].submit();"#}
+{#                 style="background-image:url({{ event.img.url }}); background-repeat: no-repeat; background-size: cover; width: 480px;height: 240px;margin-right: auto;margin-left: auto">#}
+{#                <h3 class="eventTitle userselect">{{ event.name }}</h3>#}
+{#                <form method="get" name="{{ event.name }}_form" action={% url event.link_to %}>#}
+{#                    <input type="hidden" name="dept" value={{ event.name }}>#}
+{#                    <button type="submit" class="btn btn-primary eventButtons">Rules#}
+{#                    </button>#}
+{#                </form>#}
+{#            </div>#}
+{#            {% if forloop.counter|divisibleby:5 %}#}
+{#                </div>#}
+{#                <div class="row">{% endif %}#}
+{#            {% if forloop.last %}#}
+{##}
+{#                </div>#}
+{#            {% endif %}#}
+{#            {% endfor %}#}
+{#        </div>#}
+
         <img class="img-fluid" src="{% static 'gandharva/img/party.png' %}">
     </section>
 
@@ -157,7 +181,7 @@
                                 <div class="one-slide white">
                                     <div class="testimonial w-100 h-100 p-3 text-center">
                                         <div class="brand"><img alt="logo"
-                                                                src="{{  sponsor.sponsor_logo.url }}"
+                                                                src="{{ sponsor.sponsor_logo.url }}"
                                                                 style="width:auto;height:100px;max-width:100px"/>
                                         </div>
                                         <div class="separator">&nbsp;</div>
