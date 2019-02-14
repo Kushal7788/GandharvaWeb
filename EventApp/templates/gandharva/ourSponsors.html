@@ -3,19 +3,19 @@
 {% block title %}Our Sponsors{% endblock %}
 {% block css %}
     <link href="{% static 'gandharva/css/ourSponsor.css' %}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
     <br><br><br><br><br>
     <div class="container">
-
-        <h2 class="text-center">Our Sponsors</h2>
+        <h2 class="text-center" style="font-family: 'Abel', sans-serif;">Our Sponsors</h2>
         <br>
         {% for s in sponsors %}
             {% if forloop.first %}
                 <div class="row">{% endif %}
 
-        <div class="col-sm-3" style="margin-bottom: 20px">
+        <div class="col-sm-3" style="margin-bottom: 20px;margin-left: auto;margin-right: auto">
             <div class="one-slide white">
                 <div class="testimonial w-100 h-100 p-3 text-center">
                     <div class="brand"><img alt="logo"
@@ -36,16 +36,14 @@
             </div>
         {% endif %}
         {% endfor %}
-
-
         <br><br>
-        <h2 class="text-center">Our Partners</h2>
+        <h2 class="text-center" style="font-family: 'Abel', sans-serif;">Our Partners</h2>
         <br>
         {% for p in partners %}
             {% if forloop.first %}
                 <div class="row">{% endif %}
 
-        <div class="col-sm-3" style="margin-bottom: 20px">
+        <div class="col-sm-3" style="margin-bottom: 20px;margin-right: auto;margin-left: auto">
             <div class="one-slide white">
                 <div class="testimonial w-100 h-100 p-3 text-center">
                     <div class="brand"><img alt="logo"
