@@ -498,17 +498,20 @@ def myaction(request):
         args = {
             'button_name': 'Campaign',
             'urlaccess': campaign,
+            'roles': role.role
         }
         return render(request, 'user/myactions.html', args)
     if role.role.name == 'Event Head':
         args = {
             'button_name': 'All Participants',
+            'roles': role.role
         }
         return render(request, 'user/myactions.html', args)
     else:
         args = {
             'button_name': "No Actions",
             'urlaccess': None,
+            'roles': role.role
         }
     return render(request, 'user/myactions.html', args)
 
