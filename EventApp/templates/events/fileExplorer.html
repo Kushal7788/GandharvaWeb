@@ -9,76 +9,78 @@
     <br><br><br><br><br>
 
     <div class="container">
-        <div class="col-sm-8 container-center">
-            <h3 style="text-align: center;padding-bottom:10px;padding-top: 30px;font-family: Amarillo;">
-                Gandharva'19</h3>
-            <h5 style="text-align: center;">File Upload</h5>
-            <br>
-            <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="text-center">
-                    {{ form.as_p }}
-                    <button type="submit" id="upload" class="btn btn-primary" style="margin-left: 0;width:auto;">
-                        Upload
-                    </button>
-                </div>
-                <div class="text-center">
-                    <a class="nav-link" href="{{ global.file.url }}">{{ global.title }} <span
-                            class="sr-only">(current)</span></a>
-                </div>
-            </form>
-            <br>
+    <div class="col-sm-8 container-center">
+        <div class="text-center"
+             style="width: 50%;height: auto;margin-right: auto;margin-left: auto;margin-top: 10px;margin-bottom: 20px">
+            <img class="img-fluid" src="{% static 'gandharva/img/logo_description.png' %}">
+        </div>
+        <h5 style="text-align: center;">File Upload</h5>
+        <br>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
             <div class="text-center">
-                <p>Uploaded files:</p>
+                {{ form.as_p }}
+                <button type="submit" id="upload" class="btn btn-primary" style="margin-left: 0;width:auto;">
+                    Upload
+                </button>
             </div>
+            <div class="text-center">
+                <a class="nav-link" href="{{ global.file.url }}">{{ global.title }} <span
+                        class="sr-only">(current)</span></a>
+            </div>
+        </form>
+        <br>
+        <div class="text-center">
+            <p>Uploaded files:</p>
+        </div>
 
-            <table class="table table-responsive">
-                <thead class="thead-dark">
+        <table class="table table-responsive">
+            <thead class="thead-dark">
+            <tr>
+                <th>File Name</th>
+                <th> Upload Time</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for obj in documents %}
                 <tr>
-                    <th>File Name</th>
-                    <th> Upload Time</th>
+                    <td><a href="{{ obj.document.url }}">{{ obj.fname }}</a></td>
+                    <td>
+                        <small>(Uploaded at: {{ obj.uploaded_at }})</small>
+                    </td>
                 </tr>
-                </thead>
-                <tbody>
-                {% for obj in documents %}
-                    <tr>
-                        <td><a href="{{ obj.document.url }}">{{ obj.fname }}</a></td>
-                        <td>
-                            <small>(Uploaded at: {{ obj.uploaded_at }})</small>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-            <hr>
-{#            <div class="text-center">#}
-{#                <label>Documents Uploaded By Other Users</label>#}
-{#            </div>#}
-{##}
-{#            {% for sub,val in dict.items %}#}
-{#                <br>#}
-{#                <label> Name: {{ sub.first_name }} {{ sub.last_name }}</label>#}
-{##}
-{#                <table class="table table-responsive">#}
-{#                    <thead class="thead-dark">#}
-{#                    <tr>#}
-{#                        <th>File Name</th>#}
-{#                        <th> Upload Time</th>#}
-{#                    </tr>#}
-{#                    </thead>#}
-{#                    <tbody>#}
-{#                    {% for obj in val %}#}
-{#                        <tr>#}
-{#                            <td><a href="{{ obj.document.url }}">{{ obj.fname }}</a></td>#}
-{#                            <td>#}
-{#                                <small>(Uploaded at: {{ obj.uploaded_at }})</small>#}
-{#                            </td>#}
-{#                        </tr>#}
-{#                    {% endfor %}#}
-{#                    </tbody>#}
-{#                </table>#}
-{#            {% endfor %}#}
-{#        </div>#}
+            {% endfor %}
+            </tbody>
+        </table>
+        <hr>
+        {#            <div class="text-center">#}
+        {#                <label>Documents Uploaded By Other Users</label>#}
+        {#            </div>#}
+        {##}
+        {#            {% for sub,val in dict.items %}#}
+        {#                <br>#}
+        {#                <label> Name: {{ sub.first_name }} {{ sub.last_name }}</label>#}
+        {##}
+        {#                <table class="table table-responsive">#}
+        {#                    <thead class="thead-dark">#}
+        {#                    <tr>#}
+        {#                        <th>File Name</th>#}
+        {#                        <th> Upload Time</th>#}
+        {#                    </tr>#}
+        {#                    </thead>#}
+        {#                    <tbody>#}
+        {#                    {% for obj in val %}#}
+        {#                        <tr>#}
+        {#                            <td><a href="{{ obj.document.url }}">{{ obj.fname }}</a></td>#}
+        {#                            <td>#}
+        {#                                <small>(Uploaded at: {{ obj.uploaded_at }})</small>#}
+        {#                            </td>#}
+        {#                        </tr>#}
+        {#                    {% endfor %}#}
+        {#                    </tbody>#}
+        {#                </table>#}
+        {#            {% endfor %}#}
+        {#        </div>#}
         <br><br>
     </div>
     <br><br>
