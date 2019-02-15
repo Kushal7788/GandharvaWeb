@@ -40,24 +40,24 @@ html, body {
     width: 100%;
 }
 
-@media only screen and (max-width: 800px) {
-    .table {
-        margin-left: 6%;
-        width: 90%;
-        word-wrap: break-word;
-    }
+/*@media only screen and (max-width: 800px) {*/
+/*.table {*/
+/*margin-left: 6%;*/
+/*width: 90%;*/
+/*word-wrap: break-word;*/
+/*}*/
 
-    .flexProp {
-        display: block;
-    }
+/*.flexProp {*/
+/*display: block;*/
+/*}*/
 
-    .volTable {
-        margin-left: 5%;
-        width: 90%;
-        word-wrap: break-word;
+/*.volTable {*/
+/*margin-left: 5%;*/
+/*width: 90%;*/
+/*word-wrap: break-word;*/
 
-    }
-}
+/*}*/
+/*}*/
 
 .btn-primary {
     text-align: center;
@@ -105,9 +105,25 @@ th {
 }
 
 .astext {
-    background:none;
-    border:none;
-    margin:0;
-    padding:0;
+    background: none;
+    border: none;
+    margin: 0;
+    padding: 0;
     cursor: pointer;
+}
+
+.addVolunteer {
+    text-align: center;
+    background-color: #1a73e8;
+    color: #fff;
+    border: none;
+    font-size: 14px;
+    padding-right: 22px;
+    font-weight: 400;
+    padding-top: 5px;
+    padding-left: 22px;
+    padding-bottom: 5px;
+    margin-bottom: 4px;
+    margin-top: 4px;
+    height: auto;
 }
