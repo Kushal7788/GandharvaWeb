@@ -2,7 +2,11 @@ from .models import *
 
 
 def add_variable_to_context(request):
-    obj = Document_type.objects.get(type='Rule Book')
+    obj = Document.objects.filter(category=Document_type.objects.get(type='Rule Book')).count()
+    if obj:
+        rulebook = Document.objects.get(category=Document_type.objects.get(type='Rule Book'))
+    else:
+        rulebook = None
     global_objects = EventDepartment.objects.filter(department=6)
     event_name = []
     for global_object in global_objects:
@@ -13,5 +17,5 @@ def add_variable_to_context(request):
         'testmes': Department.objects.all(),
         'global_events': event_name,
         'footers': SocialMedia.objects.all(),
-        'rulebook': Document.objects.get(category = obj)
+        'rulebook': rulebook
     }

@@ -7,9 +7,10 @@ html, body {
     font-family: 'Roboto', sans-serif;
     background-color: #f2f2f2;
 }
+
 @font-face {
-  font-family: Amarillo;
-  src: url(../../../static/gandharva/fonts/Amarillo.woff) format('woff');
+    font-family: Amarillo;
+    src: url(../../../static/gandharva/fonts/Amarillo.woff) format('woff');
 }
 
 /*************************
@@ -136,4 +137,13 @@ a:hover {
 
 .buttonDisplay {
     display: block;
+}
+
+.logo {
+    width: 32%;
+    height: auto;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
