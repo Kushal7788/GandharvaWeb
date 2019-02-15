@@ -44,7 +44,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
     <a class="navbar-brand" href="{% url 'home' %}" style="font-family: 'Amarillo';font-size: 20px;color: #fff;"><img
-            src="{% static 'gandharva/img/png_logo.png' %}" class="img-fluid" height="100" width="120"></a>
+            src="{% static 'gandharva/img/png_logo.png' %}" class="img-fluid" height="140" width="150"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span><i class="fas fa-bars" style="color:#fff;font-size: 28px"></i></span>
@@ -69,23 +69,25 @@
                         {% endif %}
                     {% endfor %}
                     {% if rulebook %}
-                    <a class="nav-link" href="{{ rulebook.file.url }}" download>Rule Book <i style="margin-left: 2px"
+                        <a class="nav-link" href="{{ rulebook.file.url }}" download>Rule Book <i
+                                style="margin-left: 2px" class="fas fa-cloud-download-alt"></i></a>
+                    {% endif %}
 
-                                                                                             class="fas fa-file-download"></i></a>
-                 {% endif %}
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false">
-                            Global Events
-                        </a>
-                        <span class="sr-only">(current)</span></a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        {% for global_event in global_events %}
-                            <form method="get" action="{% url 'details' %}">
-                                <input type="hidden" name="event" value="{{ global_event }}">
-                                <button type="submit" class="dropdown-item dropdownStyle">{{ global_event }}</button>
-                            </form>
-                        {% endfor %}
-                    </div>
+                    {#                Global Event#}
+
+                    {#                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"#}
+                    {#                       aria-haspopup="true" aria-expanded="false">#}
+                    {#                        Global Events#}
+                    {#                    </a>#}
+                    {#                    <span class="sr-only">(current)</span></a>#}
+                    {#                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">#}
+                    {#                        {% for global_event in global_events %}#}
+                    {#                            <form method="get" action="{% url 'details' %}">#}
+                    {#                                <input type="hidden" name="event" value="{{ global_event }}">#}
+                    {#                                <button type="submit" class="dropdown-item dropdownStyle">{{ global_event }}</button>#}
+                    {#                            </form>#}
+                    {#                        {% endfor %}#}
+                    {#                    </div>#}
                 </div>
             </li>
             {#            <li class="nav-item">#}
@@ -168,7 +170,7 @@
                        style="color: #fff;font-size: 26px;margin-right:2vw"></i>
                 </a>
             {% endfor %}
-            <p style="font-size:14px;color:#fff"> Copyright &copy;2019 Gandharva. All Rights Reserved.</p>
+            <p style="font-size:12px;color:#fff"> Copyright &copy;2019 Gandharva. All Rights Reserved.</p>
         </div>
     </div>
 </footer>
