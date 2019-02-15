@@ -52,5 +52,7 @@ urlpatterns = [
     url(r'^privacy-policy/$', views.policy, name='policy'),
     url(r'^change-password/$', views.change_password, name='change-password'),
     url(r'^send-username/$', views.send_username, name='send-username'),
+    url(r'^other-uploads/$', views.other_uploads, name='other-uploads'),
+    url(r'^uploaded-docs/$', views.uploaded_docs, name='uploaded-docs'),
 
 ]

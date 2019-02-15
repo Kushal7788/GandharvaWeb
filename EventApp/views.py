@@ -1041,6 +1041,27 @@ def send_username(request):
 # userget = RoleAssignment.objects.get(user=request.user.id)
 #   print (userget.role)
 
+def other_uploads(request):
+    juniors = AssignSub.objects.filter(rootuser=request.user).count()
+    if juniors:
+        juniors = AssignSub.objects.filter(rootuser=request.user).order_by('subuser')
+    else:
+        juniors = None
+    return render(request, 'user/other-uploads.html', {'juniors':juniors})
+
+def uploaded_docs(request):
+    if request.POST:
+        us = request.POST.get('junior')
+        junior = MyUser.objects.get(username=us)
+        doc_lists = fileDocument.objects.filter(user=junior).count()
+        if doc_lists:
+            doc_lists = fileDocument.objects.filter(user=junior).order_by("uploaded_at").reverse()
+        else:
+            doc_lists = None
+        return render(request, 'user/uploaded-docs.html', {'docs': doc_lists,'junior':junior})
+    else:
+        return render(request, 'user/uploaded-docs.html', {})
+
 
 # Volunteer College Date Entry by Campaign Head
 @user_Campaign_head
