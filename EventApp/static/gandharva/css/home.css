@@ -40,11 +40,7 @@ html, body {
 .mainTitle img {
     margin-left: 16vw;
     height: auto;
-<<<<<<< HEAD
     width: 62%;
-=======
-    width: 34vw;
->>>>>>> 63b4ccc30e7da3d7e8e53f7179ef8b92fe517cdd
 }
 
 .mainTitle p {
@@ -207,15 +203,10 @@ html, body {
     }
 
     .mainTitle img {
-<<<<<<< HEAD
-        margin-left: 18%;
-        height: auto;
-        width: 70vw;
-=======
+
         margin-left: 8%;
         height: auto;
         width: 80vw;
->>>>>>> 63b4ccc30e7da3d7e8e53f7179ef8b92fe517cdd
     }
 
     .mainTitle {
