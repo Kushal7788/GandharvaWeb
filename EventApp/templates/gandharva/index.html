@@ -119,48 +119,48 @@
                 {% endif %}
                 {% endif %}
             {% endfor %}
-            <br><br><br><br>
+        </div>
 
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
-               aria-haspopup="true" aria-expanded="false">
-                Global Events
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                {% for global_event in global_events %}
-                    <form method="get" action="{% url 'details' %}">
-                        <input type="hidden" name="event" value="{{ global_event }}">
-                        <button type="submit" class="dropdown-item dropdownStyle">{{ global_event }}</button>
-                    </form>
-                {% endfor %}
+        {#            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"#}
+        {#               aria-haspopup="true" aria-expanded="false">#}
+        {#                Global Events#}
+        {#            </a>#}
+        {#            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">#}
+        {#                {% for global_event in global_events %}#}
+        {#                    <form method="get" action="{% url 'details' %}">#}
+        {#                        <input type="hidden" name="event" value="{{ global_event }}">#}
+        {#                        <button type="submit" class="dropdown-item dropdownStyle">{{ global_event }}</button>#}
+        {#                    </form>#}
+        {#                {% endfor %}#}
+        {##}
+        {#            </div>#}
 
-            </div>
+        {#        <div style="background-color:#348a91">#}
+        {#            <h1 style="text-align: center;padding-top:2vh;color:#fff;font-weight:500">#}
+        {#                Global Events</h1>#}
+        {#            {% for event in events %}#}
+        {#                {% if forloop.first %}#}
+        {#                    <div class="row">{% endif %}#}
+        {#            <div class="col-sm-2 eventDiv" onclick="document.forms['{{ event.name }}_form'].submit();"#}
+        {#                 style="background-image:url({{ event.img.url }}); background-repeat: no-repeat; background-size: cover; width: 480px;height: 240px;margin-right: auto;margin-left: auto">#}
+        {#                <h3 class="eventTitle userselect">{{ event.name }}</h3>#}
+        {#                <form method="get" name="{{ event.name }}_form" action={% url event.link_to %}>#}
+        {#                    <input type="hidden" name="dept" value={{ event.name }}>#}
+        {#                    <button type="submit" class="btn btn-primary eventButtons">Rules#}
+        {#                    </button>#}
+        {#                </form>#}
+        {#            </div>#}
+        {#            {% if forloop.counter|divisibleby:5 %}#}
+        {#                </div>#}
+        {#                <div class="row">{% endif %}#}
+        {#            {% if forloop.last %}#}
+        {##}
+        {#                </div>#}
+        {#            {% endif %}#}
+        {#            {% endfor %}#}
+        {#        </div>#}
 
-            {#        <div style="background-color:#348a91">#}
-            {#            <h1 style="text-align: center;padding-top:2vh;color:#fff;font-weight:500">#}
-            {#                Global Events</h1>#}
-            {#            {% for event in events %}#}
-            {#                {% if forloop.first %}#}
-            {#                    <div class="row">{% endif %}#}
-            {#            <div class="col-sm-2 eventDiv" onclick="document.forms['{{ event.name }}_form'].submit();"#}
-            {#                 style="background-image:url({{ event.img.url }}); background-repeat: no-repeat; background-size: cover; width: 480px;height: 240px;margin-right: auto;margin-left: auto">#}
-            {#                <h3 class="eventTitle userselect">{{ event.name }}</h3>#}
-            {#                <form method="get" name="{{ event.name }}_form" action={% url event.link_to %}>#}
-            {#                    <input type="hidden" name="dept" value={{ event.name }}>#}
-            {#                    <button type="submit" class="btn btn-primary eventButtons">Rules#}
-            {#                    </button>#}
-            {#                </form>#}
-            {#            </div>#}
-            {#            {% if forloop.counter|divisibleby:5 %}#}
-            {#                </div>#}
-            {#                <div class="row">{% endif %}#}
-            {#            {% if forloop.last %}#}
-            {##}
-            {#                </div>#}
-            {#            {% endif %}#}
-            {#            {% endfor %}#}
-            {#        </div>#}
-
-            <img class="img-fluid" src="{% static 'gandharva/img/party.png' %}">
+        <img class="img-fluid" src="{% static 'gandharva/img/party.png' %}">
     </section>
 
     <section id="about" style="background-color: #75B46E">
