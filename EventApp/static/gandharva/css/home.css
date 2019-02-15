@@ -39,8 +39,8 @@ html, body {
 
 .mainTitle img {
     margin-left: 16vw;
-    height: 30vh;
-    width: 34vw;
+    height: auto;
+    width: 62%;
 }
 
 .mainTitle p {
@@ -204,7 +204,7 @@ html, body {
 
     .mainTitle img {
         margin-left: 18%;
-        height: 18vh;
+        height: auto;
         width: 70vw;
     }
 
