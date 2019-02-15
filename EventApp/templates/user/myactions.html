@@ -9,9 +9,20 @@
     <br><br><br><br><br>
     <div class="container" style="height:100vh">
         <div class="col-sm-7 container-center">
-            <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
+            <div class="text-center" style="width: 32%;height: auto;margin-right: auto;margin-left: auto;margin-top: 10px;margin-bottom: 20px">
+        <img class="img-fluid" src="{% static 'gandharva/img/logo_description.png' %}">
+        </div>
             <h5 style="text-align: center;">My Actions</h5>
             <br>
+            <div class="text-right">
+                <h5> {{ roles.name }}</h5>
+            </div>
+            <br>
+
+            <h4 style="font-weight: 400;font-size: 22px"> Your roles:</h4>
+            <h6 style="font-weight: 400;font-size: 16px">{{ roles.assigned_work }}</h6>
+
+
             {% if button_name == "Campaign" %}
                 <form method="get" action="{% url 'campaign' %}">
                     <div class="text-center">
@@ -28,9 +39,7 @@
             {#                    </div>#}
             {#                </form>#}
             {#            {% else %}#}
-            <div class="text-center">
-                <p> No actions are yet assigned to you</p>
-            </div>
+
             {#            {% endif %}#}
         </div>
         <br>

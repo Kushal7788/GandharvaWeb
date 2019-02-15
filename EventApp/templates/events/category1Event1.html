@@ -3,14 +3,6 @@
 {% block title %}{{ pageTitle }}{% endblock %}
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{% static 'events/css/events.css' %}">
-    <style>
-        #footer {
-            position: relative;
-            left: 0;
-            bottom: 0;
-            width: 100%;
-        }
-    </style>
 {% endblock %}
 {% block body %}
     <div class="container-fluid"
@@ -50,7 +42,7 @@
             Participants per Team & ₹ {{ event.entry_fee }} per team.</p>
         {% if event.rules_file.url != None %}
             <li>
-                <a href="{{ event.rules_file.url }}">{{ event.event_name }} rules pdf download </a>
+                <a href="{{ event.rules_file.url }}" download>{{ event.event_name }} rules pdf download </a>
             </li>
         {% endif %}
     </div>
@@ -63,6 +55,7 @@
         </form>
     </div>
     <br>
+    <div style="height: 20vh"></div>
 {% endblock %}
 {% block scripts %}
     <script src="{% static 'events/js/events.js' %}"></script>
