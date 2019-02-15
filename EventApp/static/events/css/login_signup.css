@@ -12,7 +12,7 @@ html, body {
 .navbar {
     opacity: 1;
     background-color: rgb(0, 78, 138) !important;
-    padding-bottom: 0;
+    padding-bottom: 10px;
 }
 
 .container-center {
@@ -251,4 +251,8 @@ input {
 
 .form-control {
     font-size: 14px;
+}
+
+.newEvent{
+    display: none;
 }

@@ -117,13 +117,20 @@ def home(request):
             if role.role.name == "Jt Campaigning Head" or role.role.name == "Campaigning Head":
                 userget = 1
 
+
+    global_objects = EventDepartment.objects.filter(department=6)
+    event_name = []
+    for global_object in global_objects:
+        event_name.append(global_object.event.event_name)
+
     args = {
         'events': Department.objects.all(),
         'sponsors': SponsorMaster.objects.all(),
         'carouselImage': Carousel.objects.all(),
         'gandharvaDate': GandharvaHome.objects.get(title__startswith="Date").data,
         'About': GandharvaHome.objects.get(title__startswith="About").data,
-        'role': userget
+        'role': userget,
+        'global_events': event_name
     }
     sweetify.sweetalert(request, 'Westworld is awesome',
                         text='Really... if you have the chance - watch it! persistent = I agree!')
@@ -156,7 +163,7 @@ def event_register(request):
 # Payment success
 def success(request):
     if request.method == 'GET':
-        print("Enter success")
+        # print("Enter success")
         payment_id = request.GET.get('payment_id')
         payment_status = request.GET.get('payment_status')
         payment_request_id = request.GET.get('payment_request_id')
@@ -164,9 +171,9 @@ def success(request):
         api2 = Instamojo(api_key=insta.key,
                          auth_token=insta.token)
         response2 = api2.payment_request_payment_status(payment_request_id, payment_id)
-        print(response2)
-        print(response2['payment_request']['purpose'])  # Purpose of Payment Request
-        print(response2['payment_request']['payment']['status'])  # Payment status
+        # print(response2)
+        # print(response2['payment_request']['purpose'])  # Purpose of Payment Request
+        # print(response2['payment_request']['payment']['status'])  # Payment status
         eid = request.GET.get("eid")
         event = EventMaster.objects.get(event_id=eid)
         user = MyUser.objects.get(email=response2['payment_request']['email'])
@@ -205,7 +212,7 @@ def success(request):
             transaction.save()
             # Generate QR code if transaction is success full
             if transaction.status == "Credit":
-                print("credit ...")
+                # print("credit ...")
                 qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_M, box_size=10, border=4)
                 # content = "event:" + event.event_name + ", user:" + user.username
 
@@ -244,14 +251,14 @@ def success(request):
                     'transaction': transaction,
                 })
 
-                send_email(user.email, mail_subject, message, ["media//" + str(team.QRcode)])
+                send_email(user.email, mail_subject, message, [team.QRcode.path])
 
             if transaction.status == "Credit":
                 return render(request, 'user/paymentSsuccess.html')
             elif transaction.status == "Failed":
                 return render(request, 'user/paymentFailed.html')
             teams = reversed(Team.objects.filter(user=user).reverse())
-            print(teams)
+            # print(teams)
         else:
             return redirect('/')
     else:
@@ -263,11 +270,11 @@ def all_participants(request):
     role = RoleAssignment.objects.get(user=request.user.id)
     if role.role.name == 'Event Head':
         eventid = role.event.event_id
-        print(eventid)
+        # print(eventid)
         # receipt = Receipt.objects.filter(event=eventid)
         # receipt.event.event_id = event_id
         receipts = Receipt.objects.filter(event=eventid)
-        print(receipts)
+        # print(receipts)
 
         """participants = []
         for receipt in receipts:
@@ -328,11 +335,11 @@ def details(request):
             redirect_url=head + current_site.domain + "success?eid=" + event_id
         )
         # print the long URL of the payment request.
-        print(response['payment_request']['longurl'])
+        # print(response['payment_request']['longurl'])
         # print the unique ID(or payment request ID)
-        print(response['payment_request']['id'])
-        print(response['payment_request']['purpose'])
-        print(response['payment_request']['amount'])
+        # print(response['payment_request']['id'])
+        # print(response['payment_request']['purpose'])
+        # print(response['payment_request']['amount'])
 
         return redirect(response['payment_request']['longurl'])
     else:
@@ -365,10 +372,10 @@ def contactus(request):
                 'id': user_email,
                 'msg': msg,
             })
-            send_email(user_email, mail_subject, message)
+            send_email('hello@viitgandharva.com', mail_subject, message)
 
         else:
-            print(form.errors)
+            # print(form.errors)
             success_form = 0
     else:
         form = ContactUsForm()
@@ -422,8 +429,8 @@ def register(request):
             to_email = form.cleaned_data.get('email')
             send_email(to_email, mail_subject, message)
             return render(request, 'user/AccountConfirm.html')
-        else:
-            print(form.errors, "heere")
+            # else:
+            # print(form.errors, "heere")
     else:
         form = UserRegistration()
 
@@ -466,7 +473,7 @@ def user_login(request):
             usercheck = None
         if usercheck is not None:
             if not usercheck.is_active:
-                print("your account is inactive")
+                # print("your account is inactive")
                 messages.error(request, 'Email not verified, please verify your email to login')
                 return render(request, 'events/login.html', {})
 
@@ -474,7 +481,7 @@ def user_login(request):
                 user = authenticate(username=username, password=password)
                 if user is not None:
                     if user.is_active:
-                        print("io")
+                        # print("io")
                         login(request, user)
                         return redirect('home')
                     else:
@@ -498,17 +505,20 @@ def myaction(request):
         args = {
             'button_name': 'Campaign',
             'urlaccess': campaign,
+            'roles': role.role
         }
         return render(request, 'user/myactions.html', args)
     if role.role.name == 'Event Head':
         args = {
             'button_name': 'All Participants',
+            'roles': role.role
         }
         return render(request, 'user/myactions.html', args)
     else:
         args = {
             'button_name': "No Actions",
             'urlaccess': None,
+            'roles': role.role
         }
     return render(request, 'user/myactions.html', args)
 
@@ -520,12 +530,49 @@ def payment(request):
 # Head Login View only to be used for Heads
 # @user_passes_test(lambda u: u.is_superuser)
 def register_head(request):
+    print("enter")
     Roles = RoleMaster.objects.all()
     role_categories = Role_category.objects.all()
     dept = Department.objects.all()
     coll = College.objects.all()
     year = College_year.objects.all()
+    events = EventMaster.objects.all()
     if request.method == 'POST':
+
+
+        # try:
+        #     old_user = MyUser.objects.get(email=userform.email)
+        #     print(old_user)
+        # except:
+        #     old_user = None
+        # try:
+        #     old_user2 = MyUser.objects.get(coll_email=userform.coll_email)
+        # except:
+        #     old_user2 = None
+        #
+        # print(old_user2)
+        # print(old_user)
+        if MyUser.objects.filter(email=request.POST.get('email')).count() == 0:
+            old_user=None
+            print(old_user)
+        else:
+            old_user = MyUser.objects.get(email=request.POST.get('email'))
+            print(old_user)
+        if MyUser.objects.filter(coll_email=request.POST.get('coll__email')).count() == 0:
+            old_user2 = None
+            print(old_user2)
+        else:
+            old_user2 = MyUser.objects.get(coll_email=request.POST.get('coll__email'))
+            print(old_user2)
+        if old_user is not None and old_user.is_active is False:
+            old_user.delete()
+        elif old_user2 is not None and old_user2.is_active is False and old_user is None:
+            old_user2.delete()
+        elif (old_user is not None and old_user.is_active is True) or (old_user2 is not None and old_user2.is_active is True):
+            args = {
+                'error': "You have already registered and your email is verified too. Enter email to reset your password."
+            }
+            return render(request, "user/reset_password.html", args)
         userform = UserRegistration(request.POST, request.FILES)
         roleform = RoleMasterForm(request.POST)
         if userform.is_valid() and roleform.is_valid():
@@ -567,17 +614,17 @@ def register_head(request):
             #       group = Group.objects.get(name='groupname')
             #      user.groups.add(group)
             # login(request, user, backend='social_core.backends.google.GoogleOAuth2')
-        else:
-            print(userform.errors)
-            print(roleform.errors)
+            # else:
+            # print(userform.errors)
+            # print(roleform.errors)
     else:
         userform = UserRegistration()
         roleform = RoleMasterForm
     selected_roles = RoleMaster.objects.all().order_by('name')
-    print(selected_roles)
+    # print(selected_roles)
     return render(request, 'events/RegisterHead.html',
                   {'userform': userform, 'roleform': roleform, 'roles': Roles, 'depts': dept, 'colleges': coll,
-                   'years': year, 'categories': role_categories, 'selected_roles': selected_roles})
+                   'years': year, 'categories': role_categories, 'selected_roles': selected_roles,'events': events})
 
 
 def load_roles(request):
@@ -615,13 +662,15 @@ def participant_event_register(request):
         eventId = request.POST.get('event_id')
         if useremail != "":
             otp = random.randint(100000, 999999)
-            message = 'OTP for email verification is->\n{0}'.format(otp)
+            message = render_to_string('user/OTP.html' ,{
+                'otp': otp
+            })
             mail_subject = 'OTP for email verification.'
-
-            send_email(useremail,mail_subject,message,otp=1)
+            request.session['otp'] = otp
+            send_email(useremail, mail_subject, message)
 
             return render(request, 'events/participantEventRegister.html',
-                          {'email': useremail, 'otp': otp, 'event_id': eventId,'btndisable': True})
+                          {'email': useremail, 'event_id': eventId, 'btndisable': True})
         else:
             return render(request, 'events/participantEventRegister.html', {'event_id': eventId, 'email': useremail})
     if request.method == 'GET':
@@ -635,14 +684,16 @@ def verifyOTP(request):
         eventId = request.POST.get('event_id')
         event = EventMaster.objects.get(pk=eventId)
         otpEntered = request.POST.get('otp')
-        originalotp = request.POST.get('originalotp')
-        print("original otp", originalotp)
+        originalotp = str(request.session.get('otp'))
+        # print(originalotp)
+        # print("original otp", originalotp)
         if originalotp != otpEntered or len(originalotp) < 6:
             error = "Invalid OTP"
             return render(request, 'events/participantEventRegister.html',
-                          {'error': error, 'event_id': eventId, 'otp': originalotp, 'email': userEmail})
+                          {'error': error, 'event_id': eventId, 'email': userEmail})
 
         else:
+            request.session['otp'] = ""
             coll = College.objects.all().order_by('name')
             if MyUser.objects.filter(email=userEmail).exists():
                 ifuser = MyUser.objects.get(email=userEmail)
@@ -659,29 +710,33 @@ def participant_details(request):
 
         participant_email = request.POST.get('email')
         event_id = request.POST.get('event_id')
-        print(event_id)
-        print("POst mail:", participant_email)
+        # print(event_id)
+        # print("POst mail:", participant_email)
         form = PaymentForm(request.POST)
         coll = College.objects.all().order_by('name')
 
-        try:
-            print(participant_email)
+        if MyUser.objects.filter(email=participant_email).count() == 0:
+            if MyUser.objects.filter(coll_email=participant_email).count() == 0:
+                ifuser = None
+
+            else:
+                ifuser = MyUser.objects.get(coll_email=participant_email)
+        else:
             ifuser = MyUser.objects.get(email=participant_email)
-        except(IntegrityError, ObjectDoesNotExist):
-            ifuser = None
+
         event_new = EventMaster.objects.get(pk=event_id)
         if len(request.POST.get('user_phone')) < 10:
             error = "Invalid mobile number"
             return render(request, 'events/participantDetails.html',
                           {'event': event_new, 'colleges': coll, 'email_participant': participant_email,
                            'present_user': ifuser, 'error': error})
-        if request.POST.get('button_state')=="on":
+        if request.POST.get('button_state') == "on":
             pass
         else:
             error = "You need to accept"
             return render(request, 'events/participantDetails.html',
                           {'event': event_new, 'colleges': coll, 'email_participant': participant_email,
-                           'present_user': ifuser,'error': error})
+                           'present_user': ifuser, 'error': error})
         if form.is_valid():
             if ifuser is None:
                 user = form.save(commit=False)
@@ -691,12 +746,12 @@ def participant_details(request):
                 user.is_active = False
                 user.save()
 
-            print("name", event_new.event_name)
+            # print("name", event_new.event_name)
             user = MyUser.objects.get(email=participant_email)
             if request.POST.get('card'):
-                print("towards Payment")
+                # print("towards Payment")
                 current_site = get_current_site(request)
-                print("here", current_site.domain)
+                # print("here", current_site.domain)
                 refer = request.POST.get('refer')
                 try:
                     referral = MyUser.objects.get(username=refer)
@@ -704,7 +759,7 @@ def participant_details(request):
                     refer = "0"
 
                 insta = InstamojoCredential.objects.latest('pk')
-                print(insta.key, insta.token, insta.salt)
+                # print(insta.key, insta.token, insta.salt)
                 api = Instamojo(api_key=insta.key,
                                 auth_token=insta.token, )
                 head = 'http://'
@@ -725,20 +780,20 @@ def participant_details(request):
 
                 )
                 # print the long URL of the payment request.
-                print(response)
-                print(response['payment_request']['longurl'])
+                # print(response)
+                # print(response['payment_request']['longurl'])
                 # print the unique ID(or payment request ID)
-                print(response['payment_request']['id'])
-                print(response['payment_request']['purpose'])
-                print(response['payment_request']['amount'])
+                # print(response['payment_request']['id'])
+                # print(response['payment_request']['purpose'])
+                # print(response['payment_request']['amount'])
                 return redirect(response['payment_request']['longurl'])
             elif request.POST.get('cash'):
                 cashpayment(request, event_new, user)
                 teams = reversed(Team.objects.filter(user=user).reverse())
-                print("CAAAAA")
+                # print("CAAAAA")
                 return render(request, 'user/registeredEvents.html', {'teams': teams})
         else:
-            print(form.errors)
+            # print(form.errors)
             error = form.errors
             return render(request, 'events/participantDetails.html',
                           {'event': event_new, 'colleges': coll, 'email_participant': participant_email,
@@ -779,7 +834,7 @@ def cashpayment(request, event_new, user):
     transaction.save()
     # Generate QR code if transaction is success full
     if transaction.status == "Cash":
-        print("cashhh")
+        # print("cashhh")
         qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_M, box_size=10, border=4)
         content = "event:" + event_new.event_name + ", user:" + user.username
         qr.add_data(content)
@@ -809,17 +864,16 @@ def cashpayment(request, event_new, user):
             'team': team,
             'transaction': transaction,
         })
-        send_email(user.email, mail_subject, message, ["media//" + str(team.QRcode)])
-
+        send_email(user.email, mail_subject, message, [team.QRcode.path])
 
 
 @staff_user
 def Profile(request):
     user = request.user
     if request.method == 'POST':
-        if request.method == 'POST' and request.FILES['prof_img']:
+        if request.method == 'POST' and len(request.FILES) == 1:
             prof_img = request.FILES['prof_img']
-            print(request.FILES['prof_img'])
+            # print(request.FILES['prof_img'])
             user.prof_img = prof_img
         user_phone = request.POST.get('user_phone')
         user.user_phone = user_phone
@@ -878,8 +932,8 @@ def team_details(request):
         form = TeamDetailsForm(request.POST)
         if form.is_valid():
             form.save()
-        else:
-            print(form.errors)
+            # else:
+            # print(form.errors)
 
     return render(request, 'events/TeamDetails.html', {'form': form, 'event': event_choose})
 
@@ -905,7 +959,7 @@ def reset_password(request):
 
         mail_subject = 'Reset Password'
         email = EmailMessage(mail_subject, message, to=[user.email])
-        send_email(user.email, mail_subject, message,otp=1)
+        send_email(user.email, mail_subject, message, otp=1)
         return HttpResponse("Mail has been send. Click on the email link to reset password")
     else:
         return render(request, "user/reset_password.html")
@@ -943,11 +997,70 @@ def new_password(request):
 
     return render(request, 'user/new_password.html')
 
+@staff_user
+def change_password(request):
+    status=True
+    if request.method == 'POST':
+        old_password = request.POST.get('old_password')
+        user = authenticate(username = request.user.username, password=old_password)
+        if user is not None:
+            status = True
+            return render(request, 'user/new_password.html', {'status':status})
+        else:
+            status = False
+            messages.error(request,"Invalid Password",{'status':status})
 
+    return render(request, 'user/change-password.html',{'status':status})
+
+def send_username(request):
+    status = 0
+    if request.method == 'POST':
+        user_email = request.POST.get('user-email')
+        count = MyUser.objects.filter(email = user_email).count()
+        if count:
+            user = MyUser.objects.get(email = user_email)
+            if user.is_active:
+                message = render_to_string('user/username-email-sent.html',
+                {
+                    'user': user,
+                })
+                mail_subject = 'Activate your account to continue.'
+                to_email = user_email
+                send_email(to_email, mail_subject, message)
+                status = 1
+                return render(request, 'user/send-username.html', {'status': status})
+            else:
+                status = 3
+                return render(request, 'user/send-username.html', {'status': status})
+        else:
+            status = -1
+            return render(request, 'user/send-username.html', {'status': status})
+    return render(request, 'user/send-username.html', {'status': status})
 # Important Notes:
 # to get user role from models
 # userget = RoleAssignment.objects.get(user=request.user.id)
 #   print (userget.role)
+
+def other_uploads(request):
+    juniors = AssignSub.objects.filter(rootuser=request.user).count()
+    if juniors:
+        juniors = AssignSub.objects.filter(rootuser=request.user).order_by('subuser')
+    else:
+        juniors = None
+    return render(request, 'user/other-uploads.html', {'juniors':juniors})
+
+def uploaded_docs(request):
+    if request.POST:
+        us = request.POST.get('junior')
+        junior = MyUser.objects.get(username=us)
+        doc_lists = fileDocument.objects.filter(user=junior).count()
+        if doc_lists:
+            doc_lists = fileDocument.objects.filter(user=junior).order_by("uploaded_at").reverse()
+        else:
+            doc_lists = None
+        return render(request, 'user/uploaded-docs.html', {'docs': doc_lists,'junior':junior})
+    else:
+        return render(request, 'user/uploaded-docs.html', {})
 
 
 # Volunteer College Date Entry by Campaign Head
@@ -969,7 +1082,7 @@ def AddVolunteer(request):
         for role in roles:
             if role.role.name == "Volunteer":
                 volunteers.append(role.user)
-                print(role.user)
+                # print(role.user)
         colleges = College.objects.all()
         args = {
             'volunteers': volunteers,
@@ -981,8 +1094,18 @@ def AddVolunteer(request):
 
 @staff_user
 def ourSponsors(request):
-    sponsors = SponsorMaster.objects.all()
+    Sponsors = SponsorMaster.objects.all()
+    sponsors=[]
+    partners=[]
+    for s in Sponsors:
+        if 'partner' in s.sponsor_type.lower():
+            print(s)
+            partners.append(s)
+        elif 'sponsor' in s.sponsor_type.lower():
+            print(s)
+            sponsors.append(s)
     args = {
+        'partners':partners,
         'sponsors': sponsors
     }
     return render(request, 'gandharva/ourSponsors.html', args)
@@ -996,6 +1119,7 @@ def ourTeam(request):
 # upload file view
 @staff_user
 def files(request):
+    glbdoc = Document.objects.get(category=Document_type.objects.get(type="Global"))
     current_doc = fileDocument.objects.filter(user=request.user).order_by("uploaded_at").reverse()
     dictonary = {}
     juniors = AssignSub.objects.filter(rootuser=request.user)
@@ -1009,12 +1133,13 @@ def files(request):
             f = form.save(commit=False)
             f.user = request.user
             f.fname = request.FILES['document'].name
-            print(request.FILES['document'].name)
+            # print(request.FILES['document'].name)
             f.save()
             return render(request, 'events/fileExplorer.html', {
                 'form': fileForm,
                 'dict': dictonary,
-                'documents': current_doc
+                'documents': current_doc,
+                'global': glbdoc
 
             })
     else:
@@ -1022,7 +1147,8 @@ def files(request):
     return render(request, 'events/fileExplorer.html', {
         'form': form,
         'dict': dictonary,
-        'documents': current_doc
+        'documents': current_doc,
+        'global': glbdoc
     })
 
 
@@ -1059,8 +1185,8 @@ def campaign(request):
 
                 'volunteers': volunteers,
             }
-            print("volunteer")
-            print(volunteers)
+            # print("volunteer")
+            # print(volunteers)
             return render(request, 'events/campaigningData.html', args)
         elif check == "1":
             events = []
@@ -1083,8 +1209,8 @@ def campaign(request):
                 args = {
                     'events': events,
                 }
-                print("")
-                print(events)
+                # print("")
+                # print(events)
             return render(request, 'events/campaigningData.html', args)
         elif check == "2":
             colleges = []
@@ -1106,8 +1232,8 @@ def campaign(request):
                 args = {
                     'colleges': colleges,
                 }
-                print("")
-                print(colleges)
+                # print("")
+                # print(colleges)
             return render(request, 'events/campaigningData.html', args)
 
         elif check == "3":
@@ -1116,7 +1242,7 @@ def campaign(request):
             for role in roles:
                 if role.role.name == "Volunteer":
                     volunteers.append(role.user)
-                    print(role.user)
+                    # print(role.user)
             colleges = College.objects.all()
             volunteerData = Volunteer.objects.all()
             args = {

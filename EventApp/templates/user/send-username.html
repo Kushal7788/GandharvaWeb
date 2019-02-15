@@ -1,0 +1,47 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}Forgot Username{% endblock %}
+{% block css %}
+    <link href="{% static 'user/css/reset_password.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+    <br><br><br><br><br>
+    <div class="container" style="height:100vh">
+        <div class="col-sm-6 container-center">
+            <div class="text-center"
+                 style="width: 32%;height: auto;margin-right: auto;margin-left: auto;margin-top: 10px;margin-bottom: 20px">
+                <img class="img-fluid" src="{% static 'gandharva/img/logo_description.png' %}">
+            </div>
+            <h5 style="text-align: center;">Email-Id</h5>
+            <br>
+            {% if status == -1 %}
+                <p style="text-align: center;color: red;font-size: 14px">The email id does not exist in the database.
+                    Please contact the
+                    support</p>
+            {% elif status == 1 %}
+                <p style="text-align: center;color: red;font-size: 14px">Email is sent successfully. Please check the
+                    email for username</p>
+            {% elif status == 3 %}
+                <p style="text-align: center;color: red;font-size: 14px">You have not completed the registration
+                    process. Please avoid futile
+                    efforts</p>
+            {% endif %}
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label class="control-label">Your Email Id:</label>
+                    <input id="email" class="form-control" style="margin: 0;width: 100%" type="email"
+                           name="user-email"
+                           placeholder="Email Id">
+                    <span id="oldpasswordErrors" class="errors"></span>
+                </div>
+                <div class="text-center">
+                    <input type="submit" class="btn newPasswordButton" style="margin-left: 0" value="Submit">
+                </div>
+            </form>
+            <br>
+        </div>
+    </div>
+    <br>
+{% endblock %}

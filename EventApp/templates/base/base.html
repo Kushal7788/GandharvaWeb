@@ -11,12 +11,14 @@
     <meta name="author" content="">
     <meta name="theme-color" content="#004E8A">
     <title>{% block title %}Home{% endblock %}</title>
+    <link rel="icon" href="{% static 'gandharva/img/png_favicon.png' %}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
           integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
           integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Lato|Lobster" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
             crossorigin="anonymous"></script>
@@ -41,9 +43,8 @@
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-    <a class="navbar-brand" href="{% url 'home' %}" style="font-family: 'Lobster', cursive;font-size: 30px;color: #fff">Gandharva'
-        19
-    </a>
+    <a class="navbar-brand" href="{% url 'home' %}" style="font-family: 'Amarillo';font-size: 20px;color: #fff;"><img
+            src="{% static 'gandharva/img/png_logo.png' %}" class="img-fluid" height="100" width="120"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span><i class="fas fa-bars" style="color:#fff;font-size: 28px"></i></span>
@@ -60,11 +61,29 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     {% for testme in testmes %}
-                    <form method="get" action="{% url 'events' %}">
-                        <input type="hidden" name="dept" value="{{ testme.name }}">
-                        <button type="submit" class="dropdown-item dropdownStyle">{{ testme.name }}</button>
-                    </form>
+                        {% if testme.name != 'Global' %}
+                            <form method="get" action="{% url 'events' %}">
+                                <input type="hidden" name="dept" value="{{ testme.name }}">
+                                <button type="submit" class="dropdown-item dropdownStyle">{{ testme.name }}</button>
+                            </form>
+                        {% endif %}
                     {% endfor %}
+
+                    <a class="nav-link" href="{{ rulebook.file.url }}" download>Rule Book <i style="margin-left: 2px"
+                                                                                             class="fas fa-file-download"></i>
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            Global Events
+                        </a>
+                        <span class="sr-only">(current)</span></a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        {% for global_event in global_events %}
+                            <form method="get" action="{% url 'details' %}">
+                                <input type="hidden" name="event" value="{{ global_event }}">
+                                <button type="submit" class="dropdown-item dropdownStyle">{{ global_event }}</button>
+                            </form>
+                        {% endfor %}
+                    </div>
                 </div>
             </li>
             {#            <li class="nav-item">#}
@@ -104,6 +123,11 @@
 
                                 <button type="submit" class="dropdown-item dropdownStyle">File Upload</button>
                             </form>
+                            <form method="get" action="{% url 'other-uploads' %}">
+
+                                <button type="submit" class="dropdown-item dropdownStyle">Other Uploads</button>
+                            </form>
+
                         {% endif %}
 
                         <form method="get" action="{% url 'user_profile' %}">
@@ -137,10 +161,10 @@
     <div class="container">
         <div class="text-center">
             {% for footer in footers %}
-            <a class="fb-ic" href="{{ footer.src }}" target="_blank">
-                <i class="{{ footer.cls }}"
-                   style="color: #fff;font-size: 26px;margin-right:2vw"></i>
-            </a>
+                <a class="fb-ic" href="{{ footer.src }}" target="_blank">
+                    <i class="{{ footer.cls }}"
+                       style="color: #fff;font-size: 26px;margin-right:2vw"></i>
+                </a>
             {% endfor %}
             <p style="font-size:14px;color:#fff"> Copyright &copy;2019 Gandharva. All Rights Reserved.</p>
         </div>

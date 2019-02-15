@@ -1,0 +1,32 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}Other Upload{% endblock %}
+{% block css %}
+    <link href="{% static 'events/css/campaign.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+    <br><br><br><br><br>
+    <div class="container">
+        <div class="col-sm-8 container-center">
+            <div class="text-center"
+                 style="width: 32%;height: auto;margin-right: auto;margin-left: auto;margin-top: 10px;margin-bottom: 20px">
+                <img class="img-fluid" src="{% static 'gandharva/img/logo_description.png' %}">
+            </div>
+            <h5 style="text-align: center;">Other Upload</h5>
+            <br>
+            <div class="text-center">
+                <label style="font-weight:bold">Documents Uploaded By Other Users</label>
+            </div>
+            <form method="post" action="{% url 'uploaded-docs' %}">
+                {% csrf_token %}
+                {% if juniors %}
+                    {% for junior in juniors %}
+                        <input hidden name="junior" value="{{ junior.subuser }}">
+                        <button class="astext">{{ junior.subuser }}</button>
+                    {% endfor %}
+                    </form>
+                {% else %}
+                    <h5 style="text-align: center;">No Subordinates Under you</h5>
+                {% endif %}
+{% endblock %}

@@ -93,6 +93,7 @@ class MyUser(AbstractUser):
 # RoleMaster contains all the vaarious roles of users
 class RoleMaster(models.Model):
     name = models.CharField(max_length=50)
+    assigned_work = models.TextField(max_length=2000,blank=True)
 
     def __str__(self):
         return self.name
@@ -122,6 +123,7 @@ class EventMaster(models.Model):
     team_size = models.IntegerField()
     rules_file = models.FileField(upload_to=rules_path, blank=True, default=None)
     entry_fee = models.IntegerField()
+    prize = models.TextField(null=True, max_length=1000)
     objective = models.TextField(max_length=1000, blank=True)
     rounds = models.TextField(max_length=10000, blank=True)
     rules = models.TextField(max_length=100000, blank=True)

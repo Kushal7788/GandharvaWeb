@@ -8,6 +8,11 @@ html, body {
     background-color: #f2f2f2;
 }
 
+@font-face {
+    font-family: Amarillo;
+    src: url(../../../static/gandharva/fonts/Amarillo.woff) format('woff');
+}
+
 /*.mainTitle {*/
 /*position: absolute;*/
 /*top: 26vh;*/
@@ -32,6 +37,12 @@ html, body {
     margin-left: 16%;
 }
 
+.mainTitle img {
+    margin-left: 16vw;
+    height: 30vh;
+    width: 34vw;
+}
+
 .mainTitle p {
     margin-bottom: 4px;
 }
@@ -47,10 +58,11 @@ html, body {
     z-index: 500;
     color: #fff;
     word-wrap: break-word;
-    font-size: 80px;
-    font-family: 'Lobster', cursive;
     text-align: center;
     padding-left: 20px;
+    padding-bottom: 28px;
+    font-family: 'Amarillo';
+    font-size: 50px
 }
 
 /*************************
@@ -186,7 +198,14 @@ html, body {
     }
 
     .mainTitle h1 {
-        font-size: 50px;
+        font-size: 30px;
+        font-family: 'Amarillo';
+    }
+
+    .mainTitle img {
+        margin-left: 18%;
+        height: 18vh;
+        width: 70vw;
     }
 
     .mainTitle {
@@ -293,12 +312,9 @@ img {
     margin-bottom: 6vh;
     margin-left: 1.5vw;
     margin-right: 1.5vw;
-    opacity: 0.84;
     border-radius: 8px;
     cursor: pointer;
 }
-
-
 
 .eventTitle {
     z-index: 100;
@@ -310,7 +326,6 @@ img {
     opacity: 1;
     word-wrap: break-word;
     hyphens: auto;
-    text-shadow: 1px 1px #000000;
 }
 
 .eventDescription {
