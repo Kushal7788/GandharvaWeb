@@ -69,15 +69,14 @@
                         {% endif %}
                     {% endfor %}
                     {% if rulebook %}
-                    <a class="nav-link" href="{{ rulebook.file.url }}" download>Rule Book <i style="margin-left: 2px"
-
-                                                                                             class="fas fa-file-download"></i></a>
-                 {% endif %}
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false">
-                            Global Events
-                        </a>
-                        <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="{{ rulebook.file.url }}" download>Rule Book <i
+                                style="margin-left: 2px" class="fas fa-arrow-down"></i></a>
+                    {% endif %}
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        Global Events
+                    </a>
+                    <span class="sr-only">(current)</span></a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         {% for global_event in global_events %}
                             <form method="get" action="{% url 'details' %}">

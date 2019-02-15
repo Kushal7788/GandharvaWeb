@@ -18,27 +18,27 @@
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="text-left">
-{#                    {{ form.as_p }}#}
+                    {#                    {{ form.as_p }}#}
 
-{#                    <div class="input-group">#}
-{#                    <div class="input-group-prepend">#}
-{#                        <span class="input-group-text" id="inputGroupFileAddon01">Profile Image</span>#}
-{#                    </div>#}
-{#                    <div class="custom-file">#}
-{#                        <input type="file" class="custom-file-input" id="inputGroupFile01"#}
-{#                               aria-describedby="inputGroupFileAddon01" name="document" hidden>#}
-{#                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>#}
-{##}
-{#                    </div>#}
-{#                </div>#}
+                    {#                    <div class="input-group">#}
+                    {#                    <div class="input-group-prepend">#}
+                    {#                        <span class="input-group-text" id="inputGroupFileAddon01">Profile Image</span>#}
+                    {#                    </div>#}
+                    {#                    <div class="custom-file">#}
+                    {#                        <input type="file" class="custom-file-input" id="inputGroupFile01"#}
+                    {#                               aria-describedby="inputGroupFileAddon01" name="document" hidden>#}
+                    {#                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>#}
+                    {##}
+                    {#                    </div>#}
+                    {#                </div>#}
                     <div class="form-group">
                         <input type="file" name="document">
-
                     </div>
-                    <button type="submit" id="upload" class="btn btn-primary" style="margin-left: 0;width:auto;">
-                        Upload
-                    </button>
-
+                    <div class="text-center">
+                        <button type="submit" id="upload" class="btn btn-primary" style="margin-left: 0;width:auto;">
+                            Upload
+                        </button>
+                    </div>
                 </div>
             </form>
             {% if global %}
@@ -48,59 +48,59 @@
                 </div>
             {% endif %}
             <br>
-        {% if documents %}
-            <div class="text-center">
-                <p>Uploaded files:</p>
-            </div>
+            {% if documents %}
+                <div class="text-center">
+                    <p>Uploaded files:</p>
+                </div>
 
-            <table class="table table-responsive">
-                <thead class="thead-dark">
-                <tr>
-                    <th>File Name</th>
-                    <th> Upload Time</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for obj in documents %}
+                <table class="table table-responsive">
+                    <thead class="thead-dark">
                     <tr>
-                        <td><a href="{{ obj.document.url }}">{{ obj.fname }}</a></td>
-                        <td>
-                            <small>(Uploaded at: {{ obj.uploaded_at }})</small>
-                        </td>
+                        <th>File Name</th>
+                        <th> Upload Time</th>
                     </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-            {#            <div class="text-center">#}
-            {#                <label>Documents Uploaded By Other Users</label>#}
-            {#            </div>#}
-            {##}
-            {#            {% for sub,val in dict.items %}#}
-            {#                <br>#}
-            {#                <label> Name: {{ sub.first_name }} {{ sub.last_name }}</label>#}
-            {##}
-            {#                <table class="table table-responsive">#}
-            {#                    <thead class="thead-dark">#}
-            {#                    <tr>#}
-            {#                        <th>File Name</th>#}
-            {#                        <th> Upload Time</th>#}
-            {#                    </tr>#}
-            {#                    </thead>#}
-            {#                    <tbody>#}
-            {#                    {% for obj in val %}#}
-            {#                        <tr>#}
-            {#                            <td><a href="{{ obj.document.url }}">{{ obj.fname }}</a></td>#}
-            {#                            <td>#}
-            {#                                <small>(Uploaded at: {{ obj.uploaded_at }})</small>#}
-            {#                            </td>#}
-            {#                        </tr>#}
-            {#                    {% endfor %}#}
-            {#                    </tbody>#}
-            {#                </table>#}
-            {#            {% endfor %}#}
-            {#        </div>#}
-        </div>
-    {% endif %}
+                    </thead>
+                    <tbody>
+                    {% for obj in documents %}
+                        <tr>
+                            <td><a href="{{ obj.document.url }}">{{ obj.fname }}</a></td>
+                            <td>
+                                <small>(Uploaded at: {{ obj.uploaded_at }})</small>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {#            <div class="text-center">#}
+                {#                <label>Documents Uploaded By Other Users</label>#}
+                {#            </div>#}
+                {##}
+                {#            {% for sub,val in dict.items %}#}
+                {#                <br>#}
+                {#                <label> Name: {{ sub.first_name }} {{ sub.last_name }}</label>#}
+                {##}
+                {#                <table class="table table-responsive">#}
+                {#                    <thead class="thead-dark">#}
+                {#                    <tr>#}
+                {#                        <th>File Name</th>#}
+                {#                        <th> Upload Time</th>#}
+                {#                    </tr>#}
+                {#                    </thead>#}
+                {#                    <tbody>#}
+                {#                    {% for obj in val %}#}
+                {#                        <tr>#}
+                {#                            <td><a href="{{ obj.document.url }}">{{ obj.fname }}</a></td>#}
+                {#                            <td>#}
+                {#                                <small>(Uploaded at: {{ obj.uploaded_at }})</small>#}
+                {#                            </td>#}
+                {#                        </tr>#}
+                {#                    {% endfor %}#}
+                {#                    </tbody>#}
+                {#                </table>#}
+                {#            {% endfor %}#}
+                {#        </div>#}
+                </div>
+            {% endif %}
         <br><br>
     </div>
     <br><br>
@@ -116,12 +116,12 @@
                 }
             };
         </script>
-{#        <script type="application/javascript">#}
-{#            $('input[type="file"]').change(function (e) {#}
-{#                var fileName = e.target.files[0].name;#}
-{#                $('.custom-file-label').html(fileName);#}
-{#            });#}
-{#        </script>#}
+        {#        <script type="application/javascript">#}
+        {#            $('input[type="file"]').change(function (e) {#}
+        {#                var fileName = e.target.files[0].name;#}
+        {#                $('.custom-file-label').html(fileName);#}
+        {#            });#}
+        {#        </script>#}
     {% endblock %}
 
 {% endblock %}
