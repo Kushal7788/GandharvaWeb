@@ -103,3 +103,11 @@ th {
     background-color: #1a73e8;
     color: #fff;
 }
+
+.astext {
+    background:none;
+    border:none;
+    margin:0;
+    padding:0;
+    cursor: pointer;
+}

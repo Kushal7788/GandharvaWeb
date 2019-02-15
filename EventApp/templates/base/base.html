@@ -124,6 +124,11 @@
 
                                 <button type="submit" class="dropdown-item dropdownStyle">File Upload</button>
                             </form>
+                            <form method="get" action="{% url 'other-uploads' %}">
+
+                                <button type="submit" class="dropdown-item dropdownStyle">Other Uploads</button>
+                            </form>
+
                         {% endif %}
 
                         <form method="get" action="{% url 'user_profile' %}">
