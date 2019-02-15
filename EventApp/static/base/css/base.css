@@ -140,10 +140,10 @@ a:hover {
 }
 
 .logo {
-    width: 32%;
+    width: 180px;
     height: auto;
     margin-right: auto;
     margin-left: auto;
     margin-top: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 20px
 }

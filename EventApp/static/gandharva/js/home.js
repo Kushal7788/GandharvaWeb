@@ -37,7 +37,7 @@ $(document).ready(function () {
         slidesToShow: 4,
         slidesToScroll: 1,
         autoplay: true,
-        autoplaySpeed: 4000,
+        autoplaySpeed: 3000,
         arrows: true,
         prevArrow: $(".testimonial-carousel-controls .prev"),
         nextArrow: $(".testimonial-carousel-controls .next"),

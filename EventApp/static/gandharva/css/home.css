@@ -40,7 +40,11 @@ html, body {
 .mainTitle img {
     margin-left: 16vw;
     height: auto;
+<<<<<<< HEAD
     width: 62%;
+=======
+    width: 34vw;
+>>>>>>> 63b4ccc30e7da3d7e8e53f7179ef8b92fe517cdd
 }
 
 .mainTitle p {
@@ -203,9 +207,15 @@ html, body {
     }
 
     .mainTitle img {
+<<<<<<< HEAD
         margin-left: 18%;
         height: auto;
         width: 70vw;
+=======
+        margin-left: 8%;
+        height: auto;
+        width: 80vw;
+>>>>>>> 63b4ccc30e7da3d7e8e53f7179ef8b92fe517cdd
     }
 
     .mainTitle {
@@ -308,7 +318,7 @@ img {
 
 .eventDiv {
     z-index: 10;
-    background-color: #b380ff;
+    background-color: #222222;
     margin-bottom: 6vh;
     margin-left: 1.5vw;
     margin-right: 1.5vw;
@@ -340,18 +350,19 @@ img {
 }
 
 .eventButtons {
-    opacity: 1;
-    z-index: 100;
-    border-radius: 4px;
-    background-color: #1a73e8;
-    border: none;
-    color: #FFFFFF;
     text-align: center;
-    transition: all 0.5s;
-    cursor: pointer;
-    position: absolute;
-    bottom: 8vh;
-    font-weight: 500;
+    background-color: #1a73e8;
+    color: #fff;
+    border: none;
+    font-size: 14px;
+    padding-right: 1.2vw;
+    font-weight: 400;
+    padding-top: 5px;
+    padding-left: 1.2vw;
+    padding-bottom: 5px;
+    margin-bottom: 4px;
+    margin-top: 14vh;
+    height: auto;
 }
 
 .eventButtons:hover {
