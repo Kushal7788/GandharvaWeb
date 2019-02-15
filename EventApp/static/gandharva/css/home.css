@@ -37,6 +37,12 @@ html, body {
     margin-left: 16%;
 }
 
+.mainTitle img {
+    margin-left: 16vw;
+    height: 30vh;
+    width: 34vw;
+}
+
 .mainTitle p {
     margin-bottom: 4px;
 }
@@ -194,6 +200,12 @@ html, body {
     .mainTitle h1 {
         font-size: 30px;
         font-family: 'Amarillo';
+    }
+
+    .mainTitle img {
+        margin-left: 18%;
+        height: 18vh;
+        width: 70vw;
     }
 
     .mainTitle {
