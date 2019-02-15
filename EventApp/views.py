@@ -1092,7 +1092,7 @@ def AddVolunteer(request):
         return render(request, 'events/campaignVolunteer.html', args)
 
 
-@staff_user
+
 def ourSponsors(request):
     Sponsors = SponsorMaster.objects.all()
     sponsors=[]
@@ -1119,34 +1119,45 @@ def ourTeam(request):
 # upload file view
 @staff_user
 def files(request):
-    glbdoc = Document.objects.get(category=Document_type.objects.get(type="Global"))
-    current_doc = fileDocument.objects.filter(user=request.user).order_by("uploaded_at").reverse()
-    dictonary = {}
-    juniors = AssignSub.objects.filter(rootuser=request.user)
-    for junior in juniors:
-        doc_list = fileDocument.objects.filter(user=junior.subuser).order_by("uploaded_at").reverse()
-        dictonary[junior.subuser] = doc_list
+    try:
+        glbdoc = Document.objects.get(category=Document_type.objects.get(type="Global"))
+    except(ObjectDoesNotExist):
+        glbdoc = None
+    current_doc = fileDocument.objects.filter(user=request.user).order_by("uploaded_at").reverse().count()
+    if current_doc:
+        current_doc = fileDocument.objects.filter(user=request.user).order_by("uploaded_at").reverse()
+    else:
+        current_doc=None
+    # dictonary = {}
+    # juniors = AssignSub.objects.filter(rootuser=request.user)
+    # for junior in juniors:
+    #     doc_list = fileDocument.objects.filter(user=junior.subuser).order_by("uploaded_at").reverse()
+    #     dictonary[junior.subuser] = doc_list
 
     if request.method == 'POST':
         form = fileForm(request.POST, request.FILES)
-        if form.is_valid():
-            f = form.save(commit=False)
-            f.user = request.user
-            f.fname = request.FILES['document'].name
-            # print(request.FILES['document'].name)
-            f.save()
+        if request.method == 'POST' and len(request.FILES) == 1:
+            if form.is_valid():
+                f = form.save(commit=False)
+                f.user = request.user
+                f.fname = request.FILES['document'].name
+                # print(request.FILES['document'].name)
+                f.save()
             return render(request, 'events/fileExplorer.html', {
                 'form': fileForm,
-                'dict': dictonary,
                 'documents': current_doc,
                 'global': glbdoc
-
+            })
+        else:
+            return render(request, 'events/fileExplorer.html', {
+                'form': fileForm,
+                'documents': current_doc,
+                'global': glbdoc
             })
     else:
         form = fileForm()
     return render(request, 'events/fileExplorer.html', {
         'form': form,
-        'dict': dictonary,
         'documents': current_doc,
         'global': glbdoc
     })
