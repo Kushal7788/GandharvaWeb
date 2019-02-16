@@ -36,7 +36,7 @@ def departmentbanner_path(instance, filename):
 
 # model for Department
 class Department(models.Model):
-    rank = models.IntegerField(default=1)
+    # rank = models.IntegerField(default=1)
     dep_id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=30)
     description = models.TextField()
