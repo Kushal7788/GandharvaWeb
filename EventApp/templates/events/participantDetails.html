@@ -13,7 +13,9 @@
     <div class="container">
         <div id="page" class="displayPage">
             <div class="col-sm-5 container-center">
-                <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
+                <div class="logo">
+        <img class="img-fluid" src="{% static 'gandharva/img/logo_description.png' %}">
+        </div>
                 <h5 style="text-align: center;">Enter your details</h5>
                 <br>
                 <form method="post" action="{% url 'participantDetails' %}" onsubmit="return validate()">
@@ -104,8 +106,8 @@
                         <p style="padding-top: 12px;padding-left: 5px">I have accepted all terms and
                             conditions</p>
                     </div>
-{#                    <a href="terms-and-conditions">Terms and Conditions</a><br>#}
-{#                    <a href="privacy-policy">Privacy Policies</a>#}
+                    {#                    <a href="terms-and-conditions">Terms and Conditions</a><br>#}
+                    {#                    <a href="privacy-policy">Privacy Policies</a>#}
                     <div class="text-right">
                         <br>
                         <button type="submit" id="cashButton" name="card" value="card" class="btn Login_btn-primary">Pay

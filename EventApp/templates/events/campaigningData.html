@@ -3,6 +3,15 @@
 {% block title %}Campaign Data{% endblock %}
 {% block css %}
     <link href="{% static 'events/css/campaign.css' %}" rel="stylesheet">
+    <style>
+        .table {
+            margin-left: 0;
+        }
+
+        td {
+            width: 500px;
+        }
+    </style>
 {% endblock %}
 {% block body %}
     <br><br><br><br><br>
@@ -11,7 +20,9 @@
             <div id="volunteer" class="container"
                  style="display: flex;flex-direction: row;justify-items: center;align-items: center;overflow: auto">
                 <div class="container-center">
-                    <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
+                    <div class="logo">
+                        <img class="img-fluid" src="{% static 'gandharva/img/logo_description.png' %}">
+                    </div>
                     <h5 style="text-align: center;">Volunteerwise Campaigning Data</h5>
                     <br>
                     <table class="table table-responsive">
@@ -39,7 +50,9 @@
             <div id="event" class="container flexProp"
                  style="display: flex;flex-direction: row;justify-items: center;align-items: center;overflow: auto">
                 <div class="container-center">
-                    <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
+                    <div class="logo">
+                        <img class="img-fluid" src="{% static 'gandharva/img/logo_description.png' %}">
+                    </div>
                     <h5 style="text-align: center;">Eventwise Entries</h5>
                     <br>
                     <table class="table table-responsive">
@@ -65,7 +78,9 @@
             <div id="college" class="container"
                  style="display: flex;flex-direction: row;justify-items: center;align-items: center;overflow: auto">
                 <div class="container-center">
-                    <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
+                    <div class="logo">
+                        <img class="img-fluid" src="{% static 'gandharva/img/logo_description.png' %}">
+                    </div>
                     <h5 style="text-align: center;">Collegewise Entries</h5>
                     <br>
                     <table class="table table-responsive">

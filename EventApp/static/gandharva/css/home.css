@@ -8,6 +8,11 @@ html, body {
     background-color: #f2f2f2;
 }
 
+@font-face {
+    font-family: Amarillo;
+    src: url(../../../static/gandharva/fonts/Amarillo.woff) format('woff');
+}
+
 /*.mainTitle {*/
 /*position: absolute;*/
 /*top: 26vh;*/
@@ -32,6 +37,12 @@ html, body {
     margin-left: 16%;
 }
 
+.mainTitle img {
+    margin-left: 14vw;
+    height: auto;
+    width: 62%;
+}
+
 .mainTitle p {
     margin-bottom: 4px;
 }
@@ -47,10 +58,11 @@ html, body {
     z-index: 500;
     color: #fff;
     word-wrap: break-word;
-    font-size: 80px;
-    font-family: 'Lobster', cursive;
     text-align: center;
     padding-left: 20px;
+    padding-bottom: 28px;
+    font-family: 'Amarillo';
+    font-size: 50px
 }
 
 /*************************
@@ -186,7 +198,15 @@ html, body {
     }
 
     .mainTitle h1 {
-        font-size: 50px;
+        font-size: 30px;
+        font-family: 'Amarillo';
+    }
+
+    .mainTitle img {
+
+        margin-left: 8%;
+        height: auto;
+        width: 80vw;
     }
 
     .mainTitle {
@@ -289,7 +309,7 @@ img {
 
 .eventDiv {
     z-index: 10;
-    background-color: #b380ff;
+    background-color: #222222;
     margin-bottom: 6vh;
     margin-left: 1.5vw;
     margin-right: 1.5vw;
@@ -321,18 +341,19 @@ img {
 }
 
 .eventButtons {
-    opacity: 1;
-    z-index: 100;
-    border-radius: 4px;
-    background-color: #1a73e8;
-    border: none;
-    color: #FFFFFF;
     text-align: center;
-    transition: all 0.5s;
-    cursor: pointer;
-    position: absolute;
-    bottom: 8vh;
-    font-weight: 500;
+    background-color: #1a73e8;
+    color: #fff;
+    border: none;
+    font-size: 14px;
+    padding-right: 1.2vw;
+    font-weight: 400;
+    padding-top: 5px;
+    padding-left: 1.2vw;
+    padding-bottom: 5px;
+    margin-bottom: 4px;
+    margin-top: 14vh;
+    height: auto;
 }
 
 .eventButtons:hover {

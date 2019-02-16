@@ -117,13 +117,20 @@ def home(request):
             if role.role.name == "Jt Campaigning Head" or role.role.name == "Campaigning Head":
                 userget = 1
 
+
+    global_objects = EventDepartment.objects.filter(department=6)
+    event_name = []
+    for global_object in global_objects:
+        event_name.append(global_object.event.event_name)
+
     args = {
         'events': Department.objects.all().order_by("rank"),
         'sponsors': SponsorMaster.objects.all(),
         'carouselImage': Carousel.objects.all(),
         'gandharvaDate': GandharvaHome.objects.get(title__startswith="Date").data,
         'About': GandharvaHome.objects.get(title__startswith="About").data,
-        'role': userget
+        'role': userget,
+        'global_events': event_name
     }
     sweetify.sweetalert(request, 'Westworld is awesome',
                         text='Really... if you have the chance - watch it! persistent = I agree!')
@@ -1038,6 +1045,27 @@ def send_username(request):
 # userget = RoleAssignment.objects.get(user=request.user.id)
 #   print (userget.role)
 
+def other_uploads(request):
+    juniors = AssignSub.objects.filter(rootuser=request.user).count()
+    if juniors:
+        juniors = AssignSub.objects.filter(rootuser=request.user).order_by('subuser')
+    else:
+        juniors = None
+    return render(request, 'user/other-uploads.html', {'juniors':juniors})
+
+def uploaded_docs(request):
+    if request.POST:
+        us = request.POST.get('junior')
+        junior = MyUser.objects.get(username=us)
+        doc_lists = fileDocument.objects.filter(user=junior).count()
+        if doc_lists:
+            doc_lists = fileDocument.objects.filter(user=junior).order_by("uploaded_at").reverse()
+        else:
+            doc_lists = None
+        return render(request, 'user/uploaded-docs.html', {'docs': doc_lists,'junior':junior})
+    else:
+        return render(request, 'user/uploaded-docs.html', {})
+
 
 # Volunteer College Date Entry by Campaign Head
 @user_Campaign_head
@@ -1068,7 +1096,7 @@ def AddVolunteer(request):
         return render(request, 'events/campaignVolunteer.html', args)
 
 
-@staff_user
+
 def ourSponsors(request):
     Sponsors = SponsorMaster.objects.all()
     sponsors=[]
@@ -1095,34 +1123,45 @@ def ourTeam(request):
 # upload file view
 @staff_user
 def files(request):
-    glbdoc = Document.objects.get(category=Document_type.objects.get(type="Global"))
-    current_doc = fileDocument.objects.filter(user=request.user).order_by("uploaded_at").reverse()
-    dictonary = {}
-    juniors = AssignSub.objects.filter(rootuser=request.user)
-    for junior in juniors:
-        doc_list = fileDocument.objects.filter(user=junior.subuser).order_by("uploaded_at").reverse()
-        dictonary[junior.subuser] = doc_list
+    try:
+        glbdoc = Document.objects.get(category=Document_type.objects.get(type="Global"))
+    except(ObjectDoesNotExist):
+        glbdoc = None
+    current_doc = fileDocument.objects.filter(user=request.user).order_by("uploaded_at").reverse().count()
+    if current_doc:
+        current_doc = fileDocument.objects.filter(user=request.user).order_by("uploaded_at").reverse()
+    else:
+        current_doc=None
+    # dictonary = {}
+    # juniors = AssignSub.objects.filter(rootuser=request.user)
+    # for junior in juniors:
+    #     doc_list = fileDocument.objects.filter(user=junior.subuser).order_by("uploaded_at").reverse()
+    #     dictonary[junior.subuser] = doc_list
 
     if request.method == 'POST':
         form = fileForm(request.POST, request.FILES)
-        if form.is_valid():
-            f = form.save(commit=False)
-            f.user = request.user
-            f.fname = request.FILES['document'].name
-            # print(request.FILES['document'].name)
-            f.save()
+        if request.method == 'POST' and len(request.FILES) == 1:
+            if form.is_valid():
+                f = form.save(commit=False)
+                f.user = request.user
+                f.fname = request.FILES['document'].name
+                # print(request.FILES['document'].name)
+                f.save()
             return render(request, 'events/fileExplorer.html', {
                 'form': fileForm,
-                'dict': dictonary,
                 'documents': current_doc,
                 'global': glbdoc
-
+            })
+        else:
+            return render(request, 'events/fileExplorer.html', {
+                'form': fileForm,
+                'documents': current_doc,
+                'global': glbdoc
             })
     else:
         form = fileForm()
     return render(request, 'events/fileExplorer.html', {
         'form': form,
-        'dict': dictonary,
         'documents': current_doc,
         'global': glbdoc
     })

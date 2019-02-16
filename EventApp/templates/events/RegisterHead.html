@@ -6,10 +6,12 @@
 {% endblock %}
 
 {% block body %}
-    <br><br><br>
+    <br><br><br><br><br>
     <div class="container">
         <div class="col-sm-5 container-center">
-            <h3 style="text-align: center;padding-top: 10px;font-family: 'Lobster', cursive;">Gandharva'19</h3>
+            <div class="logo">
+                <img class="img-fluid" src="{% static 'gandharva/img/logo_description.png' %}">
+            </div>
             <h6 style="text-align: center;">Create your Gandharva Account</h6>
             <br>
             <form method="post" enctype="multipart/form-data" onsubmit="return validate()" id="personForm"
@@ -123,7 +125,9 @@
                     Department:
                     <select name="user_dept" class="form-control" style="width: 100%;margin-left: 0">
                         {% for dept in depts %}
-                            <option value="{{ dept.pk }}">{{ dept.name }}</option>
+                            {% if dept.name != 'Global' %}
+                                <option value="{{ dept.pk }}">{{ dept.name }}</option>
+                            {% endif %}
                         {% endfor %}
                     </select>
                     <div style="color: whitesmoke">

@@ -7,10 +7,11 @@
     <!-- Google Verification -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0, user-scalable=0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Event in Vishwakarma Institute of information Technology VIIT, Pune, Maharashtra, India. Also known as Gandharva, Perception, viitgandharva, gandharva'19, gandharva19. Techno-cultural events like Dance, Singing, Acting, bike show, coding events, mechanical events with different prizes offers sponsored by expressVPN, pythonanywhere, total aqua+, eventbeep, the gate academy, more events like civil competitions, robotics, robots, gaming, pubg, reverse, coding, csgo, cs, counter strike, robo war, robo race">
+    <meta name="author" content="Gandharva VIIT Pune">
     <meta name="theme-color" content="#004E8A">
     <title>{% block title %}Home{% endblock %}</title>
+    <link rel="icon" href="{% static 'gandharva/img/png_favicon.png' %}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
           integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
@@ -42,18 +43,14 @@
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-    <a class="navbar-brand" href="{% url 'home' %}" style="font-family: 'Lobster', cursive;font-size: 30px;color: #fff">Gandharva'
-        19
-    </a>
+    <a class="navbar-brand" href="{% url 'home' %}" style="font-family: 'Amarillo';font-size: 20px;color: #fff;"><img
+            src="{% static 'gandharva/img/png_logo.png' %}" class="img-fluid" height="140" width="150"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span><i class="fas fa-bars" style="color:#fff;font-size: 28px"></i></span>
     </button>
     <div class="collapse navbar-collapse " id="navbarNavDropdown">
         <ul class="nav navbar-nav ml-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="{{ rulebook.file.url }}" download>Rule Book <span class="sr-only">(current)</span></a>
-            </li>
             <li class="nav-item active">
                 <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
             </li>
@@ -64,11 +61,33 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     {% for testme in testmes %}
-                    <form method="get" action="{% url 'events' %}">
-                        <input type="hidden" name="dept" value="{{ testme.name }}">
-                        <button type="submit" class="dropdown-item dropdownStyle">{{ testme.name }}</button>
-                    </form>
+                        {% if testme.name != 'Global' %}
+                            <form method="get" action="{% url 'events' %}">
+                                <input type="hidden" name="dept" value="{{ testme.name }}">
+                                <button type="submit" class="dropdown-item dropdownStyle">{{ testme.name }}</button>
+                            </form>
+                        {% endif %}
                     {% endfor %}
+                    {% if rulebook %}
+                        <a class="nav-link" href="{{ rulebook.file.url }}" download>Rule Book <i
+                                style="margin-left: 2px" class="fas fa-cloud-download-alt"></i></a>
+                    {% endif %}
+
+                    {#                Global Event#}
+
+                    {#                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"#}
+                    {#                       aria-haspopup="true" aria-expanded="false">#}
+                    {#                        Global Events#}
+                    {#                    </a>#}
+                    {#                    <span class="sr-only">(current)</span></a>#}
+                    {#                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">#}
+                    {#                        {% for global_event in global_events %}#}
+                    {#                            <form method="get" action="{% url 'details' %}">#}
+                    {#                                <input type="hidden" name="event" value="{{ global_event }}">#}
+                    {#                                <button type="submit" class="dropdown-item dropdownStyle">{{ global_event }}</button>#}
+                    {#                            </form>#}
+                    {#                        {% endfor %}#}
+                    {#                    </div>#}
                 </div>
             </li>
             {#            <li class="nav-item">#}
@@ -108,6 +127,11 @@
 
                                 <button type="submit" class="dropdown-item dropdownStyle">File Upload</button>
                             </form>
+                            <form method="get" action="{% url 'other-uploads' %}">
+
+                                <button type="submit" class="dropdown-item dropdownStyle">Other Uploads</button>
+                            </form>
+
                         {% endif %}
 
                         <form method="get" action="{% url 'user_profile' %}">
@@ -141,12 +165,12 @@
     <div class="container">
         <div class="text-center">
             {% for footer in footers %}
-            <a class="fb-ic" href="{{ footer.src }}" target="_blank">
-                <i class="{{ footer.cls }}"
-                   style="color: #fff;font-size: 26px;margin-right:2vw"></i>
-            </a>
+                <a class="fb-ic" href="{{ footer.src }}" target="_blank">
+                    <i class="{{ footer.cls }}"
+                       style="color: #fff;font-size: 26px;margin-right:2vw"></i>
+                </a>
             {% endfor %}
-            <p style="font-size:14px;color:#fff"> Copyright &copy;2019 Gandharva. All Rights Reserved.</p>
+            <p style="font-size:12px;color:#fff"> Copyright &copy;2019 Gandharva. All Rights Reserved.</p>
         </div>
     </div>
 </footer>
