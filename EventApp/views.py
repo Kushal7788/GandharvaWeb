@@ -345,7 +345,7 @@ def details(request):
     else:
         event_name = request.GET.get('event')
         arg = {
-            'events_list': EventMaster.objects.all(),
+            'events_list': EventMaster.objects.all().order_by('rank'),
             'pageTitle': EventMaster.objects.get(event_name__startswith=event_name).event_name,
             'event': EventMaster.objects.get(event_name__startswith=event_name),
             'dept': EventDepartment.objects.get(event=EventMaster.objects.get(event_name__startswith=event_name)),
