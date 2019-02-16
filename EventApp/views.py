@@ -124,7 +124,7 @@ def home(request):
         event_name.append(global_object.event.event_name)
 
     args = {
-        'events': Department.objects.all(),
+        'events': Department.objects.all().order_by("rank"),
         'sponsors': SponsorMaster.objects.all(),
         'carouselImage': Carousel.objects.all(),
         'gandharvaDate': GandharvaHome.objects.get(title__startswith="Date").data,
@@ -154,7 +154,7 @@ def event_register(request):
 
         args1 = {
             'pageTitle': dept,
-            'events': EventDepartment.objects.filter(department=dept_choose),
+            'events': EventDepartment.objects.filter(department=dept_choose).order_by('event__rank'),
             'dept_choosen': dept_choose
         }
         return render(request, 'events/newEvent.html', args1)
@@ -695,10 +695,14 @@ def verifyOTP(request):
         else:
             request.session['otp'] = ""
             coll = College.objects.all().order_by('name')
-            if MyUser.objects.filter(email=userEmail).exists():
-                ifuser = MyUser.objects.get(email=userEmail)
+            if MyUser.objects.filter(email=userEmail).count() == 0:
+                if MyUser.objects.filter(coll_email=userEmail).count() == 0:
+                    ifuser = None
+
+                else:
+                    ifuser = MyUser.objects.get(coll_email=userEmail)
             else:
-                ifuser = None
+                ifuser = MyUser.objects.get(email=userEmail)
             readm = "readonly"
             return render(request, 'events/participantDetails.html',
                           {'event': event, 'colleges': coll, 'email_participant': userEmail, 'present_user': ifuser,
