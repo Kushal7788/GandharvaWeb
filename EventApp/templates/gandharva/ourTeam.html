@@ -1,6 +1,9 @@
 {% extends 'base/base.html' %}
 {% load static %}
 {% block title %}Gandharva-OurTeam{% endblock %}
+{% block css %}
+    <link href="{% static 'gandharva/css/main-section.css' %}" rel="stylesheet">
+{% endblock %}
 {% block body %}
 
   <div class="container-fluid" style="margin-left: 5%;margin-right:4%;">
@@ -14,44 +17,44 @@
       <br>
 
   <div class="row"  style="width: 90%;">
-    <div class="col-sm-3" style="margin-top:130px;padding-left:4%;padding-bottom: 5%;">
+    <div class="col-sm-3 main-section">
       <div class="modal-content">
-            <div class="col-12" style="margin-top: -100px;margin-left: 1px;margin-bottom: 20px;height:70%;">
-                <img src="/static/gandharva/img/saif.jpg" alt="Contactlogo" style="height:100%;width:100%;border-radius:50%;">
+            <div class="col-12 user-img">
+                <img src="/static/gandharva/img/saif.jpg" alt="Contactlogo">
             </div>
 
-            <p style="text-align: center;font-family: 'Abel',sans-serif;font-weight: bold;font-size: 25px;line-height: 80%;">Pranav Mehta</p>
-            <p style="text-align: center;font-family: 'Abel',sans-serif;font-weight: normal;font-weight: 300;font-size: 20px;line-height: 50%;">GS</p>
+            <p class="name">Pranav Mehta</p>
+            <p class="postname">GS</p>
         </div>
       </div>
-    <div class="col-sm-3" style="margin:0;margin-top:130px;padding-left:4%;padding-bottom: 5%;">
+    <div class="col-sm-3 main-section">
       <div class="modal-content">
-            <div class="col-12" style="margin-top: -100px;margin-left: 1px;margin-bottom: 20px;height:70%;">
-                <img src="/static/gandharva/img/ajay.jpg" alt="Contactlogo" style="height:100%;width:100%;border-radius:50%;">
+            <div class="col-12 user-img">
+                <img src="/static/gandharva/img/ajay.jpg" alt="Contactlogo">
             </div>
 
-            <p style="text-align: center;font-family: 'Abel',sans-serif;font-weight: bold;font-size: 25px;line-height: 80%;">Sourabh Patil</p>
-            <p style="text-align: center;font-family: 'Abel',sans-serif;font-weight: normal;font-weight: 300;font-size: 20px;line-height:50%;">President</p>
+            <p class="name">Sourabh Patil</p>
+            <p class="postname">President</p>
         </div>
       </div>
-    <div class="col-sm-3" style="margin:0;margin-top:130px;padding-left:4%;padding-bottom: 5%;">
+    <div class="col-sm-3 main-section">
       <div class="modal-content">
-            <div class="col-12" style="margin-top: -100px;margin-left: 1px;margin-bottom: 20px;height:70%;">
-                <img src="/static/gandharva/img/ranveer.jpg" alt="Contactlogo" style="height:100%;width:100%;border-radius:50%;">
+            <div class="col-12 user-img">
+                <img src="/static/gandharva/img/ranveer.jpg" alt="Contactlogo">
             </div>
 
-            <p style="text-align: center;font-family: 'Abel',sans-serif;font-weight: bold;font-size: 25px;line-height: 80%;">Mohit Charkha</p>
-            <p style="text-align: center;font-family: 'Abel',sans-serif;font-weight: normal;font-weight: 300;font-size: 20px;line-height: 50%;">Vice President</p>
+            <p class="name">Mohit Charkha</p>
+            <p class="postname">Vice President</p>
         </div>
       </div>
-    <div class="col-sm-3" style="margin:0;margin-top:130px;padding-left:4%;padding-bottom: 5%;">
+    <div class="col-sm-3 main-section">
       <div class="modal-content">
-            <div class="col-12" style="margin-top: -100px;margin-left: 1px;margin-bottom: 20px;height:70%;">
-                <img src="/static/gandharva/img/akshay.jpg" alt="Contactlogo" style="height:100%;width:100%;border-radius:50%;">
+            <div class="col-12 user-img">
+                <img src="/static/gandharva/img/akshay.jpg" alt="Contactlogo">
             </div>
 
-            <p style="text-align: center;font-family: 'Abel',sans-serif;font-weight: bold;font-size: 25px;line-height: 80%;">Pratik Ghatage</p>
-            <p style="text-align: center;font-family: 'Abel',sans-serif;font-weight: normal;font-weight: 300;font-size: 20px;line-height:50%;">Technical Head</p>
+            <p class="name">Pratik Ghatage</p>
+            <p class="postname">Technical Head</p>
         </div>
       </div>
 
