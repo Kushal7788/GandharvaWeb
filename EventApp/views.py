@@ -501,26 +501,26 @@ def user_login(request):
 @staff_user
 def myaction(request):
     role = RoleAssignment.objects.get(user=request.user.id)
-    if role.role.name == "Campaigning Head" or role.role.name == "Jt Campaigning Head":
+    if request.user.is_staff:
         args = {
             'button_name': 'Campaign',
             'urlaccess': campaign,
             'roles': role.role
         }
         return render(request, 'user/myactions.html', args)
-    if role.role.name == 'Event Head':
-        args = {
-            'button_name': 'All Participants',
-            'roles': role.role
-        }
-        return render(request, 'user/myactions.html', args)
-    else:
-        args = {
-            'button_name': "No Actions",
-            'urlaccess': None,
-            'roles': role.role
-        }
-    return render(request, 'user/myactions.html', args)
+    # if role.role.name == 'Event Head':
+    #     args = {
+    #         'button_name': 'All Participants',
+    #         'roles': role.role
+    #     }
+    #     return render(request, 'user/myactions.html', args)
+    # else:
+    #     args = {
+    #         'button_name': "No Actions",
+    #         'urlaccess': None,
+    #         'roles': role.role
+    #     }
+    # return render(request, 'user/myactions.html', args)
 
 
 def payment(request):
@@ -1173,7 +1173,7 @@ def files(request):
 
 
 # Campaign Head Method
-@user_Campaign_head
+@staff_user
 def campaign(request):
     if request.method == "POST":
         check = request.POST.get('criteria')
@@ -1273,7 +1273,8 @@ def campaign(request):
             return render(request, 'events/campaignVolunteer.html', args)
 
     else:
-        return render(request, 'events/campaignHead.html')
+        role = RoleAssignment.objects.get(user=request.user.id)
+        return render(request, 'events/campaignHead.html', {'role': role})
 
 
 def terms(request):
