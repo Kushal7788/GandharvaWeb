@@ -328,3 +328,7 @@ class OurTeam(models.Model):
     user = models.ForeignKey(MyUser,on_delete=models.CASCADE,blank=True)
     name = models.CharField(max_length=100)
     img = models.ImageField(upload_to=ourteam_path)
+    post = models.CharField(max_length=100,default=None)
+
+    def __str__(self):
+        return 'Username : ' + self.name

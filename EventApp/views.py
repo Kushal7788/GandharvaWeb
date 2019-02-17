@@ -1117,7 +1117,11 @@ def ourSponsors(request):
 
 @staff_user
 def ourTeam(request):
-    obj = OurTeam.objects.all()
+    obj = OurTeam.objects.all().count()
+    if obj:
+        obj = OurTeam.objects.all()
+    else:
+        obj = None
     return render(request, 'gandharva/ourTeam.html',{'objs':obj})
 
 
