@@ -100,63 +100,68 @@
             </li>
 
             {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'ourTeam' %}">Our Team</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false">
-                        {{ user.username }}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'ourTeam' %}">Our Team</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    {{ user.username }}
+                    {% if user.prof_img %}
+                        <img src="{{ user.prof_img.url }}"
+                             width="28" height="28">
+                     {% else %}
                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1024px-Circle-icons-profile.svg.png"
                              width="28" height="28">
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                        {% if user.is_superuser %}
-                            <form method="get" action="{% url 'RegisterHead' %}">
-                                <input type="hidden" name="HeadRegister" value=>
-                                <button type="submit" class="dropdown-item dropdownStyle">Register Heads</button>
+                     {% endif %}
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                            {% if user.is_superuser %}
+                                <form method="get" action="{% url 'RegisterHead' %}">
+                                    <input type="hidden" name="HeadRegister" value=>
+                                    <button type="submit" class="dropdown-item dropdownStyle">Register Heads</button>
+                                </form>
+                            {% endif %}
+                            {% if user.is_staff %}
+                                {% if role == 1 %}
+                                    <form method="get" action="{% url 'campaign' %}">
+                                {% else %}
+                                    <form method="get" action="{% url 'myactions' %}">
+                                {% endif %}
+
+                            <button type="submit" class="dropdown-item dropdownStyle">My Actions</button>
                             </form>
-                        {% endif %}
-                        {% if user.is_staff %}
-                            {% if role == 1 %}
-                                <form method="get" action="{% url 'campaign' %}">
-                            {% else %}
-                                <form method="get" action="{% url 'myactions' %}">
+                                <form method="get" action="{% url 'files' %}">
+
+                                    <button type="submit" class="dropdown-item dropdownStyle">File Upload</button>
+                                </form>
+                                <form method="get" action="{% url 'other-uploads' %}">
+
+                                    <button type="submit" class="dropdown-item dropdownStyle">Other Uploads</button>
+                                </form>
+
                             {% endif %}
 
-                        <button type="submit" class="dropdown-item dropdownStyle">My Actions</button>
-                        </form>
-                            <form method="get" action="{% url 'files' %}">
+                            <form method="get" action="{% url 'user_profile' %}">
 
-                                <button type="submit" class="dropdown-item dropdownStyle">File Upload</button>
+                                <input type="hidden" name="profile" value=>
+                                <button type="submit" class="dropdown-item dropdownStyle">My Profile</button>
                             </form>
-                            <form method="get" action="{% url 'other-uploads' %}">
+                            {#                        <form method="get" action="{% url 'eventsRegister' %}">#}
+                            {#                            <input type="hidden" name="EventRegister" value=>#}
+                            {#                            <button type="submit" class="dropdown-item dropdownStyle">Registered Events</button>#}
+                            {#                        </form>#}
+                            <form method="get" action="{% url 'user_logout' %}">
 
-                                <button type="submit" class="dropdown-item dropdownStyle">Other Uploads</button>
+                                <input type="hidden" name="dept" value=>
+                                <button type="submit" class="dropdown-item dropdownStyle">Log Out</button>
                             </form>
-
-                        {% endif %}
-
-                        <form method="get" action="{% url 'user_profile' %}">
-
-                            <input type="hidden" name="profile" value=>
-                            <button type="submit" class="dropdown-item dropdownStyle">My Profile</button>
-                        </form>
-                        {#                        <form method="get" action="{% url 'eventsRegister' %}">#}
-                        {#                            <input type="hidden" name="EventRegister" value=>#}
-                        {#                            <button type="submit" class="dropdown-item dropdownStyle">Registered Events</button>#}
-                        {#                        </form>#}
-                        <form method="get" action="{% url 'user_logout' %}">
-
-                            <input type="hidden" name="dept" value=>
-                            <button type="submit" class="dropdown-item dropdownStyle">Log Out</button>
-                        </form>
-                    </div>
+                        </div>
                     {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'user_login' %}">Login</a>
-                </li>
-            {% endif %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'user_login' %}">Login</a>
+                        </li>
+                    {% endif %}
         </ul>
     </div>
 </nav>
