@@ -1117,7 +1117,8 @@ def ourSponsors(request):
 
 @staff_user
 def ourTeam(request):
-    return render(request, 'gandharva/ourTeam.html')
+    obj = OurTeam.objects.all()
+    return render(request, 'gandharva/ourTeam.html',{'objs':obj})
 
 
 # upload file view
