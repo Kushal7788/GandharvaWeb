@@ -1,10 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}Gandharva-OurTeam{% endblock %}
+{% block css %}
+    <link href="{% static 'gandharva/css/main-section.css' %}" rel="stylesheet">
+{% endblock %}
+{% block body %}
 
-</body>
-</html>
+  <div class="container-fluid" style="margin-left: 8%;margin-right:4%;">
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+  {% if objs %}
+{% for obj in objs %}
+    {% if forloop.first %}
+        <div class="row"  style="width: 90%;">{% endif %}
+    <div class="col-sm-3 main-section">
+      <div class="modal-content">
+            <div class="col-12 user-img">
+                <img src="{{ obj.img.url }}" alt="Contactlogo">
+            </div>
+
+            <p class="name">{{ obj.name }}</p>
+            <p class="postname">{{ obj.post }}</p>
+        </div>
+      </div>
+                {% if forloop.counter|divisibleby:4 %}
+                    </div>
+                    <div class="row" style="width: 90%;">{% endif %}
+    {% if forloop.last %}
+
+                    </div>
+                {% endif %}
+
+    {% endfor %}
+  {% else %}
+  <h3>No Members to display</h3>
+  {% endif %}
+  </div>
+  </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+{% endblock %}
