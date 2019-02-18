@@ -127,10 +127,10 @@
                                 {% endif %}
                             </div>
 
-                            <div id="rightdiv">{{ user.first_name }} {{ user.last_name }}<br>{{ user.username }}<br>{{ role }}
+                            <div id="rightdiv">{{ user.first_name }} {{ user.last_name }}<br><i>{{ user.username }}</i><br>{{ role }}
                             </div>
                         </div>
-                        <br>
+                        <hr>
                         {% if user.is_superuser %}
                             <form method="get" action="{% url 'RegisterHead' %}">
                                 <input type="hidden" name="HeadRegister" value=>
@@ -153,23 +153,25 @@
 
                                 <button type="submit" class="dropdown-item dropdownStyle">Other Uploads</button>
                             </form>
-
+                        <hr>
                         {% endif %}
+                        
+                        <div id="logprof">
+                                <form method="get" action="{% url 'user_profile' %}">
 
-                        <form method="get" action="{% url 'user_profile' %}">
-
-                            <input type="hidden" name="profile" value=>
-                            <button type="submit" class="dropdown-item dropdownStyle">My Profile</button>
-                        </form>
-                        {#                        <form method="get" action="{% url 'eventsRegister' %}">#}
-                        {#                            <input type="hidden" name="EventRegister" value=>#}
-                        {#                            <button type="submit" class="dropdown-item dropdownStyle">Registered Events</button>#}
-                        {#                        </form>#}
-                        <form method="get" action="{% url 'user_logout' %}">
-
-                            <input type="hidden" name="dept" value=>
-                            <button type="submit" class="dropdown-item dropdownStyle">Log Out</button>
-                        </form>
+                                        <input type="hidden" name="profile" value=>
+                                        <button type="submit" class="dropdown-item dropdownStyle">My Profile</button>
+                                    </form>
+                                    {#                        <form method="get" action="{% url 'eventsRegister' %}">#}
+                                    {#                            <input type="hidden" name="EventRegister" value=>#}
+                                    {#                            <button type="submit" class="dropdown-item dropdownStyle">Registered Events</button>#}
+                                    {#                        </form>#}
+                                    <form method="get" action="{% url 'user_logout' %}">
+            
+                                        <input type="hidden" name="dept" value=>
+                                        <button type="submit" class="dropdown-item dropdownStyle">Log Out</button>
+                                    </form>
+                        </div>
                     </div>
                     {% else %}
                 <li class="nav-item">
