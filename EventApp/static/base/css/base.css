@@ -78,11 +78,6 @@ nav li .active a {
     display: none;
 }
 
-.navbar-collapse {
-    max-height: calc(100vh - 100px);
-    overflow-y: auto;
-}
-
 @media only screen and (max-width: 800px) {
     .navbar {
         background-color: #004E8A !important;
@@ -90,6 +85,11 @@ nav li .active a {
 
     .nav.navbar-nav li a {
         padding-left: 10px;
+    }
+
+    .navbar-collapse {
+        max-height: calc(100vh - 80px);
+        overflow-y: auto;
     }
 }
 
