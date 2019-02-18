@@ -2,54 +2,71 @@
 {% load static %}
 {% block title %}Gandharva-OurTeam{% endblock %}
 {% block css %}
-    <link href="{% static 'gandharva/css/main-section.css' %}" rel="stylesheet">
+    <link href="{% static 'gandharva/css/ourTeam.css' %}" rel="stylesheet">
 {% endblock %}
 {% block body %}
 
-  <div class="container-fluid" style="margin-left: 8%;margin-right:4%;">
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-  {% if objs %}
-{% for obj in objs %}
-    {% if forloop.first %}
-        <div class="row"  style="width: 90%;">{% endif %}
-    <div class="col-sm-3 main-section">
-      <div class="modal-content">
-            <div class="col-12 user-img">
-                <img src="{{ obj.img.url }}" alt="Contactlogo">
+    <div class="container-fluid">
+        <div style="height: 20vh"></div>
+        <div class="text-center">
+            <h1 style="font-family: 'Abel', sans-serif">Our Team</h1>
+        </div>
+
+        {% if objs %}
+            {% for obj in objs %}
+                {% if forloop.first %}
+                    <div class="row">{% endif %}
+            <div class="col-sm-2 col main-section">
+                <div class="modal-content" style="margin-bottom: 14px">
+                    <div class="col-sm-12 user-img">
+                        <img src="https://vignette.wikia.nocookie.net/marvelcinematicuniverse/images/b/bb/Tony_Stark_Promo.jpg/revision/latest?cb=20141129202546" alt="Contactlogo">
+                    </div>
+                    <p class="name">{{ obj.name }}</p>
+                    <p class="postname">{{ obj.post }}</p>
+                </div>
             </div>
 
-            <p class="name">{{ obj.name }}</p>
-            <p class="postname">{{ obj.post }}</p>
-        </div>
-      </div>
-                {% if forloop.counter|divisibleby:4 %}
+            <div class="col-sm-2 col main-section">
+                <div class="modal-content">
+                    <div class="col-sm-12  user-img">
+                        <img src="{{ obj.img.url }}" alt="Contactlogo">
                     </div>
-                    <div class="row" style="width: 90%;">{% endif %}
-    {% if forloop.last %}
+                    <p class="name">{{ obj.name }}</p>
+                    <p class="postname">{{ obj.post }}</p>
+                </div>
+            </div>
 
+            <div class="col-sm-2 col main-section">
+                <div class="modal-content">
+                    <div class="col-sm-12 user-img">
+                        <img src="{{ obj.img.url }}" alt="Contactlogo">
                     </div>
-                {% endif %}
+                    <p class="name">{{ obj.name }}</p>
+                    <p class="postname">{{ obj.post }}</p>
+                </div>
+            </div>
 
-    {% endfor %}
-  {% else %}
-  <h3>No Members to display</h3>
-  {% endif %}
-  </div>
-  </div>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+            <div class="col-sm-2 col main-section">
+                <div class="modal-content">
+                    <div class="col-sm-12 user-img">
+                        <img src="{{ obj.img.url }}" alt="Contactlogo">
+                    </div>
+                    <p class="name">{{ obj.name }}</p>
+                    <p class="postname">{{ obj.post }}</p>
+                </div>
+            </div>
+            {% if forloop.counter|divisibleby:5 %}
+                </div>
+                <div class="row">{% endif %}
+            {% if forloop.last %}
+                </div>
+            {% endif %}
+            {% endfor %}
+        {% else %}
+            <div style="height: 100vh"></div>
+        {% endif %}
+    </div>
+    </div>
+    <div style="height: 30vh"></div>
 
 {% endblock %}

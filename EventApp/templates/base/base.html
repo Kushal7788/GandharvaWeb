@@ -98,69 +98,69 @@
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'contactus' %}">Contact Us</a>
             </li>
-
-            {% if user.is_authenticated %}
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'ourTeam' %}">Our Team</a>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">
-                    {{ user.username }}
-                    {% if user.prof_img %}
-                        <img src="{{ user.prof_img.url }}"
-                             width="30" height="30">
-                     {% else %}
-                        <img src="https://ui-avatars.com/api/?name={{ user.first_name }}+{{ user.last_name }}&rounded=true" width="30" height="30">
-                     {% endif %}
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                            {% if user.is_superuser %}
-                                <form method="get" action="{% url 'RegisterHead' %}">
-                                    <input type="hidden" name="HeadRegister" value=>
-                                    <button type="submit" class="dropdown-item dropdownStyle">Register Heads</button>
-                                </form>
-                            {% endif %}
-                            {% if user.is_staff %}
-                                {% if role == 1 %}
-                                    <form method="get" action="{% url 'campaign' %}">
-                                {% else %}
-                                    <form method="get" action="{% url 'myactions' %}">
-                                {% endif %}
-
-                            <button type="submit" class="dropdown-item dropdownStyle">My Actions</button>
+            {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        {{ user.username }}
+                        {% if user.prof_img %}
+                            <img src="{{ user.prof_img.url }}"
+                                 width="30" height="30">
+                        {% else %}
+                            <img src="https://ui-avatars.com/api/?name={{ user.first_name }}+{{ user.last_name }}&rounded=true"
+                                 width="30" height="30">
+                        {% endif %}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                        {% if user.is_superuser %}
+                            <form method="get" action="{% url 'RegisterHead' %}">
+                                <input type="hidden" name="HeadRegister" value=>
+                                <button type="submit" class="dropdown-item dropdownStyle">Register Heads</button>
                             </form>
-                                <form method="get" action="{% url 'files' %}">
-
-                                    <button type="submit" class="dropdown-item dropdownStyle">File Upload</button>
-                                </form>
-                                <form method="get" action="{% url 'other-uploads' %}">
-
-                                    <button type="submit" class="dropdown-item dropdownStyle">Other Uploads</button>
-                                </form>
-
+                        {% endif %}
+                        {% if user.is_staff %}
+                            {% if role == 1 %}
+                                <form method="get" action="{% url 'campaign' %}">
+                            {% else %}
+                                <form method="get" action="{% url 'myactions' %}">
                             {% endif %}
 
-                            <form method="get" action="{% url 'user_profile' %}">
+                        <button type="submit" class="dropdown-item dropdownStyle">My Actions</button>
+                        </form>
+                            <form method="get" action="{% url 'files' %}">
 
-                                <input type="hidden" name="profile" value=>
-                                <button type="submit" class="dropdown-item dropdownStyle">My Profile</button>
+                                <button type="submit" class="dropdown-item dropdownStyle">File Upload</button>
                             </form>
-                            {#                        <form method="get" action="{% url 'eventsRegister' %}">#}
-                            {#                            <input type="hidden" name="EventRegister" value=>#}
-                            {#                            <button type="submit" class="dropdown-item dropdownStyle">Registered Events</button>#}
-                            {#                        </form>#}
-                            <form method="get" action="{% url 'user_logout' %}">
+                            <form method="get" action="{% url 'other-uploads' %}">
 
-                                <input type="hidden" name="dept" value=>
-                                <button type="submit" class="dropdown-item dropdownStyle">Log Out</button>
+                                <button type="submit" class="dropdown-item dropdownStyle">Other Uploads</button>
                             </form>
-                        </div>
+
+                        {% endif %}
+
+                        <form method="get" action="{% url 'user_profile' %}">
+
+                            <input type="hidden" name="profile" value=>
+                            <button type="submit" class="dropdown-item dropdownStyle">My Profile</button>
+                        </form>
+                        {#                        <form method="get" action="{% url 'eventsRegister' %}">#}
+                        {#                            <input type="hidden" name="EventRegister" value=>#}
+                        {#                            <button type="submit" class="dropdown-item dropdownStyle">Registered Events</button>#}
+                        {#                        </form>#}
+                        <form method="get" action="{% url 'user_logout' %}">
+
+                            <input type="hidden" name="dept" value=>
+                            <button type="submit" class="dropdown-item dropdownStyle">Log Out</button>
+                        </form>
+                    </div>
                     {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'user_login' %}">Login</a>
-                        </li>
-                    {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'user_login' %}">Login</a>
+                </li>
+            {% endif %}
         </ul>
     </div>
 </nav>
@@ -193,16 +193,16 @@
 </script>
 <script type="text/javascript" src="{% static 'base/js/base.js' %}"></script>
 <script>
-        $(document).ready(function () {
-            $(document).click(function (event) {
-                var clickover = $(event.target);
-                var _opened = $(".navbar-collapse").hasClass("show");
-                if (_opened === true && !clickover.hasClass("navbar-toggler")) {
-                    $(".navbar-toggler").click();
-                }
-            });
+    $(document).ready(function () {
+        $(document).click(function (event) {
+            var clickover = $(event.target);
+            var _opened = $(".navbar-collapse").hasClass("show");
+            if (_opened === true && !clickover.hasClass("navbar-toggler")) {
+                $(".navbar-toggler").click();
+            }
         });
-    </script>
+    });
+</script>
 {% block scripts %}
 {% endblock %}
 </body>
