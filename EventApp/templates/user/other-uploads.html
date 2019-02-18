@@ -21,10 +21,14 @@
                 {% csrf_token %}
                 {% if juniors %}
                     {% for junior in juniors %}
-                        <input hidden name="junior" value="{{ junior.subuser }}">
-                        <button class="astext">{{ junior.subuser }}</button>
+
+                        <div class="text-center">
+                            <input hidden name="junior" value="{{ junior.subuser }}">
+                            <button class="astext " style="font-weight: 500;color: #3673e8;">{{ junior.subuser }}</button>
+                        </div>
                     {% endfor %}
                     </form>
+                    <br>
                 {% else %}
                     <h5 style="text-align: center; font-weight: 400">No Subordinates Under you</h5>
                 {% endif %}
