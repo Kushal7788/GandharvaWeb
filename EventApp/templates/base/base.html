@@ -105,7 +105,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
-                        {{ user.username }}
+                        {#{ user.username }}  #}
                         {% if user.prof_img %}
                             <img src="{{ user.prof_img.url }}"
                                  width="30" height="30">
@@ -115,6 +115,19 @@
                         {% endif %}
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                    <div class="maindiv" >
+                        <div id="leftdiv">
+                            {% if user.prof_img %}
+                            <img id="user-image" src="{{ user.prof_img.url }}"
+                                 width="96" height="96">
+                        {% else %}
+                            <img id="user-image" src="https://ui-avatars.com/api/?name={{ user.first_name }}+{{ user.last_name }}&rounded=true"
+                                 width="96" height="96">
+                        {% endif %}
+                        </div>
+
+                        <div id="rightdiv">{{ user.first_name }} {{ user.last_name }}<br />{{ user.username }}<br />{{ role }}</div></div>
+                        <br>
                         {% if user.is_superuser %}
                             <form method="get" action="{% url 'RegisterHead' %}">
                                 <input type="hidden" name="HeadRegister" value=>
@@ -122,12 +135,11 @@
                             </form>
                         {% endif %}
                         {% if user.is_staff %}
-                            {% if role == 1 %}
+                            {% if role == "Campaigning Head" %}
                                 <form method="get" action="{% url 'campaign' %}">
                             {% else %}
-                                <form method="get" action="{% url 'myactions' %}">
+                                <div method="get" action="{% url 'myactions' %}">
                             {% endif %}
-
                         <button type="submit" class="dropdown-item dropdownStyle">My Actions</button>
                         </form>
                             <form method="get" action="{% url 'files' %}">

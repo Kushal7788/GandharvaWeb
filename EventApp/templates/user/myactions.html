@@ -10,18 +10,25 @@
     <div class="container" style="height:100vh">
         <div class="col-sm-7 container-center">
             <div class="logo">
-        <img class="img-fluid" src="{% static 'gandharva/img/logo_description.png' %}">
-        </div>
+                <img class="img-fluid" src="{% static 'gandharva/img/logo_description.png' %}">
+            </div>
             <h5 style="text-align: center;">My Actions</h5>
             <br>
             <div class="text-right">
+                {% if roles %}
                 <h5> {{ roles.name }}</h5>
+                {% else %}
+                <h5> Role Not Assigned</h5>
+                {% endif %}
             </div>
             <br>
 
             <h4 style="font-weight: 400;font-size: 22px"> Your roles:</h4>
-            <h6 style="font-weight: 400;font-size: 16px">{{ roles.assigned_work }}</h6>
-
+            {% if roles %}
+                <h6 style="font-weight: 400;font-size: 16px">{{ roles.assigned_work }}</h6>
+            {% else %}
+                <h6 style="font-weight: 400;font-size: 16px">No Role Exists</h6>
+            {% endif %}
 
             {% if button_name == "Campaign" %}
                 <form method="get" action="{% url 'campaign' %}">
