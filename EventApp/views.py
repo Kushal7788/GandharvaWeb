@@ -870,6 +870,7 @@ def cashpayment(request, event_new, user):
             'team': team,
             'transaction': transaction,
         })
+        print(team.QRcode.path)
         send_email(user.email, mail_subject, message, [team.QRcode.path])
 
 
@@ -983,11 +984,11 @@ def reset_password_new(request, uidb64, token):
             user.token2 = None
             user.save()
             args = {
-                'user': user,
+                'user2': user,
             }
             return render(request, 'user/new_password.html', args)
         else:
-            return render(request, "user/reset_password.html")
+            return HttpResponse('Email link invlid')
     return HttpResponse("You have already reset your password")
 
 
