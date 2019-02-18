@@ -91,16 +91,16 @@
                     {#                    </div>#}
                 </div>
             </li>
-{#                        <li class="nav-item">#}
-{#                            <a class="nav-link" href="{% url 'ourSponsors' %}">Sponsors</a>#}
-{#                        </li>#}
+            {#                        <li class="nav-item">#}
+            {#                            <a class="nav-link" href="{% url 'ourSponsors' %}">Sponsors</a>#}
+            {#                        </li>#}
 
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'contactus' %}">Contact Us</a>
             </li>
-{#            <li class="nav-item">#}
-{#                <a class="nav-link" href="{% url 'ourTeam' %}">Our Team</a>#}
-{#            </li>#}
+            {#            <li class="nav-item">#}
+            {#                <a class="nav-link" href="{% url 'ourTeam' %}">Our Team</a>#}
+            {#            </li>#}
             {% if user.is_authenticated %}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
@@ -115,18 +115,21 @@
                         {% endif %}
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                    <div class="maindiv" >
-                        <div id="leftdiv">
-                            {% if user.prof_img %}
-                            <img id="user-image" src="{{ user.prof_img.url }}"
-                                 width="96" height="96">
-                        {% else %}
-                            <img id="user-image" src="https://ui-avatars.com/api/?name={{ user.first_name }}+{{ user.last_name }}&rounded=true"
-                                 width="96" height="96">
-                        {% endif %}
-                        </div>
+                        <div class="maindiv">
+                            <div id="leftdiv">
+                                {% if user.prof_img %}
+                                    <img id="user-image" src="{{ user.prof_img.url }}"
+                                         width="80" height="80">
+                                {% else %}
+                                    <img id="user-image"
+                                         src="https://ui-avatars.com/api/?name={{ user.first_name }}+{{ user.last_name }}&rounded=true"
+                                         width="80" height="80">
+                                {% endif %}
+                            </div>
 
-                        <div id="rightdiv">{{ user.first_name }} {{ user.last_name }}<br />{{ user.username }}<br />{{ role }}</div></div>
+                            <div id="rightdiv">{{ user.first_name }} {{ user.last_name }}<br>{{ user.username }}<br>{{ role }}
+                            </div>
+                        </div>
                         <br>
                         {% if user.is_superuser %}
                             <form method="get" action="{% url 'RegisterHead' %}">
