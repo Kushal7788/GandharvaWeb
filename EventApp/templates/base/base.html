@@ -193,7 +193,17 @@
     }
 </script>
 <script type="text/javascript" src="{% static 'base/js/base.js' %}"></script>
-
+<script>
+        $(document).ready(function () {
+            $(document).click(function (event) {
+                var clickover = $(event.target);
+                var _opened = $(".navbar-collapse").hasClass("show");
+                if (_opened === true && !clickover.hasClass("navbar-toggler")) {
+                    $(".navbar-toggler").click();
+                }
+            });
+        });
+    </script>
 {% block scripts %}
 {% endblock %}
 </body>
