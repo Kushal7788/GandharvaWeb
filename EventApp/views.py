@@ -499,12 +499,15 @@ def user_login(request):
 
 @staff_user
 def myaction(request):
-    role = RoleAssignment.objects.get(user=request.user.id)
+    if RoleAssignment.objects.filter(user=request.user).count():
+        role = RoleAssignment.objects.get(user=request.user.id).role
+    else:
+        role = None
     if request.user.is_staff:
         args = {
             'button_name': 'Campaign',
             'urlaccess': campaign,
-            'roles': role.role
+            'roles': role
         }
         return render(request, 'user/myactions.html', args)
     # if role.role.name == 'Event Head':
