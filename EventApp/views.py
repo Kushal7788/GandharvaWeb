@@ -975,7 +975,7 @@ def reset_password_new(request, uidb64, token):
     except(TypeError, ValueError, OverflowError, user.DoesNotExist, IntegrityError, ObjectDoesNotExist):
         user = None
     if user is not None:
-        return HttpResponse(user.token2 + 'a<br>' + token + 'b<br>')
+        # return HttpResponse(user.token2 + 'a<br>' + token + 'b<br>')
         if user.token2 == token:
             user.token2 = None
             user.save()
