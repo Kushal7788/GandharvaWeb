@@ -6,7 +6,7 @@
 {% endblock %}
 {% block body %}
 
-  <div class="container-fluid" style="margin-left: 5%;margin-right:4%;">
+  <div class="container-fluid" style="margin-left: 8%;margin-right:4%;">
       <br>
       <br>
       <br>
@@ -17,7 +17,8 @@
       <br>
   {% if objs %}
 {% for obj in objs %}
-  <div class="row"  style="width: 90%;">
+    {% if forloop.first %}
+        <div class="row"  style="width: 90%;">{% endif %}
     <div class="col-sm-3 main-section">
       <div class="modal-content">
             <div class="col-12 user-img">
@@ -28,13 +29,20 @@
             <p class="postname">{{ obj.post }}</p>
         </div>
       </div>
+                {% if forloop.counter|divisibleby:4 %}
+                    </div>
+                    <div class="row" style="width: 90%;">{% endif %}
+    {% if forloop.last %}
+
+                    </div>
+                {% endif %}
+
     {% endfor %}
   {% else %}
   <h3>No Members to display</h3>
   {% endif %}
-
   </div>
-</div>
+  </div>
     <br>
     <br>
     <br>
