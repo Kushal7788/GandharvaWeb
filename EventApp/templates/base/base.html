@@ -103,7 +103,8 @@
             {#            </li>#}
             {% if user.is_authenticated %}
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                    <a class="nav-link dropdown-toggle caret-off" href="#" id="navbarDropdownMenuLink"
+                       data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
                         {#{ user.username }}  #}
                         {% if user.prof_img %}
@@ -141,7 +142,7 @@
                             {% if role == "Campaigning Head" %}
                                 <form method="get" action="{% url 'campaign' %}">
                             {% else %}
-                                <div method="get" action="{% url 'myactions' %}">
+                                <form method="get" action="{% url 'myactions' %}">
                             {% endif %}
                         <button type="submit" class="dropdown-item dropdownStyle">My Actions</button>
                         </form>
@@ -153,24 +154,24 @@
 
                                 <button type="submit" class="dropdown-item dropdownStyle">Other Uploads</button>
                             </form>
-                        <hr>
+                            <hr>
                         {% endif %}
-                        
-                        <div id="logprof">
-                                <form method="get" action="{% url 'user_profile' %}">
 
-                                        <input type="hidden" name="profile" value=>
-                                        <button type="submit" class="dropdown-item dropdownStyle">My Profile</button>
-                                    </form>
-                                    {#                        <form method="get" action="{% url 'eventsRegister' %}">#}
-                                    {#                            <input type="hidden" name="EventRegister" value=>#}
-                                    {#                            <button type="submit" class="dropdown-item dropdownStyle">Registered Events</button>#}
-                                    {#                        </form>#}
-                                    <form method="get" action="{% url 'user_logout' %}">
-            
-                                        <input type="hidden" name="dept" value=>
-                                        <button type="submit" class="dropdown-item dropdownStyle">Log Out</button>
-                                    </form>
+                        <div id="logprof">
+                            <form method="get" action="{% url 'user_profile' %}">
+
+                                <input type="hidden" name="profile" value=>
+                                <button type="submit" class="dropdown-item dropdownStyle">My Profile</button>
+                            </form>
+                            {#                        <form method="get" action="{% url 'eventsRegister' %}">#}
+                            {#                            <input type="hidden" name="EventRegister" value=>#}
+                            {#                            <button type="submit" class="dropdown-item dropdownStyle">Registered Events</button>#}
+                            {#                        </form>#}
+                            <form method="get" action="{% url 'user_logout' %}">
+
+                                <input type="hidden" name="dept" value=>
+                                <button type="submit" class="dropdown-item dropdownStyle">Log Out</button>
+                            </form>
                         </div>
                     </div>
                     {% else %}

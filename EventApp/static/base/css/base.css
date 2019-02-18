@@ -8,11 +8,6 @@ html, body {
     background-color: #f2f2f2;
 }
 
-@font-face {
-    font-family: Amarillo;
-    src: url(../../../static/gandharva/fonts/Amarillo.woff) format('woff');
-}
-
 /*************************
 ******Navbar CSS****
 **************************/
@@ -48,7 +43,6 @@ nav .navbar-nav li a {
     /*background-color: #fff;*/
     /*color: #004E8A !important;*/
 
-
     border-color: white;
 
 }
@@ -74,6 +68,19 @@ nav li .active a {
     font-size: 18px;
     margin: 4px;
     border-radius: 6px;
+}
+
+.caret-off::before {
+    display: none;
+}
+
+.caret-off::after {
+    display: none;
+}
+
+.navbar-collapse {
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
 }
 
 @media only screen and (max-width: 800px) {
@@ -150,25 +157,24 @@ a:hover {
     margin-bottom: 20px
 }
 
-
 #user-image {
     margin-left: 20px;
     margin-top: 10px;
 }
 
-#rightdiv{
+#rightdiv {
     /*width:150px;*/
     /*font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;*/
     font-size: 16px;
-    color : white;
+    color: white;
     padding-top: 10px
 }
 
-#leftdiv{
-    width:130px;
+#leftdiv {
+    width: 130px;
 }
 
-.maindiv{
+.maindiv {
     width: 300px;
     display: flex;
     flex-direction: row;
@@ -189,3 +195,4 @@ hr {
     flex-direction: row;
     justify-content: space-between
 }
+

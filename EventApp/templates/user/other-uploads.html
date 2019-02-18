@@ -15,14 +15,12 @@
             <h5 style="text-align: center;">Other Upload</h5>
             <br>
             <div class="text-center">
-                <label style="font-weight:bold">Documents Uploaded By Other Users</label>
+                <label>Documents Uploaded By Other Users</label>
             </div>
             <form method="post" action="{% url 'uploaded-docs' %}">
                 {% csrf_token %}
                 {% if juniors %}
                     {% for junior in juniors %}
-
-
                         <div class="text-center">
                             <input hidden name="junior" value="{{ junior.subuser.username }}">
                             {% if junior.subuser.first_name %}
