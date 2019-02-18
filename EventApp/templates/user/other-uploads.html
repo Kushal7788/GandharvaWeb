@@ -21,8 +21,12 @@
                 {% csrf_token %}
                 {% if juniors %}
                     {% for junior in juniors %}
-                        <input hidden name="junior" value="{{ junior.subuser }}">
-                        <button class="astext">{{ junior.subuser }}</button>
+                        <input hidden name="junior" value="{{ junior.subuser.username }}">
+                        {% if junior.subuser.first_name %}
+                        <button class="astext">{{ junior.subuser.first_name }} {{ junior.subuser.last_name }}</button>
+                        {% else %}
+                        <button class="astext">{{ junior.subuser.full_name }}</button>
+                        {% endif %}
                     {% endfor %}
                     </form>
                 {% else %}

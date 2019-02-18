@@ -976,7 +976,7 @@ def reset_password_new(request, uidb64, token):
         user = None
     if user is not None:
         # return HttpResponse(user.token2 + 'a<br>' + token + 'b<br>')
-        if user.token2 == token:
+        if str(user.token2) == str(token):
             user.token2 = None
             user.save()
             args = {
@@ -1119,7 +1119,7 @@ def ourSponsors(request):
     return render(request, 'gandharva/ourSponsors.html', args)
 
 
-@staff_user
+
 def ourTeam(request):
     obj = OurTeam.objects.all().count()
     if obj:
