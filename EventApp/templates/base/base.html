@@ -115,15 +115,18 @@
                         {% endif %}
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-
-                        {% if user.prof_img %}
+                        <div id="leftdiv">
+                            {% if user.prof_img %}
                             <img id="user-image" src="{{ user.prof_img.url }}"
                                  width="96" height="96">
                         {% else %}
                             <img id="user-image" src="https://ui-avatars.com/api/?name={{ user.first_name }}+{{ user.last_name }}&rounded=true"
                                  width="96" height="96">
                         {% endif %}
-                        {{ user.username }}
+                        </div>
+
+                    <div id="rightdiv">{{ user.first_name }} {{ user.last_name }}<br />{{ user.username }}</div>
+
                         {% if user.is_superuser %}
                             <form method="get" action="{% url 'RegisterHead' %}">
                                 <input type="hidden" name="HeadRegister" value=>
