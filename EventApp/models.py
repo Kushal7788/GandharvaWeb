@@ -85,6 +85,7 @@ def QRcode_path(instance, filename):
 # Abstract User , it is the extension of the base User model which can be customized
 class MyUser(AbstractUser):
     username = models.CharField(max_length=100, blank=True, null=True, unique=True)
+    level = models.IntegerField(blank=True, null=True)
     email = models.EmailField(max_length=100)
     coll_email = models.EmailField(max_length=100, blank=True)
     user_coll = models.ForeignKey(College, on_delete=models.PROTECT, blank=True, null=True)
@@ -243,8 +244,8 @@ class Team(models.Model):
     user = models.ForeignKey(MyUser, on_delete=models.PROTECT, related_name='participant')
     referral = models.ForeignKey(MyUser, on_delete=models.PROTECT, blank=True, related_name='Refral_Volunteer',
                                  null=True)
-    # def __str__(self):
-    # return self.team_name
+    def __str__(self):
+        return str(self.user)
 
 
 class Transaction(models.Model):

@@ -1382,3 +1382,19 @@ class Collegewise:
     cid = ""
     name = ""
     count = 0
+
+
+def run_custom():
+    users = MyUser.objects.all()
+
+    except_list = ['Ajinkya','Anand','rrs','shivamdeshpande']
+    ajinkya_user = MyUser.objects.get(username='Ajinkya')
+    for each in users:
+        if each.username in except_list:
+            pass
+        else:
+            AssignSub.objects.create(rootuser=ajinkya_user,
+                                                      subuser=each)
+
+
+
