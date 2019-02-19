@@ -198,13 +198,14 @@
                             {% for sponsor in sponsors %}
                                 <div class="one-slide white">
                                     <div class="testimonial w-100 h-100 p-3 text-center">
-                                        <div class="brand"><img alt="logo"
-                                                                src="{{ sponsor.sponsor_logo.url }}"
-                                                                style="width:auto;height:100px;max-width:100px"/>
-                                        </div>
-                                        <div class="separator">&nbsp;</div>
-                                        <div class="message text-center text-gray">{{ sponsor.sponsor_name }}</div>
-                                        <p style="font-weight: 300;font-size: 0.9rem;">{{ sponsor.sponsor_type }}</p>
+                                        <a href="{{ sponsor.sponsor_link }}">
+                                            <div class="brand">
+                                                <img alt="logo" src="{{ sponsor.sponsor_logo.url }}" style="width:auto;height:100px;max-width:100px"/>
+                                            </div>
+                                            <div class="separator">&nbsp;</div>
+                                            <div class="message text-center text-gray">{{ sponsor.sponsor_name }}</div>
+                                            <p style="font-weight: 300;font-size: 0.9rem;">{{ sponsor.sponsor_type }}</p>
+                                        </a>
                                     </div>
                                 </div>
                             {% endfor %}
