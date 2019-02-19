@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Publicity Head</title>
+</head>
+<body>
+
+<form method="post" action="{% url 'publicity-head' %}" enctype="multipart/form-data" >
+    {% csrf_token %}
+    Subject: <input type="text" name="subject">
+    <br>
+    Message: <input type="text" name="message">
+    <br>
+    Attachment: <input type="file" name="file">
+    <br>
+    {% for participant in participants %}
+    <input type="checkbox" name="participants" id="option{{participant.email}}" value={{participant.email}}>
+    <label for="option{{participant.email}}" value="{{participant.email}}"><b>{{participant.username}}</b></label><br/>
+    {% endfor %}
+
+    <input type="submit" value="send">
+
+</form>
+
+</body>
+</html>

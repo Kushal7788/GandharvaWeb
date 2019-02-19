@@ -7,13 +7,16 @@ from email.mime.application import MIMEApplication
 
 def send_email(to_email, subject= None, message = None, attach = None,otp=0):
     # Define from
-    sender = 'hello@viitgandharva.com'
+    sender = 'sunilupare@zoho.com'
 
     # Create message
     msg = MIMEMultipart()
     msg['Subject'] = subject
     msg['From'] = sender
-    msg['To'] = to_email
+    if isinstance(to_email, list):
+        msg['To'] = ", ".join(to_email)
+    else:
+        msg['To'] = to_email
     if otp==0:
         msg.attach(MIMEText(message,'html'))
     else:
@@ -33,7 +36,7 @@ def send_email(to_email, subject= None, message = None, attach = None,otp=0):
     server = smtplib.SMTP_SSL('smtp.zoho.com', 465)
 
     # Perform operations via server
-    server.login('hello@viitgandharva.com', 'Gandharva@19hello')
+    server.login('sunilupare@yahoo.com', '2019@gandharva')
     x=server.sendmail(sender, to_email, msg.as_string())
     print("Return value",x)
     server.quit()

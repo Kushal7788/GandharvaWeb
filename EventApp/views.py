@@ -4,8 +4,11 @@ import datetime
 import json
 import re
 import string
+import EventApp
+import os
 from io import BytesIO
-
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
 import openpyxl
 import qrcode
 import sweetify
@@ -116,6 +119,10 @@ def home(request):
             role = role[0]
             if role.role.name == "Jt Campaigning Head" or role.role.name == "Campaigning Head":
                 userget = 1
+            if role.role.name == "Jt Event Head" or role.role.name == "Event Head":
+                userget = 2
+            if role.role.name == "Jt Publicity Head" or role.role.name == "Publicity Head":
+                userget = 3
 
     global_objects = EventDepartment.objects.filter(department=6)
     event_name = []
@@ -537,7 +544,8 @@ def register_head(request):
     year = College_year.objects.all()
     events = EventMaster.objects.all()
     if request.method == 'POST':
-
+        id = request.POST.get('event')
+        event = EventMaster.objects.get(pk=id)
         # try:
         #     old_user = MyUser.objects.get(email=userform.email)
         #     print(old_user)
@@ -581,9 +589,15 @@ def register_head(request):
             user.is_active = False
             user.full_name = user.first_name + " " + user.last_name
             user.save()
+            role = request.POST.get('role')
+            if role == "Event Head":
+                event.head = user
+            elif role == "Jt. Event Head":
+                event.jt_head = user
+            event.save()
             roleassign = RoleAssignment()
             roleassign.user = user
-            roleassign.role = roleform.cleaned_data.get('role')
+            roleassign.role = RoleMaster.objects.get(name=role)
             current_site = get_current_site(request)
             token1 = account_activation_token.make_token(user)
             message = render_to_string('user/acc_active_email_register_head.html', {
@@ -624,6 +638,62 @@ def register_head(request):
     return render(request, 'events/RegisterHead.html',
                   {'userform': userform, 'roleform': roleform, 'roles': Roles, 'depts': dept, 'colleges': coll,
                    'years': year, 'categories': role_categories, 'selected_roles': selected_roles, 'events': events})
+
+# @staff_user
+def event_head(request) :
+    if request.method == "POST":
+        participants_selected = request.POST.getlist('participants')
+        print(participants_selected)
+        subject = request.POST.get('subject')
+        message = request.POST.get('message')
+        if len(request.FILES)==1:
+            myfile = request.FILES['file']
+            fs = FileSystemStorage()
+            filename = fs.save(myfile.name, myfile)
+            uploaded_file_url = fs.path(filename)
+            send_email(participants_selected , subject , message,[uploaded_file_url])
+        else:
+            send_email(participants_selected, subject, message)
+        event_id = request.POST.get('event_id')
+        participants1 = Team.objects.filter(receipt__event__pk=event_id).values_list('user', flat=True).distinct()
+        participants = []
+        for p in participants1:
+            participants.append(MyUser.objects.get(pk=p))
+        return render(request, 'events/event_head.html', {'participants': participants ,'event_id' : event_id})
+    else:
+        event_id = request.GET.get('event_id')
+        participants1 = Team.objects.filter( receipt__event__pk = event_id ).values_list('user',flat=True).distinct()
+        participants=[]
+        for p in participants1:
+            participants.append(MyUser.objects.get(pk=p))
+        return render(request, 'events/event_head.html' , { 'participants' : participants , 'event_id' : event_id  })
+
+# @staff_user
+def publicity_head(request) :
+    if request.method == "POST":
+        participants_selected = request.POST.getlist('participants')
+        print("selected",participants_selected)
+        subject = request.POST.get('subject')
+        message = request.POST.get('message')
+        if len(request.FILES)==1:
+            myfile = request.FILES['file']
+            fs = FileSystemStorage()
+            filename = fs.save(myfile.name, myfile)
+            uploaded_file_url = fs.path(filename)
+            send_email(participants_selected , subject , message,[uploaded_file_url])
+        else:
+            send_email(participants_selected, subject, message)
+        participants1 = Team.objects.values_list('user', flat=True).distinct().all()
+        participants = []
+        for p in participants1:
+            participants.append(MyUser.objects.get(pk=p))
+        return render(request, 'events/publicity_head.html', {'participants': participants})
+    else:
+        participants1 = Team.objects.values_list('user', flat=True).distinct().all()
+        participants = []
+        for p in participants1:
+            participants.append(MyUser.objects.get(pk=p))
+        return render(request, 'events/publicity_head.html' , { 'participants' : participants })
 
 
 def load_roles(request):
