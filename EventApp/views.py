@@ -260,9 +260,9 @@ def success(request):
                 send_email(user.email, mail_subject, message, [team.QRcode.path])
 
             if transaction.status == "Credit":
-                return render(request, 'user/paymentSsuccess.html')
+                return render(request, 'user/paymentSsuccess.html', {'user_id': user.pk})
             elif transaction.status == "Failed":
-                return render(request, 'user/paymentFailed.html')
+                return render(request, 'user/paymentFailed.html', {'user_id': user.pk})
             teams = reversed(Team.objects.filter(user=user).reverse())
             # print(teams)
         else:
@@ -270,6 +270,14 @@ def success(request):
     else:
         print("ERROR")
 
+def hear_about_us(request):
+    if request.method == 'GET':
+        user_id = request.GET.get('user_id')
+        source = request.GET.get('source')
+
+        obj = HearAboutUs(user_id=user_id, source=source)
+        obj.save()
+        return redirect('home')
 
 @staff_user
 def all_participants(request):

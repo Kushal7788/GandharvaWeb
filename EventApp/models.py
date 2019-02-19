@@ -348,3 +348,11 @@ class OurTeam(models.Model):
 
     def __str__(self):
         return 'Username : ' + self.name
+
+
+class HearAboutUs(models.Model):
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE, blank=True)
+    source = models.CharField(default=None, max_length=200, blank=True)
+
+    def __str__(self):
+        return self.user.username + ' -> ' + self.source
