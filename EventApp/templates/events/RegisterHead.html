@@ -121,19 +121,19 @@
                     <span id="MobileErrors" class="errors"></span>
                     {{ userform.user_phone.errors }}
                 </div>
-                <div class="form-group">
-                    Department:
-                    <select name="user_dept" class="form-control" style="width: 100%;margin-left: 0">
-                        {% for dept in depts %}
-                            {% if dept.name != 'Global' %}
-                                <option value="{{ dept.pk }}">{{ dept.name }}</option>
-                            {% endif %}
-                        {% endfor %}
-                    </select>
-                    <div style="color: whitesmoke">
-                        {{ userform.user_dept.errors }}
-                    </div>
-                </div>
+                <!--<div class="form-group">-->
+                <!--    Department:-->
+                <!--    <select name="user_dept" class="form-control" style="width: 100%;margin-left: 0">-->
+                <!--        {% for dept in depts %}-->
+                <!--            {% if dept.name != 'Global' %}-->
+                <!--                <option value="{{ dept.pk }}">{{ dept.name }}</option>-->
+                <!--            {% endif %}-->
+                <!--        {% endfor %}-->
+                <!--    </select>-->
+                <!--    <div style="color: whitesmoke">-->
+                <!--        {{ userform.user_dept.errors }}-->
+                <!--    </div>-->
+                <!--</div>-->
                 <div class="form-group">
                     College:
                     <select name="user_coll" class="form-control" style="width: 100%;margin-left: 0">

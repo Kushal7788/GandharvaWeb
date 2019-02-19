@@ -91,21 +91,22 @@
                     {#                    </div>#}
                 </div>
             </li>
-            {#            <li class="nav-item">#}
-            {#                <a class="nav-link" href="{% url 'ourSponsors' %}">Sponsors</a>#}
-            {#            </li>#}
+            {#                        <li class="nav-item">#}
+            {#                            <a class="nav-link" href="{% url 'ourSponsors' %}">Sponsors</a>#}
+            {#                        </li>#}
 
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'contactus' %}">Contact Us</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'ourTeam' %}">Our Team</a>
-            </li>
+            {#            <li class="nav-item">#}
+            {#                <a class="nav-link" href="{% url 'ourTeam' %}">Our Team</a>#}
+            {#            </li>#}
             {% if user.is_authenticated %}
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                    <a class="nav-link dropdown-toggle caret-off" href="#" id="navbarDropdownMenuLink"
+                       data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
-                        {{ user.username }}
+                        {#{ user.username }}  #}
                         {% if user.prof_img %}
                             <img src="{{ user.prof_img.url }}"
                                  width="30" height="30">
@@ -115,6 +116,22 @@
                         {% endif %}
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                        <div class="maindiv">
+                            <div id="leftdiv">
+                                {% if user.prof_img %}
+                                    <img id="user-image" src="{{ user.prof_img.url }}"
+                                         width="80" height="80">
+                                {% else %}
+                                    <img id="user-image"
+                                         src="https://ui-avatars.com/api/?name={{ user.first_name }}+{{ user.last_name }}&rounded=true"
+                                         width="80" height="80">
+                                {% endif %}
+                            </div>
+
+                            <div id="rightdiv">{{ user.first_name }} {{ user.last_name }}<br><i>{{ user.username }}</i><br>{{ role }}
+                            </div>
+                        </div>
+                        <hr>
                         {% if user.is_superuser %}
                             <form method="get" action="{% url 'RegisterHead' %}">
                                 <input type="hidden" name="HeadRegister" value=>
@@ -122,7 +139,7 @@
                             </form>
                         {% endif %}
                         {% if user.is_staff %}
-                            {% if role == 1 %}
+                            {% if role == "Campaigning Head" %}
                                 <form method="get" action="{% url 'campaign' %}">
                             {% elif role == 2 %}
                                 <form method="get" action="{% url 'event-head' %}">
@@ -131,7 +148,6 @@
                             {% else %}
                                 <form method="get" action="{% url 'myactions' %}">
                             {% endif %}
-
                         <button type="submit" class="dropdown-item dropdownStyle">My Actions</button>
                         </form>
                             <form method="get" action="{% url 'files' %}">
@@ -142,23 +158,25 @@
 
                                 <button type="submit" class="dropdown-item dropdownStyle">Other Uploads</button>
                             </form>
-
+                            <hr>
                         {% endif %}
 
-                        <form method="get" action="{% url 'user_profile' %}">
+                        <div id="logprof">
+                            <form method="get" action="{% url 'user_profile' %}">
 
-                            <input type="hidden" name="profile" value=>
-                            <button type="submit" class="dropdown-item dropdownStyle">My Profile</button>
-                        </form>
-                        {#                        <form method="get" action="{% url 'eventsRegister' %}">#}
-                        {#                            <input type="hidden" name="EventRegister" value=>#}
-                        {#                            <button type="submit" class="dropdown-item dropdownStyle">Registered Events</button>#}
-                        {#                        </form>#}
-                        <form method="get" action="{% url 'user_logout' %}">
+                                <input type="hidden" name="profile" value=>
+                                <button type="submit" class="dropdown-item dropdownStyle">My Profile</button>
+                            </form>
+                            {#                        <form method="get" action="{% url 'eventsRegister' %}">#}
+                            {#                            <input type="hidden" name="EventRegister" value=>#}
+                            {#                            <button type="submit" class="dropdown-item dropdownStyle">Registered Events</button>#}
+                            {#                        </form>#}
+                            <form method="get" action="{% url 'user_logout' %}">
 
-                            <input type="hidden" name="dept" value=>
-                            <button type="submit" class="dropdown-item dropdownStyle">Log Out</button>
-                        </form>
+                                <input type="hidden" name="dept" value=>
+                                <button type="submit" class="dropdown-item dropdownStyle">Log Out</button>
+                            </form>
+                        </div>
                     </div>
                     {% else %}
                 <li class="nav-item">

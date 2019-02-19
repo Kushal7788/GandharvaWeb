@@ -89,7 +89,7 @@ class MyUser(AbstractUser):
     coll_email = models.EmailField(max_length=100, blank=True)
     user_coll = models.ForeignKey(College, on_delete=models.PROTECT, blank=True, null=True)
     user_year = models.ForeignKey(College_year, on_delete=models.PROTECT, null=True, blank=True)
-    user_dept = models.ForeignKey(Department, on_delete=models.PROTECT, null=True)
+    user_dept = models.ForeignKey(Department, on_delete=models.PROTECT, null=True, blank=True)
     prof_img = models.ImageField(upload_to=prof_path, blank=True)
     user_phone = models.CharField(max_length=10, blank=True)
     count = models.IntegerField(default=0, null=True)
@@ -98,7 +98,10 @@ class MyUser(AbstractUser):
     full_name = models.CharField(max_length=200, null=True, blank=True)
 
     def __str__(self):
-        return self.username
+        return str(self.coll_email) + ' ' + str(self.username) +' '+ str(self.full_name) +' ' + str(self.first_name)
+
+    # class Meta:
+    #     ordering = ['email']
 
 
 # RoleMaster contains all the vaarious roles of users
@@ -108,6 +111,9 @@ class RoleMaster(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        ordering = ['name']
 
 
 class Role_category(models.Model):
@@ -154,7 +160,13 @@ class RoleAssignment(models.Model):
     event = models.ForeignKey(EventMaster, on_delete=models.PROTECT, blank=True, null=True)
 
     def __str__(self):
-        return self.role.name
+        try:
+            return str(self.role.name) + ' '+ str(self.user)
+        except:
+            return str(self.role.name)
+
+    class Meta:
+        ordering = ['role']
 
 
 class Domain(models.Model):
@@ -298,8 +310,10 @@ class AssignSub(models.Model):
     subuser = models.ForeignKey(MyUser, on_delete=models.PROTECT, related_name='subordinate')
 
     def __str__(self):
-        return 'Username : ' + self.rootuser.first_name
+        return 'Root : ' + str(self.rootuser.first_name) +' ' +  str(self.rootuser.full_name) +' Sub: ' + str(self.subuser.first_name) +' '+ str(self.subuser.full_name)
 
+    class Meta:
+        unique_together = ('rootuser', 'subuser',)
 
 class InstamojoCredential(models.Model):
     key = models.CharField(max_length=50)

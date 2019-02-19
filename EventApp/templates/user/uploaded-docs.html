@@ -3,10 +3,19 @@
 {% block title %}Other Upload{% endblock %}
 {% block css %}
     <link href="{% static 'events/css/campaign.css' %}" rel="stylesheet">
+    <style>
+        .table {
+            margin-left: 0;
+        }
+
+        td {
+            width: 500px;
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
-    <br><br><br><br><br>
+    <br><br><br><br><br><br>
     <div class="container">
         <div class="col-sm-8 container-center">
             <div class="logo">
@@ -15,7 +24,7 @@
             <h5 style="text-align: center;">Other Upload</h5>
             <br>
             <div class="text-center">
-                <label style="font-weight:bold">Documents Uploaded By {{ junior }}</label>
+                <label>Documents Uploaded By {{ junior }}</label>
                 {% if docs %}
                     <table class="table table-responsive">
                         <thead class="thead-dark">
@@ -37,8 +46,11 @@
                         </tbody>
                     </table>
                 {% else %}
-                    <h5 style="text-align: center;">No Documents Uploaded</h5>
+                    <h5 style="text-align: center;font-weight: 400">No Documents Uploaded</h5><br>
                 {% endif %}
             </div>
+        </div>
+    </div>
+    <div style="height: 40vh"></div>
 
 {% endblock %}

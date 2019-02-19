@@ -7,49 +7,20 @@
 {% block body %}
 
     <div class="container-fluid">
-        <div style="height: 20vh"></div>
-        <div class="text-center">
+        <div style="height: 18vh"></div>
+        <div class="text-center" style="margin-bottom: 6vh">
             <h1 style="font-family: 'Abel', sans-serif">Our Team</h1>
         </div>
-
+        <br><br>
         {% if objs %}
             {% for obj in objs %}
                 {% if forloop.first %}
                     <div class="row">{% endif %}
-            <div class="col-sm-2 col main-section">
-                <div class="modal-content" style="margin-bottom: 14px">
-                    <div class="col-sm-12 user-img">
-                        <img src="https://vignette.wikia.nocookie.net/marvelcinematicuniverse/images/b/bb/Tony_Stark_Promo.jpg/revision/latest?cb=20141129202546" alt="Contactlogo">
-                    </div>
-                    <p class="name">{{ obj.name }}</p>
-                    <p class="postname">{{ obj.post }}</p>
-                </div>
-            </div>
-
-            <div class="col-sm-2 col main-section">
+            <div class="col col-sm-5 col-md-2 main-section">
                 <div class="modal-content">
-                    <div class="col-sm-12  user-img">
-                        <img src="{{ obj.img.url }}" alt="Contactlogo">
-                    </div>
-                    <p class="name">{{ obj.name }}</p>
-                    <p class="postname">{{ obj.post }}</p>
-                </div>
-            </div>
-
-            <div class="col-sm-2 col main-section">
-                <div class="modal-content">
-                    <div class="col-sm-12 user-img">
-                        <img src="{{ obj.img.url }}" alt="Contactlogo">
-                    </div>
-                    <p class="name">{{ obj.name }}</p>
-                    <p class="postname">{{ obj.post }}</p>
-                </div>
-            </div>
-
-            <div class="col-sm-2 col main-section">
-                <div class="modal-content">
-                    <div class="col-sm-12 user-img">
-                        <img src="{{ obj.img.url }}" alt="Contactlogo">
+                    <div class="user-img">
+                        <img src="{{ obj.img.url }}"
+                             alt="Contactlogo">
                     </div>
                     <p class="name">{{ obj.name }}</p>
                     <p class="postname">{{ obj.post }}</p>
@@ -67,6 +38,5 @@
         {% endif %}
     </div>
     </div>
-    <div style="height: 30vh"></div>
-
+    <div style="height: 20vh"></div>
 {% endblock %}
