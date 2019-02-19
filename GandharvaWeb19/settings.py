@@ -28,6 +28,8 @@ ALLOWED_HOSTS = ['127.0.0.1', 'gandharva19.pythonanywhere.com', '0.0.0.0', 'loca
                  'viitgandharva.com', '*.viitgandharva.com', '192.168.43.139', '192.168.43.211','192.168.0.103']
 
 # Application definition
+EMAIL_USE_SSL=False
+EMAIL_USE_TLS = True
 
 INSTALLED_APPS = [
     'GandharvaWeb19',

@@ -121,19 +121,19 @@
                     <span id="MobileErrors" class="errors"></span>
                     {{ userform.user_phone.errors }}
                 </div>
-                <div class="form-group">
-                    Department:
-                    <select name="user_dept" class="form-control" style="width: 100%;margin-left: 0">
-                        {% for dept in depts %}
-                            {% if dept.name != 'Global' %}
-                                <option value="{{ dept.pk }}">{{ dept.name }}</option>
-                            {% endif %}
-                        {% endfor %}
-                    </select>
-                    <div style="color: whitesmoke">
-                        {{ userform.user_dept.errors }}
-                    </div>
-                </div>
+                <!--<div class="form-group">-->
+                <!--    Department:-->
+                <!--    <select name="user_dept" class="form-control" style="width: 100%;margin-left: 0">-->
+                <!--        {% for dept in depts %}-->
+                <!--            {% if dept.name != 'Global' %}-->
+                <!--                <option value="{{ dept.pk }}">{{ dept.name }}</option>-->
+                <!--            {% endif %}-->
+                <!--        {% endfor %}-->
+                <!--    </select>-->
+                <!--    <div style="color: whitesmoke">-->
+                <!--        {{ userform.user_dept.errors }}-->
+                <!--    </div>-->
+                <!--</div>-->
                 <div class="form-group">
                     College:
                     <select name="user_coll" class="form-control" style="width: 100%;margin-left: 0">
@@ -166,9 +166,9 @@
                 {#                </div>#}
                 <div class="form-group">
                     Role :
-                    <select id="id_role" name="role" class="form-control" style="width: 100%;margin-left: 0">
+                    <select id="id_role" onchange="displayEvents(this);" name="role" class="form-control" style="width: 100%;margin-left: 0">
                         {% for selected_role in selected_roles %}
-                            <option value="{{ selected_role.id }}">{{ selected_role.name }}</option>
+                            <option value="{{ selected_role.name }}">{{ selected_role.name }}</option>
                         {% endfor %}
                     </select>
                     {{ roleform.name.errors }}
@@ -279,5 +279,14 @@
                 $('.custom-file-label').html(fileName);
             });
         </script>
+            <script>
+    function displayEvents(that) {
+    if (that.value == "Event Head" || that.value == 'Jt. Event Head') {
+        document.getElementById("events").style.display = "block";
+    } else {
+        document.getElementById("events").style.display = "none";
+    }
+    }
+</script>
     {% endblock %}
 {% endblock %}
