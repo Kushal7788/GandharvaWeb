@@ -1,27 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Event Head</title>
-</head>
-<body>
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}Other Upload{% endblock %}
+{% block css %}
+    <link href="{% static 'events/css/campaign.css' %}" rel="stylesheet">
+{% endblock %}
 
-<form method="post" action="{% url 'event-head' %}" enctype="multipart/form-data">
-    {% csrf_token %}
-    Subject: <input type="text" name="subject">
-    <br>
-    Message: <input type="text" name="message">
-    <br>
-    Attachment: <input type="file" name="file">
-    <br>
-    <input type="hidden" name="event_id" value="{{ event_id }}">
-    {% for participant in participants %}
-    <input type="checkbox" name="participants" id="option{{participant.email}}" value={{participant.email}}>
-    <label for="option{{participant.email}}" value="{{participant.email}}"><b>{{participant.username}}</b></label><br/>
-    {% endfor %}
-
-    <input type="submit" value="send">
-
-</form>
-</body>
-</html>
+{% block body %}
+    <br><br><br><br><br><br>
+    <div class="container">
+        <div class="col-sm-6 container-center">
+            <div class="logo">
+                <img class="img-fluid" src="{% static 'gandharva/img/logo_description.png' %}">
+            </div>
+            <h5 style="text-align: center;">Event Head</h5>
+            <br>
+            <form method="post" action="{% url 'event-head' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label class="control-label">Subject:</label>
+                    <input type="text" name="subject" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Message:</label>
+                    <textarea class="form-control" type="text" name="message" rows="3"></textarea>
+                </div>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroupFileAddon01">Attachment:</span>
+                    </div>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="inputGroupFile01"
+                               aria-describedby="inputGroupFileAddon01" name="prof_img" hidden>
+                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                    </div>
+                </div>
+                <br>
+                <input type="hidden" name="event_id" value="{{ event_id }}">
+                {% for participant in participants %}
+                    <input type="checkbox" name="participants" id="option{{ participant.email }}"
+                           value={{ participant.email }}>
+                    <label style="font-weight: 400" for="option{{ participant.email }}"
+                           value="{{ participant.email }}">{{ participant.username }}</label>
+                    <br>
+                {% endfor %}
+                <div class="text-right">
+                    <input type="submit" value="Send" class="btn addVolunteer">
+                </div>
+            </form>
+            <br>
+        </div>
+    </div>
+    <div style="height: 30vh"></div>
+    {% block scripts %}
+        <script type="application/javascript">
+            $('input[type="file"]').change(function (e) {
+                var fileName = e.target.files[0].name;
+                $('.custom-file-label').html(fileName);
+            });
+        </script>
+    {% endblock %}
+{% endblock %}
