@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -225,3 +226,236 @@
 {% endblock %}
 </body>
 </html>
+=======
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Don't remove -->
+    <meta name="google-site-verification" content="QJtZpdo50J6PgZpzLE-2ancGmuNBvPzKxCCpBVE2KaI"/>
+    <!-- Google Verification -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0, user-scalable=0">
+    <meta name="description"
+          content="Event in Vishwakarma Institute of information Technology VIIT, Pune, Maharashtra, India. Also known as Gandharva, Perception, viitgandharva, gandharva'19, gandharva19. Techno-cultural events like Dance, Singing, Acting, bike show, coding events, mechanical events with different prizes offers sponsored by expressVPN, pythonanywhere, total aqua+, eventbeep, the gate academy, more events like civil competitions, robotics, robots, gaming, pubg, reverse, coding, csgo, cs, counter strike, robo war, robo race">
+    <meta name="author" content="Gandharva VIIT Pune">
+    <meta name="theme-color" content="#004E8A">
+    <title>{% block title %}Home{% endblock %}</title>
+    <link rel="icon" href="{% static 'gandharva/img/png_favicon.png' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
+          integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+          integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Lato|Lobster" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+
+    {#    <script src="https://code.jquery.com/jquery-3.3.1.js"#}
+    {#            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="#}
+    {#            crossorigin="anonymous"></script>#}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    {#    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"#}
+    {#            integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"#}
+    {#            crossorigin="anonymous"></script>#}
+    <script type="text/javascript" src="{% static 'gandharva/js/bootstrap.js' %}"></script>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'base/css/base.css' %}">
+    {% block css %}
+    {% endblock %}
+    <link href="{% static 'gandharva/manifest.json' %}" rel="manifest">
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <a class="navbar-brand" href="{% url 'home' %}" style="font-family: 'Amarillo';font-size: 20px;color: #fff;"><img
+            src="{% static 'gandharva/img/png_logo.png' %}" class="img-fluid" height="140" width="150"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span><i class="fas fa-bars" style="color:#fff;font-size: 28px"></i></span>
+    </button>
+    <div class="collapse navbar-collapse " id="navbarNavDropdown">
+        <ul class="nav navbar-nav ml-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    Events
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    {% for testme in testmes %}
+                        {% if testme.name != 'Global' %}
+                            <form method="get" action="{% url 'events' %}">
+                                <input type="hidden" name="dept" value="{{ testme.name }}">
+                                <button type="submit" class="dropdown-item dropdownStyle">{{ testme.name }}</button>
+                            </form>
+                        {% endif %}
+                    {% endfor %}
+                    {% if rulebook %}
+                        <a class="nav-link" href="{{ rulebook.file.url }}" download>Rule Book <i
+                                style="margin-left: 2px" class="fas fa-cloud-download-alt"></i></a>
+                    {% endif %}
+
+                    {#                Global Event#}
+
+                    {#                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"#}
+                    {#                       aria-haspopup="true" aria-expanded="false">#}
+                    {#                        Global Events#}
+                    {#                    </a>#}
+                    {#                    <span class="sr-only">(current)</span></a>#}
+                    {#                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">#}
+                    {#                        {% for global_event in global_events %}#}
+                    {#                            <form method="get" action="{% url 'details' %}">#}
+                    {#                                <input type="hidden" name="event" value="{{ global_event }}">#}
+                    {#                                <button type="submit" class="dropdown-item dropdownStyle">{{ global_event }}</button>#}
+                    {#                            </form>#}
+                    {#                        {% endfor %}#}
+                    {#                    </div>#}
+                </div>
+            </li>
+            {#                        <li class="nav-item">#}
+            {#                            <a class="nav-link" href="{% url 'ourSponsors' %}">Sponsors</a>#}
+            {#                        </li>#}
+
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'contactus' %}">Contact Us</a>
+            </li>
+            {#            <li class="nav-item">#}
+            {#                <a class="nav-link" href="{% url 'ourTeam' %}">Our Team</a>#}
+            {#            </li>#}
+            {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle caret-off" href="#" id="navbarDropdownMenuLink"
+                       data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        {#{ user.username }}  #}
+                        {% if user.prof_img %}
+                            <img src="{{ user.prof_img.url }}"
+                                 width="30" height="30">
+                        {% else %}
+                            <img src="https://ui-avatars.com/api/?name={{ user.first_name }}+{{ user.last_name }}&rounded=true"
+                                 width="30" height="30">
+                        {% endif %}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                        <div class="maindiv">
+                            <div id="leftdiv">
+                                {% if user.prof_img %}
+                                    <img id="user-image" src="{{ user.prof_img.url }}"
+                                         width="80" height="80">
+                                {% else %}
+                                    <img id="user-image"
+                                         src="https://ui-avatars.com/api/?name={{ user.first_name }}+{{ user.last_name }}&rounded=true"
+                                         width="80" height="80">
+                                {% endif %}
+                            </div>
+
+                            <div id="rightdiv">{{ user.first_name }} {{ user.last_name }}<br><i>{{ user.username }}</i><br>{{ role }}
+                            </div>
+                        </div>
+                        <hr>
+                        {% if user.is_superuser %}
+                            <form method="get" action="{% url 'RegisterHead' %}">
+                                <input type="hidden" name="HeadRegister" value=>
+                                <button type="submit" class="dropdown-item dropdownStyle">Register Heads</button>
+                            </form>
+                        {% endif %}
+                        {% if user.is_staff %}
+                            {% if role == "Campaigning Head" %}
+                                <form method="get" action="{% url 'campaign' %}">
+                            {% elif role == 2 %}
+                                <form method="get" action="{% url 'event-head' %}">
+                            {% elif role == 3 %}
+                                <form method="get" action="{% url 'publicity-head' %}">
+                            {% else %}
+                                <form method="get" action="{% url 'myactions' %}">
+                            {% endif %}
+                        <button type="submit" class="dropdown-item dropdownStyle">My Actions</button>
+                        </form>
+                            <form method="get" action="{% url 'files' %}">
+
+                                <button type="submit" class="dropdown-item dropdownStyle">File Upload</button>
+                            </form>
+                            <form method="get" action="{% url 'other-uploads' %}">
+
+                                <button type="submit" class="dropdown-item dropdownStyle">Other Uploads</button>
+                            </form>
+                            <hr>
+                        {% endif %}
+
+                        <div id="logprof">
+                            <form method="get" action="{% url 'user_profile' %}">
+
+                                <input type="hidden" name="profile" value=>
+                                <button type="submit" class="dropdown-item dropdownStyle">My Profile</button>
+                            </form>
+                            {#                        <form method="get" action="{% url 'eventsRegister' %}">#}
+                            {#                            <input type="hidden" name="EventRegister" value=>#}
+                            {#                            <button type="submit" class="dropdown-item dropdownStyle">Registered Events</button>#}
+                            {#                        </form>#}
+                            <form method="get" action="{% url 'user_logout' %}">
+
+                                <input type="hidden" name="dept" value=>
+                                <button type="submit" class="dropdown-item dropdownStyle">Log Out</button>
+                            </form>
+                        </div>
+                    </div>
+                    {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'user_login' %}">Login</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+{% block body %}
+{% endblock %}
+<button class="btn topButton"
+        onclick="goToTop()"><i class="fas fa-arrow-up"></i></button>
+<footer id="footer">
+    <div class="container">
+        <div class="text-center">
+            {% for footer in footers %}
+                <a class="fb-ic" href="{{ footer.src }}" target="_blank">
+                    <i class="{{ footer.cls }}"
+                       style="color: #fff;font-size: 26px;margin-right:2vw"></i>
+                </a>
+            {% endfor %}
+            <p style="font-size:12px;color:#fff"> Copyright &copy;2019 Gandharva. All Rights Reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js', {
+            scope: './'
+        }).then(function (reg) {
+            reg.update()
+        });
+    }
+</script>
+<script type="text/javascript" src="{% static 'base/js/base.js' %}"></script>
+<script>
+    $(document).ready(function () {
+        $(document).click(function (event) {
+            var clickover = $(event.target);
+            var _opened = $(".navbar-collapse").hasClass("show");
+            if (_opened === true && !clickover.hasClass("navbar-toggler")) {
+                $(".navbar-toggler").click();
+            }
+        });
+    });
+</script>
+{% block scripts %}
+{% endblock %}
+</body>
+</html>
+>>>>>>> 05a3b3650e87c2ad1dd90ce6ec936429fa57a854

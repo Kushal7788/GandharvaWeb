@@ -2,7 +2,6 @@ from django.conf.urls import url, include
 from . import views
 from django.views.generic.base import TemplateView
 
-
 # Url defined here, can access the page related to the url by adding the path
 urlpatterns = [
     url(r'^$', views.home, name='home'),
@@ -54,5 +53,8 @@ urlpatterns = [
     url(r'^send-username/$', views.send_username, name='send-username'),
     url(r'^other-uploads/$', views.other_uploads, name='other-uploads'),
     url(r'^uploaded-docs/$', views.uploaded_docs, name='uploaded-docs'),
+    url(r'^event-head/$', views.event_head, name='event-head'),
+    url(r'^publicity-head/$', views.publicity_head, name='publicity-head'),
+    url(r'^hear-about-us$', views.hear_about_us, name='hear-about-us')
 
 ]
