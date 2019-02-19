@@ -22,11 +22,11 @@
                 {% if juniors %}
                     {% for junior in juniors %}
                         <div class="text-center">
-                            <input hidden name="junior" value="{{ junior.subuser.username }}">
+{#                            <input hidden name="junior" value="{{ junior.subuser.username }}">#}
                             {% if junior.subuser.first_name %}
-                            <button class="astext " style="font-weight: 500;color: #3673e8;">{{ junior.subuser.first_name }} {{ junior.subuser.last_name }}</button>
+                            <button name="junior" value="{{ junior.subuser.username }}" class="astext " style="font-weight: 500;color: #3673e8;">{{ junior.subuser.first_name }} {{ junior.subuser.last_name }}</button>
                             {% else %}
-                            <button class="astext " style="font-weight: 500;color: #3673e8;">{{ junior.subuser.full_name }}</button>
+                            <button name="junior" value="{{ junior.subuser.username }}" class="astext " style="font-weight: 500;color: #3673e8;">{{ junior.subuser.full_name }}</button>
                             {% endif %}
                         </div>
                     {% endfor %}
