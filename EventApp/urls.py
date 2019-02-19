@@ -55,5 +55,6 @@ urlpatterns = [
     url(r'^uploaded-docs/$', views.uploaded_docs, name='uploaded-docs'),
     url(r'^event-head/$', views.event_head, name='event-head'),
     url(r'^publicity-head/$', views.publicity_head, name='publicity-head'),
+    url(r'^hear-about-us$', views.hear_about_us, name='hear-about-us')
 
 ]
