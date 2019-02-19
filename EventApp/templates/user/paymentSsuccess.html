@@ -8,27 +8,32 @@
 {% block body %}
     <br><br><br><br><br>
     <div class="container" style="height: 100vh">
-        <div class="col-sm-6 container-center">
+        <div class="col-sm-5 container-center">
             <div class="logo">
-        <img class="img-fluid" src="{% static 'gandharva/img/logo_description.png' %}">
-        </div>
+                <img class="img-fluid" src="{% static 'gandharva/img/logo_description.png' %}">
+            </div>
             <h5 style="text-align: center;">Payment Successful</h5>
             <br>
             <p>Payment Successfully done. Please check your mail for the receipt. If you have any issues then please
                 contact us.</p>
-            <form method="get"  action="{% url 'hear-about-us' %}">
-                <p>From where did you came to know about us?</p>
-                <select name="source">
-                  <option value="Facebook">Facebook</option>
-                  <option value="Instagram">Instagram</option>
-                  <option value="Twitter">Twitter</option>
-                  <option value="Word of Mouth">Word of Mouth</option>
-                </select>
+            <br>
+            <form method="get" action="{% url 'hear-about-us' %}">
+                <div class="form-group">
+                    From where did you came to know about us?
+                    <select name="source" class="form-control">
+                        <option value="Facebook">Facebook</option>
+                        <option value="Instagram">Instagram</option>
+                        <option value="Twitter">Twitter</option>
+                        <option value="Word of Mouth">Word of Mouth</option>
+                    </select>
+                </div>
                 <br>
-                <input type="hidden" name="user_id" value="{{ user_id }}" >
-                <button type="submit" >Submit
-                </button>
-            <form>
+                <div class="text-right">
+                    <input type="hidden" name="user_id" value="{{ user_id }}">
+                    <button type="submit" class="confirmEmailButton">Submit</button>
+                </div>
+            </form>
+            <br>
         </div>
     </div>
 {% endblock %}
