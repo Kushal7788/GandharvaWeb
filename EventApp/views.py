@@ -232,10 +232,12 @@ def success(request):
                     except:
                         break
                 content = {
-                    'event': event.event_name,
-                    'username': user.username,
-                    'name': receipt.name,
-                    'unique_event_code': unique_event_code
+                    'Event': event.event_name,
+                    'Username': user.username,
+                    'Name': receipt.name,
+                    'Amount':receipt.event.entry_fee,
+                    'Status': transaction.status,
+                    'Mode': transaction.billing_instrument
                 }
                 qr.add_data(json.dumps(content))
                 img = qr.make_image(fill_color="black", back_color="white")
@@ -921,7 +923,16 @@ def cashpayment(request, event_new, user):
         # print("cashhh")
         qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_M, box_size=10, border=4)
         content = "event:" + event_new.event_name + ", user:" + user.username
-        qr.add_data(content)
+        content = {
+            'Event': event_new.event_name,
+            'Username': user.username,
+            'Name': receipt.name,
+            'Amount': receipt.event.entry_fee,
+            'Status': transaction.status,
+            'Mode': transaction.billing_instrument
+        }
+        qr.add_data(json.dumps(content))
+        #qr.add_data(content)
         img = qr.make_image(fill_color="black", back_color="white")
         # img.save(user.username + event.event_name + "png")
         thumb_io = BytesIO()
