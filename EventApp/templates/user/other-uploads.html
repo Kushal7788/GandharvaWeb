@@ -15,21 +15,27 @@
             <h5 style="text-align: center;">Other Upload</h5>
             <br>
             <div class="text-center">
-                <label style="font-weight:bold">Documents Uploaded By Other Users</label>
+                <label>Documents Uploaded By Other Users</label>
             </div>
             <form method="post" action="{% url 'uploaded-docs' %}">
                 {% csrf_token %}
                 {% if juniors %}
                     {% for junior in juniors %}
-                        <input hidden name="junior" value="{{ junior.subuser }}">
-                        <button class="astext">{{ junior.subuser }}</button>
+                        <div class="text-center">
+                            <input hidden name="junior" value="{{ junior.subuser.username }}">
+                            {% if junior.subuser.first_name %}
+                            <button class="astext " style="font-weight: 500;color: #3673e8;">{{ junior.subuser.first_name }} {{ junior.subuser.last_name }}</button>
+                            {% else %}
+                            <button class="astext " style="font-weight: 500;color: #3673e8;">{{ junior.subuser.full_name }}</button>
+                            {% endif %}
+                        </div>
                     {% endfor %}
                     </form>
+                    <br>
                 {% else %}
-                    <h5 style="text-align: center;">No Subordinates Under you</h5>
+                    <h5 style="text-align: center; font-weight: 400">No Subordinates Under you</h5>
                 {% endif %}
-
         </div>
     </div>
-    <div style="height: 30vh"></div>
+    <div style="height: 40vh"></div>
 {% endblock %}

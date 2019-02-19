@@ -35,8 +35,8 @@ def user_Campaign_head(function):
 
 def staff_user(function):
     def wrap(request, *args, **kwargs):
-        entry = RoleAssignment.objects.get(user=request.user.id)
-        if entry.user.is_staff:
+        entry = request.user
+        if entry.is_staff:
             return function(request, *args, **kwargs)
         else:
             raise PermissionDenied

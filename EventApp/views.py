@@ -106,17 +106,16 @@ def offline(request):
 
 # Home page Functionality
 def home(request):
-    userget = 0
-    if request.user and (not request.user.is_anonymous):
-        user = request.user
-        role = user.roleassignment_set.all()
-        if len(role) > 1:
-            return HttpResponse('Multiple Role')
-        else:
-            role = role[0]
-            if role.role.name == "Jt Campaigning Head" or role.role.name == "Campaigning Head":
-                userget = 1
-
+    # userget = 0
+    # if request.user and (not request.user.is_anonymous):
+    #     user = request.user
+    #     role = user.roleassignment_set.all()
+    #     if len(role) > 1:
+    #         return HttpResponse('Multiple Role')
+    #     else:
+    #         role = role[0]
+    #         if role.role.name == "Jt Campaigning Head" or role.role.name == "Campaigning Head":
+    #             userget = 1
 
     global_objects = EventDepartment.objects.filter(department=6)
     event_name = []
@@ -124,12 +123,12 @@ def home(request):
         event_name.append(global_object.event.event_name)
 
     args = {
-        'events': Department.objects.all(),
+        'events': Department.objects.all().order_by("rank"),
         'sponsors': SponsorMaster.objects.all(),
         'carouselImage': Carousel.objects.all(),
         'gandharvaDate': GandharvaHome.objects.get(title__startswith="Date").data,
         'About': GandharvaHome.objects.get(title__startswith="About").data,
-        'role': userget,
+       # 'role': userget,
         'global_events': event_name
     }
     sweetify.sweetalert(request, 'Westworld is awesome',
@@ -154,7 +153,7 @@ def event_register(request):
 
         args1 = {
             'pageTitle': dept,
-            'events': EventDepartment.objects.filter(department=dept_choose),
+            'events': EventDepartment.objects.filter(department=dept_choose).order_by('event__rank'),
             'dept_choosen': dept_choose
         }
         return render(request, 'events/newEvent.html', args1)
@@ -345,7 +344,7 @@ def details(request):
     else:
         event_name = request.GET.get('event')
         arg = {
-            'events_list': EventMaster.objects.all(),
+            'events_list': EventMaster.objects.all().order_by('rank'),
             'pageTitle': EventMaster.objects.get(event_name__startswith=event_name).event_name,
             'event': EventMaster.objects.get(event_name__startswith=event_name),
             'dept': EventDepartment.objects.get(event=EventMaster.objects.get(event_name__startswith=event_name)),
@@ -500,27 +499,30 @@ def user_login(request):
 
 @staff_user
 def myaction(request):
-    role = RoleAssignment.objects.get(user=request.user.id)
-    if role.role.name == "Campaigning Head" or role.role.name == "Jt Campaigning Head":
+    if RoleAssignment.objects.filter(user=request.user).count():
+        role = RoleAssignment.objects.get(user=request.user.id).role
+    else:
+        role = None
+    if request.user.is_staff:
         args = {
             'button_name': 'Campaign',
             'urlaccess': campaign,
-            'roles': role.role
+            'roles': role
         }
         return render(request, 'user/myactions.html', args)
-    if role.role.name == 'Event Head':
-        args = {
-            'button_name': 'All Participants',
-            'roles': role.role
-        }
-        return render(request, 'user/myactions.html', args)
-    else:
-        args = {
-            'button_name': "No Actions",
-            'urlaccess': None,
-            'roles': role.role
-        }
-    return render(request, 'user/myactions.html', args)
+    # if role.role.name == 'Event Head':
+    #     args = {
+    #         'button_name': 'All Participants',
+    #         'roles': role.role
+    #     }
+    #     return render(request, 'user/myactions.html', args)
+    # else:
+    #     args = {
+    #         'button_name': "No Actions",
+    #         'urlaccess': None,
+    #         'roles': role.role
+    #     }
+    # return render(request, 'user/myactions.html', args)
 
 
 def payment(request):
@@ -539,7 +541,6 @@ def register_head(request):
     events = EventMaster.objects.all()
     if request.method == 'POST':
 
-
         # try:
         #     old_user = MyUser.objects.get(email=userform.email)
         #     print(old_user)
@@ -553,7 +554,7 @@ def register_head(request):
         # print(old_user2)
         # print(old_user)
         if MyUser.objects.filter(email=request.POST.get('email')).count() == 0:
-            old_user=None
+            old_user = None
             print(old_user)
         else:
             old_user = MyUser.objects.get(email=request.POST.get('email'))
@@ -568,7 +569,8 @@ def register_head(request):
             old_user.delete()
         elif old_user2 is not None and old_user2.is_active is False and old_user is None:
             old_user2.delete()
-        elif (old_user is not None and old_user.is_active is True) or (old_user2 is not None and old_user2.is_active is True):
+        elif (old_user is not None and old_user.is_active is True) or (
+                old_user2 is not None and old_user2.is_active is True):
             args = {
                 'error': "You have already registered and your email is verified too. Enter email to reset your password."
             }
@@ -624,7 +626,7 @@ def register_head(request):
     # print(selected_roles)
     return render(request, 'events/RegisterHead.html',
                   {'userform': userform, 'roleform': roleform, 'roles': Roles, 'depts': dept, 'colleges': coll,
-                   'years': year, 'categories': role_categories, 'selected_roles': selected_roles,'events': events})
+                   'years': year, 'categories': role_categories, 'selected_roles': selected_roles, 'events': events})
 
 
 def load_roles(request):
@@ -662,7 +664,7 @@ def participant_event_register(request):
         eventId = request.POST.get('event_id')
         if useremail != "":
             otp = random.randint(100000, 999999)
-            message = render_to_string('user/OTP.html' ,{
+            message = render_to_string('user/OTP.html', {
                 'otp': otp
             })
             mail_subject = 'OTP for email verification.'
@@ -695,10 +697,14 @@ def verifyOTP(request):
         else:
             request.session['otp'] = ""
             coll = College.objects.all().order_by('name')
-            if MyUser.objects.filter(email=userEmail).exists():
-                ifuser = MyUser.objects.get(email=userEmail)
+            if MyUser.objects.filter(email=userEmail).count() == 0:
+                if MyUser.objects.filter(coll_email=userEmail).count() == 0:
+                    ifuser = None
+
+                else:
+                    ifuser = MyUser.objects.get(coll_email=userEmail)
             else:
-                ifuser = None
+                ifuser = MyUser.objects.get(email=userEmail)
             readm = "readonly"
             return render(request, 'events/participantDetails.html',
                           {'event': event, 'colleges': coll, 'email_participant': userEmail, 'present_user': ifuser,
@@ -864,6 +870,7 @@ def cashpayment(request, event_new, user):
             'team': team,
             'transaction': transaction,
         })
+        print(team.QRcode.path)
         send_email(user.email, mail_subject, message, [team.QRcode.path])
 
 
@@ -972,15 +979,16 @@ def reset_password_new(request, uidb64, token):
     except(TypeError, ValueError, OverflowError, user.DoesNotExist, IntegrityError, ObjectDoesNotExist):
         user = None
     if user is not None:
-        if user.token2 == token:
+        # return HttpResponse(user.token2 + 'a<br>' + token + 'b<br>')
+        if str(user.token2) == str(token):
             user.token2 = None
             user.save()
             args = {
-                'user': user,
+                'user2': user,
             }
             return render(request, 'user/new_password.html', args)
         else:
-            return render(request, "user/reset_password.html")
+            return HttpResponse('Email link invlid')
     return HttpResponse("You have already reset your password")
 
 
@@ -997,33 +1005,35 @@ def new_password(request):
 
     return render(request, 'user/new_password.html')
 
+
 @staff_user
 def change_password(request):
-    status=True
+    status = True
     if request.method == 'POST':
         old_password = request.POST.get('old_password')
-        user = authenticate(username = request.user.username, password=old_password)
+        user = authenticate(username=request.user.username, password=old_password)
         if user is not None:
             status = True
-            return render(request, 'user/new_password.html', {'status':status})
+            return render(request, 'user/new_password.html', {'status': status})
         else:
             status = False
-            messages.error(request,"Invalid Password",{'status':status})
+            messages.error(request, "Invalid Password", {'status': status})
 
-    return render(request, 'user/change-password.html',{'status':status})
+    return render(request, 'user/change-password.html', {'status': status})
+
 
 def send_username(request):
     status = 0
     if request.method == 'POST':
         user_email = request.POST.get('user-email')
-        count = MyUser.objects.filter(email = user_email).count()
+        count = MyUser.objects.filter(email=user_email).count()
         if count:
-            user = MyUser.objects.get(email = user_email)
+            user = MyUser.objects.get(email=user_email)
             if user.is_active:
                 message = render_to_string('user/username-email-sent.html',
-                {
-                    'user': user,
-                })
+                                           {
+                                               'user': user,
+                                           })
                 mail_subject = 'Activate your account to continue.'
                 to_email = user_email
                 send_email(to_email, mail_subject, message)
@@ -1036,6 +1046,8 @@ def send_username(request):
             status = -1
             return render(request, 'user/send-username.html', {'status': status})
     return render(request, 'user/send-username.html', {'status': status})
+
+
 # Important Notes:
 # to get user role from models
 # userget = RoleAssignment.objects.get(user=request.user.id)
@@ -1047,7 +1059,8 @@ def other_uploads(request):
         juniors = AssignSub.objects.filter(rootuser=request.user).order_by('subuser')
     else:
         juniors = None
-    return render(request, 'user/other-uploads.html', {'juniors':juniors})
+    return render(request, 'user/other-uploads.html', {'juniors': juniors})
+
 
 def uploaded_docs(request):
     if request.POST:
@@ -1058,7 +1071,7 @@ def uploaded_docs(request):
             doc_lists = fileDocument.objects.filter(user=junior).order_by("uploaded_at").reverse()
         else:
             doc_lists = None
-        return render(request, 'user/uploaded-docs.html', {'docs': doc_lists,'junior':junior})
+        return render(request, 'user/uploaded-docs.html', {'docs': doc_lists, 'junior': junior})
     else:
         return render(request, 'user/uploaded-docs.html', {})
 
@@ -1092,11 +1105,10 @@ def AddVolunteer(request):
         return render(request, 'events/campaignVolunteer.html', args)
 
 
-
 def ourSponsors(request):
     Sponsors = SponsorMaster.objects.all()
-    sponsors=[]
-    partners=[]
+    sponsors = []
+    partners = []
     for s in Sponsors:
         if 'partner' in s.sponsor_type.lower():
             print(s)
@@ -1105,15 +1117,20 @@ def ourSponsors(request):
             print(s)
             sponsors.append(s)
     args = {
-        'partners':partners,
+        'partners': partners,
         'sponsors': sponsors
     }
     return render(request, 'gandharva/ourSponsors.html', args)
 
 
-@staff_user
+
 def ourTeam(request):
-    return render(request, 'gandharva/ourTeam.html')
+    obj = OurTeam.objects.all().count()
+    if obj:
+        obj = OurTeam.objects.all()
+    else:
+        obj = None
+    return render(request, 'gandharva/ourTeam.html', {'objs': obj})
 
 
 # upload file view
@@ -1127,7 +1144,7 @@ def files(request):
     if current_doc:
         current_doc = fileDocument.objects.filter(user=request.user).order_by("uploaded_at").reverse()
     else:
-        current_doc=None
+        current_doc = None
     # dictonary = {}
     # juniors = AssignSub.objects.filter(rootuser=request.user)
     # for junior in juniors:
@@ -1164,7 +1181,7 @@ def files(request):
 
 
 # Campaign Head Method
-@user_Campaign_head
+@staff_user
 def campaign(request):
     if request.method == "POST":
         check = request.POST.get('criteria')
@@ -1264,7 +1281,8 @@ def campaign(request):
             return render(request, 'events/campaignVolunteer.html', args)
 
     else:
-        return render(request, 'events/campaignHead.html')
+        role = RoleAssignment.objects.get(user=request.user.id)
+        return render(request, 'events/campaignHead.html', {'role': role})
 
 
 def terms(request):

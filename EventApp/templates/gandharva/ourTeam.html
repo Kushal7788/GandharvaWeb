@@ -1,10 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}Gandharva-OurTeam{% endblock %}
+{% block css %}
+    <link href="{% static 'gandharva/css/ourTeam.css' %}" rel="stylesheet">
+{% endblock %}
+{% block body %}
 
-</body>
-</html>
+    <div class="container-fluid">
+        <div style="height: 18vh"></div>
+        <div class="text-center" style="margin-bottom: 6vh">
+            <h1 style="font-family: 'Abel', sans-serif">Our Team</h1>
+        </div>
+        <br><br>
+        {% if objs %}
+            {% for obj in objs %}
+                {% if forloop.first %}
+                    <div class="row">{% endif %}
+            <div class="col col-sm-5 col-md-2 main-section">
+                <div class="modal-content">
+                    <div class="user-img">
+                        <img src="{{ obj.img.url }}"
+                             alt="Contactlogo">
+                    </div>
+                    <p class="name">{{ obj.name }}</p>
+                    <p class="postname">{{ obj.post }}</p>
+                </div>
+            </div>
+            {% if forloop.counter|divisibleby:5 %}
+                </div>
+                <div class="row">{% endif %}
+            {% if forloop.last %}
+                </div>
+            {% endif %}
+            {% endfor %}
+        {% else %}
+            <div style="height: 100vh"></div>
+        {% endif %}
+    </div>
+    </div>
+    <div style="height: 20vh"></div>
+{% endblock %}
