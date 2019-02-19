@@ -14,60 +14,55 @@ html, body {
     padding-bottom: 10px;
 }
 
-/*.name {*/
-/*text-align: center;*/
-/*font-size: 18px;*/
-/*margin-bottom: 1px;*/
-/*word-wrap: break-word;*/
-/*}*/
+.main-section {
+    margin-top: 50px;
+    padding-left: 1%;
+    padding-bottom: 5%;
+    margin-right: 1%;
+    margin-left: 2%;
 
-/*.postname {*/
-/*text-align: center;*/
-/*font-size: 16px;*/
-/*margin-bottom: 2px;*/
-/*word-wrap: break-word;*/
-/*}*/
+}
 
-/*.user-img {*/
-/*margin-top: -100px;*/
-/*!*margin-left: 12px;*!*/
-/*margin-bottom: 20px;*/
-/*height: 70%;*/
-/*}*/
+.modal-content {
+    padding: 0 10px;
+}
 
-/*.user-img img {*/
-/*height: 120px;*/
-/*width: 120px;*/
-/*border-radius: 50%;*/
-/*}*/
+.user-img {
+    margin-top: -14vh;
+    margin-left: 2.4vw;
+    margin-bottom: 20px;
+    height: 70%;
 
-/*.main-section {*/
-/*margin-top: 130px;*/
-/*padding-left: 4%;*/
-/*padding-bottom: 5%;*/
-/*}*/
+}
 
-/*.modal-content {*/
+.user-img img {
+    height: auto;
+    width: 100%;
+    border-radius: 50%;
+}
 
-/*padding: 0 10px;*/
-/*}*/
+.name {
+    text-align: center;
+    font-family: 'Abel', sans-serif;
+    font-weight: bold;
+}
 
-/*@media only screen and (max-width: 500px) {*/
-/*.user-img img {*/
-/*height: 60px;*/
-/*width: 60px;*/
-/*border-radius: 50%;*/
-/*}*/
-/*}*/
+.postname {
+    text-align: center;
+    font-family: 'Abel', sans-serif;
+    font-weight: normal;
+    font-weight: 300;
+}
 
 @media only screen and (min-width: 992px) {
 
     .main-section {
         margin-top: 50px;
-        padding-left: 4%;
+        padding-left: 1%;
         padding-bottom: 5%;
-        margin-right: 20px;
-        margin-left: 20px;
+        margin-right: 1%;
+        margin-left: 2%;
+
     }
 
     .modal-content {
@@ -76,15 +71,13 @@ html, body {
 
     .user-img {
         margin-top: -14vh;
-        margin-left: -1vw;
-        margin-bottom: 20px;
-        height: 70%;
-
+        margin-left: 2px;
+        margin-bottom: 4px;
     }
 
     .user-img img {
-        height: 140px;
-        width: 140px;
+        height: 80%;
+        width: 100%;
         border-radius: 50%;
     }
 
@@ -92,8 +85,7 @@ html, body {
         text-align: center;
         font-family: 'Abel', sans-serif;
         font-weight: bold;
-        font-size: 25px;
-        line-height: 80%;
+        font-size: 20px;
     }
 
     .postname {
@@ -101,35 +93,45 @@ html, body {
         font-family: 'Abel', sans-serif;
         font-weight: normal;
         font-weight: 300;
-        font-size: 20px;
-        line-height: 50%;
+        font-size: 18px;
     }
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 400px) {
+    .user-img {
+        margin-top: -40px;
+        margin-left: 1vw;
+        margin-bottom: 20px;
+    }
+     .user-img img {
+        height: 130px;
+        width: 120px;
+        border-radius: 50%;
+    }
+}
+
+@media only screen and (min-width: 401px)and (max-width: 500px) {
 
     .main-section {
         margin-top: 130px;
-        margin-left: 5%;
-        padding-bottom: 5%;;
+        padding-bottom: 5%;
+        float: left;
+        width: 100%;
     }
 
     .modal-content {
-
         padding: 0 10px;
     }
 
     .user-img {
         margin-top: -40px;
-        margin-left: 0px;
+        margin-left: 4vw;
         margin-bottom: 20px;
-        /*height: 90%;*/
-
     }
 
     .user-img img {
-        height: 60px;
-        width: 60px;
+        height: 130px;
+        width: 120px;
         border-radius: 50%;
     }
 
@@ -137,8 +139,6 @@ html, body {
         text-align: center;
         font-family: 'Abel', sans-serif;
         font-weight: bold;
-        font-size: 25px;
-        line-height: 80%;
     }
 
     .postname {
@@ -146,8 +146,6 @@ html, body {
         font-family: 'Abel', sans-serif;
         font-weight: normal;
         font-weight: 300;
-        font-size: 20px;
-        line-height: 50%;
     }
 
 }

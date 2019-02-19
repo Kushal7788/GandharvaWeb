@@ -106,16 +106,16 @@ def offline(request):
 
 # Home page Functionality
 def home(request):
-    userget = 0
-    if request.user and (not request.user.is_anonymous):
-        user = request.user
-        role = user.roleassignment_set.all()
-        if len(role) > 1:
-            return HttpResponse('Multiple Role')
-        else:
-            role = role[0]
-            if role.role.name == "Jt Campaigning Head" or role.role.name == "Campaigning Head":
-                userget = 1
+    # userget = 0
+    # if request.user and (not request.user.is_anonymous):
+    #     user = request.user
+    #     role = user.roleassignment_set.all()
+    #     if len(role) > 1:
+    #         return HttpResponse('Multiple Role')
+    #     else:
+    #         role = role[0]
+    #         if role.role.name == "Jt Campaigning Head" or role.role.name == "Campaigning Head":
+    #             userget = 1
 
     global_objects = EventDepartment.objects.filter(department=6)
     event_name = []
@@ -128,7 +128,7 @@ def home(request):
         'carouselImage': Carousel.objects.all(),
         'gandharvaDate': GandharvaHome.objects.get(title__startswith="Date").data,
         'About': GandharvaHome.objects.get(title__startswith="About").data,
-        'role': userget,
+       # 'role': userget,
         'global_events': event_name
     }
     sweetify.sweetalert(request, 'Westworld is awesome',
@@ -499,12 +499,15 @@ def user_login(request):
 
 @staff_user
 def myaction(request):
-    role = RoleAssignment.objects.get(user=request.user.id)
+    if RoleAssignment.objects.filter(user=request.user).count():
+        role = RoleAssignment.objects.get(user=request.user.id).role
+    else:
+        role = None
     if request.user.is_staff:
         args = {
             'button_name': 'Campaign',
             'urlaccess': campaign,
-            'roles': role.role
+            'roles': role
         }
         return render(request, 'user/myactions.html', args)
     # if role.role.name == 'Event Head':
@@ -867,6 +870,7 @@ def cashpayment(request, event_new, user):
             'team': team,
             'transaction': transaction,
         })
+        print(team.QRcode.path)
         send_email(user.email, mail_subject, message, [team.QRcode.path])
 
 
@@ -980,11 +984,11 @@ def reset_password_new(request, uidb64, token):
             user.token2 = None
             user.save()
             args = {
-                'user': user,
+                'user2': user,
             }
             return render(request, 'user/new_password.html', args)
         else:
-            return render(request, "user/reset_password.html")
+            return HttpResponse('Email link invlid')
     return HttpResponse("You have already reset your password")
 
 

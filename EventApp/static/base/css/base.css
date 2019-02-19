@@ -8,11 +8,6 @@ html, body {
     background-color: #f2f2f2;
 }
 
-@font-face {
-    font-family: Amarillo;
-    src: url(../../../static/gandharva/fonts/Amarillo.woff) format('woff');
-}
-
 /*************************
 ******Navbar CSS****
 **************************/
@@ -46,7 +41,8 @@ nav .navbar-nav li a {
 
 .navbar-nav > li > .dropdown-menu :hover {
     /*background-color: #fff;*/
-    color: #004E8A !important;
+    /*color: #004E8A !important;*/
+
     border-color: white;
 
 }
@@ -74,6 +70,14 @@ nav li .active a {
     border-radius: 6px;
 }
 
+.caret-off::before {
+    display: none;
+}
+
+.caret-off::after {
+    display: none;
+}
+
 @media only screen and (max-width: 800px) {
     .navbar {
         background-color: #004E8A !important;
@@ -81,6 +85,11 @@ nav li .active a {
 
     .nav.navbar-nav li a {
         padding-left: 10px;
+    }
+
+    .navbar-collapse {
+        max-height: calc(100vh - 80px);
+        overflow-y: auto;
     }
 }
 
@@ -109,7 +118,7 @@ a {
 a:focus,
 a:hover {
     text-decoration: none;
-    outline: none
+    outline: none;
 }
 
 .userselect {
@@ -147,3 +156,43 @@ a:hover {
     margin-top: 10px;
     margin-bottom: 20px
 }
+
+#user-image {
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+#rightdiv {
+    /*width:150px;*/
+    /*font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;*/
+    font-size: 16px;
+    color: white;
+    padding-top: 10px
+}
+
+#leftdiv {
+    width: 130px;
+}
+
+.maindiv {
+    width: 300px;
+    display: flex;
+    flex-direction: row;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+    border-color: white
+}
+
+#logprof {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between
+}
+
