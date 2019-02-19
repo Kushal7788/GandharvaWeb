@@ -603,7 +603,7 @@ def register_head(request):
             role = request.POST.get('role')
             if role == "Event Head":
                 event.head = user
-            elif role == "Jt. Event Head":
+            elif role == "Jt Event Head":
                 event.jt_head = user
             event.save()
             roleassign = RoleAssignment()
