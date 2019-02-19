@@ -582,7 +582,7 @@ def register_head(request):
             return render(request, "user/reset_password.html", args)
         userform = UserRegistration(request.POST, request.FILES)
         roleform = RoleMasterForm(request.POST)
-        if userform.is_valid() and roleform.is_valid():
+        if userform.is_valid() :
             user = userform.save(commit=False)
             password = userform.cleaned_data.get('password')
             user.set_password(password)
