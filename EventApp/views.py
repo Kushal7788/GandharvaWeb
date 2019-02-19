@@ -270,6 +270,7 @@ def success(request):
     else:
         print("ERROR")
 
+
 def hear_about_us(request):
     if request.method == 'GET':
         user_id = request.GET.get('user_id')
@@ -278,6 +279,7 @@ def hear_about_us(request):
         obj = HearAboutUs(user_id=user_id, source=source)
         obj.save()
         return redirect('home')
+
 
 @staff_user
 def all_participants(request):
@@ -481,38 +483,38 @@ def user_login(request):
     if request.user.is_active:
         return redirect('home')
     else:
-         if request.method == 'POST':
-             username = request.POST.get('username')
-             password = request.POST.get('password')
-             try:
-                 usercheck = MyUser.objects.get(username=username)
-             except ObjectDoesNotExist:
-                 usercheck = None
-             if usercheck is not None:
-                 if not usercheck.is_active:
-                     # print("your account is inactive")
-                     messages.error(request, 'Email not verified, please verify your email to login')
-                     return render(request, 'events/login.html', {})
+        if request.method == 'POST':
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+            try:
+                usercheck = MyUser.objects.get(username=username)
+            except ObjectDoesNotExist:
+                usercheck = None
+            if usercheck is not None:
+                if not usercheck.is_active:
+                    # print("your account is inactive")
+                    messages.error(request, 'Email not verified, please verify your email to login')
+                    return render(request, 'events/login.html', {})
 
-                 else:
-                     user = authenticate(username=username, password=password)
-                     if user is not None:
-                         if user.is_active:
-                             # print("io")
-                             login(request, user)
-                             return redirect('home')
-                         else:
-                             messages.error(request, 'Invalid Username or Password')
-                             return render(request, 'events/login.html', {})
-                     else:
-                         messages.error(request, 'Invalid Username or Password')
-                         return render(request, 'events/login.html', {})
+                else:
+                    user = authenticate(username=username, password=password)
+                    if user is not None:
+                        if user.is_active:
+                            # print("io")
+                            login(request, user)
+                            return redirect('home')
+                        else:
+                            messages.error(request, 'Invalid Username or Password')
+                            return render(request, 'events/login.html', {})
+                    else:
+                        messages.error(request, 'Invalid Username or Password')
+                        return render(request, 'events/login.html', {})
 
-             else:
-                 messages.error(request, 'Invalid Username or Password')
-                 return render(request, 'events/login.html', {})
-         else:
-             return render(request, 'events/login.html', {})
+            else:
+                messages.error(request, 'Invalid Username or Password')
+                return render(request, 'events/login.html', {})
+        else:
+            return render(request, 'events/login.html', {})
 
 
 @staff_user
@@ -593,7 +595,7 @@ def register_head(request):
             return render(request, "user/reset_password.html", args)
         userform = UserRegistration(request.POST, request.FILES)
         roleform = RoleMasterForm(request.POST)
-        if userform.is_valid() :
+        if userform.is_valid():
             user = userform.save(commit=False)
             password = userform.cleaned_data.get('password')
             user.set_password(password)
@@ -601,14 +603,19 @@ def register_head(request):
             user.full_name = user.first_name + " " + user.last_name
             user.save()
             role = request.POST.get('role')
-            if role == "Event Head":
-                event.head = user
-            elif role == "Jt. Event Head":
-                event.jt_head = user
-            event.save()
+
             roleassign = RoleAssignment()
             roleassign.user = user
             roleassign.role = RoleMaster.objects.get(name=role)
+
+            if role == "Event Head":
+                event.head = user
+            elif role == "Jt Event Head":
+                event.jt_head = user
+
+            event.save()
+            roleassign.event = event
+
             current_site = get_current_site(request)
             token1 = account_activation_token.make_token(user)
             message = render_to_string('user/acc_active_email_register_head.html', {
@@ -650,19 +657,20 @@ def register_head(request):
                   {'userform': userform, 'roleform': roleform, 'roles': Roles, 'depts': dept, 'colleges': coll,
                    'years': year, 'categories': role_categories, 'selected_roles': selected_roles, 'events': events})
 
+
 # @staff_user
-def event_head(request) :
+def event_head(request):
     if request.method == "POST":
         participants_selected = request.POST.getlist('participants')
         print(participants_selected)
         subject = request.POST.get('subject')
         message = request.POST.get('message')
-        if len(request.FILES)==1:
+        if len(request.FILES) == 1:
             myfile = request.FILES['file']
             fs = FileSystemStorage()
             filename = fs.save(myfile.name, myfile)
             uploaded_file_url = fs.path(filename)
-            send_email(participants_selected , subject , message,[uploaded_file_url])
+            send_email(participants_selected, subject, message, [uploaded_file_url])
         else:
             send_email(participants_selected, subject, message)
         event_id = request.POST.get('event_id')
@@ -670,28 +678,29 @@ def event_head(request) :
         participants = []
         for p in participants1:
             participants.append(MyUser.objects.get(pk=p))
-        return render(request, 'events/event_head.html', {'participants': participants ,'event_id' : event_id})
+        return render(request, 'events/event_head.html', {'participants': participants, 'event_id': event_id})
     else:
         event_id = request.GET.get('event_id')
-        participants1 = Team.objects.filter( receipt__event__pk = event_id ).values_list('user',flat=True).distinct()
-        participants=[]
+        participants1 = Team.objects.filter(receipt__event__pk=event_id).values_list('user', flat=True).distinct()
+        participants = []
         for p in participants1:
             participants.append(MyUser.objects.get(pk=p))
-        return render(request, 'events/event_head.html' , { 'participants' : participants , 'event_id' : event_id  })
+        return render(request, 'events/event_head.html', {'participants': participants, 'event_id': event_id})
+
 
 # @staff_user
-def publicity_head(request) :
+def publicity_head(request):
     if request.method == "POST":
         participants_selected = request.POST.getlist('participants')
-        print("selected",participants_selected)
+        print("selected", participants_selected)
         subject = request.POST.get('subject')
         message = request.POST.get('message')
-        if len(request.FILES)==1:
+        if len(request.FILES) == 1:
             myfile = request.FILES['file']
             fs = FileSystemStorage()
             filename = fs.save(myfile.name, myfile)
             uploaded_file_url = fs.path(filename)
-            send_email(participants_selected , subject , message,[uploaded_file_url])
+            send_email(participants_selected, subject, message, [uploaded_file_url])
         else:
             send_email(participants_selected, subject, message)
         participants1 = Team.objects.values_list('user', flat=True).distinct().all()
@@ -704,7 +713,7 @@ def publicity_head(request) :
         participants = []
         for p in participants1:
             participants.append(MyUser.objects.get(pk=p))
-        return render(request, 'events/publicity_head.html' , { 'participants' : participants })
+        return render(request, 'events/publicity_head.html', {'participants': participants})
 
 
 def load_roles(request):
@@ -1200,7 +1209,6 @@ def ourSponsors(request):
     return render(request, 'gandharva/ourSponsors.html', args)
 
 
-
 def ourTeam(request):
     obj = OurTeam.objects.all().count()
     if obj:
@@ -1395,14 +1403,11 @@ class Collegewise:
 def run_custom():
     users = MyUser.objects.all()
 
-    except_list = ['Ajinkya','Anand','rrs','shivamdeshpande']
+    except_list = ['Ajinkya', 'Anand', 'rrs', 'shivamdeshpande']
     ajinkya_user = MyUser.objects.get(username='Ajinkya')
     for each in users:
         if each.username in except_list:
             pass
         else:
             AssignSub.objects.create(rootuser=ajinkya_user,
-                                                      subuser=each)
-
-
-
+                                     subuser=each)
