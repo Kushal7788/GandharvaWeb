@@ -310,8 +310,10 @@ class AssignSub(models.Model):
     subuser = models.ForeignKey(MyUser, on_delete=models.PROTECT, related_name='subordinate')
 
     def __str__(self):
-        return 'Username : ' + self.rootuser.first_name
+        return 'Root : ' + str(self.rootuser.first_name) +' ' +  str(self.rootuser.full_name) +' Sub: ' + str(self.subuser.first_name) +' '+ str(self.subuser.full_name)
 
+    class Meta:
+        unique_together = ('rootuser', 'subuser',)
 
 class InstamojoCredential(models.Model):
     key = models.CharField(max_length=50)
