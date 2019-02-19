@@ -3,6 +3,15 @@
 {% block title %}Other Upload{% endblock %}
 {% block css %}
     <link href="{% static 'events/css/campaign.css' %}" rel="stylesheet">
+    <style>
+        .table {
+            margin-left: 0;
+        }
+
+        td {
+            width: 500px;
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
@@ -22,11 +31,56 @@
                 {% if juniors %}
                     {% for junior in juniors %}
                         <div class="text-center">
-{#                            <input hidden name="junior" value="{{ junior.subuser.username }}">#}
+                            {#                            <input hidden name="junior" value="{{ junior.subuser.username }}">#}
                             {% if junior.subuser.first_name %}
-                            <button name="junior" value="{{ junior.subuser.username }}" class="astext " style="font-weight: 500;color: #3673e8;">{{ junior.subuser.first_name }} {{ junior.subuser.last_name }}</button>
+                                <table class="table table-responsive">
+                                    <thead class="thead-dark">
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Role</th>
+                                        <th> Last Upload</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>
+                                            <button name="junior" value="{{ junior.subuser.username }}" class="astext "
+                                                    style="font-weight: 500;color: #3673e8;">{{ junior.subuser.first_name }} {{ junior.subuser.last_name }}</button>
+                                        </td>
+                                        <td>
+                                            role
+                                        </td>
+                                        <td>
+                                            last upload
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             {% else %}
-                            <button name="junior" value="{{ junior.subuser.username }}" class="astext " style="font-weight: 500;color: #3673e8;">{{ junior.subuser.full_name }}</button>
+                                <table class="table table-responsive">
+                                    <thead class="thead-dark">
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Role</th>
+                                        <th> Last Upload</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>
+                                            <button name="junior" value="{{ junior.subuser.username }}" class="astext "
+                                                    style="font-weight: 500;color: #3673e8;">{{ junior.subuser.full_name }}</button>
+
+                                        </td>
+                                        <td>
+                                            role
+                                        </td>
+                                        <td>
+                                            last upload
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             {% endif %}
                         </div>
                     {% endfor %}
