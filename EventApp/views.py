@@ -470,38 +470,41 @@ def user_logout(request):
 
 # Login for user to Existing Account
 def user_login(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        try:
-            usercheck = MyUser.objects.get(username=username)
-        except ObjectDoesNotExist:
-            usercheck = None
-        if usercheck is not None:
-            if not usercheck.is_active:
-                # print("your account is inactive")
-                messages.error(request, 'Email not verified, please verify your email to login')
-                return render(request, 'events/login.html', {})
-
-            else:
-                user = authenticate(username=username, password=password)
-                if user is not None:
-                    if user.is_active:
-                        # print("io")
-                        login(request, user)
-                        return redirect('home')
-                    else:
-                        messages.error(request, 'Invalid Username or Password')
-                        return render(request, 'events/login.html', {})
-                else:
-                    messages.error(request, 'Invalid Username or Password')
-                    return render(request, 'events/login.html', {})
-
-        else:
-            messages.error(request, 'Invalid Username or Password')
-            return render(request, 'events/login.html', {})
+    if request.user.is_active:
+        return redirect('home')
     else:
-        return render(request, 'events/login.html', {})
+         if request.method == 'POST':
+             username = request.POST.get('username')
+             password = request.POST.get('password')
+             try:
+                 usercheck = MyUser.objects.get(username=username)
+             except ObjectDoesNotExist:
+                 usercheck = None
+             if usercheck is not None:
+                 if not usercheck.is_active:
+                     # print("your account is inactive")
+                     messages.error(request, 'Email not verified, please verify your email to login')
+                     return render(request, 'events/login.html', {})
+
+                 else:
+                     user = authenticate(username=username, password=password)
+                     if user is not None:
+                         if user.is_active:
+                             # print("io")
+                             login(request, user)
+                             return redirect('home')
+                         else:
+                             messages.error(request, 'Invalid Username or Password')
+                             return render(request, 'events/login.html', {})
+                     else:
+                         messages.error(request, 'Invalid Username or Password')
+                         return render(request, 'events/login.html', {})
+
+             else:
+                 messages.error(request, 'Invalid Username or Password')
+                 return render(request, 'events/login.html', {})
+         else:
+             return render(request, 'events/login.html', {})
 
 
 @staff_user
@@ -582,7 +585,7 @@ def register_head(request):
             return render(request, "user/reset_password.html", args)
         userform = UserRegistration(request.POST, request.FILES)
         roleform = RoleMasterForm(request.POST)
-        if userform.is_valid() and roleform.is_valid():
+        if userform.is_valid() :
             user = userform.save(commit=False)
             password = userform.cleaned_data.get('password')
             user.set_password(password)
