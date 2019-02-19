@@ -7,7 +7,6 @@
 
 {% block body %}
     <br><br><br><br><br><br>
-
     <div class="container">
         <div class="col-sm-6 container-center">
             <div class="logo">
@@ -25,7 +24,6 @@
                     <label class="control-label">Message:</label>
                     <textarea class="form-control" type="text" name="message" rows="3"></textarea>
                 </div>
-
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="inputGroupFileAddon01">Attachment:</span>
@@ -41,7 +39,7 @@
                 {% for participant in participants %}
                     <input type="checkbox" name="participants" id="option{{ participant.email }}"
                            value={{ participant.email }}>
-                    <label for="option{{ participant.email }}"
+                    <label style="font-weight: 400" for="option{{ participant.email }}"
                            value="{{ participant.email }}">{{ participant.username }}</label>
                     <br>
                 {% endfor %}
