@@ -54,5 +54,6 @@ urlpatterns = [
     url(r'^send-username/$', views.send_username, name='send-username'),
     url(r'^other-uploads/$', views.other_uploads, name='other-uploads'),
     url(r'^uploaded-docs/$', views.uploaded_docs, name='uploaded-docs'),
+    url(r'^hear-about-us$',views.hear_about_us, name='hear-about-us')
 
 ]
