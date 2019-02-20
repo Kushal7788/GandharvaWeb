@@ -53,7 +53,7 @@ def campaigning_excel(request):
     all_transactions = Transaction.objects.filter(Q(status='Credit')|Q(status='Cash'))
     wb = openpyxl.Workbook()
     sheet = wb.active
-    columns = ['Participant Name', 'Event','Phone No.' 'College', 'Date']
+    columns = ['Participant Name', 'Event','Phone No.', 'College', 'Date']
 
     heading_row_num = 1
 
