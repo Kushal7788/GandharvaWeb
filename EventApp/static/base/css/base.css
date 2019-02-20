@@ -197,3 +197,12 @@ hr {
     justify-content: space-between
 }
 
+.alert{
+    text-align: center;
+    position: center;
+    top: 65px;
+    /*left: 3%;*/
+    /*width: 300px;*/
+    /*height: auto;*/
+    z-index: 1500;
+}
