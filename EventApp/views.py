@@ -53,7 +53,7 @@ def campaigning_excel(request):
     all_transactions = Transaction.objects.filter(Q(status='Credit')|Q(status='Cash'))
     wb = openpyxl.Workbook()
     sheet = wb.active
-    columns = ['Participant Name', 'Event', 'College', 'Date']
+    columns = ['Participant Name', 'Event','Phone No.' 'College', 'Date']
 
     heading_row_num = 1
 
@@ -66,6 +66,7 @@ def campaigning_excel(request):
     for row, each_transaction in enumerate(all_transactions):
         values = [each_transaction.team.user.first_name + " " + each_transaction.team.user.last_name,
                   each_transaction.receipt.event.event_name,
+                  each_transaction.team.user.user_phone,
                   each_transaction.team.user.user_coll.name,
                   str(each_transaction.date)]
         for col, each_value in enumerate(values):
@@ -97,7 +98,7 @@ def campaigning_excel(request):
     #     i = i + 1
     # insta = InstamojoCredential.objects.latest('pk')
     current_site = get_current_site(request)
-    pathw = current_site.domain + 'media/CampaignData.xlsx'
+    pathw = '/media/CampaignData.xlsx'
     # return HttpResponse(BASE_DIR + '/media/CampaignData.xlsx')
     wb.save(BASE_DIR + '/media/CampaignData.xlsx')
     arg = {
