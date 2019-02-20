@@ -1487,6 +1487,8 @@ def pariwartan(request):
 
 
 def verifyOTP_event(request):
+    vishwa = EventMaster.objects.get(event_name="Vishwa-Pariwartan")
+    stats = 0
     if request.method == 'POST':
         userEmail = request.POST.get('useremail')
         otpEntered = request.POST.get('otp')
@@ -1509,8 +1511,11 @@ def verifyOTP_event(request):
                 error = None
                 ifuser = MyUser.objects.get(email=userEmail)
                 if Team.objects.filter(user=ifuser).count():
-                    stats = 1
-                    participant = Team.objects.get(user=ifuser)
+                    teams = Team.objects.filter(user=ifuser)
+                    for team in teams:
+                        if Transaction.objects.get(team = team).receipt.event == vishwa:
+                            participant = Transaction.objects.get(team = team)
+                            stats = 1
                 else:
                     stats = 0
                     participant = None
