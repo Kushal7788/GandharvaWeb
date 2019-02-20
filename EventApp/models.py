@@ -149,6 +149,7 @@ class EventMaster(models.Model):
     container_src = models.ImageField(max_length=500, blank=True)
     location = models.CharField(max_length=40, blank=True)
     timings = models.CharField(max_length=200, blank=True)
+    can_register = models.BooleanField(default=True)
 
     def __str__(self):
         return self.event_name
