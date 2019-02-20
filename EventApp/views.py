@@ -4,6 +4,9 @@ import datetime
 import json
 import re
 import string
+
+from django.db.models import Q
+
 import EventApp
 import os
 from io import BytesIO
@@ -47,7 +50,7 @@ from .email_sender import send_email
 
 # @staff_user
 def campaigning_excel(request):
-    all_transactions = Transaction.objects.filter(status='Credit')
+    all_transactions = Transaction.objects.filter(Q(status='Credit')|Q(status='Cash'))
     wb = openpyxl.Workbook()
     sheet = wb.active
     columns = ['Participant Name', 'Event', 'College', 'Date']
@@ -1082,7 +1085,7 @@ def reset_password_new(request, uidb64, token):
         # return HttpResponse(user.token2 + 'a<br>' + token + 'b<br>')
         if str(user.token2) == str(token):
             args = {
-                'user': user,
+                'user_new': user,
             }
             return render(request, 'user/new_password.html', args)
         else:
