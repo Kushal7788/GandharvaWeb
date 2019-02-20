@@ -1219,7 +1219,7 @@ def ourSponsors(request):
             print(s)
             sponsors.append(s)
     args = {
-        'partners': partners.sort(),
+        'partners': partners,
         'sponsors': sponsors
     }
     return render(request, 'gandharva/ourSponsors.html', args)
