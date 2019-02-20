@@ -1081,8 +1081,6 @@ def reset_password_new(request, uidb64, token):
     if user is not None:
         # return HttpResponse(user.token2 + 'a<br>' + token + 'b<br>')
         if str(user.token2) == str(token):
-            user.token2 = None
-            user.save()
             args = {
                 'user': user,
             }
@@ -1100,6 +1098,7 @@ def new_password(request):
         user = MyUser.objects.get(pk=id)
         if new_password == confirm_new_password:
             user.set_password(new_password)
+            user.token2 = None
             user.save()
             return render(request, 'events/login.html', {})
 
