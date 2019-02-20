@@ -1542,11 +1542,17 @@ def pariwartan_upload(request):
         usermail = request.POST.get('user')
         user = MyUser.objects.get(email=usermail)
         doc = request.FILES['doc']
-        pariwartan = Pariwartan()
-        pariwartan.user = user
-        pariwartan.doc = doc
-        pariwartan.save()
-        stats = 2
+        if Pariwartan.objects.filter(user = user).count():
+             pariwartan = Pariwartan.objects.get(user = user)
+             pariwartan.doc = doc
+             pariwartan.save()
+             stats = 2
+        else:
+            pariwartan = Pariwartan()
+            pariwartan.user = user
+            pariwartan.doc = doc
+            pariwartan.save()
+            stats = 2
     elif request.method == 'POST':
         stats = 1
     return render(request, 'events/pariwartan_upload.html', {'stats': stats, 'participant': participant})
