@@ -1422,3 +1422,7 @@ def run_custom():
         else:
             AssignSub.objects.create(rootuser=ajinkya_user,
                                      subuser=each)
+
+def participant_live(request):
+    teams = Team.objects.all()
+    return render(request , 'events/participant-live.html' , { 'teams' : teams})
