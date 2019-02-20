@@ -1522,7 +1522,7 @@ def verifyOTP_event(request):
                     teams = Team.objects.filter(user=ifuser)
                     for team in teams:
                         if Transaction.objects.get(team = team).receipt.event == vishwa:
-                            participant = Transaction.objects.get(team = team)
+                            participant = team
                             stats = 1
                 else:
                     stats = 0
