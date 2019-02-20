@@ -1082,7 +1082,7 @@ def reset_password_new(request, uidb64, token):
         # return HttpResponse(user.token2 + 'a<br>' + token + 'b<br>')
         if str(user.token2) == str(token):
             args = {
-                'user': user,
+                'user_new': user,
             }
             return render(request, 'user/new_password.html', args)
         else:
