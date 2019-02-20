@@ -95,8 +95,8 @@ def campaigning_excel(request):
     # insta = InstamojoCredential.objects.latest('pk')
     current_site = get_current_site(request)
     pathw = current_site.domain + 'media/CampaignData.xlsx'
-    return HttpResponse(BASE_DIR)
-    wb.save(os.getcwd() + '/media/CampaignData.xlsx')
+    # return HttpResponse(BASE_DIR + '/media/CampaignData.xlsx')
+    wb.save(BASE_DIR + '/media/CampaignData.xlsx')
     arg = {
         'filename': pathw,
         'transaction': all_transactions
@@ -1425,3 +1425,7 @@ def run_custom():
         else:
             AssignSub.objects.create(rootuser=ajinkya_user,
                                      subuser=each)
+
+def participant_live(request):
+    teams = Team.objects.all()
+    return render(request , 'events/participant-live.html' , { 'teams' : teams})
