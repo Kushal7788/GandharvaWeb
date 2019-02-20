@@ -53,7 +53,7 @@ def campaigning_excel(request):
     all_transactions = Transaction.objects.filter(Q(status='Credit')|Q(status='Cash'))
     wb = openpyxl.Workbook()
     sheet = wb.active
-    columns = ['Participant Name', 'Event','Phone No.', 'College', 'Date']
+    columns = ['Participant Name', 'Event', 'Phone No.', 'College', 'Date', 'Email Id','Mode','Refral Person']
 
     heading_row_num = 1
 
@@ -64,11 +64,23 @@ def campaigning_excel(request):
         curr_cell.value = each_column
 
     for row, each_transaction in enumerate(all_transactions):
-        values = [each_transaction.team.user.first_name + " " + each_transaction.team.user.last_name,
-                  each_transaction.receipt.event.event_name,
-                  each_transaction.team.user.user_phone,
-                  each_transaction.team.user.user_coll.name,
-                  str(each_transaction.date)]
+        if each_transaction.team.referral:
+            values = [each_transaction.team.user.first_name + " " + each_transaction.team.user.last_name,
+                      each_transaction.receipt.event.event_name,
+                      each_transaction.team.user.user_phone,
+                      each_transaction.team.user.user_coll.name,
+                      str(each_transaction.date),
+                      each_transaction.team.user.email,
+                      each_transaction.status,
+                      each_transaction.team.referral.first_name + " " + each_transaction.team.referral.last_name]
+        else:
+            values = [each_transaction.team.user.first_name + " " + each_transaction.team.user.last_name,
+                      each_transaction.receipt.event.event_name,
+                      each_transaction.team.user.user_phone,
+                      each_transaction.team.user.user_coll.name,
+                      str(each_transaction.date),
+                      each_transaction.team.user.email,
+                      each_transaction.status]
         for col, each_value in enumerate(values):
             curr_cell = sheet.cell(row=row + data_starting_number, column=col + 1)
             curr_cell.value = each_value
