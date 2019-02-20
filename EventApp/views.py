@@ -150,7 +150,7 @@ def home(request):
 
     args = {
         'events': Department.objects.all().order_by("rank"),
-        'sponsors': SponsorMaster.objects.all(),
+        'sponsors': SponsorMaster.objects.all().order_by('sponsor_rank'),
         'carouselImage': Carousel.objects.all(),
         'gandharvaDate': GandharvaHome.objects.get(title__startswith="Date").data,
         'About': GandharvaHome.objects.get(title__startswith="About").data,
@@ -629,10 +629,10 @@ def register_head(request):
             roleassign.user = user
             roleassign.role = RoleMaster.objects.get(name=role)
 
-            if role == "Event Head":
-                event.head = user
-            elif role == "Jt Event Head":
-                event.jt_head = user
+            # if role == "Event Head":
+            #     event.head = user
+            # elif role == "Jt Event Head":
+            #     event.jt_head = user
 
             event.save()
             roleassign.event = event
@@ -1221,7 +1221,7 @@ def AddVolunteer(request):
 
 
 def ourSponsors(request):
-    Sponsors = SponsorMaster.objects.all()
+    Sponsors = SponsorMaster.objects.all().order_by('sponsor_rank')
     sponsors = []
     partners = []
     for s in Sponsors:
@@ -1232,7 +1232,7 @@ def ourSponsors(request):
             print(s)
             sponsors.append(s)
     args = {
-        'partners': partners,
+        'partners': partners.sort(),
         'sponsors': sponsors
     }
     return render(request, 'gandharva/ourSponsors.html', args)
@@ -1323,10 +1323,15 @@ def campaign(request):
                         v.name = name
                         v.count = 1
                         volunteers.append(v)
+            total = 0
+            for c in volunteers:
+                total = total + c.count
             args = {
 
                 'volunteers': volunteers,
+                'total' : total
             }
+
             # print("volunteer")
             # print(volunteers)
             return render(request, 'events/campaigningData.html', args)
@@ -1348,8 +1353,12 @@ def campaign(request):
                         e.event_name = event.event_name
                         e.count = 1
                         events.append(e)
-                args = {
+            total = 0
+            for c in events:
+                total = total + c.count
+            args = {
                     'events': events,
+                'total' : total
                 }
                 # print("")
                 # print(events)
@@ -1371,8 +1380,12 @@ def campaign(request):
                         c.name = college.name
                         c.count = 1
                         colleges.append(c)
-                args = {
+            total = 0
+            for c in colleges :
+                total = total + c.count
+            args = {
                     'colleges': colleges,
+                    'total' : total
                 }
                 # print("")
                 # print(colleges)

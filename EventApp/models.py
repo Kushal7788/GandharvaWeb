@@ -194,6 +194,7 @@ class SponsorMaster(models.Model):
     sponsor_info = models.CharField(max_length=200, default='No Info. Available')
     sponsor_type = models.CharField(max_length=30, blank=True)
     sponsor_link = models.URLField(blank=True)
+    sponsor_rank = models.IntegerField(default=1)
 
     def __str__(self):
         return self.sponsor_name
