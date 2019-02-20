@@ -1311,10 +1311,15 @@ def campaign(request):
                         v.name = name
                         v.count = 1
                         volunteers.append(v)
+            total = 0
+            for c in volunteers:
+                total = total + c.count
             args = {
 
                 'volunteers': volunteers,
+                'total' : total
             }
+
             # print("volunteer")
             # print(volunteers)
             return render(request, 'events/campaigningData.html', args)
@@ -1336,8 +1341,12 @@ def campaign(request):
                         e.event_name = event.event_name
                         e.count = 1
                         events.append(e)
-                args = {
+            total = 0
+            for c in events:
+                total = total + c.count
+            args = {
                     'events': events,
+                'total' : total
                 }
                 # print("")
                 # print(events)
@@ -1359,8 +1368,12 @@ def campaign(request):
                         c.name = college.name
                         c.count = 1
                         colleges.append(c)
-                args = {
+            total = 0
+            for c in colleges :
+                total = total + c.count
+            args = {
                     'colleges': colleges,
+                    'total' : total
                 }
                 # print("")
                 # print(colleges)
