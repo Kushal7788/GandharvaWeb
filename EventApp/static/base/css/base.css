@@ -160,6 +160,7 @@ a:hover {
 #user-image {
     margin-left: 20px;
     margin-top: 10px;
+    border-radius: 50%;
 }
 
 #rightdiv {

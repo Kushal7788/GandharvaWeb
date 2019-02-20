@@ -110,7 +110,7 @@
                         {#{ user.username }}  #}
                         {% if user.prof_img %}
                             <img src="{{ user.prof_img.url }}"
-                                 width="30" height="30">
+                                 width="30" height="30" style="border-radius: 50%">
                         {% else %}
                             <img src="https://ui-avatars.com/api/?name={{ user.first_name }}+{{ user.last_name }}&rounded=true"
                                  width="30" height="30">
