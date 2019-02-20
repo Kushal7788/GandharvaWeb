@@ -53,7 +53,7 @@ def campaigning_excel(request):
     all_transactions = Transaction.objects.filter(Q(status='Credit')|Q(status='Cash'))
     wb = openpyxl.Workbook()
     sheet = wb.active
-    columns = ['Participant Name', 'Event','Phone No.' ,'College', 'Date']
+    columns = ['Participant Name', 'Event','Phone No.' , 'College', 'Date']
 
     heading_row_num = 1
 
@@ -1289,7 +1289,6 @@ def campaign(request):
         check = request.POST.get('criteria')
         # volunteer wise
         if check == "0":
-            total = 0
             volunteers = []
             transactions = Transaction.objects.all()
             for transaction in transactions:
@@ -1312,12 +1311,9 @@ def campaign(request):
                         v.name = name
                         v.count = 1
                         volunteers.append(v)
-            for v in volunteers :
-                total = total + v.count
             args = {
 
                 'volunteers': volunteers,
-                'total': total,
             }
             # print("volunteer")
             # print(volunteers)
@@ -1340,12 +1336,8 @@ def campaign(request):
                         e.event_name = event.event_name
                         e.count = 1
                         events.append(e)
-            total = 0
-            for e in events:
-                total = total + e.count
-            args = {
+                args = {
                     'events': events,
-                    'total' : total
                 }
                 # print("")
                 # print(events)
@@ -1367,12 +1359,8 @@ def campaign(request):
                         c.name = college.name
                         c.count = 1
                         colleges.append(c)
-            total = 0
-            for e in colleges:
-                total = total + e.count
-            args = {
+                args = {
                     'colleges': colleges,
-                    'total' : total
                 }
                 # print("")
                 # print(colleges)
@@ -1421,7 +1409,6 @@ class Eventwise:
     event_id = 0
     event_name = ""
     count = 0
-    domain_name = ""
 
 
 class Collegewise:
@@ -1444,7 +1431,6 @@ def run_custom():
 
 def participant_live(request):
     events = []
-    domains = []
     transactions = Transaction.objects.all()
     for transaction in transactions:
         if transaction.status == "Credit" or transaction.status == "Cash":
@@ -1457,33 +1443,11 @@ def participant_live(request):
                     break
             if c == 0:
                 e = Eventwise()
-                d = EventDepartment.objects.get(event = event)
-                e.domain_name = d.department.name
                 e.event_id = event.event_id
                 e.event_name = event.event_name
                 e.count = 1
                 events.append(e)
-
-    for e in events :
-        do=0
-        for d in domains :
-            if e.domain_name == d.name :
-                d.count = d.count +1
-                do=1
-                break
-        if do == 0 :
-            dom = Domainwise()
-            dom.name = e.domain_name
-            print(dom.name)
-            dom.count = 1
-            dom.events.append(e)
-
-    args = {
-            'domains': domains,
+        args = {
+            'events': events,
         }
     return render(request , 'events/participant-live.html' , args)
-
-class Domainwise :
-    name = ""
-    events = []
-    count = 0

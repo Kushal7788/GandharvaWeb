@@ -94,7 +94,9 @@
             {#                        <li class="nav-item">#}
             {#                            <a class="nav-link" href="{% url 'ourSponsors' %}">Sponsors</a>#}
             {#                        </li>#}
-
+                                   <li class="nav-item">
+                                        <a class="nav-link" href="{% url 'ourSponsors' %}">Sponsors</a>
+                                   </li>
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'contactus' %}">Contact Us</a>
             </li>
@@ -182,10 +184,29 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'user_login' %}">Login</a>
                 </li>
+                {#  <div class="alert alert-success">#}
+                        {#  <strong>Success!</strong> You should <a href="#" class="alert-link">read this message</a>#}
+                {#</div>#}
             {% endif %}
         </ul>
     </div>
 </nav>
+{#<div class="alert">#}
+{#    {% if alert_type == "green" %}#}
+{#    <div class="alert alert-success">#}
+{#          <strong>Success!</strong> You should <a href="#" class="alert-link">read this message</a>.#}
+{#        <h5><strong>Success!</strong> You have logged in..!!</h5>#}
+{#    </div>#}
+{#    {% elif alert_type == "blue" %}#}
+{#    <div class="alert alert-info">#}
+{#        <h5><strong>Info!</strong> You should read this message</h5>#}
+{#    </div>#}
+{#    {% elif alert_type == "red" %}#}
+{#    <div class="alert alert-warning">#}
+{#        <h5><strong>Warning!</strong> You should read this message</h5>#}
+{#    </div>#}
+{#    {% endif %}#}
+{#</div>#}
 {% block body %}
 {% endblock %}
 <button class="btn topButton"
