@@ -41,7 +41,8 @@
                             <div class="form-group">
                                 <label class="control-label">First Name:</label>
                                 <input id="firstName" class="form-control" type="text"
-                                       name="first_name" placeholder="First name" value="{{ present_user.first_name }}">
+                                       name="first_name" placeholder="First name" value="{{ present_user.first_name }}"
+                                       required>
                                 <span style="color:red;">
                                 {{ form.first_name.errors }}
                             </span>
@@ -52,7 +53,7 @@
                                 <label class="control-label">Last Name:</label>
                                 <input id="lastName" class="form-control" type="text"
                                        name="last_name" placeholder="Last name" value="{{ present_user.last_name }}"
-                                >
+                                       required>
                                 <span style="color: red">
                                 {{ form.last_name.errors }}
                             </span>
@@ -61,14 +62,14 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label">Email:</label>
-                        <input readonly class="form-control" name="email"
-                               value="{{ email_participant }}">
+                        <input readonly class="form-control" id="EMail" name="email"
+                               value="{{ email_participant }}" required>
                     </div>
                     <div class="form-group">
                         <label class="control-label">Mobile:</label>
                         <input id="mobile" class="form-control" type="tel"
                                name="user_phone" placeholder="Mobile Number" value="{{ present_user.user_phone }}"
-                        >
+                               required>
                         <span style="color: red">
                         {{ form.user_phone.errors }}
                     </span>
@@ -111,15 +112,15 @@
                     </span>
                     <div class="text-right">
                         <br>
-                        <button type="submit"  name="card" value="card" class="btn Login_btn-primary">Pay
+                        <button type="submit" name="card" value="card" class="btn Login_btn-primary">Pay
                             Now
                         </button>
-                        {#                        {% if request.user.is_staff %}#}
-                        <button type="submit" name="cash" value="cash"
-                                class="btn Login_btn-primary"
-                                style="margin-left: 6px">Pay By Cash
-                        </button>
-                        {#                        {% endif %}#}
+                        {% if request.user.is_staff %}
+                            <button type="submit" name="cash" value="cash"
+                                    class="btn Login_btn-primary"
+                                    style="margin-left: 6px">Pay By Cash
+                            </button>
+                        {% endif %}
                     </div>
                     <br><br>
                 </form>
@@ -133,10 +134,13 @@
         <script>
             document.querySelector('#from1').addEventListener('submit', function (e) {
                 var form = this;
+                var firstname = document.getElementById('firstName').value;
+                var lastname = document.getElementById('lastName').value;
+                var email = document.getElementById('EMail').value;
                 e.preventDefault();
                 swal({
-                    title: "Are you sure?",
-                    text: "You want to pay for event {{ event.event_name }}",
+                    title: "Proceed with payment?",
+                    text: "Name: " + firstname + " " + lastname + "\n" + "Email: " + email + "\n" + "Event: {{ event.event_name }}\n" + "Fee: " + "₹ {{ event.entry_fee }}\n",
                     icon: "warning",
                     buttons: [
                         'No, cancel it!',
