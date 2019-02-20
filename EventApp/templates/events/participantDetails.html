@@ -131,52 +131,54 @@
     <br><br><br>
     {% block scripts %}
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-        <script>
-            document.querySelector('#from1').addEventListener('submit', function (e) {
-                var form = this;
-                var firstname = document.getElementById('firstName').value;
-                var lastname = document.getElementById('lastName').value;
-                var email = document.getElementById('EMail').value;
-                e.preventDefault();
-                swal({
-                    title: "Proceed with payment?",
-                    text: "Name: " + firstname + " " + lastname + "\n" + "Email: " + email + "\n" + "Event: {{ event.event_name }}\n" + "Fee: " + "₹ {{ event.entry_fee }}\n",
-                    icon: "warning",
-                    buttons: [
-                        'No, cancel it!',
-                        'Yes, I am sure!'
-                    ],
-                    dangerMode: true,
-                }).then(function (isConfirm) {
-                    if (isConfirm) {
-                        form.submit();
-                    } else {
-                    }
-                })
-            });
 
-            $(document).ready(function () {
-                $("#cashButton").click(function () {
-                    $('.loader').addClass('displayLoader');
-                    myFunction(this);
-                });
+{#        <script>#}
+{#            document.querySelector('#from1').addEventListener('submit', function (e) {#}
+{#                var form = this;#}
+{#                var firstname = document.getElementById('firstName').value;#}
+{#                var lastname = document.getElementById('lastName').value;#}
+{#                var email = document.getElementById('EMail').value;#}
+{#                e.preventDefault();#}
+{#                swal({#}
+{#                    title: "Proceed with payment?",#}
+{#                    text: "Name: " + firstname + " " + lastname + "\n" + "Email: " + email + "\n" + "Event: {{ event.event_name }}\n" + "Fee: " + "₹ {{ event.entry_fee }}\n",#}
+{#                    icon: "warning",#}
+{#                    buttons: [#}
+{#                        'No, cancel it!',#}
+{#                        'Yes, I am sure!'#}
+{#                    ],#}
+{#                    dangerMode: true,#}
+{#                }).then(function (isConfirm) {#}
+{#                    if (isConfirm) {#}
+{#                        form.submit();#}
+{#                    } else {#}
+{#                    }#}
+{#                })#}
+{#            });#}
+{##}
+{#            $(document).ready(function () {#}
+{#                $("#cashButton").click(function () {#}
+{#                    $('.loader').addClass('displayLoader');#}
+{#                    myFunction(this);#}
+{#                });#}
+{##}
+{#                $("#cashButton1").click(function () {#}
+{#                    $('.loader').addClass('displayLoader');#}
+{#                    myFunction(this);#}
+{#                });#}
+{##}
+{#                function myFunction(div) {#}
+{#                    $('#page').addClass('hidePage');#}
+{#                    $('.navbar').addClass('hidePage');#}
+{#                    $('#footer').addClass('hidePage');#}
+{#                    $('#over').addClass('displayOverlay');#}
+{#                    document.querySelector('html').style.overflow = "hidden";#}
+{#                    document.querySelector('body').style.overflow = "hidden";#}
+{#                    $(".loader").toggle();#}
+{#                    $(div).toggle();#}
+{#                }#}
+{#            });#}
+{#        </script>#}
 
-                $("#cashButton1").click(function () {
-                    $('.loader').addClass('displayLoader');
-                    myFunction(this);
-                });
-
-                function myFunction(div) {
-                    $('#page').addClass('hidePage');
-                    $('.navbar').addClass('hidePage');
-                    $('#footer').addClass('hidePage');
-                    $('#over').addClass('displayOverlay');
-                    document.querySelector('html').style.overflow = "hidden";
-                    document.querySelector('body').style.overflow = "hidden";
-                    $(".loader").toggle();
-                    $(div).toggle();
-                }
-            });
-        </script>
     {% endblock %}
 {% endblock %}

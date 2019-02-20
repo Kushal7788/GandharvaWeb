@@ -1084,10 +1084,8 @@ def reset_password_new(request, uidb64, token):
     if user is not None:
         # return HttpResponse(user.token2 + 'a<br>' + token + 'b<br>')
         if str(user.token2) == str(token):
-            user.token2 = None
-            user.save()
             args = {
-                'user': user,
+                'user_new': user,
             }
             return render(request, 'user/new_password.html', args)
         else:
@@ -1103,6 +1101,7 @@ def new_password(request):
         user = MyUser.objects.get(pk=id)
         if new_password == confirm_new_password:
             user.set_password(new_password)
+            user.token2 = None
             user.save()
             return render(request, 'events/login.html', {})
 
@@ -1430,5 +1429,24 @@ def run_custom():
                                      subuser=each)
 
 def participant_live(request):
-    teams = Team.objects.all()
-    return render(request , 'events/participant-live.html' , { 'teams' : teams})
+    events = []
+    transactions = Transaction.objects.all()
+    for transaction in transactions:
+        if transaction.status == "Credit" or transaction.status == "Cash":
+            event = transaction.team.receipt.event
+            c = 0
+            for i in range(len(events)):
+                if events[i].event_id == event.event_id:
+                    c = 1
+                    events[i].count = events[i].count + 1
+                    break
+            if c == 0:
+                e = Eventwise()
+                e.event_id = event.event_id
+                e.event_name = event.event_name
+                e.count = 1
+                events.append(e)
+        args = {
+            'events': events,
+        }
+    return render(request , 'events/participant-live.html' , args)
