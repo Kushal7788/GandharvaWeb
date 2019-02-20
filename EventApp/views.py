@@ -4,6 +4,9 @@ import datetime
 import json
 import re
 import string
+
+from django.db.models import Q
+
 import EventApp
 import os
 from io import BytesIO
@@ -47,7 +50,7 @@ from .email_sender import send_email
 
 # @staff_user
 def campaigning_excel(request):
-    all_transactions = Transaction.objects.filter(status='Credit')
+    all_transactions = Transaction.objects.filter(Q(status='Credit')|Q(status='Cash'))
     wb = openpyxl.Workbook()
     sheet = wb.active
     columns = ['Participant Name', 'Event', 'College', 'Date']
