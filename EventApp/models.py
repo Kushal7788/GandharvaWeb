@@ -357,3 +357,15 @@ class HearAboutUs(models.Model):
 
     def __str__(self):
         return self.user.username + ' -> ' + self.source
+
+def pariwartan(instance, filename):
+    ext = filename.split('.')[-1]
+    filename = '{}.{}'.format("Vishwa-Pariwartan/" + instance.user.email , ext)
+    return filename
+
+class Pariwartan (models.Model):
+    user  = models.ForeignKey(MyUser,on_delete=models.CASCADE)
+    doc = models.FileField(upload_to=pariwartan)
+
+    def __str__(self):
+        return self.user.username

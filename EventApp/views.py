@@ -4,25 +4,22 @@ import datetime
 import json
 import re
 import string
-
-from django.db.models import Q
-
-import EventApp
-import os
 from io import BytesIO
-from django.conf import settings
-from django.core.files.storage import FileSystemStorage
+
 import openpyxl
 import qrcode
 import sweetify
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files import File
+from django.core.files.storage import FileSystemStorage
 from django.core.mail import EmailMessage
 from django.db import IntegrityError
+from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
@@ -33,27 +30,17 @@ from instamojo_wrapper import Instamojo
 from EventApp.decorators import *
 from GandharvaWeb19 import settings
 from GandharvaWeb19.settings import BASE_DIR
+from .email_sender import send_email
 from .forms import *
 from .token import *
-from instamojo_wrapper import Instamojo
-from django.db import IntegrityError
-import datetime
-from django.core.exceptions import ObjectDoesNotExist
-import qrcode
-import json
-import string
-import openpyxl
-import sweetify
-import re
-from .email_sender import send_email
 
 
 # @staff_user
 def campaigning_excel(request):
-    all_transactions = Transaction.objects.filter(Q(status='Credit')|Q(status='Cash'))
+    all_transactions = Transaction.objects.filter(Q(status='Credit') | Q(status='Cash'))
     wb = openpyxl.Workbook()
     sheet = wb.active
-    columns = ['Participant Name', 'Event', 'Phone No.', 'College', 'Date', 'Email Id','Mode','Refral Person']
+    columns = ['Participant Name', 'Event', 'Phone No.', 'College', 'Date', 'Email Id', 'Mode', 'Refral Person']
 
     heading_row_num = 1
 
@@ -911,7 +898,7 @@ def participant_details(request):
             error = form.errors
             return render(request, 'events/participantDetails.html',
                           {'event': event_new, 'colleges': coll, 'email_participant': participant_email,
-                           'present_user': ifuser, 'error': error})
+                           'present_user': ifuser, 'error': error, 'form': form})
     else:
         return redirect('/')
 
@@ -1329,7 +1316,7 @@ def campaign(request):
             args = {
 
                 'volunteers': volunteers,
-                'total' : total
+                'total': total
             }
 
             # print("volunteer")
@@ -1357,11 +1344,11 @@ def campaign(request):
             for c in events:
                 total = total + c.count
             args = {
-                    'events': events,
-                'total' : total
-                }
-                # print("")
-                # print(events)
+                'events': events,
+                'total': total
+            }
+            # print("")
+            # print(events)
             return render(request, 'events/campaigningData.html', args)
         elif check == "2":
             colleges = []
@@ -1381,14 +1368,14 @@ def campaign(request):
                         c.count = 1
                         colleges.append(c)
             total = 0
-            for c in colleges :
+            for c in colleges:
                 total = total + c.count
             args = {
-                    'colleges': colleges,
-                    'total' : total
-                }
-                # print("")
-                # print(colleges)
+                'colleges': colleges,
+                'total': total
+            }
+            # print("")
+            # print(colleges)
             return render(request, 'events/campaigningData.html', args)
 
         elif check == "3":
@@ -1454,6 +1441,7 @@ def run_custom():
             AssignSub.objects.create(rootuser=ajinkya_user,
                                      subuser=each)
 
+
 def participant_live(request):
     events = []
     transactions = Transaction.objects.all()
@@ -1475,4 +1463,78 @@ def participant_live(request):
         args = {
             'events': events,
         }
-    return render(request , 'events/participant-live.html' , args)
+    return render(request, 'events/participant-live.html', args)
+
+
+def pariwartan(request):
+    if request.method == 'POST':
+        useremail = request.POST.get('email')
+        if useremail != "":
+            otp = random.randint(100000, 999999)
+            message = render_to_string('user/OTP.html', {
+                'otp': otp
+            })
+            mail_subject = 'OTP for email verification.'
+            request.session['otp'] = otp
+            send_email(useremail, mail_subject, message)
+
+            return render(request, 'events/pariwartan.html',
+                          {'email': useremail, 'btndisable': True})
+        else:
+            return render(request, 'events/pariwartan.html', {'email': useremail})
+    if request.method == 'GET':
+        return render(request, 'events/pariwartan.html', {})
+
+
+def verifyOTP_event(request):
+    if request.method == 'POST':
+        userEmail = request.POST.get('useremail')
+        otpEntered = request.POST.get('otp')
+        originalotp = str(request.session.get('otp'))
+        # print(originalotp)
+        # print("original otp", originalotp)
+        if originalotp != otpEntered or len(originalotp) < 6:
+            error = "Invalid OTP"
+            return render(request, 'events/pariwartan.html',
+                          {'error': error, 'email': userEmail})
+
+        else:
+            request.session['otp'] = ""
+            if MyUser.objects.filter(email=userEmail).count() == 0:
+                ifuser = None
+                error = "Not participated in this Event!!"
+                stats = 0
+                participant = None
+            else:
+                error = None
+                ifuser = MyUser.objects.get(email=userEmail)
+                if Team.objects.filter(user=ifuser).count():
+                    stats = 1
+                    participant = Team.objects.get(user=ifuser)
+                else:
+                    stats = 0
+                    participant = None
+
+            readm = "readonly"
+            return render(request, 'events/pariwartan_upload.html',
+                          {'error': error, 'present_user': ifuser,
+                           'readm': readm, 'participant': participant, 'stats': stats})
+
+
+def pariwartan_upload(request):
+    usermail = request.POST.get('user')
+    user = MyUser.objects.get(email=usermail)
+    participant = Team.objects.get(user=user)
+    if request.method == 'POST' and len(request.FILES) == 1:
+        usermail = request.POST.get('user')
+        user = MyUser.objects.get(email=usermail)
+        doc = request.FILES['doc']
+        pariwartan = Pariwartan()
+        pariwartan.user = user
+        pariwartan.doc = doc
+        pariwartan.save()
+        stats = 2
+    elif request.method == 'POST':
+        stats = 1
+    return render(request, 'events/pariwartan_upload.html', {'stats': stats, 'participant': participant})
+    # print(request.FILES['prof_img']

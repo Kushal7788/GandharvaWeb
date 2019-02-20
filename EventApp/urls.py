@@ -57,5 +57,8 @@ urlpatterns = [
     url(r'^publicity-head/$', views.publicity_head, name='publicity-head'),
     url(r'^hear-about-us$', views.hear_about_us, name='hear-about-us'),
     url(r'^participant-live$', views.participant_live, name='participant-live'),
+    url(r'^verifyOTP-event$', views.verifyOTP_event, name='verifyOTP-event'),
+    url(r'^pariwartan$', views.pariwartan, name='pariwartan'),
+    url(r'^pariwartan-upload$', views.pariwartan_upload, name='pariwartan-upload'),
 
 ]

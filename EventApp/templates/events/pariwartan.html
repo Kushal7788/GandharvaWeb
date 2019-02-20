@@ -1,0 +1,95 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}Vishwa-Pariwartan Email Verification{% endblock %}
+{% block css %}
+    <link href="{% static 'events/css/login_signup.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+    <br><br><br><br>
+    <div id="over" class="overlay"></div>
+    <div class="loader"></div>
+    <div class="container" style="height: 100vh" id="wrapper">
+        <div id="page" class="displayPage">
+            <div class="col-sm-5 container-center">
+                <div class="logo">
+                    <img class="img-fluid" src="{% static 'gandharva/img/logo_description.png' %}">
+                </div>
+                <h5 style="text-align: center;">Enter participant's email</h5>
+                <br>
+                <form id="from1" method="post" action="{% url 'pariwartan' %}"
+                      onsubmit="return myValidate()">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input id="email" type="email" class="form-control" name="email" placeholder="Email"
+                               value="{{ email }}">
+                        <span style="color: red">
+                    {{ form.user_name.errors }}
+                    </span>
+                    </div>
+                    <span id="EmailErrors" class="errors"></span>
+                    <div class="form-group">
+{#                        <input type="hidden" name="event_id" value={{ event_id }}>#}
+                        <div class="text-right">
+                            <button type="submit" id="sendOTPButton" class="btn Login_btn-primary"
+                                    style="margin-left: 0;font-weight: 400">
+                                Send OTP
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <form method="post" action="{% url 'verifyOTP-event' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input id="Otp" type="text" class="form-control" name="otp" placeholder="OTP">
+                        <span style="color: red">
+                    {% if error %}
+                        {{ error }}
+                    {% endif %}
+                    </span>
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" name="dummy" value='1'>
+                        <input type="hidden" name="useremail" value={{ email }}>
+                        <div class="text-right">
+                            <button type="submit" id="verifyButton" class="btn Login_btn-primary"
+                                    style="font-weight: 400">Verify OTP
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <br><br>
+    {% block scripts %}
+        <script>
+            $(document).ready(function () {
+                {% if btndisable %}
+                    document.getElementById('sendOTPButton').disabled = true;
+                    document.getElementById('sendOTPButton').innerText = "Please wait";
+                    document.getElementById('Otp').focus();
+                    setTimeout(function () {
+                        document.getElementById('sendOTPButton').disabled = false;
+                        document.getElementById('sendOTPButton').innerText = "Resend OTP";
+                    }, 10000);
+                {% endif %}
+                $("#from1").submit(function () {
+                    $('.loader').addClass('displayLoader');
+                    myFunction(this);
+                });
+
+                function myFunction(div) {
+                    $('#page').addClass('hidePage');
+                    $('.navbar').addClass('hidePage');
+                    $('#footer').addClass('hidePage');
+                    $('#over').addClass('displayOverlay');
+                    document.querySelector('html').style.overflow = "hidden";
+                    document.querySelector('body').style.overflow = "hidden";
+                    $(".loader").toggle();
+                    $(div).toggle();
+                }
+            });
+        </script>
+    {% endblock %}
+{% endblock %}
