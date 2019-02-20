@@ -757,22 +757,30 @@ def participant_event_register(request):
     if request.method == 'POST':
         useremail = request.POST.get('email')
         eventId = request.POST.get('event_id')
-        if useremail != "":
-            otp = random.randint(100000, 999999)
-            message = render_to_string('user/OTP.html', {
-                'otp': otp
-            })
-            mail_subject = 'OTP for email verification.'
-            request.session['otp'] = otp
-            send_email(useremail, mail_subject, message)
+        event = EventMaster.objects.get(event_id=eventId)
+        if event.can_register:
+            if useremail != "":
+                otp = random.randint(100000, 999999)
+                message = render_to_string('user/OTP.html', {
+                    'otp': otp
+                })
+                mail_subject = 'OTP for email verification.'
+                request.session['otp'] = otp
+                send_email(useremail, mail_subject, message)
 
-            return render(request, 'events/participantEventRegister.html',
-                          {'email': useremail, 'event_id': eventId, 'btndisable': True})
+                return render(request, 'events/participantEventRegister.html',
+                              {'email': useremail, 'event_id': eventId, 'btndisable': True})
+            else:
+                return render(request, 'events/participantEventRegister.html', {'event_id': eventId, 'email': useremail})
         else:
-            return render(request, 'events/participantEventRegister.html', {'event_id': eventId, 'email': useremail})
+            return HttpResponse("Sorry this event is not available for registration")
     if request.method == 'GET':
         event_id = request.GET.get('event_id')
-        return render(request, 'events/participantEventRegister.html', {'event_id': event_id})
+        event = EventMaster.objects.get(event_id=event_id)
+        if event.can_register:
+            return render(request, 'events/participantEventRegister.html', {'event_id': event_id})
+        else:
+            return HttpResponse("Sorry this event is not available for registration")
 
 
 def verifyOTP(request):
@@ -1219,7 +1227,7 @@ def ourSponsors(request):
             print(s)
             sponsors.append(s)
     args = {
-        'partners': partners.sort(),
+        'partners': partners,
         'sponsors': sponsors
     }
     return render(request, 'gandharva/ourSponsors.html', args)
@@ -1487,6 +1495,8 @@ def pariwartan(request):
 
 
 def verifyOTP_event(request):
+    vishwa = EventMaster.objects.get(event_name="Vishwa-Pariwartan")
+    stats = 0
     if request.method == 'POST':
         userEmail = request.POST.get('useremail')
         otpEntered = request.POST.get('otp')
@@ -1509,8 +1519,11 @@ def verifyOTP_event(request):
                 error = None
                 ifuser = MyUser.objects.get(email=userEmail)
                 if Team.objects.filter(user=ifuser).count():
-                    stats = 1
-                    participant = Team.objects.get(user=ifuser)
+                    teams = Team.objects.filter(user=ifuser)
+                    for team in teams:
+                        if Transaction.objects.get(team = team).receipt.event == vishwa:
+                            participant = team
+                            stats = 1
                 else:
                     stats = 0
                     participant = None
