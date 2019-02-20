@@ -19,6 +19,14 @@
     </div>
     <br>
     <div class="container">
+        {% if event.prize %}
+            <h4 class="colorlib-heading">
+                Prize</h4>
+            <pre style="margin-top: 12px">{{ event.prize }}</pre>
+        {% endif %}
+    </div>
+    <br>
+    <div class="container">
         {% if event.rounds %}
             <h4 class="colorlib-heading">
                 Rounds</h4>

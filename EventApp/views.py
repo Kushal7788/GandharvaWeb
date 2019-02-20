@@ -29,6 +29,7 @@ from instamojo_wrapper import Instamojo
 
 from EventApp.decorators import *
 from GandharvaWeb19 import settings
+from GandharvaWeb19.settings import BASE_DIR
 from .forms import *
 from .token import *
 from instamojo_wrapper import Instamojo
@@ -44,7 +45,7 @@ import re
 from .email_sender import send_email
 
 
-@staff_user
+# @staff_user
 def campaigning_excel(request):
     all_transactions = Transaction.objects.filter(status='Credit')
     wb = openpyxl.Workbook()
@@ -91,15 +92,17 @@ def campaigning_excel(request):
     #     c4 = sheet.cell(row=i, column=5)
     #     c4.value = str(t.time)
     #     i = i + 1
-    insta = InstamojoCredential.objects.latest('pk')
+    # insta = InstamojoCredential.objects.latest('pk')
     current_site = get_current_site(request)
     pathw = current_site.domain + 'media/CampaignData.xlsx'
-    wb.save("media/CampaignData.xlsx")
+    return HttpResponse(BASE_DIR)
+    wb.save(os.getcwd() + '/media/CampaignData.xlsx')
     arg = {
         'filename': pathw,
         'transaction': all_transactions
 
     }
+    # return HttpResponse()
     return render(request, 'user/TableToExcel.html', arg)
 
 
@@ -235,7 +238,7 @@ def success(request):
                     'Event': event.event_name,
                     'Username': user.username,
                     'Name': receipt.name,
-                    'Amount':receipt.event.entry_fee,
+                    'Amount': receipt.event.entry_fee,
                     'Status': transaction.status,
                     'Mode': transaction.billing_instrument
                 }
@@ -941,7 +944,7 @@ def cashpayment(request, event_new, user):
             'Mode': transaction.billing_instrument
         }
         qr.add_data(json.dumps(content))
-        #qr.add_data(content)
+        # qr.add_data(content)
         img = qr.make_image(fill_color="black", back_color="white")
         # img.save(user.username + event.event_name + "png")
         thumb_io = BytesIO()
