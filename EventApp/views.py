@@ -29,6 +29,7 @@ from instamojo_wrapper import Instamojo
 
 from EventApp.decorators import *
 from GandharvaWeb19 import settings
+from GandharvaWeb19.settings import BASE_DIR
 from .forms import *
 from .token import *
 from instamojo_wrapper import Instamojo
@@ -94,7 +95,7 @@ def campaigning_excel(request):
     # insta = InstamojoCredential.objects.latest('pk')
     current_site = get_current_site(request)
     pathw = current_site.domain + 'media/CampaignData.xlsx'
-    return HttpResponse(os.getcwd() + '/media/CampaignData.xlsx')
+    return HttpResponse(BASE_DIR)
     wb.save(os.getcwd() + '/media/CampaignData.xlsx')
     arg = {
         'filename': pathw,
