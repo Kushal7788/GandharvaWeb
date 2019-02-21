@@ -268,7 +268,7 @@ def success(request):
                 send_email(user.email, mail_subject, message, [team.QRcode.path])
 
             if transaction.status == "Credit":
-                return render(request, 'user/paymentSsuccess.html', {'user_id': user.pk})
+                return render(request, 'user/paymentSsuccess.html', {'user': user})
             elif transaction.status == "Failed":
                 return render(request, 'user/paymentFailed.html', {'user_id': user.pk})
             teams = reversed(Team.objects.filter(user=user).reverse())
@@ -876,7 +876,10 @@ def participant_details(request):
                 user.save()
 
             # print("name", event_new.event_name)
-            user = MyUser.objects.get(email=participant_email)
+            if MyUser.objects.filter(email=participant_email).count():
+                user = MyUser.objects.get(email=participant_email)
+            elif MyUser.objects.filter(coll_email=participant_email).count():
+                user = MyUser.objects.get(coll_email=participant_email)
             if request.POST.get('card'):
                 # print("towards Payment")
                 current_site = get_current_site(request)
