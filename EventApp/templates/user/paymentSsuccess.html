@@ -14,7 +14,7 @@
             </div>
             <h5 style="text-align: center;">Payment Successful</h5>
             <br>
-            <p>Payment Successfully done. Please check your mail for the receipt. If you have any issues then please
+            <p>Payment Successfully done. Please check your mail {{ user.email }} for the receipt. If you have any issues then please
                 contact us.</p>
             <br>
             <form method="get" action="{% url 'hear-about-us' %}">
@@ -29,7 +29,7 @@
                 </div>
                 <br>
                 <div class="text-right">
-                    <input type="hidden" name="user_id" value="{{ user_id }}">
+                    <input type="hidden" name="user_id" value="{{ user.id }}">
                     <button type="submit" class="confirmEmailButton">Submit</button>
                 </div>
             </form>
