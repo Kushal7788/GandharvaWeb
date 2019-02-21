@@ -112,7 +112,7 @@
                         {#{ user.username }}  #}
                         {% if user.prof_img %}
                             <img src="{{ user.prof_img.url }}"
-                                 width="30" height="30" style="border-radius: 50%">
+                                 width="30" height="30" style="border-radius: 50%; image-orientation: from-image" >
                         {% else %}
                             <img src="https://ui-avatars.com/api/?name={{ user.first_name }}+{{ user.last_name }}&rounded=true"
                                  width="30" height="30">
@@ -163,7 +163,7 @@
                         <div id="logprof">
                             <form method="get" action="{% url 'user_profile' %}">
 
-                                <input type="hidden" name="profile" value=>
+                                <input type="hidden" name="profile" value="">
                                 <button type="submit" class="dropdown-item dropdownStyle">My Profile</button>
                             </form>
                             {#                        <form method="get" action="{% url 'eventsRegister' %}">#}

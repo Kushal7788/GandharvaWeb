@@ -15,11 +15,11 @@
             {% if forloop.first %}
                 <div class="row">{% endif %}
 
-        <div class="col-sm-3" style="margin-bottom: 20px;margin-left: auto;margin-right: auto">
+        <div class="col-sm-2" style="margin-bottom: 20px;margin-left: auto;margin-right: auto">
             <div class="one-slide white">
                 <div class="testimonial w-100 h-100 p-3 text-center">
                     <div class="brand"><img alt="logo"
-                                            src="{{ site }}{{ s.sponsor_logo }}"
+                                            src="{{ s.sponsor_logo.url }}"
                                             style="width:auto;height:100px;max-width:100px"/>
                     </div>
                     <div class="separator">&nbsp;</div>
@@ -43,11 +43,11 @@
             {% if forloop.first %}
                 <div class="row">{% endif %}
 
-        <div class="col-sm-3" style="margin-bottom: 20px;margin-right: auto;margin-left: auto">
+        <div class="col-sm-2" style="margin-bottom: 20px;margin-right: auto;margin-left: auto">
             <div class="one-slide white">
                 <div class="testimonial w-100 h-100 p-3 text-center">
                     <div class="brand"><img alt="logo"
-                                            src="{{ site }}{{ p.sponsor_logo }}"
+                                            src="{{ p.sponsor_logo.url }}"
                                             style="width:auto;height:100px;max-width:100px"/>
                     </div>
                     <div class="separator">&nbsp;</div>
