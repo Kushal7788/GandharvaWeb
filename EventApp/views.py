@@ -612,6 +612,20 @@ def register_head(request):
             else:
                 user = userform.save(commit=False)
             password = userform.cleaned_data.get('password')
+            coll_email = userform.cleaned_data.get('coll_email')
+            user_mail = userform.cleaned_data.get('email')
+            user_name = userform.cleaned_data.get('username')
+            user_year = userform.cleaned_data.get('user_year')
+            user_coll = userform.cleaned_data.get('user_coll')
+            user_mobile = userform.cleaned_data.get('user_phone')
+            user.coll_email = coll_email
+            user.email = user_mail
+            user_year = College_year.objects.get(title = user_year)
+            user_coll = College.objects.get(name =user_coll)
+            user.user_coll = user_coll
+            user.user_year = user_year
+            user.username = user_name
+            user.user_phone = user_mobile
             user.set_password(password)
             user.is_active = False
             user.full_name = user.first_name + " " + user.last_name
