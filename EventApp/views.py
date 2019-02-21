@@ -592,11 +592,12 @@ def register_head(request):
             old_user2 = MyUser.objects.get(coll_email=request.POST.get('coll__email'))
             print(old_user2)
         if old_user is not None and old_user.is_active is False:
-            old_user.delete()
+            user_stat = 1
         elif old_user2 is not None and old_user2.is_active is False and old_user is None:
-            old_user2.delete()
+            user_stat = 2
         elif (old_user is not None and old_user.is_active is True) or (
                 old_user2 is not None and old_user2.is_active is True):
+            user_stat = 0
             args = {
                 'error': "You have already registered and your email is verified too. Enter email to reset your password."
             }
@@ -604,7 +605,12 @@ def register_head(request):
         userform = UserRegistration(request.POST, request.FILES)
         roleform = RoleMasterForm(request.POST)
         if userform.is_valid():
-            user = userform.save(commit=False)
+            if user_stat == 1:
+                user =  old_user
+            elif user_stat == 2:
+                user = old_user2
+            else:
+                user = userform.save(commit=False)
             password = userform.cleaned_data.get('password')
             user.set_password(password)
             user.is_active = False
@@ -1539,9 +1545,14 @@ def verifyOTP_event(request):
 
 
 def pariwartan_upload(request):
+    vishwa = EventMaster.objects.get(event_name="Vishwa-Pariwartan")
     usermail = request.POST.get('user')
     user = MyUser.objects.get(email=usermail)
-    participant = Team.objects.get(user=user)
+    if Team.objects.filter(user=user).count():
+        teams = Team.objects.filter(user=user)
+        for team in teams:
+            if Transaction.objects.get(team=team).receipt.event == vishwa:
+                participant = team
     if request.method == 'POST' and len(request.FILES) == 1:
         usermail = request.POST.get('user')
         user = MyUser.objects.get(email=usermail)
