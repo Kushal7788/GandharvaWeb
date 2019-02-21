@@ -1238,28 +1238,55 @@ def AddVolunteer(request):
         }
         return render(request, 'events/campaignVolunteer.html', args)
 
+class CategoryWise :
+    category = None
+    sponsors = []
+    partners = []
 
 def ourSponsors(request):
     Sponsors = SponsorMaster.objects.all().order_by('sponsor_rank')
-    sponsors = []
-    partners = []
+    Categories = SponsorCategory.objects.all().order_by('category_rank')
+    category = []
+    #comment from here to
+    sp = []
+    part = []
     for s in Sponsors:
-        if 'partner' in s.sponsor_type.lower():
-            print(s)
-            partners.append(s)
-        elif 'sponsor' in s.sponsor_type.lower():
-            print(s)
-            sponsors.append(s)
+        if "sponsor" in s.sponsor_type.lower():
+            sp.append(s)
+        elif "partner" in s.sponsor_type.lower():
+            part.append(s)
+    #here after displaying data categorywise u only need category list
+    for c in Categories:
+        sponsors = []
+        partners = []
+        cat = CategoryWise()
+        cat.category = c
+        for s in Sponsors:
+            if c == s.sponsor_category and "sponsor" in s.sponsor_type.lower():
+                sponsors.append(s)
+            elif c == s.sponsor_category and "partner" in s.sponsor_type.lower():
+                partners.append(s)
+        cat.sponsors = sponsors
+        cat.partners = partners
+        category.append(cat)
+        sponsors.clear()
+        partners.clear()
     current_site = get_current_site(request)
     print(current_site)
     current_site = str(current_site) + "/media/"
     args = {
-        'partners': partners,
-        'sponsors': sponsors,
+        'partners': part,
+        'sponsors': sp,
         'site' : current_site,
+        'category' : category
     }
     return render(request, 'gandharva/ourSponsors.html', args)
-
+    #Accessing category wise data:
+    #run loop for c in category
+    #c.category.sponsor_category = to access category name
+    #c.category.category_rank = to access to category_rank
+    #c.sponsors = sponsors of current category and c.sponsors[index].sponsors_name to access sponsor_name
+    #similarly for partners of each category
 
 def ourTeam(request):
     obj = OurTeam.objects.all().count()
