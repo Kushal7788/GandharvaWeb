@@ -82,7 +82,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 (
-                'department', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='EventApp.Department')),
+                    'department',
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='EventApp.Department')),
             ],
         ),
         migrations.CreateModel(

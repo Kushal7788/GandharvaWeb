@@ -38,8 +38,9 @@
                         {#                            Structure:</h5>#}
                         {#                        <p>Max {{ event.event.team_size }} Participants per Team & ₹ {{ event.event.entry_fee }} per#}
                         {#                                  team.</p>#}
-                        <h6 style="font-weight: 400"> Prizes: <pre
-                                style="font-family: Verdana, Geneva, sans-serif;
+                        <h6 style="font-weight: 400"> Prizes:
+                            <pre
+                                    style="font-family: Verdana, Geneva, sans-serif;
     font-weight: 300;
     font-size: 14px;">{{ event.event.prize }} </pre>
                         </h6>
@@ -67,11 +68,13 @@
                             <button type="submit" class="btn btn-primary eventButtons">Rules
                             </button>
                         </form>
-                        <form method="get" action="{% url 'participantEventRegister' %}">
-                            <input type="hidden" name="event_id" value={{ event.event.event_id }}>
-                            <button type="submit" id="modal-btn" class="btn btn-primary eventButtons">Register Now
-                            </button>
-                        </form>
+                        {% if event.event.can_register %}
+                            <form method="get" action="{% url 'participantEventRegister' %}">
+                                <input type="hidden" name="event_id" value={{ event.event.event_id }}>
+                                <button type="submit" id="modal-btn" class="btn btn-primary eventButtons">Register Now
+                                </button>
+                            </form>
+                        {% endif %}
                     </div>
                 </div>
 

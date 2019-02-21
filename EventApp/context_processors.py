@@ -20,11 +20,10 @@ def add_variable_to_context(request):
     for global_object in global_objects:
         event_name.append(global_object.event.event_name)
 
-
     return {
         'testmes': Department.objects.all().order_by('rank'),
         'global_events': event_name,
         'footers': SocialMedia.objects.all(),
         'rulebook': rulebook,
-        'role':roles_user,
+        'role': roles_user,
     }
