@@ -25,7 +25,7 @@ SECRET_KEY = '^)ef3%8r$&327z%qz92yxgcxt6m@4s8j7$czx%5r6140^zh&g4'
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'gandharva19.pythonanywhere.com', '0.0.0.0', 'localhost', 'www.viitgandharva.com',
-                 'viitgandharva.com', '*.viitgandharva.com', '192.168.43.139', '192.168.43.211','192.168.0.103']
+                 'viitgandharva.com', '*.viitgandharva.com', '192.168.43.139', '192.168.43.211','192.168.0.103','192.168.0.111']
 
 # Application definition
 EMAIL_USE_SSL=False

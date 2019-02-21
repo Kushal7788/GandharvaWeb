@@ -161,6 +161,7 @@ a:hover {
     margin-left: 20px;
     margin-top: 10px;
     border-radius: 50%;
+    image-orientation: from-image;
 }
 
 #rightdiv {
