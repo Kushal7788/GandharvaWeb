@@ -6,7 +6,6 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('EventApp', '0058_merge_20190218_1202'),
     ]
@@ -30,7 +29,8 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='myuser',
             name='user_dept',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, to='EventApp.Department'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT,
+                                    to='EventApp.Department'),
         ),
         migrations.AlterUniqueTogether(
             name='assignsub',
@@ -39,6 +39,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='hearaboutus',
             name='user',
-            field=models.ForeignKey(blank=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(blank=True, on_delete=django.db.models.deletion.CASCADE,
+                                    to=settings.AUTH_USER_MODEL),
         ),
     ]

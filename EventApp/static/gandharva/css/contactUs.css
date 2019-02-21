@@ -110,11 +110,11 @@ html, body {
 
 @media only screen and (max-width: 500px) {
 
-.topHeight {
-    height: 2vh;
-}
+    .topHeight {
+        height: 2vh;
+    }
 
-.bottomHeight {
-    height: 5vh;
-}
+    .bottomHeight {
+        height: 5vh;
+    }
 }

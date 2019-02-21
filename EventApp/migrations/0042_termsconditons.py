@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('EventApp', '0041_sponsormaster_sponsor_logo'),
     ]

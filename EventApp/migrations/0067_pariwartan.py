@@ -7,7 +7,6 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('EventApp', '0066_sponsormaster_sponsor_rank'),
     ]
