@@ -47,10 +47,12 @@ class Department(models.Model):
     def __str__(self):
         return self.name
 
+
 def ourteam_path(instance, filename):
     ext = filename.split('.')[-1]
     filename = '{}.{}'.format("OurTeam_images/" + instance.name, ext)
     return filename
+
 
 def sponsor_path(instance, filename):
     ext = filename.split('.')[-1]
@@ -99,7 +101,7 @@ class MyUser(AbstractUser):
     full_name = models.CharField(max_length=200, null=True, blank=True)
 
     def __str__(self):
-        return str(self.coll_email) + ' ' + str(self.username) +' '+ str(self.full_name) +' ' + str(self.first_name)
+        return str(self.coll_email) + ' ' + str(self.username) + ' ' + str(self.full_name) + ' ' + str(self.first_name)
 
     # class Meta:
     #     ordering = ['email']
@@ -108,7 +110,7 @@ class MyUser(AbstractUser):
 # RoleMaster contains all the vaarious roles of users
 class RoleMaster(models.Model):
     name = models.CharField(max_length=50)
-    assigned_work = models.TextField(max_length=2000,blank=True)
+    assigned_work = models.TextField(max_length=2000, blank=True)
 
     def __str__(self):
         return self.name
@@ -163,7 +165,7 @@ class RoleAssignment(models.Model):
 
     def __str__(self):
         try:
-            return str(self.role.name) + ' '+ str(self.user)
+            return str(self.role.name) + ' ' + str(self.user)
         except:
             return str(self.role.name)
 
@@ -246,6 +248,7 @@ class Team(models.Model):
     user = models.ForeignKey(MyUser, on_delete=models.PROTECT, related_name='participant')
     referral = models.ForeignKey(MyUser, on_delete=models.PROTECT, blank=True, related_name='Refral_Volunteer',
                                  null=True)
+
     def __str__(self):
         return str(self.user)
 
@@ -314,10 +317,12 @@ class AssignSub(models.Model):
     subuser = models.ForeignKey(MyUser, on_delete=models.PROTECT, related_name='subordinate')
 
     def __str__(self):
-        return 'Root : ' + str(self.rootuser.first_name) +' ' +  str(self.rootuser.full_name) +' Sub: ' + str(self.subuser.first_name) +' '+ str(self.subuser.full_name)
+        return 'Root : ' + str(self.rootuser.first_name) + ' ' + str(self.rootuser.full_name) + ' Sub: ' + str(
+            self.subuser.first_name) + ' ' + str(self.subuser.full_name)
 
     class Meta:
         unique_together = ('rootuser', 'subuser',)
+
 
 class InstamojoCredential(models.Model):
     key = models.CharField(max_length=50)
@@ -342,11 +347,12 @@ class SocialMedia(models.Model):
     src = models.CharField(max_length=200)
     cls = models.CharField(max_length=300, blank=True)
 
+
 class OurTeam(models.Model):
-    user = models.ForeignKey(MyUser,on_delete=models.CASCADE,blank=True)
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE, blank=True)
     name = models.CharField(max_length=100)
     img = models.ImageField(upload_to=ourteam_path)
-    post = models.CharField(max_length=100,default=None)
+    post = models.CharField(max_length=100, default=None)
 
     def __str__(self):
         return 'Username : ' + self.name
@@ -359,13 +365,15 @@ class HearAboutUs(models.Model):
     def __str__(self):
         return self.user.username + ' -> ' + self.source
 
+
 def pariwartan(instance, filename):
     ext = filename.split('.')[-1]
-    filename = '{}.{}'.format("Vishwa-Pariwartan/" + instance.user.email , ext)
+    filename = '{}.{}'.format("Vishwa-Pariwartan/" + instance.user.email, ext)
     return filename
 
-class Pariwartan (models.Model):
-    user  = models.ForeignKey(MyUser,on_delete=models.CASCADE)
+
+class Pariwartan(models.Model):
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE)
     doc = models.FileField(upload_to=pariwartan)
 
     def __str__(self):

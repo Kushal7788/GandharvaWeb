@@ -91,13 +91,13 @@
                     {#                        {% endfor %}#}
                     {#                    </div>#}
                 </div>
-            </li>
-            {#                        <li class="nav-item">#}
-            {#                            <a class="nav-link" href="{% url 'ourSponsors' %}">Sponsors</a>#}
-            {#                        </li>#}
-                                   <li class="nav-item">
+             </li>
+                                    <li class="nav-item">
                                         <a class="nav-link" href="{% url 'ourSponsors' %}">Sponsors</a>
-                                   </li>
+                                    </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'ourSponsors' %}">Sponsors</a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'contactus' %}">Contact Us</a>
             </li>
@@ -182,7 +182,7 @@
                     <a class="nav-link" href="{% url 'user_login' %}">Login</a>
                 </li>
                 {#  <div class="alert alert-success">#}
-                        {#  <strong>Success!</strong> You should <a href="#" class="alert-link">read this message</a>#}
+                {#  <strong>Success!</strong> You should <a href="#" class="alert-link">read this message</a>#}
                 {#</div>#}
             {% endif %}
         </ul>
@@ -233,13 +233,13 @@
 </script>
 <script type="text/javascript" src="{% static 'base/js/base.js' %}"></script>
 <script>
-        $(document).click(function (event) {
-            var clickover = $(event.target);
-            var _opened = $(".navbar-collapse").hasClass("show");
-            if (_opened === true && !clickover.hasClass("navbar-toggler")) {
-                $(".navbar-toggler").click();
-            }
-        });
+    $(document).click(function (event) {
+        var clickover = $(event.target);
+        var _opened = $(".navbar-collapse").hasClass("show");
+        if (_opened === true && !clickover.hasClass("navbar-toggler")) {
+            $(".navbar-toggler").click();
+        }
+    });
 </script>
 {% block scripts %}
 {% endblock %}

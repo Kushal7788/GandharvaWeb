@@ -26,7 +26,7 @@
 
                 <div class="form-group" style="width: 80%;margin-left: auto;margin-right: auto">
                     Name
-                    <select id="volunteers" name="volunteers" class="form-control" >
+                    <select id="volunteers" name="volunteers" class="form-control">
                         <option value="">Select</option>
                         {% for volunteer in volunteers %}
                             <option value="{{ volunteer.pk }}">{{ volunteer.first_name }} {{ volunteer.last_name }}</option>
@@ -36,7 +36,7 @@
 
                 <div class="form-group" style="width: 80%;margin-left: auto;margin-right: auto">
                     College
-                    <select id="colleges" name="colleges" class="form-control" >
+                    <select id="colleges" name="colleges" class="form-control">
                         <option value="">Select</option>
                         {% for college in colleges %}
                             <option value="{{ college.pk }}">{{ college.name }}</option>
@@ -46,36 +46,36 @@
 
                 <div class="form-group" style="width: 80%;margin-left: auto;margin-right: auto">
                     Date
-                    <input type="date" name="campaignDate" class="form-control" >
+                    <input type="date" name="campaignDate" class="form-control">
                 </div>
                 <div class="text-right">
                     <button type="submit" class="btn addVolunteer">Add Entry</button>
                 </div>
             </form>
             <br>
-         {% if volunteers %}
-            <div class="container"
-                 style="display: flex;flex-direction: row;justify-items: center;align-items: center;overflow: auto">
-                <table class="table table-responsive volTable">
-                    <thead class="thead-dark">
-                    <tr>
-                        <th>Volunteer Name</th>
-                        <th>College Name</th>
-                        <th>Date</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for volunteer in volunteerData %}
+            {% if volunteers %}
+                <div class="container"
+                     style="display: flex;flex-direction: row;justify-items: center;align-items: center;overflow: auto">
+                    <table class="table table-responsive volTable">
+                        <thead class="thead-dark">
                         <tr>
-                            <td>{{ volunteer.user.first_name }} {{ volunteer.user.last_name }}</td>
-                            <td>{{ volunteer.college.name }}</td>
-                            <td>{{ volunteer.date }}</td>
+                            <th>Volunteer Name</th>
+                            <th>College Name</th>
+                            <th>Date</th>
                         </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        {% endif %}
+                        </thead>
+                        <tbody>
+                        {% for volunteer in volunteerData %}
+                            <tr>
+                                <td>{{ volunteer.user.first_name }} {{ volunteer.user.last_name }}</td>
+                                <td>{{ volunteer.college.name }}</td>
+                                <td>{{ volunteer.date }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
         </div>
     </div>
     <br><br>
