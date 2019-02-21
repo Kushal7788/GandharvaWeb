@@ -1226,9 +1226,13 @@ def ourSponsors(request):
         elif 'sponsor' in s.sponsor_type.lower():
             print(s)
             sponsors.append(s)
+    current_site = get_current_site(request)
+    print(current_site)
+    current_site = str(current_site) + "/media/"
     args = {
         'partners': partners,
-        'sponsors': sponsors
+        'sponsors': sponsors,
+        'site' : current_site,
     }
     return render(request, 'gandharva/ourSponsors.html', args)
 
