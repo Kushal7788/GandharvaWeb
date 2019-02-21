@@ -1213,6 +1213,7 @@ def uploaded_docs(request):
 # Volunteer College Date Entry by Campaign Head
 @user_Campaign_head
 def AddVolunteer(request):
+    campaign_team = RoleMaster.objects.get(name = 'Campaigning Team')
     if request.method == "POST":
         uid = request.POST.get('volunteers')
         cid = request.POST.get('colleges')
@@ -1227,9 +1228,8 @@ def AddVolunteer(request):
         volunteers = []
         roles = RoleAssignment.objects.all()
         for role in roles:
-            if role.role.name == "Volunteer":
+            if role.role == campaign_team:
                 volunteers.append(role.user)
-                # print(role.user)
         colleges = College.objects.all()
         args = {
             'volunteers': volunteers,
@@ -1445,7 +1445,7 @@ def campaign(request):
             volunteers = []
             roles = RoleAssignment.objects.all()
             for role in roles:
-                if role.role.name == "Volunteer":
+                if role.role.name == "Campaigning Team":
                     volunteers.append(role.user)
                     # print(role.user)
             colleges = College.objects.all()
