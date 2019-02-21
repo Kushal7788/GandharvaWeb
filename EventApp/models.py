@@ -149,6 +149,7 @@ class EventMaster(models.Model):
     container_src = models.ImageField(max_length=500, blank=True)
     location = models.CharField(max_length=40, blank=True)
     timings = models.CharField(max_length=200, blank=True)
+    can_register = models.BooleanField(default=True)
 
     def __str__(self):
         return self.event_name
@@ -194,6 +195,7 @@ class SponsorMaster(models.Model):
     sponsor_info = models.CharField(max_length=200, default='No Info. Available')
     sponsor_type = models.CharField(max_length=30, blank=True)
     sponsor_link = models.URLField(blank=True)
+    sponsor_rank = models.IntegerField(default=1)
 
     def __str__(self):
         return self.sponsor_name
@@ -356,3 +358,15 @@ class HearAboutUs(models.Model):
 
     def __str__(self):
         return self.user.username + ' -> ' + self.source
+
+def pariwartan(instance, filename):
+    ext = filename.split('.')[-1]
+    filename = '{}.{}'.format("Vishwa-Pariwartan/" + instance.user.email , ext)
+    return filename
+
+class Pariwartan (models.Model):
+    user  = models.ForeignKey(MyUser,on_delete=models.CASCADE)
+    doc = models.FileField(upload_to=pariwartan)
+
+    def __str__(self):
+        return self.user.username

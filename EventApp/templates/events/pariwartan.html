@@ -1,6 +1,6 @@
 {% extends 'base/base.html' %}
 {% load static %}
-{% block title %}Participant Email Verification{% endblock %}
+{% block title %}Vishwa-Pariwartan Email Verification{% endblock %}
 {% block css %}
     <link href="{% static 'events/css/login_signup.css' %}" rel="stylesheet">
 {% endblock %}
@@ -15,9 +15,9 @@
                 <div class="logo">
                     <img class="img-fluid" src="{% static 'gandharva/img/logo_description.png' %}">
                 </div>
-                <h5 style="text-align: center;">Enter participants email</h5>
+                <h5 style="text-align: center;">Enter participant's email</h5>
                 <br>
-                <form id="from1" method="post" action="{% url 'participantEventRegister' %}"
+                <form id="from1" method="post" action="{% url 'pariwartan' %}"
                       onsubmit="return myValidate()">
                     {% csrf_token %}
                     <div class="form-group">
@@ -29,7 +29,7 @@
                     </div>
                     <span id="EmailErrors" class="errors"></span>
                     <div class="form-group">
-                        <input type="hidden" name="event_id" value={{ event_id }}>
+{#                        <input type="hidden" name="event_id" value={{ event_id }}>#}
                         <div class="text-right">
                             <button type="submit" id="sendOTPButton" class="btn Login_btn-primary"
                                     style="margin-left: 0;font-weight: 400">
@@ -38,7 +38,7 @@
                         </div>
                     </div>
                 </form>
-                <form method="post" action="{% url 'verifyOTP' %}">
+                <form method="post" action="{% url 'verifyOTP-event' %}">
                     {% csrf_token %}
                     <div class="form-group">
                         <input id="Otp" type="text" class="form-control" name="otp" placeholder="OTP">
@@ -50,7 +50,6 @@
                     </div>
                     <div class="form-group">
                         <input type="hidden" name="dummy" value='1'>
-                        <input type="hidden" name="event_id" value={{ event_id }}>
                         <input type="hidden" name="useremail" value={{ email }}>
                         <div class="text-right">
                             <button type="submit" id="verifyButton" class="btn Login_btn-primary"

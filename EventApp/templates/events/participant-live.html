@@ -6,43 +6,59 @@
     <style>
         .table {
             margin-left: 0;
+            margin-right: 20px;
         }
 
         td {
-            width: 500px;
+            width: 200px;
+        }
+
+        #footer {
+            display: none;
+        }
+
+        .navbar {
+            display: none;
         }
     </style>
 {% endblock %}
 
 {% block body %}
-    <br><br><br><br>
-    <div class="container">
-        <div class="col-sm-6 container-center">
-            <div class="logo">
-                <img class="img-fluid" src="{% static 'gandharva/img/logo_description.png' %}">
-            </div>
-            <h5 style="text-align: center;">Eventwise Entries</h5>
-            <br>
-            <table class="table table-responsive">
-                <thead class="thead-dark">
-                <tr>
-                    <th>Event Name</th>
-                    <th>Participant Count</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for event in events %}
-                    <tr>
-                        <td>{{ event.event_name }}</td>
-                        <td>{{ event.count }}</td>
-                    </tr>
+    <div class="container-fluid">
+        <div id="event">
+            <div style="display: flex;flex-direction: row;justify-items: left;flex-wrap: wrap">
+                {% for d in domains %}
+                    <div>
+                        <h3>{{ d.name }}</h3>
+                        <table class="table table-responsive">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th>Name</th>
+                                <th>Count</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for e in d.event %}
+                                <tr>
+                                    <td>{{ e.name }}</td>
+                                    <td>{{ e.count }}</td>
+                                </tr>
+                            {% endfor %}
+                            <tr>
+                                <td>
+                                    Total
+                                </td>
+                                <td>
+                                    {{ d.count }}
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 {% endfor %}
-                </tbody>
-            </table>
+            </div>
         </div>
-        <br>
     </div>
-    <div style="height: 30vh"></div>
     {% block scripts %}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
         <script>
