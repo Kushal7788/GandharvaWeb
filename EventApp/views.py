@@ -567,6 +567,7 @@ def register_head(request):
     if request.method == 'POST':
         id = request.POST.get('event')
         event = EventMaster.objects.get(pk=id)
+        user_stat = 0
         # try:
         #     old_user = MyUser.objects.get(email=userform.email)
         #     print(old_user)
