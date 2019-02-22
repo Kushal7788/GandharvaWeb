@@ -45,6 +45,7 @@ html, body {
     text-align: center;
     font-family: 'Abel', sans-serif;
     font-weight: bold;
+    font-size: 20px;
 }
 
 .postname {
@@ -52,6 +53,7 @@ html, body {
     font-family: 'Abel', sans-serif;
     font-weight: normal;
     font-weight: 300;
+    font-size: 18px;
 }
 
 @media only screen and (min-width: 600px) {
@@ -76,7 +78,7 @@ html, body {
     }
 
     .user-img img {
-        height:180px;
+        height: 180px;
         width: 180px;
         border-radius: 50%;
     }
