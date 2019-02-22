@@ -109,6 +109,41 @@ def campaigning_excel(request):
     return render(request, 'user/TableToExcel.html', arg)
 
 
+def volunteer_excel(request):
+    camp_team = RoleMaster.objects.get(name="Campaigning Team")
+    all_camp = RoleAssignment.objects.filter(role=camp_team)
+    wb = openpyxl.Workbook()
+    sheet = wb.active
+    columns = ['Volunteer Name', 'Phone No.']
+
+    heading_row_num = 1
+
+    data_starting_number = 3
+
+    for counter, each_column in enumerate(columns):
+        curr_cell = sheet.cell(row=heading_row_num, column=counter + 1)
+        curr_cell.value = each_column
+
+    for row, each_camp in enumerate(all_camp):
+        values = [each_camp.user.first_name + " " + each_camp.user.last_name,
+                  each_camp.user.user_phone]
+        for col, each_value in enumerate(values):
+            curr_cell = sheet.cell(row=row + data_starting_number, column=col + 1)
+            curr_cell.value = each_value
+
+    current_site = get_current_site(request)
+    pathw = '/media/VolunteerData.xlsx'
+    # return HttpResponse(BASE_DIR + '/media/CampaignData.xlsx')
+    wb.save(BASE_DIR + '/media/VolunteerData.xlsx')
+    arg = {
+        'filename': pathw,
+        'camp_teams': all_camp
+
+    }
+    # return HttpResponse()
+    return render(request, 'user/Campaign_volunteer_excel.html', arg)
+
+
 def offline(request):
     return render(request, 'gandharva/offline.html', {})
 
