@@ -15,9 +15,8 @@
             <div class="row">
                 <div id="eventImage" class="col-sm-12 col-md-6"
                      style="background-image: url('{{ event.event.container_src.url }}');background-size: cover">
-                    <div id="eventImageTitle" style="margin:20px;height:300px;">
-                        <div
-                                style="background:linear-gradient(45deg,rgba(0,0,0,0.5),rgba(0,0,0,0.5));height: inherit;text-align: center">
+                    <div id="eventImageTitle" style="margin:20px;height:92%;">
+                        <div style="background:linear-gradient(45deg,rgba(0,0,0,0.5),rgba(0,0,0,0.5));height: inherit;text-align: center">
                             <h3 class="userselect"
                                 style="color:#fff;word-wrap: break-word;padding-top:12vh;font-weight: 400;">{{ event.event.tagline }}</h3>
                         </div>
@@ -28,21 +27,9 @@
                     <p class="eventDescription" style="margin-top: 12px;font-size: 14px">
                         {{ event.event.objective }}
                     </p>
-                    {#                    <div class="contact">#}
-                    {#                        <h4>Contact:</h4>#}
-                    {#                        <p>Sanul : 123456789</p>#}
-                    {#                        <p>Sanul : 123456789</p>#}
-                    {#                    </div>#}
                     <div class="team">
-                        {#                        <h5 style="color: #000;font-weight: 500">Team and Fee#}
-                        {#                            Structure:</h5>#}
-                        {#                        <p>Max {{ event.event.team_size }} Participants per Team & ₹ {{ event.event.entry_fee }} per#}
-                        {#                                  team.</p>#}
                         <h6 style="font-weight: 400"> Prizes:
-                            <pre
-                                    style="font-family: Verdana, Geneva, sans-serif;
-    font-weight: 300;
-    font-size: 14px;">{{ event.event.prize }} </pre>
+                            <pre style="font-family: Verdana, Geneva, sans-serif;font-weight: 300;font-size: 14px;">{{ event.event.prize }} </pre>
                         </h6>
                         <h6 style="font-weight: 400"> Team: <span
                                 style="font-family: Verdana, Geneva, sans-serif;
@@ -54,11 +41,9 @@
     font-size: 14px;"> ₹ {{ event.event.entry_fee }} per
                         team</span></h6>
                         {% if event.event.rules_file.url != None %}
-
                             <a style="font-size: 14px"
                                href="{{ event.event.rules_file.url }}" download>{{ event.event.event_name }} rules PDF
                                 download</a>
-
                         {% endif %}
                     </div>
 
@@ -77,33 +62,6 @@
                         {% endif %}
                     </div>
                 </div>
-
-                {#            Referral code pop up#}
-                {#                <div style="display: flex;align-items: center;justify-content: center;">#}
-                {#                    <div id="my-modal" class="modal">#}
-                {#                        <div class="modal-content">#}
-                {#                            <div class="modal-header">#}
-                {#                                <h2>Got referral code ?</h2>#}
-                {#                                <span class="close">&times;</span>#}
-                {#                            </div>#}
-                {#                            <div class="modal-body">#}
-                {#                                <p>Enter your referral code :</p>#}
-                {#                                <form>#}
-                {#                                    <input type="text" class="form-control">#}
-                {#                                    <button type="submit" class="btn btn-primary eventButtons">Submit</button>#}
-                {#                                </form>#}
-                {#                            </div>#}
-                {#                            <div class="modal-footer">#}
-                {#                                <div class="text-right">#}
-                {#                                    <button class="btn btn-primary eventButtons">#}
-                {#                                        Skip#}
-                {#                                    </button>#}
-                {#                                </div>#}
-                {#                            </div>#}
-                {#                        </div>#}
-                {#                    </div>#}
-                {#                </div>#}
-
             </div>
             <br>
         {% endfor %}
