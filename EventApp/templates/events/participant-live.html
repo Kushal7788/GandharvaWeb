@@ -1,0 +1,77 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}Live Participants{% endblock %}
+{% block css %}
+    <link href="{% static 'events/css/campaign.css' %}" rel="stylesheet">
+    <style>
+        .table {
+            margin-left: 0;
+            margin-right: 20px;
+        }
+
+        td {
+            width: 200px;
+        }
+
+        #footer {
+            display: none;
+        }
+
+        .navbar {
+            display: none;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div id="event">
+            <div style="display: flex;flex-direction: row;justify-items: left;flex-wrap: wrap">
+                {% for d in domains %}
+                    <div>
+                        <h3>{{ d.name }}</h3>
+                        <table class="table table-responsive">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th>Name</th>
+                                <th>Count</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for e in d.event %}
+                                <tr>
+                                    <td>{{ e.name }}</td>
+                                    <td>{{ e.count }}</td>
+                                </tr>
+                            {% endfor %}
+                            <tr>
+                                <td>
+                                    Total
+                                </td>
+                                <td>
+                                    {{ d.count }}
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% block scripts %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <script>
+            setInterval(function () {
+                $.ajax({
+                    type: "GET",
+                    url: "/participant-live",  // URL to your view that serves new info
+                })
+                    .done(function (response) {
+                        $('#event').html(response);
+                    });
+            }, 10000)
+        </script>
+    {% endblock %}
+{% endblock %}
+

@@ -5,7 +5,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.application import MIMEApplication
 
 
-def send_email(to_email, subject= None, message = None, attach = None,otp=0):
+def send_email(to_email, subject=None, message=None, attach=None, otp=0):
     # Define from
     sender = 'gandharvaviitpune@gmail.com'
 
@@ -14,8 +14,8 @@ def send_email(to_email, subject= None, message = None, attach = None,otp=0):
     msg['Subject'] = subject
     msg['From'] = sender
     msg['To'] = to_email
-    if otp==0:
-        msg.attach(MIMEText(message,'html'))
+    if otp == 0:
+        msg.attach(MIMEText(message, 'html'))
     else:
         msg.attach(MIMEText(message))
     # Attach File
@@ -38,6 +38,6 @@ def send_email(to_email, subject= None, message = None, attach = None,otp=0):
 
     # Perform operations via server
     server.login('gandharvaviitpune@gmail.com', 'Gandharva@19')
-    x=server.sendmail(sender, to_email, msg.as_string())
-    print("Return value",x)
+    x = server.sendmail(sender, to_email, msg.as_string())
+    print("Return value", x)
     server.quit()

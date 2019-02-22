@@ -15,9 +15,10 @@
                 <div class="logo">
                     <img class="img-fluid" src="{% static 'gandharva/img/logo_description.png' %}">
                 </div>
-                <h5 style="text-align: center;">Enter your email</h5>
+                <h5 style="text-align: center;">Enter participants email</h5>
                 <br>
-                <form method="post" action="{% url 'participantEventRegister' %}">
+                <form id="from1" method="post" action="{% url 'participantEventRegister' %}"
+                      onsubmit="return myValidate()">
                     {% csrf_token %}
                     <div class="form-group">
                         <input id="email" type="email" class="form-control" name="email" placeholder="Email"
@@ -26,6 +27,7 @@
                     {{ form.user_name.errors }}
                     </span>
                     </div>
+                    <span id="EmailErrors" class="errors"></span>
                     <div class="form-group">
                         <input type="hidden" name="event_id" value={{ event_id }}>
                         <div class="text-right">
@@ -64,20 +66,16 @@
     {% block scripts %}
         <script>
             $(document).ready(function () {
-
                 {% if btndisable %}
                     document.getElementById('sendOTPButton').disabled = true;
                     document.getElementById('sendOTPButton').innerText = "Please wait";
                     document.getElementById('Otp').focus();
-
                     setTimeout(function () {
                         document.getElementById('sendOTPButton').disabled = false;
                         document.getElementById('sendOTPButton').innerText = "Resend OTP";
-
                     }, 10000);
                 {% endif %}
-
-                $("#sendOTPButton").click(function () {
+                $("#from1").submit(function () {
                     $('.loader').addClass('displayLoader');
                     myFunction(this);
                 });

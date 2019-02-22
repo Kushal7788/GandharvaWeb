@@ -38,9 +38,10 @@ urlpatterns = [
     url(r'participant-event-register', views.participant_event_register, name='participantEventRegister'),
     url(r'participant-details', views.participant_details, name='participantDetails'),
     url(r'^our-sponsors/$', views.ourSponsors, name='ourSponsors'),
-    url(r'^our-team/$', views.ourTeam, name='ourTeam'),
+    url(r'^our-team/$', views.our_team, name='ourTeam'),
     url(r'^verifyOTP/$', views.verifyOTP, name='verifyOTP'),
     url(r'^excel/$', views.campaigning_excel, name='TableToExcel'),
+    url(r'^volunteer-data/$', views.volunteer_excel, name='volunteer-data'),
     url(r'^file-upload/$', views.files, name='files'),
     url(r'^myactions/$', views.myaction, name='myactions'),
     url(r'all-participants', views.all_participants, name='all_participanrs'),
@@ -55,6 +56,10 @@ urlpatterns = [
     url(r'^uploaded-docs/$', views.uploaded_docs, name='uploaded-docs'),
     url(r'^event-head/$', views.event_head, name='event-head'),
     url(r'^publicity-head/$', views.publicity_head, name='publicity-head'),
-    url(r'^hear-about-us$', views.hear_about_us, name='hear-about-us')
+    url(r'^hear-about-us$', views.hear_about_us, name='hear-about-us'),
+    url(r'^participant-live$', views.participant_live, name='participant-live'),
+    url(r'^verifyOTP-event$', views.verifyOTP_event, name='verifyOTP-event'),
+    url(r'^pariwartan$', views.pariwartan, name='pariwartan'),
+    url(r'^pariwartan-upload$', views.pariwartan_upload, name='pariwartan-upload'),
 
 ]

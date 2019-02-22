@@ -1,0 +1,48 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}Campaigning Information{% endblock %}
+{% block css %}
+    <link href="{% static 'events/css/campaign.css' %}" rel="stylesheet">
+{% endblock %}
+{% block body %}
+    <br><br><br><br><br><br>
+    <div class="container">
+        <div class="col-sm-8 container-center">
+            <div class="logo">
+                <img class="img-fluid" src="{% static 'gandharva/img/logo_description.png' %}">
+            </div>
+            <h5 style="text-align: center">Campaigning Information</h5>
+            <br>
+            <div class="text-center">
+                <a href="{{ filename }}" download class="btn bg-primary DownloadButton">
+                    Download
+                </a>
+            </div>
+            <br>
+            <div class="container-fluid"
+                 style="display: flex; align-items:center;overflow: auto">
+                <table class="table" style="align-items: center">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>Volunteer Name</th>
+                        <th>Contact Info</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for t in camp_teams %}
+                        <tr>
+                            <td>{{ t.user.first_name }} {{ t.user.last_name }}</td>
+                            <td>{{ t.user.user_phone }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <br><br>
+    <div style="height: 40vh"></div>
+{% endblock %}
+
+
+

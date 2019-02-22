@@ -4,7 +4,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('EventApp', '0052_merge_20190214_1801'),
     ]

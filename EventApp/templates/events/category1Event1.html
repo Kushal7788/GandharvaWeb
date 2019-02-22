@@ -19,6 +19,14 @@
     </div>
     <br>
     <div class="container">
+        {% if event.prize %}
+            <h4 class="colorlib-heading">
+                Prize</h4>
+            <pre style="margin-top: 12px">{{ event.prize }}</pre>
+        {% endif %}
+    </div>
+    <br>
+    <div class="container">
         {% if event.rounds %}
             <h4 class="colorlib-heading">
                 Rounds</h4>
@@ -47,13 +55,15 @@
         {% endif %}
     </div>
     <br><br>
-    <div class="container">
-        <form method="get" action="{% url 'participantEventRegister' %}">
-            <input type="hidden" name="event_id" value={{ event.event_id }}>
-            <button type="submit" id="modal-btn" class="btn btn-primary eventButtons">Register Now
-            </button>
-        </form>
-    </div>
+    {% if event.can_register %}
+        <div class="container">
+            <form method="get" action="{% url 'participantEventRegister' %}">
+                <input type="hidden" name="event_id" value={{ event.event_id }}>
+                <button type="submit" id="modal-btn" class="btn btn-primary eventButtons">Register Now
+                </button>
+            </form>
+        </div>
+    {% endif %}
     <br>
     <div style="height: 20vh"></div>
 {% endblock %}

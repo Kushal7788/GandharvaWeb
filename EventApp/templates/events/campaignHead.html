@@ -15,17 +15,17 @@
             <p style="text-align: center;">Select an option</p>
             <div class="row">
                 {% if role.role.name == "Campaigning Head" or role.role.name == "Jt Campaigning Head" %}
-                <div class="col-sm-12 col-md-12">
-                    <div class="text-center">
-                        <form method="post" action="{% url 'campaign' %}">
-                            {% csrf_token %}
-                            <input type="hidden" name="criteria" value="0">
-                            <button type="submit" class="btn btn-primary">Number of
-                                Entries
-                            </button>
-                        </form>
+                    <div class="col-sm-12 col-md-12">
+                        <div class="text-center">
+                            <form method="post" action="{% url 'campaign' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="criteria" value="0">
+                                <button type="submit" class="btn btn-primary">Number of
+                                    Entries
+                                </button>
+                            </form>
+                        </div>
                     </div>
-                </div>
                 {% endif %}
                 <div class="col-sm-12 col-md-12">
                     <div class="text-center">
@@ -39,36 +39,45 @@
                     </div>
                 </div>
                 {% if role.role.name == "Campaigning Head" or role.role.name == "Jt Campaigning Head" %}
-                <div class="col-sm-12 col-md-12">
-                    <div class="text-center">
-                        <form method="post" action="{% url 'campaign' %}">
-                            {% csrf_token %}
-                            <input type="hidden" name="criteria" value="2">
-                            <button type="submit" class="btn btn-primary">Collegewise
-                                Entries
-                            </button>
-                        </form>
+                    <div class="col-sm-12 col-md-12">
+                        <div class="text-center">
+                            <form method="post" action="{% url 'campaign' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="criteria" value="2">
+                                <button type="submit" class="btn btn-primary">Collegewise
+                                    Entries
+                                </button>
+                            </form>
+                        </div>
                     </div>
-                </div>
-                <div class="col-sm-12 col-md-12">
-                    <div class="text-center">
-                        <form method="post" action="{% url 'campaign' %}">
-                            {% csrf_token %}
-                            <input type="hidden" name="criteria" value="3">
-                            <button type="submit" class="btn btn-primary">Add Volunteer
-                            </button>
-                        </form>
+                    <div class="col-sm-12 col-md-12">
+                        <div class="text-center">
+                            <form method="post" action="{% url 'campaign' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="criteria" value="3">
+                                <button type="submit" class="btn btn-primary">Add Volunteer
+                                </button>
+                            </form>
+                        </div>
                     </div>
-                </div>
-                <div class="col-sm-12 col-md-12">
-                    <div class="text-center">
-                        <form method="post" action="{% url 'TableToExcel' %}">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-primary">Participant Information
-                            </button>
-                        </form>
+                    <div class="col-sm-12 col-md-12">
+                        <div class="text-center">
+                            <form method="post" action="{% url 'TableToExcel' %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary">Participant Information
+                                </button>
+                            </form>
+                        </div>
                     </div>
-                </div>
+                    <div class="col-sm-12 col-md-12">
+                        <div class="text-center">
+                            <form method="post" action="{% url 'volunteer-data' %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary">Volunteer Information
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 {% endif %}
             </div>
         </div>

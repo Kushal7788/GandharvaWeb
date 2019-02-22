@@ -1,0 +1,107 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}Participant Details{% endblock %}
+
+{% block css %}
+    <link href="{% static 'events/css/login_signup.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+    <br><br><br><br><br>
+    <div id="over" class="overlay"></div>
+    <div class="loader"></div>
+    <div class="container">
+        <div id="page" class="displayPage">
+            <div class="col-sm-5 container-center">
+                <div class="logo">
+                    <img class="img-fluid" src="{% static 'gandharva/img/logo_description.png' %}">
+                </div>
+                {% if stats == 1 %}
+                    <h5 style="text-align: center;">Enter your details</h5>
+                    <br>
+                    <form id="from1" method="post" action="{% url 'pariwartan-upload' %}" onsubmit="return validate()"
+                          enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {#                    {% if form.non_field_errors %}#}
+                        {#                        <ul>#}
+                        {#                            {% for error in form.non_field_errors %}#}
+                        {#                                <li>{{ error }}</li>#}
+                        {#                            {% endfor %}#}
+                        {#                        </ul>#}
+                        {#                    {% endif %}#}
+                        {#                    {% if form.name.errors %}#}
+                        {#                        <ul>#}
+                        {#                            {% for error in form.name.errors %}#}
+                        {#                                <li>{{ error }}</li>#}
+                        {#                            {% endfor %}#}
+                        {#                        </ul>#}
+                        {#                    {% endif %}#}
+                        <h4 style="word-wrap: break-word">Event: Visha-Pariwartan</h4>
+                        <br>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">First Name:</label>
+                                    <label id="firstName" class="form-control" type="text"
+                                           name="first_name"
+                                            >{{ participant.user.first_name }}</label>
+                                    <span style="color:red;">
+                            </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Last Name:</label>
+                                    <label id="lastName" class="form-control" type="text"
+                                           name="last_name"
+                                           required>{{ participant.user.last_name }}</label>
+                                    <span style="color: red">
+                            </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Email:</label>
+                            <label readonly class="form-control" id="EMail" name="email"
+                                   required>{{ participant.user.email }}</label>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Mobile:</label>
+                            <label id="mobile" class="form-control" type="tel"
+                                   name="user_phone">{{ participant.user.user_phone }}</label>
+                            <span style="color: red">
+                    </span>
+                        </div>
+                        {#                    <div style="display: flex;flex-direction: row;">#}
+                        {#                        <input id="button_state" type="checkbox" name="button_state" style="background-color: #fff"#}
+                        {#                               required>#}
+                        {#                        <p style="padding-top: 12px;padding-left: 5px">I have accepted all terms and#}
+                        {#                            conditions</p>#}
+                        {#                    </div>#}
+                        {#                    <a href="terms-and-conditions">Terms and Conditions</a><br>#}
+                        {#                    <a href="privacy-policy">Privacy Policies</a>#}
+                        <input type="file" class="form-control" name="doc">
+                        <div class="text-right">
+                            <br>
+                            <input hidden name="user" value="{{ participant.user.email }}">
+                            <button type="submit" name="card" value="" class="btn Login_btn-primary">Submit
+                            </button>
+                        </div>
+                        <br><br>
+                    </form>
+                {% elif stats == 2 %}
+                    <h5 style="text-align: center;">You Have Submitted the document successfully to the event</h5>
+                {% else %}
+                    <h5 style="text-align: center;">You Have Not participated for the event</h5>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <br><br><br>
+    {% block scripts %}
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+    {% endblock %}
+{% endblock %}
