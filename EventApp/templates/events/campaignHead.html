@@ -69,6 +69,15 @@
                             </form>
                         </div>
                     </div>
+                    <div class="col-sm-12 col-md-12">
+                        <div class="text-center">
+                            <form method="post" action="{% url 'volunteer-data' %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary">Volunteer Information
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 {% endif %}
             </div>
         </div>

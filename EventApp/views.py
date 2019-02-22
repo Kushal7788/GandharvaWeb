@@ -109,6 +109,41 @@ def campaigning_excel(request):
     return render(request, 'user/TableToExcel.html', arg)
 
 
+def volunteer_excel(request):
+    camp_team = RoleMaster.objects.get(name="Campaigning Team")
+    all_camp = RoleAssignment.objects.filter(role=camp_team)
+    wb = openpyxl.Workbook()
+    sheet = wb.active
+    columns = ['Volunteer Name', 'Phone No.']
+
+    heading_row_num = 1
+
+    data_starting_number = 3
+
+    for counter, each_column in enumerate(columns):
+        curr_cell = sheet.cell(row=heading_row_num, column=counter + 1)
+        curr_cell.value = each_column
+
+    for row, each_camp in enumerate(all_camp):
+        values = [each_camp.user.first_name + " " + each_camp.user.last_name,
+                  each_camp.user.user_phone]
+        for col, each_value in enumerate(values):
+            curr_cell = sheet.cell(row=row + data_starting_number, column=col + 1)
+            curr_cell.value = each_value
+
+    current_site = get_current_site(request)
+    pathw = '/media/VolunteerData.xlsx'
+    # return HttpResponse(BASE_DIR + '/media/CampaignData.xlsx')
+    wb.save(BASE_DIR + '/media/VolunteerData.xlsx')
+    arg = {
+        'filename': pathw,
+        'camp_teams': all_camp
+
+    }
+    # return HttpResponse()
+    return render(request, 'user/Campaign_volunteer_excel.html', arg)
+
+
 def offline(request):
     return render(request, 'gandharva/offline.html', {})
 
@@ -1213,6 +1248,7 @@ def uploaded_docs(request):
 # Volunteer College Date Entry by Campaign Head
 @user_Campaign_head
 def AddVolunteer(request):
+    campaign_team = RoleMaster.objects.get(name = 'Campaigning Team')
     if request.method == "POST":
         uid = request.POST.get('volunteers')
         cid = request.POST.get('colleges')
@@ -1227,9 +1263,8 @@ def AddVolunteer(request):
         volunteers = []
         roles = RoleAssignment.objects.all()
         for role in roles:
-            if role.role.name == "Volunteer":
+            if role.role == campaign_team:
                 volunteers.append(role.user)
-                # print(role.user)
         colleges = College.objects.all()
         args = {
             'volunteers': volunteers,
@@ -1238,28 +1273,55 @@ def AddVolunteer(request):
         }
         return render(request, 'events/campaignVolunteer.html', args)
 
+class CategoryWise :
+    category = None
+    sponsors = []
+    partners = []
 
 def ourSponsors(request):
     Sponsors = SponsorMaster.objects.all().order_by('sponsor_rank')
-    sponsors = []
-    partners = []
+    Categories = SponsorCategory.objects.all().order_by('category_rank')
+    category = []
+    #comment from here to
+    sp = []
+    part = []
     for s in Sponsors:
-        if 'partner' in s.sponsor_type.lower():
-            print(s)
-            partners.append(s)
-        elif 'sponsor' in s.sponsor_type.lower():
-            print(s)
-            sponsors.append(s)
+        if "sponsor" in s.sponsor_type.lower():
+            sp.append(s)
+        elif "partner" in s.sponsor_type.lower():
+            part.append(s)
+    #here after displaying data categorywise u only need category list
+    for c in Categories:
+        sponsors = []
+        partners = []
+        cat = CategoryWise()
+        cat.category = c
+        for s in Sponsors:
+            if c == s.sponsor_category and "sponsor" in s.sponsor_type.lower():
+                sponsors.append(s)
+            elif c == s.sponsor_category and "partner" in s.sponsor_type.lower():
+                partners.append(s)
+        cat.sponsors = sponsors
+        cat.partners = partners
+        category.append(cat)
+        sponsors.clear()
+        partners.clear()
     current_site = get_current_site(request)
     print(current_site)
     current_site = str(current_site) + "/media/"
     args = {
-        'partners': partners,
-        'sponsors': sponsors,
+        'partners': part,
+        'sponsors': sp,
         'site' : current_site,
+        'category' : category
     }
     return render(request, 'gandharva/ourSponsors.html', args)
-
+    #Accessing category wise data:
+    #run loop for c in category
+    #c.category.sponsor_category = to access category name
+    #c.category.category_rank = to access to category_rank
+    #c.sponsors = sponsors of current category and c.sponsors[index].sponsors_name to access sponsor_name
+    #similarly for partners of each category
 
 def ourTeam(request):
     obj = OurTeam.objects.all().count()
@@ -1418,7 +1480,7 @@ def campaign(request):
             volunteers = []
             roles = RoleAssignment.objects.all()
             for role in roles:
-                if role.role.name == "Volunteer":
+                if role.role.name == "Campaigning Team":
                     volunteers.append(role.user)
                     # print(role.user)
             colleges = College.objects.all()
