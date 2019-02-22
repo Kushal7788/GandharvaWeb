@@ -1,11 +1,11 @@
 // This is the "Offline copy of pages" service worker
 
 // eslint-disable-next-line no-restricted-globals
-self.addEventListener('install', event = > {
+self.addEventListener('install', event => {
     const offlinePage = new Request('/offline');
 event.waitUntil(
-    fetch(offlinePage).then(response = >
-    caches.open('gandharva-offline-v1').then(cache = > cache.put(offlinePage, response))
+    fetch(offlinePage).then(response =>
+    caches.open('gandharva-offline-v1').then(cache => cache.put(offlinePage, response))
 )
 )
 ;
@@ -13,10 +13,10 @@ event.waitUntil(
 ;
 
 // eslint-disable-next-line no-restricted-globals
-self.addEventListener('fetch', event = > {
+self.addEventListener('fetch', event => {
     event.respondWith(
-    fetch(event.request).catch(() = >
-    caches.open('gandharva-offline-v1').then(cache = > cache.match('/offline'))
+    fetch(event.request).catch(() =>
+    caches.open('gandharva-offline-v1').then(cache => cache.match('/offline'))
 )
 )
 ;
