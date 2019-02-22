@@ -41,6 +41,7 @@ urlpatterns = [
     url(r'^our-team/$', views.ourTeam, name='ourTeam'),
     url(r'^verifyOTP/$', views.verifyOTP, name='verifyOTP'),
     url(r'^excel/$', views.campaigning_excel, name='TableToExcel'),
+    url(r'^volunteer-data/$', views.volunteer_excel, name='volunteer-data'),
     url(r'^file-upload/$', views.files, name='files'),
     url(r'^myactions/$', views.myaction, name='myactions'),
     url(r'all-participants', views.all_participants, name='all_participanrs'),
