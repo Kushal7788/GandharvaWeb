@@ -16,7 +16,6 @@
             {% for obj in objs %}
                 {% if forloop.first %}
                     <div class="row">{% endif %}
-            <div class="row">
                 <div class="col col-sm-5 col-md-2 main-section">
                     <div class="modal-content">
                         <div class="user-img">
@@ -26,7 +25,6 @@
                         <p class="name">{{ obj.name }}<br> <span style="font-weight: 400">{{ obj.post }}</span></p>
                     </div>
                 </div>
-            </div>
             {% if forloop.counter|divisibleby:5 %}
                 </div>
                 <div class="row">{% endif %}
