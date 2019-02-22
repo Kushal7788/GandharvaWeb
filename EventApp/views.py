@@ -1279,43 +1279,21 @@ class CategoryWise :
     partners = []
 
 def ourSponsors(request):
-    Sponsors = SponsorMaster.objects.all().order_by('sponsor_rank')
+    dict = {}
     Categories = SponsorCategory.objects.all().order_by('category_rank')
-    category = []
-    #comment from here to
-    sp = []
-    part = []
-    for s in Sponsors:
-        if "sponsor" in s.sponsor_type.lower():
-            sp.append(s)
-        elif "partner" in s.sponsor_type.lower():
-            part.append(s)
-    #here after displaying data categorywise u only need category list
     for c in Categories:
-        sponsors = []
-        partners = []
-        cat = CategoryWise()
-        cat.category = c
-        for s in Sponsors:
-            if c == s.sponsor_category and "sponsor" in s.sponsor_type.lower():
-                sponsors.append(s)
-            elif c == s.sponsor_category and "partner" in s.sponsor_type.lower():
-                partners.append(s)
-        cat.sponsors = sponsors
-        cat.partners = partners
-        category.append(cat)
-        sponsors.clear()
-        partners.clear()
+        all_sponsor = SponsorMaster.objects.filter(sponsor_category=c).order_by('sponsor_rank')
+        dict[c] = all_sponsor
+        c.sponsor_category
     current_site = get_current_site(request)
     print(current_site)
     current_site = str(current_site) + "/media/"
     args = {
-        'partners': part,
-        'sponsors': sp,
-        'site' : current_site,
-        'category' : category
+        'dict' : dict,
+        'site' : current_site
     }
     return render(request, 'gandharva/ourSponsors.html', args)
+
     #Accessing category wise data:
     #run loop for c in category
     #c.category.sponsor_category = to access category name

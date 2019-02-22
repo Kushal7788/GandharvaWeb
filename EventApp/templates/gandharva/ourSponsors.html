@@ -9,7 +9,8 @@
 {% block body %}
     <br><br><br><br><br>
     <div class="container-fluid">
-        <h2 class="text-center" style="font-family: 'Abel', sans-serif;">Our Sponsors</h2>
+        {% for c,sponsors in dict.items %}
+        <h2 class="text-center" style="font-family: 'Abel', sans-serif;">{{ c.sponsor_category }}</h2>
         <br>
         {% for s in sponsors %}
             {% if forloop.first %}
@@ -37,33 +38,34 @@
         {% endif %}
         {% endfor %}
         <br><br>
-        <h2 class="text-center" style="font-family: 'Abel', sans-serif;">Our Partners</h2>
-        <br>
-        {% for p in partners %}
-            {% if forloop.first %}
-                <div class="row">{% endif %}
-
-        <div class="col-sm-2" style="margin-bottom: 20px;margin-right: auto;margin-left: auto">
-            <div class="one-slide white">
-                <div class="testimonial w-100 h-100 p-3 text-center">
-                    <div class="brand"><img alt="logo"
-                                            src="{{ p.sponsor_logo.url }}"
-                                            style="width:auto;height:100px;max-width:100px"/>
-                    </div>
-                    <div class="separator">&nbsp;</div>
-                    <div class="message text-center text-gray">{{ p.sponsor_name }}</div>
-                    <p style="font-weight: 300;font-size: 0.9rem;">{{ p.sponsor_type }}</p>
-                </div>
-            </div>
-        </div>
-
-        {% if forloop.counter|divisibleby:5 %}
-            </div>
-            <div class="row">{% endif %}
-        {% if forloop.last %}
-            </div>
-        {% endif %}
-        {% endfor %}
+    {% endfor %}
+{#        <h2 class="text-center" style="font-family: 'Abel', sans-serif;">Our Partners</h2>#}
+{#        <br>#}
+{#        {% for p in partners %}#}
+{#            {% if forloop.first %}#}
+{#                <div class="row">{% endif %}#}
+{##}
+{#        <div class="col-sm-2" style="margin-bottom: 20px;margin-right: auto;margin-left: auto">#}
+{#            <div class="one-slide white">#}
+{#                <div class="testimonial w-100 h-100 p-3 text-center">#}
+{#                    <div class="brand"><img alt="logo"#}
+{#                                            src="{{ p.sponsor_logo.url }}"#}
+{#                                            style="width:auto;height:100px;max-width:100px"/>#}
+{#                    </div>#}
+{#                    <div class="separator">&nbsp;</div>#}
+{#                    <div class="message text-center text-gray">{{ p.sponsor_name }}</div>#}
+{#                    <p style="font-weight: 300;font-size: 0.9rem;">{{ p.sponsor_type }}</p>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{##}
+{#        {% if forloop.counter|divisibleby:5 %}#}
+{#            </div>#}
+{#            <div class="row">{% endif %}#}
+{#        {% if forloop.last %}#}
+{#            </div>#}
+{#        {% endif %}#}
+{#        {% endfor %}#}
 
     </div>
     <div style="height: 20vh"></div>

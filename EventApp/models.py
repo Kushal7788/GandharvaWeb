@@ -189,6 +189,13 @@ class EventDepartment(models.Model):
     def __str__(self):
         return self.event.event_name
 
+#sponsor category
+class SponsorCategory(models.Model):
+    sponsor_category = models.CharField(max_length=30)
+    category_rank = models.IntegerField()
+
+    def __str__(self):
+        return self.sponsor_category
 
 # sponsors model
 class SponsorMaster(models.Model):
@@ -198,14 +205,12 @@ class SponsorMaster(models.Model):
     sponsor_type = models.CharField(max_length=30, blank=True)
     sponsor_link = models.URLField(blank=True)
     sponsor_rank = models.IntegerField(default=1)
-    # sponsor_category = models.ForeignKey(SponsorCategory, on_delete=models.PROTECT)
+    sponsor_category = models.ForeignKey(SponsorCategory, on_delete=models.PROTECT,blank=True,default= None,null=True)
     def __str__(self):
         return self.sponsor_name
 
-# #sponsor category
-# class SponsorCategory(models.Model):
-#     sponsor_category = models.CharField(max_length=30)
-#     category_rank = models.IntegerField()
+
+
 
 # contains media for front-end
 class Carousel(models.Model):
