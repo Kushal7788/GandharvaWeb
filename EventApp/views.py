@@ -642,7 +642,7 @@ def register_head(request):
         roleform = RoleMasterForm(request.POST)
         if userform.is_valid():
             if user_stat == 1:
-                user =  old_user
+                user = old_user
             elif user_stat == 2:
                 user = old_user2
             else:
@@ -656,8 +656,8 @@ def register_head(request):
             user_mobile = userform.cleaned_data.get('user_phone')
             user.coll_email = coll_email
             user.email = user_mail
-            user_year = College_year.objects.get(title = user_year)
-            user_coll = College.objects.get(name =user_coll)
+            user_year = College_year.objects.get(title=user_year)
+            user_coll = College.objects.get(name=user_coll)
             user.user_coll = user_coll
             user.user_year = user_year
             user.username = user_name
@@ -827,7 +827,8 @@ def participant_event_register(request):
                 return render(request, 'events/participantEventRegister.html',
                               {'email': useremail, 'event_id': eventId, 'btndisable': True})
             else:
-                return render(request, 'events/participantEventRegister.html', {'event_id': eventId, 'email': useremail})
+                return render(request, 'events/participantEventRegister.html',
+                              {'event_id': eventId, 'email': useremail})
         else:
             return HttpResponse("Sorry this event is not available for registration")
     if request.method == 'GET':
@@ -1248,7 +1249,7 @@ def uploaded_docs(request):
 # Volunteer College Date Entry by Campaign Head
 @user_Campaign_head
 def AddVolunteer(request):
-    campaign_team = RoleMaster.objects.get(name = 'Campaigning Team')
+    campaign_team = RoleMaster.objects.get(name='Campaigning Team')
     if request.method == "POST":
         uid = request.POST.get('volunteers')
         cid = request.POST.get('colleges')
@@ -1273,10 +1274,12 @@ def AddVolunteer(request):
         }
         return render(request, 'events/campaignVolunteer.html', args)
 
-class CategoryWise :
+
+class CategoryWise:
     category = None
     sponsors = []
     partners = []
+
 
 def ourSponsors(request):
     dict = {}
@@ -1289,22 +1292,23 @@ def ourSponsors(request):
     print(current_site)
     current_site = str(current_site) + "/media/"
     args = {
-        'dict' : dict,
-        'site' : current_site
+        'dict': dict,
+        'site': current_site
     }
     return render(request, 'gandharva/ourSponsors.html', args)
 
-    #Accessing category wise data:
-    #run loop for c in category
-    #c.category.sponsor_category = to access category name
-    #c.category.category_rank = to access to category_rank
-    #c.sponsors = sponsors of current category and c.sponsors[index].sponsors_name to access sponsor_name
-    #similarly for partners of each category
+    # Accessing category wise data:
+    # run loop for c in category
+    # c.category.sponsor_category = to access category name
+    # c.category.category_rank = to access to category_rank
+    # c.sponsors = sponsors of current category and c.sponsors[index].sponsors_name to access sponsor_name
+    # similarly for partners of each category
 
-def ourTeam(request):
+
+def our_team(request):
     obj = OurTeam.objects.all().count()
     if obj:
-        obj = OurTeam.objects.all()
+        obj = OurTeam.objects.all().order_by('rank')
     else:
         obj = None
     return render(request, 'gandharva/ourTeam.html', {'objs': obj})
@@ -1589,7 +1593,7 @@ def verifyOTP_event(request):
                 if Team.objects.filter(user=ifuser).count():
                     teams = Team.objects.filter(user=ifuser)
                     for team in teams:
-                        if Transaction.objects.get(team = team).receipt.event == vishwa:
+                        if Transaction.objects.get(team=team).receipt.event == vishwa:
                             participant = team
                             stats = 1
                 else:
@@ -1615,11 +1619,11 @@ def pariwartan_upload(request):
         usermail = request.POST.get('user')
         user = MyUser.objects.get(email=usermail)
         doc = request.FILES['doc']
-        if Pariwartan.objects.filter(user = user).count():
-             pariwartan = Pariwartan.objects.get(user = user)
-             pariwartan.doc = doc
-             pariwartan.save()
-             stats = 2
+        if Pariwartan.objects.filter(user=user).count():
+            pariwartan = Pariwartan.objects.get(user=user)
+            pariwartan.doc = doc
+            pariwartan.save()
+            stats = 2
         else:
             pariwartan = Pariwartan()
             pariwartan.user = user
