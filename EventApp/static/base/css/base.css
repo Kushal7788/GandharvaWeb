@@ -207,3 +207,54 @@ hr {
     /*height: auto;*/
     z-index: 1500;
 }
+
+.overlay {
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1100;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.loader {
+    display: none;
+    z-index: 1500;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    border: 8px solid #fff;
+    border-radius: 50%;
+    border-top: 6px solid #004E8A;
+    width: 60px;
+    height: 60px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.hidePage {
+    opacity: 0.3;
+}
+.displayOverlay {
+    display: block;
+}
