@@ -68,6 +68,8 @@ html, body {
 
     .modal-content {
         padding: 0 10px;
+          width: 200px;
+        height: 250px;
     }
 
     .user-img {
@@ -257,11 +259,13 @@ html, body {
 
     .modal-content {
         padding: 0 10px;
+         width: 200px;
+        height: 250px;
     }
 
     .user-img {
         margin-top: -10vh;
-        margin-left: 2.6%;
+        margin-left: 3%;
         margin-bottom: 8%;
     }
 
