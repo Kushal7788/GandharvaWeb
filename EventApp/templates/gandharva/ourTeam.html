@@ -16,16 +16,17 @@
             {% for obj in objs %}
                 {% if forloop.first %}
                     <div class="row">{% endif %}
-                <div class="col col-sm-5 col-md-2 main-section">
-                    <div class="modal-content">
-                        <div class="user-img">
-                            <img src="{{ obj.img.url }}"
-                                 alt="Contactlogo">
-                        </div>
-                        <p class="name">{{ obj.name }}<br> <span style="font-weight: 400">{{ obj.post }}</span></p>
+            <div class="col col-sm-2 main-section">
+                <div class="modal-content">
+                    <div class="user-img">
+                        <img src="{{ obj.img.url }}"
+                             alt="Contactlogo">
                     </div>
+                    <p class="name">{{ obj.name }}<br> <span
+                            style="font-weight: 400;padding-bottom: 10px">{{ obj.post }}</span></p>
                 </div>
-            {% if forloop.counter|divisibleby:5 %}
+            </div>
+            {% if forloop.counter|divisibleby:4 %}
                 </div>
                 <div class="row">{% endif %}
             {% if forloop.last %}
