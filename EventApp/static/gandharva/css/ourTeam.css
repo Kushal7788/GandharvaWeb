@@ -276,20 +276,20 @@ html, body {
 
     .modal-content {
         padding: 0 10px;
-        width: 200px;
+        width: 240px;
         height: 250px;
     }
 
     .user-img {
-        margin-top: -8vh;
-        margin-left: 6%;
-        margin-bottom: 8px;
+        margin-top: -14vh;
+        margin-left: 10%;
+        margin-bottom: 30px;
         image-orientation: from-image;
     }
 
     .user-img img {
-        height: 160px;
-        width: 160px;
+        height: 180px;
+        width: 180px;
         border-radius: 50%;
     }
 
