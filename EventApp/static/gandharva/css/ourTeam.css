@@ -45,7 +45,7 @@ html, body {
     font-family: 'Abel', sans-serif;
     font-weight: bold;
     word-wrap: break-word;
-    }
+}
 
 .postname {
     text-align: center;
@@ -53,7 +53,7 @@ html, body {
     font-weight: normal;
     font-weight: 300;
     word-wrap: break-word;
-    }
+}
 
 @media only screen and (min-width: 700px) {
 
@@ -72,12 +72,12 @@ html, body {
 
     .user-img {
         margin-top: -12vh;
-        margin-left: 20%;
+        margin-left: -2px;
         margin-bottom: 4px;
     }
 
     .user-img img {
-        height:100px;
+        height: 100px;
         width: 100px;
         border-radius: 50%;
     }
@@ -155,29 +155,31 @@ html, body {
     }
 
 }
-@media only screen and (min-width: 768px) and (max-width: 991.8px)  {
+
+@media only screen and (min-width: 768px) and (max-width: 991.8px) {
 
     .main-section {
         margin-top: 5%;
         padding-bottom: 25%;
         margin-right: 10%;
         margin-bottom: 5%;
-    margin-left: 5%;
+        margin-left: 5%;
     }
+
     .modal-content {
         padding: 0 30px;
-        width: 200%;
+        width: 200px;
         height: 250px;
     }
 
     .user-img {
         margin-top: -6vh;
         margin-bottom: 4px;
-        margin-left: 1%;
+        margin-left: -2px;
     }
 
     .user-img img {
-        height:150px;
+        height: 150px;
         width: 150px;
         border-radius: 50%;
     }
@@ -205,22 +207,23 @@ html, body {
         margin-top: 5%;
         padding-bottom: 25%;
         margin-right: 10%;
-       margin-left: 5%;
+        /*margin-left: 5%;*/
     }
+
     .modal-content {
         padding: 0 30px;
-        width: 150%;
+        width: 200px;
         height: 250px;
     }
 
     .user-img {
         margin-top: -10vh;
         margin-bottom: 20%;
-        margin-left: 5%;
+        /*margin-left: 5%;*/
     }
 
     .user-img img {
-        height:150px;
+        height: 150px;
         width: 150px;
         border-radius: 50%;
     }
@@ -242,7 +245,7 @@ html, body {
     }
 }
 
-@media (min-width: 1200px){
+@media (min-width: 1200px) {
 
     .main-section {
         margin-top: 50px;
@@ -250,7 +253,7 @@ html, body {
         padding-bottom: 5%;
         margin-right: 1%;
         margin-left: 2%;
-}
+    }
 
     .modal-content {
         padding: 0 10px;
@@ -258,12 +261,12 @@ html, body {
 
     .user-img {
         margin-top: -10vh;
-        margin-left: 14%;
+        margin-left: -2px;
         margin-bottom: 8%;
     }
 
     .user-img img {
-        height:180px;
+        height: 180px;
         width: 180px;
         border-radius: 50%;
     }
