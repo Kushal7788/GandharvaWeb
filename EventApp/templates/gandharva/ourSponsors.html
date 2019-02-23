@@ -10,35 +10,38 @@
     <br><br><br><br><br>
     <div class="container-fluid">
         {% for c,sponsors in dict.items %}
-        <h2 class="text-center" style="font-family: 'Abel', sans-serif;">{{ c.sponsor_category }}</h2>
-        <br>
-        {% for s in sponsors %}
-            {% if forloop.first %}
-                <div class="row">{% endif %}
+            <h2 class="text-center" style="font-family: 'Abel', sans-serif;">{{ c.sponsor_category }}</h2>
+            <br>
+            {% for s in sponsors %}
+                {% if forloop.first %}
+                    <div class="row">{% endif %}
 
-        <div class="col col-md-2" style="margin-bottom: 20px;margin-left: auto;margin-right: auto">
-            <div class="one-slide white">
-                <div class="testimonial w-100 h-100 p-1 text-center">
-                    <div class="brand"><img alt="logo"
-                                            src="{{ s.sponsor_logo.url }}"
-                                            style="width:auto;height:100px;max-width:100px"/>
+            <div class="col col-md-2" style="margin-bottom: 20px;margin-left: auto;margin-right: auto">
+                <div class="one-slide white">
+                    <div class="testimonial w-100 h-100 p-1 text-center">
+                        <a style="color: #000" href="{{ s.sponsor_link }}" target="_blank">
+                            <div class="brand"><img alt="logo"
+                                                    src="{{ s.sponsor_logo.url }}"
+                                                    style="width:auto;height:100px;max-width:100px"/>
+                            </div>
+                            <div class="separator">&nbsp;</div>
+                            <div class="message text-center text-gray"
+                                 style="word-wrap: break-word">{{ s.sponsor_name }}</div>
+                            <p style="font-weight: 300;font-size: 0.9rem;word-wrap: break-word">{{ s.sponsor_type }}</p>
+                        </a>
                     </div>
-                    <div class="separator">&nbsp;</div>
-                    <div class="message text-center text-gray" style="word-wrap: break-word">{{ s.sponsor_name }}</div>
-                    <p style="font-weight: 300;font-size: 0.9rem;word-wrap: break-word">{{ s.sponsor_type }}</p>
                 </div>
             </div>
-        </div>
 
-        {% if forloop.counter|divisibleby:5 %}
-            </div>
-            <div class="row">{% endif %}
-        {% if forloop.last %}
-            </div>
-        {% endif %}
+            {% if forloop.counter|divisibleby:5 %}
+                </div>
+                <div class="row">{% endif %}
+            {% if forloop.last %}
+                </div>
+            {% endif %}
+            {% endfor %}
+            <br><br>
         {% endfor %}
-        <br><br>
-    {% endfor %}
     </div>
     <div style="height: 20vh"></div>
     <br><br><br>
