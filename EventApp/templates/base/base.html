@@ -262,34 +262,34 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         }
     });
 
-    $('a').click(function () {
-        if($(this).hasClass("dropdown-toggle")) return;
-        if($(this).hasClass("navbar-toggler")) return;
-        if($(this).hasClass("topButton")) return;
-    console.log('kaasdasdasdsa')
-                $('.loader').addClass('displayLoader');
-                myFunction(this);
-            });
-
-            $('button').click(function () {
-                if($(this).hasClass("dropdown-toggle")) return;
-                if($(this).hasClass("navbar-toggler")) return;
-                if($(this).hasClass("topButton")) return;
-        console.log('kaasdasdasdsa')
-                    $('.loader').addClass('displayLoader');
-                    myFunction(this);
-                });
-
-            function myFunction(div) {
-                $('#page').addClass('hidePage');
-                $('.navbar').addClass('hidePage');
-                $('#footer').addClass('hidePage');
-                $('#over').addClass('displayOverlay');
-                document.querySelector('html').style.overflow = "hidden";
-                document.querySelector('body').style.overflow = "hidden";
-                $(".loader").toggle();
-                $(div).toggle();
-            }
+    {#$('a').click(function () {#}
+    {#    if($(this).hasClass("dropdown-toggle")) return;#}
+    {#    if($(this).hasClass("navbar-toggler")) return;#}
+    {#    if($(this).hasClass("topButton")) return;#}
+    {#console.log('kaasdasdasdsa')#}
+    {#            $('.loader').addClass('displayLoader');#}
+    {#            myFunction(this);#}
+    {#        });#}
+    {##}
+    {#        $('button').click(function () {#}
+    {#            if($(this).hasClass("dropdown-toggle")) return;#}
+    {#            if($(this).hasClass("navbar-toggler")) return;#}
+    {#            if($(this).hasClass("topButton")) return;#}
+    {#    console.log('kaasdasdasdsa')#}
+    {#                $('.loader').addClass('displayLoader');#}
+    {#                myFunction(this);#}
+    {#            });#}
+    {##}
+    {#        function myFunction(div) {#}
+    {#            $('#page').addClass('hidePage');#}
+    {#            $('.navbar').addClass('hidePage');#}
+    {#            $('#footer').addClass('hidePage');#}
+    {#            $('#over').addClass('displayOverlay');#}
+    {#            document.querySelector('html').style.overflow = "hidden";#}
+    {#            document.querySelector('body').style.overflow = "hidden";#}
+    {#            $(".loader").toggle();#}
+    {#            $(div).toggle();#}
+    {#        }#}
 </script>
 {% block scripts %}
 {% endblock %}
