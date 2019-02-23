@@ -18,9 +18,21 @@ html, body {
     background: #25ade3;
 }
 
+@media (max-width: 575px) {
+    .testimonial-carousel .one-slide {
+        height: 240px;
+    }
+
+    .testimonial-carousel img {
+        width: 44%;
+        height: 80px;
+    }
+}
+
 .pos-r {
     position: relative !important;
 }
+
 @media only screen and (min-width: 992px) {
 
     .white {
@@ -98,17 +110,6 @@ html, body {
         width: 100%;
     }
 
-    @media (max-width: 575px) {
-        .testimonial-carousel .one-slide {
-            height: 240px;
-        }
-
-        .testimonial-carousel img {
-            width: 44%;
-            height: 80px;
-        }
-    }
-
     .message {
         font-size: 16px;
     }
@@ -147,14 +148,13 @@ html, body {
 
     .one-slide {
         font-size: 1.1rem;
-        margin-left: 1rem;
-        margin-right: 1rem;
         height: 250px;
-        width: 90%;
+        width: 100%;
         border-style: solid;
         border-width: 1px;
         border-color: #cccccc;
         border-radius: 12px;
+        word-wrap: break-word;
     }
 
     .one-slide img {
@@ -187,21 +187,11 @@ html, body {
     .testimonial-carousel .message {
         width: 100%;
         font-size: 1rem;
+        word-wrap: break-word;
     }
 
     .testimonial-carousel .brand {
         width: 100%;
-    }
-
-    @media (max-width: 575px) {
-        .testimonial-carousel .one-slide {
-            height: 240px;
-        }
-
-        .testimonial-carousel img {
-            width: 44%;
-            height: 80px;
-        }
     }
 
     .message {
@@ -209,7 +199,7 @@ html, body {
     }
 }
 
-@m@media only screen and (min-width: 401px)and (max-width: 500px) {
+@media only screen and (min-width: 401px)and (max-width: 766px) {
 
     .white {
         background: #fff;
@@ -242,10 +232,8 @@ html, body {
 
     .one-slide {
         font-size: 1.1rem;
-        margin-left: 1rem;
-        margin-right: 1rem;
         height: 250px;
-        width: 90%;
+        width: 100%;
         border-style: solid;
         border-width: 1px;
         border-color: #cccccc;
@@ -288,23 +276,12 @@ html, body {
         width: 100%;
     }
 
-    @media (max-width: 575px) {
-        .testimonial-carousel .one-slide {
-            height: 240px;
-        }
-
-        .testimonial-carousel img {
-            width: 44%;
-            height: 80px;
-        }
-    }
-
     .message {
         font-size: 16px;
     }
 }
 
-@media (min-width: 768px) and (max-width: 991.98px){
+@media (min-width: 768px) and (max-width: 991.98px) {
 
     .white {
         background: #fff;
@@ -337,8 +314,6 @@ html, body {
 
     .one-slide {
         font-size: 1.1rem;
-        /*margin-left: 1rem;*/
-        /*margin-right: 1rem;*/
         height: 250px;
         width: 100%;
         border-style: solid;
@@ -381,17 +356,6 @@ html, body {
 
     .testimonial-carousel .brand {
         width: 100%;
-    }
-
-    @media (max-width: 575px) {
-        .testimonial-carousel .one-slide {
-            height: 240px;
-        }
-
-        .testimonial-carousel img {
-            width: 44%;
-            height: 80px;
-        }
     }
 
     .message {
