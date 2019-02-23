@@ -101,11 +101,25 @@ html, body {
 }
 
 @media only screen and (max-width: 400px) {
+
+    .main-section {
+        margin-top: 75px;
+        padding-bottom: 5%;
+        float: left;
+        width: 120px;
+    }
+
+    .modal-content {
+        padding: 0px 30px;
+        float: left;
+        width:150px;
+        height: 100%;
+    }
     .user-img {
         margin-top: -50px;
-        margin-left: 3%;
+        margin-left: -15%;
         margin-bottom: 20px;
-        width: 80%;
+        width: 150px;
     }
 
     .user-img img {
@@ -121,16 +135,19 @@ html, body {
         margin-top: 75px;
         padding-bottom: 5%;
         float: left;
-        width: 80%;
+        width: 120px;
     }
 
     .modal-content {
-        padding: 20px 10px;
+        padding: 0px 30px;
+        float: left;
+        width:170px;
+        height: 100%;
     }
 
     .user-img {
-        margin-top: -80px;
-        margin-left: 10%;
+        margin-top: -60px;
+        margin-left: -5%;
         margin-bottom: 20px;
     }
 
@@ -203,19 +220,19 @@ html, body {
 
     .main-section {
         margin-top: 5%;
-        padding-bottom: 25%;
+        padding-bottom: 15%;
         margin-right: 10%;
        margin-left: 5%;
     }
     .modal-content {
         padding: 0 30px;
         width: 150%;
-        height: 250px;
+        height: 200px;
     }
 
     .user-img {
         margin-top: -10vh;
-        margin-bottom: 20%;
+        margin-bottom: 25%;
         margin-left: 5%;
     }
 
