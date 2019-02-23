@@ -32,8 +32,7 @@ html, body {
     margin-bottom: 20px;
     height: 70%;
     image-orientation: from-image;
-
-}
+    }
 
 .user-img img {
     height: 180px;
@@ -77,7 +76,6 @@ html, body {
         margin-left: -2px;
         margin-bottom: 4px;
         image-orientation: from-image;
-
     }
 
     .user-img img {
@@ -132,7 +130,7 @@ html, body {
     }
 }
 
-@media only screen and (min-width: 401px)and (max-width: 500px) {
+@media only screen and (min-width: 401px)and (max-width: 760px) {
 
     .main-section {
         margin-top: 75px;
@@ -148,10 +146,10 @@ html, body {
 
     .user-img {
         margin-top: -60px;
+        margin-left: -6px;
         margin-bottom: 20px;
-        image-orientation: from-image;
-
-    }
+    image-orientation: from-image;
+        }
 
     .user-img img {
         height: 120px;
@@ -196,7 +194,6 @@ html, body {
         margin-bottom: 4px;
         margin-left: -2px;
         image-orientation: from-image;
-
     }
 
     .user-img img {
@@ -234,7 +231,7 @@ html, body {
     .modal-content {
         padding: 0 30px;
         width: 150%;
-        height: 250px;
+        height: 280px;
     }
 
     .user-img {
@@ -281,7 +278,7 @@ html, body {
     .modal-content {
         padding: 0 10px;
          width: 200px;
-        height: 200px;
+        height: 210px;
     }
 
     .user-img {
@@ -312,6 +309,8 @@ html, body {
         font-weight: 300;
         font-size: 18px;
         word-wrap: break-word;
+        margin-bottom: 5%;
     }
 
 }
+
