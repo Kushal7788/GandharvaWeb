@@ -10,15 +10,15 @@
     <br><br><br><br><br>
     <div class="container-fluid">
         {% for c,sponsors in dict.items %}
-            <h2 class="text-center" style="font-family: 'Abel', sans-serif;font-weight: bold">{{ c.sponsor_category }}</h2>
+            <h2 class="text-center" style="font-family: 'Abel', sans-serif;">{{ c.sponsor_category }}</h2>
             <br>
             {% for s in sponsors %}
                 {% if forloop.first %}
                     <div class="row">{% endif %}
 
-            <div class="col col-sm-3" style="margin-bottom: 20px;margin-left: auto;margin-right: auto;">
+            <div class="col col-md-2" style="margin-bottom: 20px;margin-left: auto;margin-right: auto;">
                 <div class="one-slide white">
-                    <div class="testimonial w-100 h-100 text-center">
+                    <div class="testimonial w-100 h-100 p-1 text-center">
                         <a style="color: #000" href="{{ s.sponsor_link }}" target="_blank">
                             <div class="brand"><img alt="logo"
                                                     src="{{ s.sponsor_logo.url }}"
