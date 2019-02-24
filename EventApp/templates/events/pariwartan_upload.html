@@ -44,7 +44,7 @@
                                     <label class="control-label">First Name:</label>
                                     <label id="firstName" class="form-control" type="text"
                                            name="first_name"
-                                            >{{ participant.user.first_name }}</label>
+                                    >{{ participant.user.first_name }}</label>
                                     <span style="color:red;">
                             </span>
                                 </div>
@@ -80,7 +80,20 @@
                         {#                    </div>#}
                         {#                    <a href="terms-and-conditions">Terms and Conditions</a><br>#}
                         {#                    <a href="privacy-policy">Privacy Policies</a>#}
-                        <input type="file" class="form-control" name="doc">
+
+
+                        {#                        <input type="file" class="form-control" name="doc">#}
+
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroupFileAddon01">Doc</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="inputGroupFile01"
+                                       aria-describedby="inputGroupFileAddon01" name="doc" hidden>
+                                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                            </div>
+                        </div>
                         <div class="text-right">
                             <br>
                             <input hidden name="user" value="{{ participant.user.email }}">
@@ -91,17 +104,22 @@
                     </form>
                 {% elif stats == 2 %}
                     <h5 style="text-align: center;">You Have Submitted the document successfully to the event</h5>
+                    <div style="height: 60vh"></div>
                 {% else %}
                     <h5 style="text-align: center;">You Have Not participated for the event</h5>
+                    <div style="height: 60vh"></div>
                 {% endif %}
             </div>
         </div>
     </div>
-
     <br><br><br>
     {% block scripts %}
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
-
+        <script type="application/javascript">
+            $('input[type="file"]').change(function (e) {
+                var fileName = e.target.files[0].name;
+                $('.custom-file-label').html(fileName);
+            });
+        </script>
     {% endblock %}
 {% endblock %}
