@@ -169,8 +169,8 @@ class RoleAssignment(models.Model):
         except:
             return str(self.role.name)
 
-    class Meta:
-        ordering = ['role']
+    # class Meta:
+    #     ordering = ['role']
 
 
 class Domain(models.Model):
