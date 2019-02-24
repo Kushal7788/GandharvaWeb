@@ -24,6 +24,7 @@ html, body {
 
 .modal-content {
     padding: 0 10px;
+    height: 100%;
 }
 
 .user-img {
@@ -188,7 +189,7 @@ html, body {
     .modal-content {
         padding: 0 30px;
         width: 200px;
-        height: 300px;
+        height:100%;
     }
 
     .user-img {
@@ -232,7 +233,7 @@ html, body {
     .modal-content {
         padding: 0 30px;
         width: 250px;
-        height: 320px;
+        height: 100%
     }
 
     .user-img {
