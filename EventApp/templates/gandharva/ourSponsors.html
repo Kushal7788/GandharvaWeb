@@ -10,7 +10,7 @@
     <br><br><br><br><br>
     <div class="container-fluid">
         {% for c,sponsors in dict.items %}
-            <h2 class="text-center" style="font-family: 'Abel', sans-serif;">{{ c.sponsor_category }}</h2>
+            <h2 class="text-center" style="font-family: 'Abel', sans-serif;font-weight: bold">{{ c.sponsor_category }}</h2>
             <br>
             {% for s in sponsors %}
                 {% if forloop.first %}
