@@ -362,6 +362,9 @@ class OurTeam(models.Model):
     img = models.ImageField(upload_to=ourteam_path)
     post = models.CharField(max_length=100, default=None)
     rank = models.IntegerField(default=1)
+    fb_link = models.URLField(blank=True)
+    insta_link = models.URLField(blank=True)
+    twitter_link = models.URLField(blank=True)
     def __str__(self):
         return 'Username : ' + self.name
 
