@@ -143,13 +143,13 @@ html, body {
         padding: 0px 30px;
         float: left;
         width: 170px;
-        height: 200px;
+        height: 100%;
     }
 
     .user-img {
         margin-top: -60px;
         margin-left: -6px;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
         image-orientation: from-image;
     }
 
@@ -188,7 +188,7 @@ html, body {
     .modal-content {
         padding: 0 30px;
         width: 200px;
-        height: 250px;
+        height: 300px;
     }
 
     .user-img {
@@ -231,14 +231,14 @@ html, body {
 
     .modal-content {
         padding: 0 30px;
-        width: 150%;
-        height: 280px;
+        width: 250px;
+        height: 320px;
     }
 
     .user-img {
         margin-top: -10vh;
         margin-left: 5%;
-        margin-bottom: 20%;
+        margin-bottom: 30px;
         image-orientation: from-image;
     }
 
@@ -277,12 +277,12 @@ html, body {
     .modal-content {
         padding: 0 10px;
         width: 240px;
-        height: 250px;
+        height: 100%;
     }
 
     .user-img {
         margin-top: -14vh;
-        margin-left: 10%;
+        margin-left: 9.4%;
         margin-bottom: 30px;
         image-orientation: from-image;
     }
