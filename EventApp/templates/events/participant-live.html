@@ -39,9 +39,9 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {% for e in d.event %}
+                            {% for e in d.events %}
                                 <tr>
-                                    <td>{{ e.name }}</td>
+                                    <td>{{ e.event_name }}</td>
                                     <td>{{ e.count }}</td>
                                 </tr>
                             {% endfor %}
@@ -60,6 +60,7 @@
             </div>
         </div>
     </div>
+{% endblock %}
     {% block scripts %}
         <script src="https://code.jquery.com/jquery-3.3.1.js"
                 integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
@@ -77,6 +78,4 @@
                 });
             }, 10000);
         </script>
-    {% endblock %}
 {% endblock %}
-
