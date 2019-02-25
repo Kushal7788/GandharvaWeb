@@ -1524,6 +1524,7 @@ def run_custom():
 
 def participant_live(request):
     events = []
+    domains = []
     transactions = Transaction.objects.all()
     for transaction in transactions:
         if transaction.status == "Credit" or transaction.status == "Cash":
@@ -1536,14 +1537,39 @@ def participant_live(request):
                     break
             if c == 0:
                 e = Eventwise()
+                d = EventDepartment.objects.get(event = event)
+                e.domain_name = d.department.name
                 e.event_id = event.event_id
                 e.event_name = event.event_name
                 e.count = 1
                 events.append(e)
-        args = {
-            'events': events,
+
+    for e in events :
+        do=0
+        for d in domains :
+            if e.domain_name == d.name :
+                d.count = d.count + 1
+                do=1
+                break
+        if do == 0 :
+            dom = Domainwise()
+            dom.name = e.domain_name
+            dom.count = 1
+            dom.events.append(e)
+            domains.append(dom)
+    for d in domains:
+        print("domain_name:",d.name)
+        for e in d.events:
+            print(e.event_name)
+    args = {
+            'domains': domains,
         }
-    return render(request, 'events/participant-live.html', args)
+    return render(request , 'events/participant-live.html' , args)
+
+class Domainwise :
+    name = ""
+    events = []
+    count = 0
 
 
 def pariwartan(request):
@@ -1567,7 +1593,7 @@ def pariwartan(request):
 
 
 def verifyOTP_event(request):
-    vishwa = EventMaster.objects.get(event_name="Vishwa-Pariwartan")
+    vishwa = EventMaster.objects.get(event_name="VishwaParivartan")
     stats = 0
     if request.method == 'POST':
         userEmail = request.POST.get('useremail')
@@ -1607,7 +1633,7 @@ def verifyOTP_event(request):
 
 
 def pariwartan_upload(request):
-    vishwa = EventMaster.objects.get(event_name="Vishwa-Pariwartan")
+    vishwa = EventMaster.objects.get(event_name="VishwaParivartan")
     usermail = request.POST.get('user')
     user = MyUser.objects.get(email=usermail)
     if Team.objects.filter(user=user).count():

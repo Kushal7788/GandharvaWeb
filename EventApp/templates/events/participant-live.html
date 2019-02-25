@@ -25,6 +25,7 @@
 
 {% block body %}
     <div class="container-fluid">
+        {{ d.name }}
         <div id="event">
             <div style="display: flex;flex-direction: row;justify-items: left;flex-wrap: wrap">
                 {% for d in domains %}
@@ -38,9 +39,9 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {% for e in d.event %}
+                            {% for e in d.events %}
                                 <tr>
-                                    <td>{{ e.name }}</td>
+                                    <td>{{ e.event_name }}</td>
                                     <td>{{ e.count }}</td>
                                 </tr>
                             {% endfor %}
@@ -59,19 +60,22 @@
             </div>
         </div>
     </div>
+{% endblock %}
     {% block scripts %}
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.js"
+                integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+                crossorigin="anonymous">
+        </script>
         <script>
             setInterval(function () {
                 $.ajax({
                     type: "GET",
                     url: "/participant-live",  // URL to your view that serves new info
-                })
-                    .done(function (response) {
-                        $('#event').html(response);
-                    });
-            }, 10000)
+                }).done(function (response) {
+                    $('#event').html(response);
+                    console.log(response);
+                    console.log("hello");
+                });
+            }, 10000);
         </script>
-    {% endblock %}
 {% endblock %}
-
