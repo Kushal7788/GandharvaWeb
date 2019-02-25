@@ -1567,7 +1567,7 @@ def pariwartan(request):
 
 
 def verifyOTP_event(request):
-    vishwa = EventMaster.objects.get(event_name="Vishwa-Pariwartan")
+    vishwa = EventMaster.objects.get(event_name="VishwaParivartan")
     stats = 0
     if request.method == 'POST':
         userEmail = request.POST.get('useremail')
@@ -1607,7 +1607,7 @@ def verifyOTP_event(request):
 
 
 def pariwartan_upload(request):
-    vishwa = EventMaster.objects.get(event_name="Vishwa-Pariwartan")
+    vishwa = EventMaster.objects.get(event_name="VishwaParivartan")
     usermail = request.POST.get('user')
     user = MyUser.objects.get(email=usermail)
     if Team.objects.filter(user=user).count():
