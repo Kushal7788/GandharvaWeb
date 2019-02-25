@@ -3,7 +3,7 @@
   "short_name": "Gandharva19",
   "theme_color": "#004E8A",
   "background_color": "#004E8A",
-  "display": "standalone",
+  "display": "minimal-ui",
   "Scope": "/",
   "start_url": "/",
   "icons": [
