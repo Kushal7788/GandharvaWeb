@@ -508,7 +508,6 @@ def activate(request, uidb64, token):
             user.is_active = True
             user.token1 = None
         user.save()
-        login(request, user, backend='social_core.backends.google.GoogleOAuth2')
         # return redirect('home')
         return render(request, 'user/accountActivate.html')
     else:
@@ -802,7 +801,6 @@ def activate_register_head(request, uidb64, token):
             user.is_active = True
             user.is_staff = True
         user.save()
-        login(request, user, backend='social_core.backends.google.GoogleOAuth2')
         # return redirect('home')
         return render(request, 'user/accountActivate.html')
     else:
