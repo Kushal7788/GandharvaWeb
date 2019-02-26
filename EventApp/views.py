@@ -1,5 +1,5 @@
 # inlcude the various features which are to be used in Views here
-
+import copy
 import datetime
 import json
 import re
@@ -1548,19 +1548,25 @@ def participant_live(request):
         do=0
         for d in domains :
             if e.domain_name == d.name :
-                d.count = d.count + 1
+                d.count = d.count + e.count
+                d.events.append(copy.deepcopy(e))
                 do=1
                 break
         if do == 0 :
             dom = Domainwise()
             dom.name = e.domain_name
-            dom.count = 1
-            dom.events.append(e)
-            domains.append(dom)
-    for d in domains:
-        print("domain_name:",d.name)
-        for e in d.events:
-            print(e.event_name)
+            dom.count = e.count
+            ev = []
+            ev.append(copy.deepcopy(e))
+            dom.events = ev
+            domains.append(copy.deepcopy(dom))
+            del dom
+
+
+    # for d in domains:
+    #     print("domain_name:",d.name)
+    #     for e in d.events:
+    #         print(e.event_name)
     args = {
             'domains': domains,
         }
@@ -1570,6 +1576,55 @@ class Domainwise :
     name = ""
     events = []
     count = 0
+
+def live(request):
+        events = []
+        domains = []
+        transactions = Transaction.objects.all()
+        for transaction in transactions:
+            if transaction.status == "Credit" or transaction.status == "Cash":
+                event = transaction.team.receipt.event
+                c = 0
+                for i in range(len(events)):
+                    if events[i].event_id == event.event_id:
+                        c = 1
+                        events[i].count = events[i].count + 1
+                        break
+                if c == 0:
+                    e = Eventwise()
+                    d = EventDepartment.objects.get(event=event)
+                    e.domain_name = d.department.name
+                    e.event_id = event.event_id
+                    e.event_name = event.event_name
+                    e.count = 1
+                    events.append(e)
+
+        for e in events:
+            do = 0
+            for d in domains:
+                if e.domain_name == d.name:
+                    d.count = d.count + e.count
+                    d.events.append(copy.deepcopy(e))
+                    do = 1
+                    break
+            if do == 0:
+                dom = Domainwise()
+                dom.name = e.domain_name
+                dom.count = e.count
+                ev = []
+                ev.append(copy.deepcopy(e))
+                dom.events = ev
+                domains.append(copy.deepcopy(dom))
+                del dom
+
+        # for d in domains:
+        #     print("domain_name:",d.name)
+        #     for e in d.events:
+        #         print(e.event_name)
+        args = {
+            'domains': domains,
+        }
+        return render(request,'events/live.html',args)
 
 
 def pariwartan(request):

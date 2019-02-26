@@ -1,0 +1,29 @@
+{% for d in domains %}
+                    <div>
+                        <h3>{{ d.name }}</h3>
+                        <table class="table table-responsive">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th>Name</th>
+                                <th>Count</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for e in d.events %}
+                                <tr>
+                                    <td>{{ e.event_name }}</td>
+                                    <td>{{ e.count }}</td>
+                                </tr>
+                            {% endfor %}
+                            <tr>
+                                <td>
+                                    Total
+                                </td>
+                                <td>
+                                    {{ d.count }}
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                {% endfor %}
