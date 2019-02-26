@@ -3,31 +3,31 @@
 <html lang="en">
 <head>
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-134955797-1"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-
-        gtag('js', new Date());
-        gtag('config', 'UA-134955797-1');
-    </script>
-    <!-- Google Tag Manager -->
-    <script>(function (w, d, s, l, i) {
-        w[l] = w[l] || [];
-        w[l].push({
-            'gtm.start':
-                new Date().getTime(), event: 'gtm.js'
-        });
-        var f = d.getElementsByTagName(s)[0],
-            j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
-        j.async = true;
-        j.src =
-            'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-        f.parentNode.insertBefore(j, f);
-    })(window, document, 'script', 'dataLayer', 'GTM-N3HFDHH');</script>
+{#    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-134955797-1"></script>#}
+{#    <script>#}
+{#        window.dataLayer = window.dataLayer || [];#}
+{##}
+{#        function gtag() {#}
+{#            dataLayer.push(arguments);#}
+{#        }#}
+{##}
+{#        gtag('js', new Date());#}
+{#        gtag('config', 'UA-134955797-1');#}
+{#    </script>#}
+{#    <!-- Google Tag Manager -->#}
+{#    <script>(function (w, d, s, l, i) {#}
+{#        w[l] = w[l] || [];#}
+{#        w[l].push({#}
+{#            'gtm.start':#}
+{#                new Date().getTime(), event: 'gtm.js'#}
+{#        });#}
+{#        var f = d.getElementsByTagName(s)[0],#}
+{#            j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';#}
+{#        j.async = true;#}
+{#        j.src =#}
+{#            'https://www.googletagmanager.com/gtm.js?id=' + i + dl;#}
+{#        f.parentNode.insertBefore(j, f);#}
+{#    })(window, document, 'script', 'dataLayer', 'GTM-N3HFDHH');</script>#}
     <!-- End Google Tag Manager -->
 
     <!-- Don't remove -->
@@ -97,12 +97,12 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     {% for testme in testmes %}
-                        {% if testme.name != 'Global' %}
+
                             <form method="get" action="{% url 'events' %}">
                                 <input type="hidden" name="dept" value="{{ testme.name }}">
                                 <button type="submit" class="dropdown-item dropdownStyle">{{ testme.name }}</button>
                             </form>
-                        {% endif %}
+
                     {% endfor %}
                     {% if rulebook %}
                         <a class="nav-link" href="{{ rulebook.file.url }}" download>Rule Book <i
@@ -178,6 +178,8 @@
                         {% if user.is_staff %}
                             {% if role == "Campaigning Head" %}
                                 <form method="get" action="{% url 'campaign' %}">
+                                    {% elif role == "Participant-Live" %}
+                                <form method="get" action="{% url 'participant-live' %}">
                             {% else %}
                                 <form method="get" action="{% url 'myactions' %}">
                             {% endif %}
@@ -263,6 +265,23 @@
         }).then(function (reg) {
             reg.update()
         });
+    }
+
+    if('Notification' in window){
+      Notification.requestPermission(function(status) {
+        console.log('Notification permission status:', status);
+      });
+    }
+
+    const displayNotification = (data) => {
+        if (Notification.permission === 'granted' && document.hidden) {
+            navigator.serviceWorker.getRegistration().then(function(reg) {
+            const options = {
+                icon: 'images/icons/icon-72x72.png'
+            }
+            reg.showNotification(data,options);
+            });
+        }
     }
 </script>
 <script type="text/javascript" src="{% static 'base/js/base.js' %}"></script>

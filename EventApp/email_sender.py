@@ -13,7 +13,11 @@ def send_email(to_email, subject=None, message=None, attach=None, otp=0):
     msg = MIMEMultipart()
     msg['Subject'] = subject
     msg['From'] = sender
-    msg['To'] = to_email
+    # msg['To'] = to_email
+    if isinstance(to_email, list):
+        msg['To'] = ", ".join(to_email)
+    else:
+        msg['To'] = to_email
     if otp == 0:
         msg.attach(MIMEText(message, 'html'))
     else:
