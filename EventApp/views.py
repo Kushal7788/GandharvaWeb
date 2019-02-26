@@ -1751,13 +1751,39 @@ def pariwartan_upload(request):
     return render(request, 'events/pariwartan_upload.html', {'stats': stats, 'participant': participant})
 
 def qr_verify(request):
+    stat=5
+    selected = None
     if request.method == 'POST':
-        userEmail = request.POST.get('qr')
-        otpEntered = request.POST.get('textqr')
-        print("yesssssssssss")
-        print(userEmail)
-        print("nooooooooooooo")
-        print(otpEntered)
-    return  render(request, 'events/qr-code-verify.html',{})
+        body = request.POST.get('textqr')
+        try:
+             data = json.loads(body)
+             event = data['event']
+             name = data['username']
+             otpEntered = request.POST.get('textqr')
+             print(otpEntered)
+             print(event)
+             print(name)
+        except:
+            stat = 2
+        if stat is not 2:
+            user = MyUser.objects.get(email = name)
+            eventname = EventMaster.objects.get(event_name=event)
+            if Team.objects.filter(user = user).count():
+                teams = Team.objects.filter(user=user)
+                for team in teams:
+                    if team.receipt.event == eventname:
+                        if team.ispresent is False:
+                             selected = team
+                             team.ispresent = True
+                             team.save()
+                             stat = 1
+                        else:
+                            stat = 3
+                    else:
+                        stat = 0
+            else:
+                stat = 0
+
+    return  render(request, 'events/qr-code-verify.html',{'stats':stat,'team':selected})
 
     # print(request.FILES['prof_img']

@@ -17,7 +17,17 @@
         </label>
         <input type="submit" value="Go">
     </form>
-
+    <br><br>
+    {% if stats == 0 %}
+    <h3>Please Verify the QR code again or you have not registered in this Event</h3>
+    {% elif stats == 2 %}
+    <h3>QR Code Verification Failed, Please try again with valid QR code</h3>
+    {% elif stats == 1 %}
+    <h3>Team Name = {{ team.user.first_name }}  Event Registered is {{ team.receipt.event.event_name }}   your attendance has been marked true, you cannot participate for the sam event again</h3>
+    {% elif stats == 3 %}
+    <h3>You have already participated in this event before, please dont waste your precious time</h3>
+        {% else %}
+    {% endif %}
 {% endblock %}
 {% block scripts %}
     <script src="{% static 'events/js/qr_packed.js' %}"></script>
