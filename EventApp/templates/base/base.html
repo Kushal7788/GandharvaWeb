@@ -178,6 +178,8 @@
                         {% if user.is_staff %}
                             {% if role == "Campaigning Head" %}
                                 <form method="get" action="{% url 'campaign' %}">
+                                    {% elif role == "Participant-Live" %}
+                                <form method="get" action="{% url 'participant-live' %}">
                             {% else %}
                                 <form method="get" action="{% url 'myactions' %}">
                             {% endif %}
