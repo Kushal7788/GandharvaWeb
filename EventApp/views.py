@@ -1750,6 +1750,7 @@ def pariwartan_upload(request):
         stats = 1
     return render(request, 'events/pariwartan_upload.html', {'stats': stats, 'participant': participant})
 
+@user_passes_test(lambda u: u.is_superuser)
 def qr_verify(request):
     stat=5
     selected = None
