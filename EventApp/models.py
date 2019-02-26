@@ -256,7 +256,7 @@ class Team(models.Model):
     user = models.ForeignKey(MyUser, on_delete=models.PROTECT, related_name='participant')
     referral = models.ForeignKey(MyUser, on_delete=models.PROTECT, blank=True, related_name='Refral_Volunteer',
                                  null=True)
-
+    ispresent = models.BooleanField(default=False)
     def __str__(self):
         return str(self.user)
 

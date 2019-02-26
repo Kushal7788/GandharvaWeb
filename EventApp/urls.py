@@ -62,5 +62,6 @@ urlpatterns = [
     url(r'^pariwartan$', views.pariwartan, name='pariwartan'),
     url(r'^pariwartan-upload$', views.pariwartan_upload, name='pariwartan-upload'),
     url(r'^live$', views.live, name='live'),
+    url(r'^qr-code-verify$', views.qr_verify, name='qr-verify'),
 
 ]

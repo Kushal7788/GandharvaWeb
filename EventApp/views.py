@@ -1749,4 +1749,15 @@ def pariwartan_upload(request):
     elif request.method == 'POST':
         stats = 1
     return render(request, 'events/pariwartan_upload.html', {'stats': stats, 'participant': participant})
+
+def qr_verify(request):
+    if request.method == 'POST':
+        userEmail = request.POST.get('qr')
+        otpEntered = request.POST.get('textqr')
+        print("yesssssssssss")
+        print(userEmail)
+        print("nooooooooooooo")
+        print(otpEntered)
+    return  render(request, 'events/qr-code-verify.html',{})
+
     # print(request.FILES['prof_img']
