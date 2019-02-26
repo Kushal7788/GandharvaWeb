@@ -264,6 +264,23 @@
             reg.update()
         });
     }
+
+    if('Notification' in window){
+      Notification.requestPermission(function(status) {
+        console.log('Notification permission status:', status);
+      });
+    }
+
+    const displayNotification = (data) => {
+        if (Notification.permission === 'granted' && document.hidden) {
+            navigator.serviceWorker.getRegistration().then(function(reg) {
+            const options = {
+                icon: 'images/icons/icon-72x72.png'
+            }
+            reg.showNotification(data,options);
+            });
+        }
+    }
 </script>
 <script type="text/javascript" src="{% static 'base/js/base.js' %}"></script>
 <script>
