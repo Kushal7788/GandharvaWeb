@@ -192,6 +192,7 @@ html, body {
         margin-top: 75px;
         padding-bottom: 5%;
         padding-right: 27%;
+        margin-left: 15%;
     }
 
     .modal-content {
@@ -237,7 +238,7 @@ html, body {
         padding-bottom: 25%;
         margin-right: 10%;
         margin-bottom: 5%;
-        margin-left: 5%;
+        margin-left: 15%;
     }
 
     .modal-content {
@@ -248,8 +249,8 @@ html, body {
 
     .user-img {
         margin-top: -6vh;
-        margin-bottom: 4px;
-        margin-left: -2px;
+        margin-bottom: 20px;
+        margin-left: -4px;
         image-orientation: from-image;
     }
 
@@ -281,12 +282,12 @@ html, body {
     .main-section {
         margin-top: 5%;
         padding-bottom: 15%;
-        margin-right: 10%;
+        margin-right: 6%;
     }
 
     .modal-content {
         padding: 0 30px;
-        width: 250px;
+        width: 235px;
         height: 100%
     }
 
@@ -336,9 +337,9 @@ html, body {
     }
 
     .user-img {
-        margin-top: -14vh;
-        margin-left: 9.4%;
-        margin-bottom: 30px;
+        margin-top: -10vh;
+        margin-left: 6.4%;
+        margin-bottom: 43px;
         image-orientation: from-image;
     }
 
