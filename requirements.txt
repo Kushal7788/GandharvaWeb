@@ -7,3 +7,4 @@ openpyxl
 sweetify
 qrcode
 xlwt
+django-webpush
