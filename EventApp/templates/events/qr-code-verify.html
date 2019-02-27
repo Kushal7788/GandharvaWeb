@@ -6,28 +6,49 @@
     <link rel="stylesheet" type="text/css" href="{% static 'events/css/qrcode.css' %}">
 {% endblock %}
 {% block body %}
-<br><br><br><br>
-    <form method="post" action="" >
-    {%  csrf_token %}
-        <input type=text size=16 placeholder="Tracking Code" class=qrcode-text name="textqr">
-        <label class=qrcode-text-btn>
-            <input
-            type=file accept="image/*" capture=environment onclick="return showQRIntro();"
-            onchange="openQRCamera(this);" tabindex=-1 name="qr">
-        </label>
-        <input type="submit" value="Go">
-    </form>
-    <br><br>
-    {% if stats == 0 %}
-    <h3>Please Verify the QR code again or you have not registered in this Event</h3>
-    {% elif stats == 2 %}
-    <h3>QR Code Verification Failed, Please try again with valid QR code</h3>
-    {% elif stats == 1 %}
-    <h3>Team Name = {{ team.user.first_name }}  Event Registered is {{ team.receipt.event.event_name }}   your attendance has been marked true, you cannot participate for the sam event again</h3>
-    {% elif stats == 3 %}
-    <h3>You have already participated in this event before, please dont waste your precious time</h3>
-        {% else %}
-    {% endif %}
+    <br><br><br><br><br>
+    <div class="container" style="height: 96vh">
+        <div class="col-sm-5 container-center">
+            <div class="logo">
+                <img class="img-fluid" src="{% static 'gandharva/img/logo_description.png' %}">
+            </div>
+            <h5 style="text-align: center;">QR Code Scanner</h5>
+            <br>
+
+            <form method="post" action="">
+                {% csrf_token %}
+                <div class="input-group">
+                    <input type=text placeholder="Tracking Code" class="form-control qrcode-text"
+                           name="textqr">
+                    <div class="input-group-append">
+                        <label class=qrcode-text-btn>
+                            <input type=file accept="image/*" capture=environment onclick="openQRCamera(this);"
+                                   onchange="openQRCamera(this);" tabindex=-1 name="qr">
+                        </label>
+                    </div>
+                </div>
+                <br>
+                <div class="text-right">
+                    <input type="submit" class="btn-primary" value="Submit">
+                </div>
+            </form>
+            <br>
+            <div class="text-center">
+                {% if stats == 0 %}
+                    <h6>Please Verify the QR code again or you have not registered in this Event</h6>
+                {% elif stats == 2 %}
+                    <h6>QR Code Verification Failed, Please try again with valid QR code</h6>
+                {% elif stats == 1 %}
+                    <h6>Team Name = {{ team.user.first_name }} Event Registered is {{ team.receipt.event.event_name }}
+                        your
+                        attendance has been marked true, you cannot participate for the same event again</h6>
+                {% elif stats == 3 %}
+                    <h6>You have already participated in this event before, please dont waste your precious time</h6>
+                {% else %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
 {% endblock %}
 {% block scripts %}
     <script src="{% static 'events/js/qr_packed.js' %}"></script>
@@ -48,9 +69,9 @@
             reader.readAsDataURL(node.files[0]);
         }
 
-        function showQRIntro() {
-            return confirm("Use your camera to take a picture of a QR code.");
-        }
+        {#function showQRIntro() {#}
+        {#    return confirm("Use your camera to take a picture of a QR code.");#}
+        {#}#}
     </script>
     <script src="{% static 'events/js/events.js' %}"></script>
 {% endblock %}
