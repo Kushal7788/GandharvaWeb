@@ -7,8 +7,8 @@
 {% endblock %}
 {% block body %}
     <br><br><br><br><br>
-    <div class="container" style="height: 96vh">
-        <div class="col-sm-5 container-center">
+    <div class="container" style="height: 92vh">
+        <div class="col-md-5 container-center">
             <div class="logo">
                 <img class="img-fluid" src="{% static 'gandharva/img/logo_description.png' %}">
             </div>
@@ -17,20 +17,20 @@
 
             <form method="post" action="">
                 {% csrf_token %}
-                <div class="input-group">
-                    <input type=text placeholder="Tracking Code" class="form-control qrcode-text"
-                           name="textqr">
-                    <div class="input-group-append">
-                        <label class=qrcode-text-btn>
-                            <input type=file accept="image/*" capture=environment onclick="openQRCamera(this);"
-                                   onchange="openQRCamera(this);" tabindex=-1 name="qr">
-                        </label>
-                    </div>
+                <input type=text placeholder="Tracking Code" class=qrcode-text name="qr">
+                <label
+                        class=qrcode-text-btn>
+                    <input type=file
+                           accept="image/*"
+                           capture=environment
+                           onchange="openQRCamera(this);"
+                           tabindex=-1>
+                </label>
+                <div class="text-right">
+                    <br>
+                    <input type=button value="Go">
                 </div>
                 <br>
-                <div class="text-right">
-                    <input type="submit" class="btn-primary" value="Submit">
-                </div>
             </form>
             <br>
             <div class="text-center">
@@ -68,10 +68,6 @@
             };
             reader.readAsDataURL(node.files[0]);
         }
-
-        {#function showQRIntro() {#}
-        {#    return confirm("Use your camera to take a picture of a QR code.");#}
-        {#}#}
     </script>
     <script src="{% static 'events/js/events.js' %}"></script>
 {% endblock %}
