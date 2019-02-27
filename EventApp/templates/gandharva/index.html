@@ -97,7 +97,7 @@
             <h1 style="text-align: center;padding-top:2vh;color:#fff;font-weight:500">
                 Events</h1>
             {% for event in events %}
-                <!--{% if event.name != 'Global' %}-->
+{#                {% if event.name != 'Global' %}#}
                     {% if forloop.first %}
                         <div class="row">{% endif %}
                 <div class="col-sm-2 eventDiv" onclick="document.forms['{{ event.name }}_form'].submit();"
@@ -116,7 +116,7 @@
                 {% if forloop.last %}
 
                     </div>
-                <!--{% endif %}-->
+{#                {% endif %}#}
                 {% endif %}
             {% endfor %}
         </div>
