@@ -22,7 +22,7 @@
                            name="textqr">
                     <div class="input-group-append">
                         <label class=qrcode-text-btn>
-                            <input type=file accept="image/*" capture=environment onclick="return showQRIntro();"
+                            <input type=file accept="image/*" capture=environment onclick="openQRCamera(this);"
                                    onchange="openQRCamera(this);" tabindex=-1 name="qr">
                         </label>
                     </div>
@@ -69,9 +69,9 @@
             reader.readAsDataURL(node.files[0]);
         }
 
-        function showQRIntro() {
-            return confirm("Use your camera to take a picture of a QR code.");
-        }
+        {#function showQRIntro() {#}
+        {#    return confirm("Use your camera to take a picture of a QR code.");#}
+        {#}#}
     </script>
     <script src="{% static 'events/js/events.js' %}"></script>
 {% endblock %}
