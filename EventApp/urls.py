@@ -1,6 +1,7 @@
 from django.conf.urls import url, include
 from . import views
 from django.views.generic.base import TemplateView
+from django.urls import path
 
 # Url defined here, can access the page related to the url by adding the path
 urlpatterns = [
@@ -64,4 +65,8 @@ urlpatterns = [
     url(r'^live$', views.live, name='live'),
     url(r'^qr-code-verify$', views.qr_verify, name='qr-verify'),
 
+    url(r'^web-push$', views.web_push, name='web-push'),
+    url(r'^send-push$', views.send_push, name='send-push'),
+    url(r'^webpush/', include('webpush.urls')),
+    path('sw.js', TemplateView.as_view(template_name='sw.js', content_type='application/x-javascript')),
 ]

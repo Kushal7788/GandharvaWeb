@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'social_django',
-    'sweetify'
+    'sweetify',
+    'webpush',
 ]
 AUTH_USER_MODEL = 'EventApp.MyUser'
 
@@ -115,6 +116,12 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+WEBPUSH_SETTINGS = {
+   "VAPID_PUBLIC_KEY": "BMKX00jjFozhtzAM844UEBVmLErgxGvOJbhr-9pApblvdLiGV9tgBp1VcSZqmFWwQXSO_L-wk1neGbK8ks6Euwo",
+   "VAPID_PRIVATE_KEY": "sLk4IRjiSjRF5kQPwbdugjVqgJwHQ_3Sg4Jbxg4prmc",
+   "VAPID_ADMIN_EMAIL": "viitgandharva3@gmail.com"
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
