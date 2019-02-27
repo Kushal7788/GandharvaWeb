@@ -45,7 +45,6 @@
                 fetch('/live')
                     .then(response=>response.text())
                 .then(resp => {
-                    {#$('#event').html(resp);#}
                     console.log(resp)
                      $('#event').html(resp)
                 })

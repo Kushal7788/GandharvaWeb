@@ -1501,6 +1501,7 @@ class Eventwise:
     event_id = 0
     event_name = ""
     count = 0
+    dept_id = 0
 
 
 class Collegewise:
@@ -1526,6 +1527,7 @@ def participant_live(request):
     events = []
     domains = []
     names = []
+    numbers = []
     transactions = Transaction.objects.all()
     for transaction in transactions:
         if transaction.status == "Credit" or transaction.status == "Cash":
@@ -1539,6 +1541,7 @@ def participant_live(request):
             if c == 0:
                 e = Eventwise()
                 d = EventDepartment.objects.get(event = event)
+                e.dept_id = d.department.dep_id
                 e.domain_name = d.department.name
                 e.event_id = event.event_id
                 e.event_name = event.event_name
@@ -1560,10 +1563,29 @@ def participant_live(request):
             new.count = 0
             events.append(new)
             names.append(new.event_name)
-
+    glob = 0
     for e in events :
         do=0
         for d in domains :
+            if e.dept_id > 5:
+                if glob == 0:
+                    dom = Domainwise()
+                    dom.name = "Global"
+                    dom.count = e.count
+                    ev = []
+                    ev.append(copy.deepcopy(e))
+                    dom.events = ev
+                    domains.append(copy.deepcopy(dom))
+                    del dom
+                    glob = 1
+                    do = 1
+                elif glob == 1 :
+                    d.count = d.count + e.count
+                    d.events.append(copy.deepcopy(e))
+                    do = 1
+                break
+
+
             if e.domain_name == d.name :
                 d.count = d.count + e.count
                 d.events.append(copy.deepcopy(e))
@@ -1579,13 +1601,13 @@ def participant_live(request):
             domains.append(copy.deepcopy(dom))
             del dom
 
-
-    # for d in domains:
-    #     print("domain_name:",d.name)
-    #     for e in d.events:
-    #         print(e.event_name)
+    total =0
+    for d in domains :
+        total = total + d.count
     args = {
             'domains': domains,
+            'total' : total
+
         }
     return render(request , 'events/participant-live.html' , args)
 
@@ -1598,6 +1620,7 @@ def live(request):
     events = []
     domains = []
     names = []
+    numbers = []
     transactions = Transaction.objects.all()
     for transaction in transactions:
         if transaction.status == "Credit" or transaction.status == "Cash":
@@ -1611,6 +1634,7 @@ def live(request):
             if c == 0:
                 e = Eventwise()
                 d = EventDepartment.objects.get(event=event)
+                e.dept_id = d.department.dep_id
                 e.domain_name = d.department.name
                 e.event_id = event.event_id
                 e.event_name = event.event_name
@@ -1632,10 +1656,28 @@ def live(request):
             new.count = 0
             events.append(new)
             names.append(new.event_name)
-
+    glob = 0
     for e in events:
         do = 0
         for d in domains:
+            if e.dept_id > 5:
+                if glob == 0:
+                    dom = Domainwise()
+                    dom.name = "Global"
+                    dom.count = e.count
+                    ev = []
+                    ev.append(copy.deepcopy(e))
+                    dom.events = ev
+                    domains.append(copy.deepcopy(dom))
+                    del dom
+                    glob = 1
+                    do = 1
+                elif glob == 1:
+                    d.count = d.count + e.count
+                    d.events.append(copy.deepcopy(e))
+                    do = 1
+                break
+
             if e.domain_name == d.name:
                 d.count = d.count + e.count
                 d.events.append(copy.deepcopy(e))
@@ -1651,12 +1693,13 @@ def live(request):
             domains.append(copy.deepcopy(dom))
             del dom
 
-    # for d in domains:
-    #     print("domain_name:",d.name)
-    #     for e in d.events:
-    #         print(e.event_name)
+    total = 0
+    for d in domains:
+        total = total + d.count
     args = {
         'domains': domains,
+        'total': total
+
     }
 
     return render(request,'events/live.html',args)
