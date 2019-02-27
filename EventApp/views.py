@@ -1810,8 +1810,12 @@ def qr_verify(request):
         body = request.POST.get('textqr')
         try:
              data = json.loads(body)
-             event = data['event']
-             name = data['username']
+             try:
+                event = data['event']
+                name = data['username']
+             except:
+                 event = data['Event']
+                 name = data['Username']
              otpEntered = request.POST.get('textqr')
              print(otpEntered)
              print(event)
@@ -1833,9 +1837,9 @@ def qr_verify(request):
                         else:
                             stat = 3
                     else:
-                        stat = 0
+                        stat = 6
             else:
-                stat = 0
+                stat = 4
 
     return  render(request, 'events/qr-code-verify.html',{'stats':stat,'team':selected})
 

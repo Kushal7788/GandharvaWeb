@@ -17,7 +17,7 @@
 
             <form method="post" action="">
                 {% csrf_token %}
-                <input type=text placeholder="Tracking Code" class=qrcode-text name="qr">
+                <input type=text placeholder="Tracking Code" class=qrcode-text name="textqr">
                 <label
                         class=qrcode-text-btn>
                     <input type=file
@@ -44,6 +44,10 @@
                         attendance has been marked true, you cannot participate for the same event again</h6>
                 {% elif stats == 3 %}
                     <h6>You have already participated in this event before, please dont waste your precious time</h6>
+                {% elif stats == 4 %}
+                    <h6>You have not registered in any events, to register please go on home page</h6>
+                {% elif stats == 6 %}
+                    <h6>You have not registered for this particular event </h6>
                 {% else %}
                 {% endif %}
             </div>
