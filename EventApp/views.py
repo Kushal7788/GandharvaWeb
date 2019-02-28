@@ -1589,11 +1589,13 @@ def participant_live(request):
                     del dom
                     glob = 1
                     do = 1
+                    break
                 elif glob == 1 :
-                    d.count = d.count + e.count
-                    d.events.append(copy.deepcopy(e))
+                    if d.name == "Global":
+                        d.count = d.count + e.count
+                        d.events.append(copy.deepcopy(e))
+                        break
                     do = 1
-                break
 
 
             if e.domain_name == d.name :
@@ -1686,11 +1688,13 @@ def live(request):
                         del dom
                         glob = 1
                         do = 1
+                        break
                     elif glob == 1:
-                        d.count = d.count + e.count
-                        d.events.append(copy.deepcopy(e))
+                        if d.name == "Global":
+                            d.count = d.count + e.count
+                            d.events.append(copy.deepcopy(e))
+                            break
                         do = 1
-                    break
 
                 if e.domain_name == d.name:
                     d.count = d.count + e.count
@@ -1714,16 +1718,13 @@ def live(request):
             i = i + 1
             numbers.append(d.count)
             for e in d.events :
-                if numbersold[i] != e.count :
-                    e.is_change = 1
-                    print(e.event_name)
-                i = i + 1
+                if numbersold:
+                    if numbersold[i] != e.count :
+                        e.is_change = 1
+                        print(e.event_name)
+                    i = i + 1
                 numbers.append(e.count)
         request.session['numbers'] = numbers
-        for d in domains :
-            for e in d.events :
-                if e.is_change:
-                    print(e.is_change," ",e.event_name)
         args = {
             'domains': domains,
             'total': total,
