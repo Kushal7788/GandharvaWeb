@@ -1619,6 +1619,8 @@ def participant_live(request):
         for e in d.events:
             numbers.append(e.count)
     request.session['numbers'] = numbers
+    request.session['total'] = total
+
     args = {
             'domains': domains,
             'total' : total,
@@ -1633,6 +1635,7 @@ class Domainwise :
 
 def live(request):
     if request.method == "POST" :
+        is_khamosh = 0
         events = []
         domains = []
         names = []
@@ -1725,9 +1728,16 @@ def live(request):
                     i = i + 1
                 numbers.append(e.count)
         request.session['numbers'] = numbers
+        if request.session.get('total'):
+            sub = total - request.session.get('total')
+            if sub == 10 :
+                is_khamosh = 1
+                request.session['total'] = total
         args = {
             'domains': domains,
             'total': total,
+            'khamosh' : is_khamosh
+
         }
         return render(request,'events/live.html',args)
 

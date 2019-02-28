@@ -107,6 +107,12 @@
                         <td>
                             Total
                         </td>
+                        {% if khamosh == 1 %}
+                        <audio src="/media/Notification/khamosh.mp3" autoplay>
+                                    <p>If you are reading this, it is because your browser does not support the audio
+                                        element. </p>
+                                </audio>
+                        {% endif %}
                         <td>
                             {{ d.count }}
                         </td>
