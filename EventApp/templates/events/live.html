@@ -81,7 +81,14 @@
                     {% for e in d.events %}
                         <tr>
                             <td>{{ e.event_name }}</td>
+                            {% if e.is_change == 1 %}
+                            <audio src="/media/Notification/beep.mp3" autoplay>
+                                <p>If you are reading this, it is because your browser does not support the audio element.     </p>
+                            </audio>
+                            <td style="color: red">{{ e.count }}</td>
+                            {% elif e.is_change == 0 %}
                             <td>{{ e.count }}</td>
+                            {% endif %}
                         </tr>
                     {% endfor %}
                     <tr style="background-color: #404040;color: white;font-size: 15px;line-height: 8px;min-height: 8px;

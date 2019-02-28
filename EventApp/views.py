@@ -5,7 +5,7 @@ import json
 import re
 import string
 from io import BytesIO
-
+from django.http import HttpRequest
 import openpyxl
 import qrcode
 import sweetify
@@ -1511,6 +1511,7 @@ class Eventwise:
     event_name = ""
     count = 0
     dept_id = 0
+    is_change = 0
 
 
 class Collegewise:
@@ -1540,7 +1541,7 @@ def participant_live(request):
     transactions = Transaction.objects.all()
     for transaction in transactions:
         if transaction.status == "Credit" or transaction.status == "Cash":
-            event = transaction.team.receipt.event
+            event = transaction.receipt.event
             c = 0
             for i in range(len(events)):
                 if events[i].event_id == event.event_id:
@@ -1609,13 +1610,16 @@ def participant_live(request):
             dom.events = ev
             domains.append(copy.deepcopy(dom))
             del dom
-
-    total =0
-    for d in domains :
+    total = 0
+    for d in domains:
         total = total + d.count
+        numbers.append(d.count)
+        for e in d.events:
+            numbers.append(e.count)
+    request.session['numbers'] = numbers
     args = {
             'domains': domains,
-            'total' : total
+            'total' : total,
 
         }
     return render(request , 'events/participant-live.html' , args)
@@ -1626,93 +1630,105 @@ class Domainwise :
     count = 0
 
 def live(request):
-    events = []
-    domains = []
-    names = []
-    numbers = []
-    transactions = Transaction.objects.all()
-    for transaction in transactions:
-        if transaction.status == "Credit" or transaction.status == "Cash":
-            event = transaction.team.receipt.event
-            c = 0
-            for i in range(len(events)):
-                if events[i].event_id == event.event_id:
-                    c = 1
-                    events[i].count = events[i].count + 1
+    if request.method == "POST" :
+        events = []
+        domains = []
+        names = []
+        numbers = []
+        numbersold = request.session.get('numbers')
+        transactions = Transaction.objects.all()
+        for transaction in transactions:
+            if transaction.status == "Credit" or transaction.status == "Cash":
+                event = transaction.receipt.event
+                c = 0
+                for i in range(len(events)):
+                    if events[i].event_id == event.event_id:
+                        c = 1
+                        events[i].count = events[i].count + 1
+                        break
+                if c == 0:
+                    e = Eventwise()
+                    d = EventDepartment.objects.get(event=event)
+                    e.dept_id = d.department.dep_id
+                    e.domain_name = d.department.name
+                    e.event_id = event.event_id
+                    e.event_name = event.event_name
+                    e.count = 1
+                    events.append(e)
+                    names.append(e.event_name)
+
+        eve = EventMaster.objects.all()
+        # print(names)
+        for e in eve:
+            if e.event_name not in names:
+                # print(e.event_name)
+                new = Eventwise()
+                d = EventDepartment.objects.get(event=e)
+                new.domain_name = d.department.name
+                new.event_id = d.event.event_id
+                new.event_name = d.event.event_name
+                new.count = 0
+                events.append(new)
+                names.append(new.event_name)
+        glob = 0
+        for e in events:
+            do = 0
+            for d in domains:
+                if e.dept_id > 5:
+                    if glob == 0:
+                        dom = Domainwise()
+                        dom.name = "Global"
+                        dom.count = e.count
+                        ev = []
+                        ev.append(copy.deepcopy(e))
+                        dom.events = ev
+                        domains.append(copy.deepcopy(dom))
+                        del dom
+                        glob = 1
+                        do = 1
+                    elif glob == 1:
+                        d.count = d.count + e.count
+                        d.events.append(copy.deepcopy(e))
+                        do = 1
                     break
-            if c == 0:
-                e = Eventwise()
-                d = EventDepartment.objects.get(event=event)
-                e.dept_id = d.department.dep_id
-                e.domain_name = d.department.name
-                e.event_id = event.event_id
-                e.event_name = event.event_name
-                e.count = 1
-                events.append(e)
-                names.append(e.event_name)
 
-    eve = EventMaster.objects.all()
-    # print(names)
-    for e in eve:
-        if e.event_name not in names:
-            # print(e.event_name)
-            new = Eventwise()
-            d = EventDepartment.objects.get(event=e)
-            new.domain_name = d.department.name
-
-            new.event_id = d.event.event_id
-            new.event_name = d.event.event_name
-            new.count = 0
-            events.append(new)
-            names.append(new.event_name)
-    glob = 0
-    for e in events:
-        do = 0
-        for d in domains:
-            if e.dept_id > 5:
-                if glob == 0:
-                    dom = Domainwise()
-                    dom.name = "Global"
-                    dom.count = e.count
-                    ev = []
-                    ev.append(copy.deepcopy(e))
-                    dom.events = ev
-                    domains.append(copy.deepcopy(dom))
-                    del dom
-                    glob = 1
-                    do = 1
-                elif glob == 1:
+                if e.domain_name == d.name:
                     d.count = d.count + e.count
                     d.events.append(copy.deepcopy(e))
                     do = 1
-                break
+                    break
+            if do == 0:
+                dom = Domainwise()
+                dom.name = e.domain_name
+                dom.count = e.count
+                ev = []
+                ev.append(copy.deepcopy(e))
+                dom.events = ev
+                domains.append(copy.deepcopy(dom))
+                del dom
 
-            if e.domain_name == d.name:
-                d.count = d.count + e.count
-                d.events.append(copy.deepcopy(e))
-                do = 1
-                break
-        if do == 0:
-            dom = Domainwise()
-            dom.name = e.domain_name
-            dom.count = e.count
-            ev = []
-            ev.append(copy.deepcopy(e))
-            dom.events = ev
-            domains.append(copy.deepcopy(dom))
-            del dom
-
-    total = 0
-    for d in domains:
-        total = total + d.count
-    args = {
-        'domains': domains,
-        'total': total
-
-    }
-
-    return render(request,'events/live.html',args)
-
+        total = 0
+        i = 0
+        for d in domains:
+            total = total + d.count
+            i = i + 1
+            numbers.append(d.count)
+            for e in d.events :
+                if numbersold[i] != e.count :
+                    e.is_change = 1
+                    print(e.event_name)
+                i = i + 1
+                numbers.append(e.count)
+        request.session['numbers'] = numbers
+        for d in domains :
+            for e in d.events :
+                if e.is_change:
+                    print(e.is_change," ",e.event_name)
+        args = {
+            'domains': domains,
+            'total': total,
+        }
+        return render(request,'events/live.html',args)
 
 def pariwartan(request):
     if request.method == 'POST':
