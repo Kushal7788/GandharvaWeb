@@ -62,9 +62,13 @@
     {#{% endblock %}#}
 </head>
 <body>
+<br>
+<br>
+
 <div class="text-center" style="background-color: #1a1a1a;color: #fff;margin: 0">
-    <h4>Total : {{ total }}</h4>
+    <h1>Total : {{ total }}</h1>
 </div>
+<br>
 <div id="event" style="margin: 0">
     <div style="display: flex;flex-direction: row;justify-items: left;flex-wrap: wrap">
         {% for d in domains %}
@@ -79,17 +83,24 @@
                     </thead>
                     <tbody>
                     {% for e in d.events %}
-                        <tr>
-                            <td>{{ e.event_name }}</td>
-                            {% if e.is_change == 1 %}
-                            <audio src="/media/Notification/beep.mp3" autoplay>
-                                <p>If you are reading this, it is because your browser does not support the audio element.     </p>
-                            </audio>
-                            <td style="color: red">{{ e.count }}</td>
-                            {% elif e.is_change == 0 %}
-                            <td>{{ e.count }}</td>
-                            {% endif %}
-                        </tr>
+                        {% if e.is_change == 1 %}
+                            <tr style="color: #194bbb">
+                                <td>{{ e.event_name }}</td>
+
+                                <audio src="/media/Notification/beep.mp3" autoplay>
+                                    <p>If you are reading this, it is because your browser does not support the audio
+                                        element. </p>
+                                </audio>
+                                <td>{{ e.count }}</td>
+                            </tr>
+                        {% elif e.is_change == 0 %}
+                            <tr>
+                                <td>{{ e.event_name }}</td>
+
+                                <td>{{ e.count }}</td>
+
+                            </tr>
+                        {% endif %}
                     {% endfor %}
                     <tr style="background-color: #404040;color: white;font-size: 15px;line-height: 8px;min-height: 8px;
       height: 8px;">

@@ -8,4 +8,3 @@ sweetify
 qrcode
 xlwt
 django-webpush
-webpush
