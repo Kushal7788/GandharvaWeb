@@ -258,7 +258,7 @@ class Team(models.Model):
                                  null=True)
     ispresent = models.BooleanField(default=False)
     def __str__(self):
-        return str(self.user)
+        return str(self.user) + ' Referral: ' + str(self.referral)
 
 
 class Transaction(models.Model):
