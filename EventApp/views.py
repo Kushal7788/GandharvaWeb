@@ -1839,40 +1839,57 @@ def qr_verify(request):
     stat=5
     selected = None
     if request.method == 'POST':
-        body = request.POST.get('textqr')
-        try:
-             data = json.loads(body)
-             try:
-                event = data['event']
-                name = data['username']
-             except:
-                 event = data['Event']
-                 name = data['Username']
-             otpEntered = request.POST.get('textqr')
-             print(otpEntered)
-             print(event)
-             print(name)
-        except:
-            stat = 2
-        if stat is not 2:
-            user = MyUser.objects.get(email = name)
-            eventname = EventMaster.objects.get(event_name=event)
-            if Team.objects.filter(user = user).count():
-                teams = Team.objects.filter(user=user)
+        if "qrcode" in request.POST:
+            body = request.POST.get('textqr')
+            try:
+                 data = json.loads(body)
+                 try:
+                    event = data['event']
+                    name = data['username']
+                 except:
+                     event = data['Event']
+                     name = data['Username']
+                 otpEntered = request.POST.get('textqr')
+                 print(otpEntered)
+                 print(event)
+                 print(name)
+            except:
+                stat = 2
+            if stat is not 2:
+                user = MyUser.objects.get(email = name)
+                eventname = EventMaster.objects.get(event_name=event)
+                if Team.objects.filter(user = user).count():
+                    teams = Team.objects.filter(user=user)
+                    for team in teams:
+                        if team.receipt.event == eventname:
+                            if team.ispresent is False:
+                                 selected = team
+                                 team.ispresent = True
+                                 team.save()
+                                 stat = 1
+                            else:
+                                stat = 3
+                        else:
+                            stat = 6
+                else:
+                    stat = 4
+        elif "altcode" in request.POST:
+            text = request.POST.get("altqr")
+            if text:
+                teams = Team.objects.all()
                 for team in teams:
-                    if team.receipt.event == eventname:
+                    if team.Refral_Code == text:
                         if team.ispresent is False:
-                             selected = team
-                             team.ispresent = True
-                             team.save()
-                             stat = 1
+                            selected = team
+                            team.ispresent = True
+                            team.save()
+                            stat = 1
                         else:
                             stat = 3
                     else:
-                        stat = 6
+                        stat = 8
             else:
-                stat = 4
-
+                stat = 2
     return  render(request, 'events/qr-code-verify.html',{'stats':stat,'team':selected})
 
     # print(request.FILES['prof_img']
