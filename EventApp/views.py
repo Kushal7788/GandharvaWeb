@@ -1566,11 +1566,11 @@ def participant_live(request):
     # print(names)
     for e in eve :
         if e.event_name not in names :
-            # print(e.event_name)
+            print(e.event_name)
             new = Eventwise()
             d = EventDepartment.objects.get(event=e)
+            new.dept_id = d.department.dep_id
             new.domain_name = d.department.name
-
             new.event_id = d.event.event_id
             new.event_name = d.event.event_name
             new.count = 0
@@ -1669,9 +1669,10 @@ def live(request):
         # print(names)
         for e in eve:
             if e.event_name not in names:
-                # print(e.event_name)
+                print(e.event_name)
                 new = Eventwise()
                 d = EventDepartment.objects.get(event=e)
+                new.dept_id = d.department.dep_id
                 new.domain_name = d.department.name
                 new.event_id = d.event.event_id
                 new.event_name = d.event.event_name
