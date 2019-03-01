@@ -1909,6 +1909,43 @@ def event_present(request):
                     present.append(team)
                 else:
                     notcame.append(team)
+    if request.method == "POST":
+        if "send" in request.POST:
+            participants_selected = request.POST.getlist('participants')
+            subject = request.POST.get('subject')
+            message = request.POST.get('message')
+            if len(request.FILES) == 1:
+                myfile = request.FILES['file']
+                fs = FileSystemStorage()
+                filename = fs.save(myfile.name, myfile)
+                uploaded_file_url = fs.path(filename)
+                send_email(participants_selected, subject, message, [uploaded_file_url])
+            else:
+                send_email(participants_selected, subject, message)
+            participants1 = Team.objects.values_list('user', flat=True).distinct().all()
+            participants = []
+            for p in participants1:
+                participants.append(MyUser.objects.get(pk=p))
+        elif "resend" in request.POST:
+            participants_selected = request.POST.getlist('participants')
+            for obj in participants_selected:
+                print(obj)
+                selected_user = MyUser.objects.get(email = obj)
+                team_selecteds = Team.objects.filter(user = selected_user)
+                for team_selected in team_selecteds:
+                    if team_selected.receipt.event == event:
+                        transaction = Transaction.objects.get(receipt=team_selected.receipt)
+                    else:
+                        transaction = None
+                mail_subject = 'You have registered for ' + event.event_name + ' '
+                message = render_to_string('events/receiptCashPayment.html', {
+                'user': selected_user,
+                'event': event,
+                'team': team_selected,
+                'transaction': transaction,
+                })
+
+                send_email(selected_user.email, mail_subject, message, [team.QRcode.path])
 
     return render(request, "events/event--presenty.html",{'presents':present,'notcomes':notcame})
 

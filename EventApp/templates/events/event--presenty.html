@@ -2,23 +2,77 @@
 {% load static %}
 {% block title %}Event Presenty{% endblock %}
 {% block css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'events/css/events.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'events/css/qrcode.css' %}">
-{% endblock %}
-{% block body %}
-    <br><br><br><br><br>
-    <div class="container" style="height: 92vh">
-    <h3>Present PPl</h3>
-    {% for present in presents %}
-        <h2>{{ present.user.email }}</h2>
-    {% endfor %}
-    <h3>Absent PPl</h3>
-    {% for notcome in notcomes %}
-        <h2>{{ notcome.user.email }}</h2>
-    {% endfor %}
-    </div>
-{% endblock %}
-{% block scripts %}
-    <script src="{% static 'events/js/events.js' %}"></script>
+    <link href="{% static 'events/css/campaign.css' %}" rel="stylesheet">
 {% endblock %}
 
+{% block body %}
+    <br><br><br><br><br><br>
+    <div class="container">
+        <div class="col-sm-6 container-center">
+            <div class="logo">
+                <img class="img-fluid" src="{% static 'gandharva/img/logo_description.png' %}">
+            </div>
+            <h5 style="text-align: center;">Event Head</h5>
+            <br>
+            <form method="post" action="{% url 'event-presenty' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label class="control-label">Subject:</label>
+                    <input type="text" name="subject" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Message:</label>
+                    <textarea class="form-control" type="text" name="message" rows="3"></textarea>
+                </div>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroupFileAddon01">Attachment:</span>
+                    </div>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="inputGroupFile01"
+                               aria-describedby="inputGroupFileAddon01" name="file" hidden>
+                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                    </div>
+                </div>
+                <br>
+                {% for notcome in notcomes %}
+                    <input type="checkbox" name="participants" id="option{{ notcome.user.email }}"
+                           value={{ notcome.user.email }}>
+{#                    <label style="font-weight: 400" for="option{{ notcome.user.email }}"#}
+{#                           value="{{ notcome.user.email }}">{{ notcome.user.username }}</label><br/>#}
+                    <input type="text" name="participants" id="option{{ notcome.user.email }}" onclick="devchange(this)"
+                           value={{ notcome.user.email }}>
+                {% endfor %}
+
+                <div class="text-right">
+                    <input name="send" type="submit" value="Send" class="btn addVolunteer">
+                </div>
+                <div class="text-right">
+                    <input name="resend" type="submit" value="Resend Receipt" class="btn addVolunteer">
+                </div>
+            </form>
+            <div>
+                <h3>Present PPl</h3>
+                {% for present in presents %}
+                    <h6>{{ present.user.email }}</h6>
+                {% endfor %}
+            </div>
+            <br>
+        </div>
+    </div>
+    <div style="height: 30vh"></div>
+    {% block scripts %}
+        <script type="application/javascript">
+            $('input[type="file"]').change(function (e) {
+                var fileName = e.target.files[0].name;
+                $('.custom-file-label').html(fileName);
+            });
+        </script>
+        <script type="text/javascript">
+    function devchange(chkPassport) {
+        var dvPassport = document.getElementById("dvPassport");
+        dvPassport.style.display = chkPassport.checked ? "block" : "none";
+    }
+</script>
+    {% endblock %}
+{% endblock %}
