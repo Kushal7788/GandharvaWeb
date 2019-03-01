@@ -38,10 +38,8 @@
                 {% for notcome in notcomes %}
                     <input type="checkbox" name="participants" id="option{{ notcome.user.email }}"
                            value={{ notcome.user.email }}>
-{#                    <label style="font-weight: 400" for="option{{ notcome.user.email }}"#}
-{#                           value="{{ notcome.user.email }}">{{ notcome.user.username }}</label><br/>#}
-                    <input type="text" name="participants" id="option{{ notcome.user.email }}" onclick="devchange(this)"
-                           value={{ notcome.user.email }}>
+                    <label style="font-weight: 400" for="option{{ notcome.user.email }}"
+                           value="{{ notcome.user.email }}">{{ notcome.user.username }}</label><br/>
                 {% endfor %}
 
                 <div class="text-right">
@@ -68,11 +66,5 @@
                 $('.custom-file-label').html(fileName);
             });
         </script>
-        <script type="text/javascript">
-    function devchange(chkPassport) {
-        var dvPassport = document.getElementById("dvPassport");
-        dvPassport.style.display = chkPassport.checked ? "block" : "none";
-    }
-</script>
     {% endblock %}
 {% endblock %}
