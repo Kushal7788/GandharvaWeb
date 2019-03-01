@@ -47,78 +47,101 @@ import json
 
 # @staff_user
 def campaigning_excel(request):
-    all_transactions = Transaction.objects.filter(Q(status='Credit') | Q(status='Cash')).order_by('status')
-    wb = openpyxl.Workbook()
-    sheet = wb.active
-    columns = ['Participant Name', 'Event', 'Phone No.', 'College', 'Date', 'Email Id','Amount','Mode', 'Refral Person']
+    if request.method == "POST":
+        all_transactions = Transaction.objects.filter(Q(status='Credit') | Q(status='Cash')).order_by('status')
+        wb = openpyxl.Workbook()
+        sheet = wb.active
+        columns = ['Participant Name', 'Event', 'Phone No.', 'Date', 'Email Id','Mode', 'Refral Person','College']
+        merge_col = ['Credit','Cash']
+        heading_row_num = 1
+        data_starting_number = 3
+        merge_no = 5
+        counter = 0
+        sheet.column_dimensions['E'].width = 35
+        for each_column in columns:
+            if counter == merge_no :
+                counter = counter + 1
+                merge_no = merge_no + 1
+                curr_cell = sheet.merge_cells(start_row=heading_row_num,start_column=merge_no,end_row=heading_row_num,end_column=merge_no+1)
+                sheet.cell(row=heading_row_num,column=merge_no).value = each_column
+                # print(each_column)
+                # print(merge_no)
+                num = merge_no
+                for col in merge_col :
+                    sheet.cell(row=heading_row_num + 1, column=num).value = col
+                    num = num + 1
+                print(counter, " ", each_column)
 
-    heading_row_num = 1
 
-    data_starting_number = 3
+            else:
+                curr_cell = sheet.cell(row=heading_row_num, column=counter + 1)
+                curr_cell.value = each_column
+                # print(each_column)
+                print(counter," ",each_column)
+            counter = counter + 1
 
-    for counter, each_column in enumerate(columns):
-        curr_cell = sheet.cell(row=heading_row_num, column=counter + 1)
-        curr_cell.value = each_column
 
-    for row, each_transaction in enumerate(all_transactions):
-        if each_transaction.team.referral:
-            values = [each_transaction.team.user.first_name + " " + each_transaction.team.user.last_name,
-                      each_transaction.receipt.event.event_name,
-                      each_transaction.team.user.user_phone,
-                      each_transaction.team.user.user_coll.name,
-                      str(each_transaction.date),
-                      each_transaction.team.user.email,
-                      each_transaction.receipt.event.entry_fee,
-                      each_transaction.status,
-                      each_transaction.team.referral.first_name + " " + each_transaction.team.referral.last_name]
+        for row, each_transaction in enumerate(all_transactions):
+            if request.POST.get('date'):
+                date = request.POST.get('date')
+                if str(each_transaction.date) == str(date) :
+                    pass
+                else:
+                    continue
+            if each_transaction.team.referral:
+                values = [each_transaction.team.user.first_name + " " + each_transaction.team.user.last_name,
+                          each_transaction.receipt.event.event_name,
+                          each_transaction.team.user.user_phone,
+                          str(each_transaction.date),
+                          each_transaction.team.user.email,
+                          each_transaction.receipt.event.entry_fee,
+                          each_transaction.team.referral.first_name + " " + each_transaction.team.referral.last_name,
+                          each_transaction.team.user.user_coll.name]
+            else:
+                values = [each_transaction.team.user.first_name + " " + each_transaction.team.user.last_name,
+                          each_transaction.receipt.event.event_name,
+                          each_transaction.team.user.user_phone,
+                          str(each_transaction.date),
+                          each_transaction.team.user.email,
+                          each_transaction.receipt.event.entry_fee,
+                          "",
+                          each_transaction.team.user.user_coll.name]
+            col = 0
+            for each_value in values:
+
+                if col == (merge_no - 1)  :
+                    if each_transaction.status == "Credit" :
+                        curr_cell = sheet.cell(row=row + data_starting_number, column=col + 1)
+                        curr_cell.value = each_value
+                    else:
+                        curr_cell = sheet.cell(row=row + data_starting_number, column=col + 2)
+                        curr_cell.value = each_value
+                    col = col + 1
+
+                else:
+                    curr_cell = sheet.cell(row=row + data_starting_number, column=col + 1)
+                    curr_cell.value = each_value
+                col = col + 1
+        current_site = get_current_site(request)
+        pathw = '/media/CampaignData.xlsx'
+        # return HttpResponse(BASE_DIR + '/media/CampaignData.xlsx')
+        wb.save(BASE_DIR + '/media/CampaignData.xlsx')
+        arg = {
+            'transaction': all_transactions
+        }
+        # return HttpResponse()
+        # return render(request, 'user/TableToExcel.html', arg)
+        if request.POST.get('check'):
+            return (redirect(pathw))
         else:
-            values = [each_transaction.team.user.first_name + " " + each_transaction.team.user.last_name,
-                      each_transaction.receipt.event.event_name,
-                      each_transaction.team.user.user_phone,
-                      each_transaction.team.user.user_coll.name,
-                      str(each_transaction.date),
-                      each_transaction.team.user.email,
-                      each_transaction.receipt.event.entry_fee,
-                      each_transaction.status]
-        for col, each_value in enumerate(values):
-            curr_cell = sheet.cell(row=row + data_starting_number, column=col + 1)
-            curr_cell.value = each_value
+            return render(request, 'user/TableToExcel.html', arg)
 
-    # i = 2
-    # c1 = sheet.cell(row=1, column=1)
-    # c1.value = "ParticipantName"
-    # c3 = sheet.cell(row=1, column=2)
-    # c3.value = "EventName"
-    # c2 = sheet.cell(row=1, column=3)
-    # c2.value = "College Name"
-    # c1 = sheet.cell(row=1, column=4)
-    # c1.value = "VisitingDate"
-    # c1 = sheet.cell(row=1, column=5)
-    # c1.value = "VisitingTime"
-    # for t in transaction:
-    #     c1 = sheet.cell(row=i, column=1)
-    #     c1.value = t.team.user.first_name + " " + t.team.user.last_name
-    #     c2 = sheet.cell(row=i, column=2)
-    #     c2.value = t.receipt.event.event_name
-    #     c2 = sheet.cell(row=i, column=3)
-    #     c2.value = t.team.user.user_coll.name
-    #     c3 = sheet.cell(row=i, column=4)
-    #     c3.value = str(t.date)
-    #     c4 = sheet.cell(row=i, column=5)
-    #     c4.value = str(t.time)
-    #     i = i + 1
-    # insta = InstamojoCredential.objects.latest('pk')
-    current_site = get_current_site(request)
-    pathw = '/media/CampaignData.xlsx'
-    # return HttpResponse(BASE_DIR + '/media/CampaignData.xlsx')
-    wb.save(BASE_DIR + '/media/CampaignData.xlsx')
-    arg = {
-        'filename': pathw,
-        'transaction': all_transactions
-
-    }
-    # return HttpResponse()
-    return render(request, 'user/TableToExcel.html', arg)
+    else:
+        all_transactions = Transaction.objects.filter(Q(status='Credit') | Q(status='Cash')).order_by('status')
+        arg = {
+            'transaction': all_transactions
+        }
+        return render(request, 'user/TableToExcel.html', arg)
 
 
 def volunteer_excel(request):
