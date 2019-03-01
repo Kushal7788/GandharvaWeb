@@ -10,6 +10,7 @@ import openpyxl
 import qrcode
 import sweetify
 from django.conf import settings
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import user_passes_test
@@ -1790,9 +1791,11 @@ def verifyOTP_event(request):
                 if Team.objects.filter(user=ifuser).count():
                     teams = Team.objects.filter(user=ifuser)
                     for team in teams:
-                        if Transaction.objects.get(team=team).receipt.event == vishwa:
-                            participant = team
-                            stats = 1
+                        trans = Transaction.objects.filter(team=team)
+                        for tran in trans:
+                            if tran.receipt.event == vishwa:
+                                participant = team
+                                stats = 1
                 else:
                     stats = 0
                     participant = None
