@@ -1893,7 +1893,23 @@ def qr_verify(request):
     return  render(request, 'events/qr-code-verify.html',{'stats':stat,'team':selected})
 
     # print(request.FILES['prof_img']
+@event_head_present
+def event_present(request):
+    present = []
+    notcame = []
+    user =request.user
+    if RoleAssignment.objects.filter(user= user).count:
+        event_headpresent = RoleAssignment.objects.get(user= user).event
+        event = EventMaster.objects.get(event_name=event_headpresent)
+        teams = Team.objects.all()
+        for team in teams:
+            if team.receipt.event == event:
+                if team.ispresent:
+                    present.append(team)
+                else:
+                    notcame.append(team)
 
+    return render(request, "events/event--presenty.html",{'presents':present,'notcomes':notcame})
 
 @require_GET
 def web_push(request):

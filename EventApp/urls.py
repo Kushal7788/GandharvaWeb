@@ -66,6 +66,7 @@ urlpatterns = [
     url(r'^qr-code-verify$', views.qr_verify, name='qr-verify'),
 
     url(r'^web-push$', views.web_push, name='web-push'),
+    url(r'^event-presenty$', views.event_present, name='event-presenty'),
     url(r'^send-push$', views.send_push, name='send-push'),
     url(r'^webpush/', include('webpush.urls')),
     path('sw.js', TemplateView.as_view(template_name='sw.js', content_type='application/x-javascript')),
