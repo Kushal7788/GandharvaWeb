@@ -471,7 +471,7 @@ def contactus(request):
                 'id': user_email,
                 'msg': msg,
             })
-            send_email('hello@viitgandharva.com', mail_subject, message)
+            send_email('gandharvaviitpune@gmail.com', mail_subject, message)
 
         else:
             # print(form.errors)
