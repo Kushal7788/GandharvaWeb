@@ -848,22 +848,33 @@ def activate_register_head(request, uidb64, token):
 
 
 def participant_event_register(request):
+    stat = 0
     if request.method == 'POST':
         useremail = request.POST.get('email')
         eventId = request.POST.get('event_id')
         event = EventMaster.objects.get(event_id=eventId)
         if event.can_register:
             if useremail != "":
-                otp = random.randint(100000, 999999)
-                message = render_to_string('user/OTP.html', {
-                    'otp': otp
-                })
-                mail_subject = 'OTP for email verification.'
-                request.session['otp'] = otp
-                send_email(useremail, mail_subject, message)
+                if event.event_name == 'Marathon':
+                    temp_email = useremail
+                    domain = temp_email.split('@')[1]
+                    print(domain)
+                    print("see hereeeeeeeee")
+                    if domain != 'viit.ac.in':
+                        stat = 1
+                    else:
+                        stat = 0
+                if stat == 0:
+                    otp = random.randint(100000, 999999)
+                    message = render_to_string('user/OTP.html', {
+                        'otp': otp
+                    })
+                    mail_subject = 'OTP for email verification.'
+                    request.session['otp'] = otp
+                    send_email(useremail, mail_subject, message)
 
                 return render(request, 'events/participantEventRegister.html',
-                              {'email': useremail, 'event_id': eventId, 'btndisable': True})
+                                  {'email': useremail, 'event_id': eventId, 'btndisable': True,'stat':stat})
             else:
                 return render(request, 'events/participantEventRegister.html',
                               {'event_id': eventId, 'email': useremail})
@@ -1937,7 +1948,7 @@ def event_present(request):
                     notcame.append(team)
     if request.method == "POST":
         if "send" in request.POST:
-            participants_selected = request.POST.getlist('participants')
+            participants_selecteds = request.POST.getlist('participants')
             subject = request.POST.get('subject')
             message = request.POST.get('message')
             if len(request.FILES) == 1:
@@ -1945,9 +1956,11 @@ def event_present(request):
                 fs = FileSystemStorage()
                 filename = fs.save(myfile.name, myfile)
                 uploaded_file_url = fs.path(filename)
-                send_email(participants_selected, subject, message, [uploaded_file_url])
+                for participants_selected in participants_selecteds:
+                    send_email(participants_selected, subject, message, [uploaded_file_url])
             else:
-                send_email(participants_selected, subject, message)
+                for participants_selected in participants_selecteds:
+                    send_email(participants_selected, subject, message)
             participants1 = Team.objects.values_list('user', flat=True).distinct().all()
             participants = []
             for p in participants1:
