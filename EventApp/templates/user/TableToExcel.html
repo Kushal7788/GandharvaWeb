@@ -14,9 +14,13 @@
             <h5 style="text-align: center">Participant Information</h5>
             <br>
             <div class="text-center">
-                <a href="{{ filename }}" download class="btn bg-primary DownloadButton">
-                    Download
-                </a>
+                <form method="post" action="{% url 'TableToExcel' %}">
+                    {% csrf_token %}
+                     <input type="date" name="date">
+                     <input type="hidden" name="check" value="1">
+                     <button type="submit" class="btn bg-primary DownloadButton">Download</button>
+                </form>
+
             </div>
             <br>
             <div class="container"
