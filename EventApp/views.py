@@ -858,8 +858,6 @@ def participant_event_register(request):
                 if event.event_name == 'Marathon':
                     temp_email = useremail
                     domain = temp_email.split('@')[1]
-                    print(domain)
-                    print("see hereeeeeeeee")
                     if domain != 'viit.ac.in':
                         stat = 1
                     else:
