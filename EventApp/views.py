@@ -855,7 +855,7 @@ def participant_event_register(request):
         event = EventMaster.objects.get(event_id=eventId)
         if event.can_register:
             if useremail != "":
-                if event.event_name == 'Marathon':
+                if event.event_name == 'Marathon & Zumba':
                     temp_email = useremail
                     domain = temp_email.split('@')[1]
                     if domain != 'viit.ac.in':
