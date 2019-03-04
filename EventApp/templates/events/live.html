@@ -27,9 +27,10 @@
     <link href="{% static 'events/css/campaign.css' %}" rel="stylesheet">
     <style>
         .table {
-            margin-left: 0;
-            margin-right: 20px;
+            padding-left: 10px;
             margin-top: 2px;
+            padding-right: 10px;
+            padding-bottom: 10px;
         }
 
         td {
@@ -42,7 +43,6 @@
             line-height: 8px;
             min-height: 8px;
             height: 8px;
-
         }
 
         tr {
@@ -58,6 +58,11 @@
         .navbar {
             display: none;
         }
+        .border
+        {
+           border-style:solid;
+           border-color: #1a1a1a;
+        }
     </style>
     {#{% endblock %}#}
 </head>
@@ -65,7 +70,7 @@
 <br>
 <br>
 
-<div class="text-center" style="background-color: #1a1a1a;color: #fff;margin: 0">
+<div class="text-center" style="background-color: #1a1a1a;color: #fff;margin: 0;border-radius: 15px">
     <h1>Total : {{ total }}</h1>
 </div>
 <br>
@@ -73,10 +78,10 @@
     <div style="display: flex;flex-direction: row;justify-items: left;flex-wrap: wrap">
         {% for d in domains %}
             <div>
-                <h6 style="margin-bottom: 0;padding-bottom: 0">{{ d.name }}</h6>
-                <table class="table table-responsive">
+                <h2 style="margin-bottom: 0;padding-bottom: 0; text-align:center ;">{{ d.name }}</h2>
+                <table class="table table-responsive"   >
                     <thead class="thead-dark">
-                    <tr>
+                    <tr">
                         <th>Name</th>
                         <th>Count</th>
                     </tr>
@@ -84,7 +89,7 @@
                     <tbody>
                     {% for e in d.events %}
                         {% if e.is_change == 1 %}
-                            <tr style="background-color: #194bbb">
+                            <tr style="background-color: #194bbb;border-style: solid;border-color: #1a73e8">
                                 <td>{{ e.event_name }}</td>
 
                                 <audio src="/media/Notification/beep.mp3" autoplay>
@@ -95,15 +100,15 @@
                             </tr>
                         {% elif e.is_change == 0 %}
                             <tr>
-                                <td>{{ e.event_name }}</td>
 
-                                <td>{{ e.count }}</td>
+                                <td class="border">{{ e.event_name }}</td>
+
+                                <td class="border">{{ e.count }}</td>
 
                             </tr>
                         {% endif %}
                     {% endfor %}
-                    <tr style="background-color: #404040;color: white;font-size: 15px;line-height: 8px;min-height: 8px;
-      height: 8px;">
+                    <tr style="background-color: #404040;color: white;font-size: 15px;line-height: 8px;min-height: 8px;height:">
                         <td>
                             Total
                         </td>

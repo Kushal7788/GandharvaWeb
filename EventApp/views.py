@@ -47,78 +47,104 @@ import json
 
 # @staff_user
 def campaigning_excel(request):
-    all_transactions = Transaction.objects.filter(Q(status='Credit') | Q(status='Cash')).order_by('status')
-    wb = openpyxl.Workbook()
-    sheet = wb.active
-    columns = ['Participant Name', 'Event', 'Phone No.', 'College', 'Date', 'Email Id','Amount','Mode', 'Refral Person']
+    if request.method == "POST":
+        all_transactions = Transaction.objects.filter(Q(status='Credit') | Q(status='Cash')).order_by('date')
+        arg = {
+            'transaction': all_transactions
+        }
+        if not request.POST.get('check'):
+            return render(request, 'user/TableToExcel.html', arg)
+        wb = openpyxl.Workbook()
+        sheet = wb.active
+        columns = ['Participant Name', 'Event', 'Phone No.', 'Date', 'Email Id','Mode', 'Refral Person','College']
+        merge_col = ['Credit','Cash']
+        heading_row_num = 1
+        data_starting_number = 3
+        merge_no = 5
+        counter = 0
+        sheet.column_dimensions['E'].width = 35
+        for each_column in columns:
+            if counter == merge_no :
+                counter = counter + 1
+                merge_no = merge_no + 1
+                curr_cell = sheet.merge_cells(start_row=heading_row_num,start_column=merge_no,end_row=heading_row_num,end_column=merge_no+1)
+                sheet.cell(row=heading_row_num,column=merge_no).value = each_column
+                # print(each_column)
+                # print(merge_no)
+                num = merge_no
+                for col in merge_col :
+                    sheet.cell(row=heading_row_num + 1, column=num).value = col
+                    num = num + 1
+                # print(counter, " ", each_column)
+            else:
+                curr_cell = sheet.cell(row=heading_row_num, column=counter + 1)
+                curr_cell.value = each_column
+                # print(each_column)
+                # print(counter," ",each_column)
+            counter = counter + 1
 
-    heading_row_num = 1
-
-    data_starting_number = 3
-
-    for counter, each_column in enumerate(columns):
-        curr_cell = sheet.cell(row=heading_row_num, column=counter + 1)
-        curr_cell.value = each_column
-
-    for row, each_transaction in enumerate(all_transactions):
-        if each_transaction.team.referral:
-            values = [each_transaction.team.user.first_name + " " + each_transaction.team.user.last_name,
-                      each_transaction.receipt.event.event_name,
-                      each_transaction.team.user.user_phone,
-                      each_transaction.team.user.user_coll.name,
-                      str(each_transaction.date),
-                      each_transaction.team.user.email,
-                      each_transaction.receipt.event.entry_fee,
-                      each_transaction.status,
-                      each_transaction.team.referral.first_name + " " + each_transaction.team.referral.last_name]
+        flag = 1
+        row = 0
+        for each_transaction in all_transactions:
+            # print(each_transaction.date)
+            flag = 1
+            if request.POST.get('date'):
+                date = request.POST.get('date')
+                # print(date)
+                print(str(each_transaction.date)," ",str(date))
+                if str(each_transaction.date) == str(date) :
+                    print(1)
+                else:
+                    flag = 0
+            if flag == 1 :
+                if each_transaction.team.referral:
+                    values = [each_transaction.team.user.first_name + " " + each_transaction.team.user.last_name,
+                              each_transaction.receipt.event.event_name,
+                              each_transaction.team.user.user_phone,
+                              str(each_transaction.date),
+                              each_transaction.team.user.email,
+                              each_transaction.receipt.event.entry_fee,
+                              each_transaction.team.referral.first_name + " " + each_transaction.team.referral.last_name,
+                              each_transaction.team.user.user_coll.name]
+                else:
+                    values = [each_transaction.team.user.first_name + " " + each_transaction.team.user.last_name,
+                              each_transaction.receipt.event.event_name,
+                              each_transaction.team.user.user_phone,
+                              str(each_transaction.date),
+                              each_transaction.team.user.email,
+                              each_transaction.receipt.event.entry_fee,
+                              "",
+                              each_transaction.team.user.user_coll.name]
+                col = 0
+                row = row + 1
+                for each_value in values:
+                    if col == (merge_no - 1)  :
+                        if each_transaction.status == "Credit" :
+                            sheet.cell(row=row + data_starting_number, column=col + 1).value = each_value
+                            # curr_cell.value = each_value
+                        else:
+                            sheet.cell(row=row + data_starting_number, column=col + 2).value = each_value
+                            # curr_cell.value = each_value
+                        col = col + 1
+                        print(each_value)
+                    else:
+                        sheet.cell(row=row + data_starting_number, column=col + 1).value = each_value
+                        # curr_cell.value = each_value
+                    col = col + 1
+        current_site = get_current_site(request)
+        pathw = '/media/CampaignData.xlsx'
+        wb.save(BASE_DIR + '/media/CampaignData.xlsx')
+        if request.POST.get('check'):
+            return (redirect(pathw))
         else:
-            values = [each_transaction.team.user.first_name + " " + each_transaction.team.user.last_name,
-                      each_transaction.receipt.event.event_name,
-                      each_transaction.team.user.user_phone,
-                      each_transaction.team.user.user_coll.name,
-                      str(each_transaction.date),
-                      each_transaction.team.user.email,
-                      each_transaction.receipt.event.entry_fee,
-                      each_transaction.status]
-        for col, each_value in enumerate(values):
-            curr_cell = sheet.cell(row=row + data_starting_number, column=col + 1)
-            curr_cell.value = each_value
+            return render(request, 'user/TableToExcel.html', arg)
 
-    # i = 2
-    # c1 = sheet.cell(row=1, column=1)
-    # c1.value = "ParticipantName"
-    # c3 = sheet.cell(row=1, column=2)
-    # c3.value = "EventName"
-    # c2 = sheet.cell(row=1, column=3)
-    # c2.value = "College Name"
-    # c1 = sheet.cell(row=1, column=4)
-    # c1.value = "VisitingDate"
-    # c1 = sheet.cell(row=1, column=5)
-    # c1.value = "VisitingTime"
-    # for t in transaction:
-    #     c1 = sheet.cell(row=i, column=1)
-    #     c1.value = t.team.user.first_name + " " + t.team.user.last_name
-    #     c2 = sheet.cell(row=i, column=2)
-    #     c2.value = t.receipt.event.event_name
-    #     c2 = sheet.cell(row=i, column=3)
-    #     c2.value = t.team.user.user_coll.name
-    #     c3 = sheet.cell(row=i, column=4)
-    #     c3.value = str(t.date)
-    #     c4 = sheet.cell(row=i, column=5)
-    #     c4.value = str(t.time)
-    #     i = i + 1
-    # insta = InstamojoCredential.objects.latest('pk')
-    current_site = get_current_site(request)
-    pathw = '/media/CampaignData.xlsx'
-    # return HttpResponse(BASE_DIR + '/media/CampaignData.xlsx')
-    wb.save(BASE_DIR + '/media/CampaignData.xlsx')
-    arg = {
-        'filename': pathw,
-        'transaction': all_transactions
-
-    }
-    # return HttpResponse()
-    return render(request, 'user/TableToExcel.html', arg)
+    else:
+        all_transactions = Transaction.objects.filter(Q(status='Credit') | Q(status='Cash')).order_by('date')
+        arg = {
+            'transaction': all_transactions
+        }
+        return render(request, 'user/TableToExcel.html', arg)
 
 
 def volunteer_excel(request):
@@ -445,7 +471,7 @@ def contactus(request):
                 'id': user_email,
                 'msg': msg,
             })
-            send_email('hello@viitgandharva.com', mail_subject, message)
+            send_email('gandharvaviitpune@gmail.com', mail_subject, message)
 
         else:
             # print(form.errors)
@@ -822,22 +848,31 @@ def activate_register_head(request, uidb64, token):
 
 
 def participant_event_register(request):
+    stat = 0
     if request.method == 'POST':
         useremail = request.POST.get('email')
         eventId = request.POST.get('event_id')
         event = EventMaster.objects.get(event_id=eventId)
         if event.can_register:
             if useremail != "":
-                otp = random.randint(100000, 999999)
-                message = render_to_string('user/OTP.html', {
-                    'otp': otp
-                })
-                mail_subject = 'OTP for email verification.'
-                request.session['otp'] = otp
-                send_email(useremail, mail_subject, message)
+                if event.event_name == 'Marathon & Zumba':
+                    temp_email = useremail
+                    domain = temp_email.split('@')[1]
+                    if domain != 'viit.ac.in':
+                        stat = 1
+                    else:
+                        stat = 0
+                if stat == 0:
+                    otp = random.randint(100000, 999999)
+                    message = render_to_string('user/OTP.html', {
+                        'otp': otp
+                    })
+                    mail_subject = 'OTP for email verification.'
+                    request.session['otp'] = otp
+                    send_email(useremail, mail_subject, message)
 
                 return render(request, 'events/participantEventRegister.html',
-                              {'email': useremail, 'event_id': eventId, 'btndisable': True})
+                                  {'email': useremail, 'event_id': eventId, 'btndisable': True,'stat':stat})
             else:
                 return render(request, 'events/participantEventRegister.html',
                               {'event_id': eventId, 'email': useremail})
@@ -1374,7 +1409,7 @@ def files(request):
 
 
 # Campaign Head Method
-@staff_user
+@user_Campaign_head
 def campaign(request):
     if request.method == "POST":
         check = request.POST.get('criteria')
@@ -1535,6 +1570,7 @@ def run_custom():
             AssignSub.objects.create(rootuser=ajinkya_user,
                                      subuser=each)
 
+@user_Campaign_head
 
 def participant_live(request):
     events = []
@@ -1909,6 +1945,45 @@ def event_present(request):
                     present.append(team)
                 else:
                     notcame.append(team)
+    if request.method == "POST":
+        if "send" in request.POST:
+            participants_selecteds = request.POST.getlist('participants')
+            subject = request.POST.get('subject')
+            message = request.POST.get('message')
+            if len(request.FILES) == 1:
+                myfile = request.FILES['file']
+                fs = FileSystemStorage()
+                filename = fs.save(myfile.name, myfile)
+                uploaded_file_url = fs.path(filename)
+                for participants_selected in participants_selecteds:
+                    send_email(participants_selected, subject, message, [uploaded_file_url])
+            else:
+                for participants_selected in participants_selecteds:
+                    send_email(participants_selected, subject, message)
+            participants1 = Team.objects.values_list('user', flat=True).distinct().all()
+            participants = []
+            for p in participants1:
+                participants.append(MyUser.objects.get(pk=p))
+        elif "resend" in request.POST:
+            participants_selected = request.POST.getlist('participants')
+            for obj in participants_selected:
+                print(obj)
+                selected_user = MyUser.objects.get(email = obj)
+                team_selecteds = Team.objects.filter(user = selected_user)
+                for team_selected in team_selecteds:
+                    if team_selected.receipt.event == event:
+                        transaction = Transaction.objects.get(receipt=team_selected.receipt)
+                    else:
+                        transaction = None
+                mail_subject = 'You have registered for ' + event.event_name + ' '
+                message = render_to_string('events/receiptCashPayment.html', {
+                'user': selected_user,
+                'event': event,
+                'team': team_selected,
+                'transaction': transaction,
+                })
+
+                send_email(selected_user.email, mail_subject, message, [team.QRcode.path])
 
     return render(request, "events/event--presenty.html",{'presents':present,'notcomes':notcame})
 
