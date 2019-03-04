@@ -1571,7 +1571,7 @@ def run_custom():
                                      subuser=each)
 
 @user_Campaign_head
-@executive_incharge
+
 def participant_live(request):
     events = []
     domains = []
