@@ -41,7 +41,7 @@ def send_email(to_email, subject=None, message=None, attach=None, otp=0):
     server.starttls()
 
     # Perform operations via server
-    server.login('gandharvaviitpune@gmail.com', 'Gandharva@19')
+    server.login('gandharvaviitpune@gmail.com', 'Gandharva@2k19')
     x = server.sendmail(sender, to_email, msg.as_string())
     print("Return value", x)
     server.quit()

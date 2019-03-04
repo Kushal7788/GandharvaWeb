@@ -42,15 +42,38 @@
             setInterval(function () {
                 {#alert("hello");#}
                 console.log("enter")
-                fetch('/live')
+                fetch('/live',{
+  method: "post",
+  headers: {
+      "X-CSRFToken": getCookie("csrftoken"),
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  }
+})
                     .then(response=>response.text())
                 .then(resp => {
-                    {#$('#event').html(resp);#}
                     console.log(resp)
                      $('#event').html(resp)
                 })
 
 
             }, 10000);
+        </script>
+        <script>
+        function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
         </script>
 {% endblock %}

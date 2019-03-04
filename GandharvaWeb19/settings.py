@@ -25,7 +25,7 @@ SECRET_KEY = '^)ef3%8r$&327z%qz92yxgcxt6m@4s8j7$czx%5r6140^zh&g4'
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'gandharva19.pythonanywhere.com', '0.0.0.0', 'localhost', 'www.viitgandharva.com',
-                 'viitgandharva.com', '*.viitgandharva.com', '192.168.43.139', '192.168.43.211','192.168.0.103','192.168.0.111']
+                 'viitgandharva.com', '*.viitgandharva.com', '192.168.43.139', '192.168.43.211','192.168.0.103','192.168.0.111','192.168.1.3']
 
 # Application definition
 EMAIL_USE_SSL=False
@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'social_django',
-    'sweetify'
+    'sweetify',
+    'webpush',
 ]
 AUTH_USER_MODEL = 'EventApp.MyUser'
 
@@ -115,6 +116,12 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+WEBPUSH_SETTINGS = {
+   "VAPID_PUBLIC_KEY": "BMKX00jjFozhtzAM844UEBVmLErgxGvOJbhr-9pApblvdLiGV9tgBp1VcSZqmFWwQXSO_L-wk1neGbK8ks6Euwo",
+   "VAPID_PRIVATE_KEY": "sLk4IRjiSjRF5kQPwbdugjVqgJwHQ_3Sg4Jbxg4prmc",
+   "VAPID_ADMIN_EMAIL": "viitgandharva3@gmail.com"
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
