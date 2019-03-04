@@ -1409,7 +1409,7 @@ def files(request):
 
 
 # Campaign Head Method
-@staff_user
+@user_Campaign_head
 def campaign(request):
     if request.method == "POST":
         check = request.POST.get('criteria')
