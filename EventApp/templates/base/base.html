@@ -67,7 +67,19 @@
     {% block css %}
     {% endblock %}
     <link href="{% static 'gandharva/manifestv1.json' %}" rel="manifest">
-
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+  <script>
+    var OneSignal = window.OneSignal || [];
+    OneSignal.push(function() {
+      OneSignal.init({
+        appId: "",
+        autoRegister: false,
+        notifyButton: {
+          enable: true,
+        },
+      });
+    });
+  </script>
 </head>
 <body>
 <div id="over" class="overlay"></div>
@@ -267,11 +279,11 @@
         });
     }
 
-    if('Notification' in window){
+    /*if('Notification' in window){
       Notification.requestPermission(function(status) {
         console.log('Notification permission status:', status);
       });
-    }
+    }*/
 
     const displayNotification = (data) => {
         if (Notification.permission === 'granted' && document.hidden) {
