@@ -61,6 +61,7 @@ urlpatterns = [
     url(r'^participant-live$', views.participant_live, name='participant-live'),
     url(r'^verifyOTP-event$', views.verifyOTP_event, name='verifyOTP-event'),
     url(r'^pariwartan$', views.pariwartan, name='pariwartan'),
+    url(r'^event-count', views.event_count, name='event-count'),
     url(r'^pariwartan-upload$', views.pariwartan_upload, name='pariwartan-upload'),
     url(r'^live$', views.live, name='live'),
     url(r'^qr-code-verify$', views.qr_verify, name='qr-verify'),

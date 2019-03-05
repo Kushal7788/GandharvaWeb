@@ -601,12 +601,16 @@ def user_login(request):
 
 @staff_user
 def myaction(request):
+    stat = 0
     role = RoleAssignment.objects.get(user=request.user.id)
     if request.user.is_staff:
+        if role.role.name == "Event Head":
+            stat = 1
         args = {
             'button_name': 'Campaign',
             'urlaccess': campaign,
-            'roles': role.role
+            'roles': role.role,
+            'stat': stat
         }
         return render(request, 'user/myactions.html', args)
     # if role.role.name == 'Event Head':
@@ -2013,3 +2017,9 @@ def send_push(request):
         return JsonResponse(status=200, data={"message": "Web push successful"})
     except TypeError:
         return JsonResponse(status=500, data={"message": "An error occurred"})
+
+# @event_head_present
+def event_count(request):
+    role = RoleAssignment.objects.get(user=request.user)
+    count = Receipt.objects.filter(event= role.event).count() - 1
+    return render(request, 'user/event-count.html', {'count':count,'event':role.event})
