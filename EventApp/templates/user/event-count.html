@@ -1,0 +1,20 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}Event Count{% endblock %}
+{% block css %}
+    <link href="{% static 'user/css/myactions.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+    <br><br><br><br><br>
+    <div class="container" style="height:100vh">
+        <div class="col-sm-7 container-center">
+            <div class="logo">
+                <img class="img-fluid" src="{% static 'gandharva/img/logo_description.png' %}">
+            </div>
+            <h5 style="text-align: center;">Event Count</h5>
+            <br>
+            <h5 style="text-align: center;">{{ event }} :  {{ count }}</h5>
+        <br>
+    </div>
+{% endblock %}
