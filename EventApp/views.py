@@ -698,6 +698,25 @@ def register_head(request):
             user_coll = userform.cleaned_data.get('user_coll')
             user_mobile = userform.cleaned_data.get('user_phone')
             user.coll_email = coll_email
+            flag = 0
+            if "@viit" in coll_email:
+                 if "@viit.ac.in" not in coll_email:
+                    flag = 1
+            if "@viit" in user_mail:
+                 if "@viit.ac.in" not in user_mail:
+                    flag = 1
+
+            if flag == 1:
+                userform = UserRegistration()
+                roleform = RoleMasterForm
+                selected_roles = RoleMaster.objects.all().order_by('name')
+                # print(selected_roles)
+                return render(request, 'events/RegisterHead.html',
+                              {'userform': userform, 'roleform': roleform, 'roles': Roles, 'depts': dept,
+                               'colleges': coll,
+                               'years': year, 'categories': role_categories, 'selected_roles': selected_roles,
+                               'events': events})
+
             user.email = user_mail
             user_year = College_year.objects.get(title=user_year)
             user_coll = College.objects.get(name=user_coll)
@@ -719,6 +738,7 @@ def register_head(request):
             #     event.head = user
             # elif role == "Jt Event Head":
             #     event.jt_head = user
+
 
             event.save()
             roleassign.event = event
