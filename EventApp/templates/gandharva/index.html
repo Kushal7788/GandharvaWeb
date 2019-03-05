@@ -97,27 +97,27 @@
             <h1 style="text-align: center;padding-top:2vh;color:#fff;font-weight:500">
                 Events</h1>
             {% for event in events %}
-{#                {% if event.name != 'Global' %}#}
-                    {% if forloop.first %}
-                        <div class="row">{% endif %}
-                <div class="col-sm-2 eventDiv" onclick="document.forms['{{ event.name }}_form'].submit();"
-                     style="background-image:url({{ event.img.url }}); background-repeat: no-repeat; background-size: cover; width: 480px;height: 240px">
-                    <h3 class="eventTitle userselect">{{ event.name }}</h3>
-                    <form method="get" name="{{ event.name }}_form" action={% url event.link_to %}>
-                        <input type="hidden" name="dept" value={{ event.name }}>
-                        <button type="submit" class="btn btn-primary eventButtons">Learn
-                            More
-                        </button>
-                    </form>
-                </div>
-                {% if forloop.counter|divisibleby:5 %}
-                    </div>
+                {#                {% if event.name != 'Global' %}#}
+                {% if forloop.first %}
                     <div class="row">{% endif %}
-                {% if forloop.last %}
+            <div class="col-sm-2 eventDiv" onclick="document.forms['{{ event.name }}_form'].submit();"
+                 style="background-image:url({{ event.img.url }}); background-repeat: no-repeat; background-size: cover; width: 480px;height: 240px">
+                <h3 class="eventTitle userselect">{{ event.name }}</h3>
+                <form method="get" name="{{ event.name }}_form" action={% url event.link_to %}>
+                    <input type="hidden" name="dept" value={{ event.name }}>
+                    <button type="submit" class="btn btn-primary eventButtons">Learn
+                        More
+                    </button>
+                </form>
+            </div>
+            {% if forloop.counter|divisibleby:5 %}
+                </div>
+                <div class="row">{% endif %}
+            {% if forloop.last %}
 
-                    </div>
-{#                {% endif %}#}
-                {% endif %}
+                </div>
+                {#                {% endif %}#}
+            {% endif %}
             {% endfor %}
         </div>
 
@@ -179,6 +179,83 @@
             </div>
         </div>
     </section>
+
+    <section id="event_timeline">
+        <div class="container">
+            <div class="page-header">
+                <h1 id="timeline" style="text-align: center;padding-top: 20px">Schedule</h1>
+            </div>
+            <ul class="timeline">
+                <li>
+                    <div class="timeline-badge"><span class="timeline-balloon-date-day">17</span>
+                        <span class="timeline-balloon-date-month" style="color: #1a1a1a">MAR</span></div>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <h4 class="timeline-title">Mussum ipsum cacilds</h4>
+                        </div>
+                        <div class="timeline-body">
+                            <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois
+                                divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis,
+                                nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta
+                                quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim.
+                                Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="timeline-inverted">
+                    <div class="timeline-badge warning"><span class="timeline-balloon-date-day">18</span>
+                        <span class="timeline-balloon-date-month" style="color: #1a1a1a">MAR</span></div>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <h4 class="timeline-title">Mussum ipsum cacilds</h4>
+                        </div>
+                        <div class="timeline-body">
+                            <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois
+                                divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis,
+                                nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta
+                                quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim.
+                                Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
+                        </div>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="timeline-badge success"><span class="timeline-balloon-date-day">19</span>
+                        <span class="timeline-balloon-date-month" style="color: #1a1a1a">MAR</span></div>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <h4 class="timeline-title">Mussum ipsum cacilds</h4>
+                        </div>
+                        <div class="timeline-body">
+                            <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois
+                                divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis,
+                                nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta
+                                quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim.
+                                Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="timeline-inverted">
+                    <div class="timeline-badge danger"><span class="timeline-balloon-date-day">20</span>
+                        <span class="timeline-balloon-date-month" style="color: #1a1a1a">MAR</span>
+                    </div>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <h4 class="timeline-title">Mussum ipsum cacilds</h4>
+                        </div>
+                        <div class="timeline-body">
+                            <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois
+                                divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis,
+                                nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta
+                                quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim.
+                                Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+
 
     <section id="sponsorSection" class="orange-fade p-5 margin-top-xl pos-r parallax"
              style="padding:0; background-image: url('{% static 'gandharva/img/p.jpg' %}');">
