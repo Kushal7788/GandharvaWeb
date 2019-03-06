@@ -182,41 +182,41 @@
 
     {#    TimeLine Section#}
 
-        <section id="event_timeline">
-            <div class="container">
-                <div class="page-header">
-                    <h1 id="timeline" style="text-align: center;padding-top: 20px">Schedule</h1>
-                </div>
-                <ul class="timeline">
-                    {% for timeline in timelines  %}
-                    {% if forloop.counter|divisibleby:2 %}
-                    <li>
-                        <div class="timeline-badge"><span class="timeline-balloon-date-day">{{ timeline.date.day }}</span>
-                            <span class="timeline-balloon-date-month" style="color: #1a1a1a">{{ timeline.date|date:'F' }}</span></div>
-                        <div class="timeline-panel">
-                            <div class="timeline-heading">
-                                <h4 class="timeline-title">{{ timeline.name }}</h4>
-                            </div>
-                            <div class="timeline-body">
+{#        <section id="event_timeline">#}
+{#            <div class="container">#}
+{#                <div class="page-header">#}
+{#                    <h1 id="timeline" style="text-align: center;padding-top: 20px">Schedule</h1>#}
+{#                </div>#}
+{#                <ul class="timeline">#}
+{#                    {% for timeline in timelines  %}#}
+{#                    {% if forloop.counter|divisibleby:2 %}#}
+{#                    <li>#}
+{#                        <div class="timeline-badge"><span class="timeline-balloon-date-day">{{ timeline.date.day }}</span>#}
+{#                            <span class="timeline-balloon-date-month" style="color: #1a1a1a">{{ timeline.date|date:'F' }}</span></div>#}
+{#                        <div class="timeline-panel">#}
+{#                            <div class="timeline-heading">#}
+{#                                <h4 class="timeline-title">{{ timeline.name }}</h4>#}
+{#                            </div>#}
+{#                            <div class="timeline-body">#}
 {#                                <p><span class="font-weight-bold">10:00 AM</span> Some Event and its biiiiggg name and some text <br><span class="font-weight-bold">11:00 AM</span> Machine Learning Workshop</p>#}
-                                 <p>{{ timeline.info }}</p>
-                            </div>
-                        </div>
-                    </li>
-                    {% else %}
-                    <li class="timeline-inverted">
-                        <div class="timeline-badge warning"><span class="timeline-balloon-date-day">{{ timeline.date.day }}</span>
-                            <span class="timeline-balloon-date-month" style="color: #1a1a1a">{{ timeline.date|date:'F' }}</span></div>
-                        <div class="timeline-panel">
-                            <div class="timeline-heading">
-                                <h4 class="timeline-title">{{ timeline.name }}</h4>
-                            </div>
-                            <div class="timeline-body">
-                                <p>{{ timeline.info }}</p>
-                            </div>
-                        </div>
-                    </li>
-
+{#                                 <p>{{ timeline.info }}</p>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </li>#}
+{#                    {% else %}#}
+{#                    <li class="timeline-inverted">#}
+{#                        <div class="timeline-badge warning"><span class="timeline-balloon-date-day">{{ timeline.date.day }}</span>#}
+{#                            <span class="timeline-balloon-date-month" style="color: #1a1a1a">{{ timeline.date|date:'F' }}</span></div>#}
+{#                        <div class="timeline-panel">#}
+{#                            <div class="timeline-heading">#}
+{#                                <h4 class="timeline-title">{{ timeline.name }}</h4>#}
+{#                            </div>#}
+{#                            <div class="timeline-body">#}
+{#                                <p>{{ timeline.info }}</p>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </li>#}
+{##}
 {#                    <li>#}
 {#                        <div class="timeline-badge success"><span class="timeline-balloon-date-day">19</span>#}
 {#                            <span class="timeline-balloon-date-month" style="color: #1a1a1a">MAR</span></div>#}
@@ -250,11 +250,11 @@
 {#                            </div>#}
 {#                        </div>#}
 {#                    </li>#}
-                    {% endif %}
-                    {% endfor %}
-                </ul>
-            </div>
-        </section>
+{#                    {% endif %}#}
+{#                    {% endfor %}#}
+{#                </ul>#}
+{#            </div>#}
+{#        </section>#}
 
 
     <section id="sponsorSection" class="orange-fade p-5 margin-top-xl pos-r parallax"
