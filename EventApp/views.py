@@ -1466,7 +1466,7 @@ def campaign(request):
             total_amount = 0
             for c in volunteers:
                 total = total + c.count
-                total_amount = total_amount +c.money
+                total_amount = total_amount + c.money
             args = {
 
                 'volunteers': volunteers,
