@@ -2043,3 +2043,12 @@ def event_count(request):
     role = RoleAssignment.objects.get(user=request.user)
     count = Receipt.objects.filter(event= role.event).count() - 1
     return render(request, 'user/event-count.html', {'count':count,'event':role.event})
+
+def event_days(request):
+    objects = Event_days.objects.all()
+    return render(request, 'events/dawise_events.html', {'events':objects})
+
+def jsonview(request):
+    # str = {"employees":[{"firstname":"John","age":30,"mail":"john@gmail.com"},{"firstname":"Jimmy","age":25,"mail":"jimmy@gmail.com"},{"firstname":"Jenny","age":22,"mail":"jenny@gmail.com"},{"firstname":"Jeremy","age":40,"mail":"jeremy@gmail.com"},{"firstname":"Justin","age":32,"mail":"justin@gmail.com"}]}
+    # todis = json.dumps(str)
+    return render(request, 'events/package.json', {})

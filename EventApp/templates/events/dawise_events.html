@@ -1,0 +1,29 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}VishwaParivartan Email Verification{% endblock %}
+{% block css %}
+    <link href="{% static 'events/css/login_signup.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+    <br><br><br><br>
+    <div id="over" class="overlay"></div>
+    <div class="loader"></div>
+    <div class="container" style="height: 100vh" id="wrapper">
+        <div id="page" class="displayPage">
+            <div class="col-sm-5 container-center">
+                <div class="logo">
+                    <img class="img-fluid" src="{% static 'gandharva/img/logo_description.png' %}">
+                </div>
+                {% for event in events %}
+                <div>{{ event.date }}  :-  {{ event.name }}
+                {{ event.info }}
+                </div>
+                {% endfor    %}
+            </div>
+        </div>
+    </div>
+    <br><br>
+    {% block scripts %}
+    {% endblock %}
+{% endblock %}

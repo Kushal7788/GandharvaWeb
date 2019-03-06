@@ -389,3 +389,11 @@ class Pariwartan(models.Model):
 
     def __str__(self):
         return self.user.username
+
+class Event_days(models.Model):
+    date = models.DateField()
+    name = models.CharField(max_length=100)
+    info = models.TextField(max_length=10000)
+
+    def __str__(self):
+        return self.name
