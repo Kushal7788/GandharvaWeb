@@ -1463,12 +1463,15 @@ def campaign(request):
                     v.money = transaction.receipt.event.entry_fee
                     volunteers.append(v)
             total = 0
+            total_amount = 0
             for c in volunteers:
                 total = total + c.count
+                total_amount = total_amount +c.money
             args = {
 
                 'volunteers': volunteers,
-                'total': total
+                'total': total,
+                'total_amount': total_amount
             }
             return render(request, 'events/campaigningData.html', args)
         elif check == "1":
