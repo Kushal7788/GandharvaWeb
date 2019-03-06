@@ -1443,25 +1443,25 @@ def campaign(request):
             volunteers = []
             transactions = Transaction.objects.all()
             for transaction in transactions:
-                if transaction.status == "Credit" or "Cash":
-
-                    try:
-                        ref = transaction.team.referral.username
-                        name = MyUser.objects.get(username=ref)
-                    except Exception:
-                        continue
-                    c = 0
-                    for i in range(len(volunteers)):
-                        if volunteers[i].username == ref:
-                            c = 1
-                            volunteers[i].count = volunteers[i].count + 1
-                            break
-                    if c == 0:
-                        v = Volunteerwise()
-                        v.username = ref
-                        v.name = name
-                        v.count = 1
-                        volunteers.append(v)
+                try:
+                    ref = transaction.team.referral.username
+                    name = MyUser.objects.get(username=ref)
+                except Exception:
+                    continue
+                c = 0
+                for i in range(len(volunteers)):
+                    if volunteers[i].username == ref:
+                        c = 1
+                        volunteers[i].count = volunteers[i].count + 1
+                        volunteers[i].money = volunteers[i].money + transaction.receipt.event.entry_fee
+                        break
+                if c == 0:
+                    v = Volunteerwise()
+                    v.username = ref
+                    v.name = name
+                    v.count = 1
+                    v.money = transaction.receipt.event.entry_fee
+                    volunteers.append(v)
             total = 0
             for c in volunteers:
                 total = total + c.count
@@ -1470,9 +1470,6 @@ def campaign(request):
                 'volunteers': volunteers,
                 'total': total
             }
-
-            # print("volunteer")
-            # print(volunteers)
             return render(request, 'events/campaigningData.html', args)
         elif check == "1":
             events = []
@@ -1567,6 +1564,7 @@ class Volunteerwise:
     username = ""
     name = ""
     count = 0
+    money = 0
 
 
 class Eventwise:
