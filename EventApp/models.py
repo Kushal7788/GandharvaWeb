@@ -162,7 +162,7 @@ class RoleAssignment(models.Model):
     user = models.ForeignKey(MyUser, on_delete=models.CASCADE)
     role = models.ForeignKey(RoleMaster, on_delete=models.PROTECT)
     event = models.ForeignKey(EventMaster, on_delete=models.PROTECT, blank=True, null=True)
-
+    level = models.IntegerField(null=True,blank=True)
     def __str__(self):
         try:
             return str(self.role.name) + ' ' + str(self.user)

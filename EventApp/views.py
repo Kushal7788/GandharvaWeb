@@ -1434,7 +1434,7 @@ def files(request):
 
 
 # Campaign Head Method
-@user_Campaign_head
+@staff_user
 def campaign(request):
     if request.method == "POST":
         check = request.POST.get('criteria')
@@ -1476,10 +1476,13 @@ def campaign(request):
             return render(request, 'events/campaigningData.html', args)
         elif check == "1":
             events = []
+            domains = []
+            names = []
+            # numbers = []
             transactions = Transaction.objects.all()
             for transaction in transactions:
                 if transaction.status == "Credit" or transaction.status == "Cash":
-                    event = transaction.team.receipt.event
+                    event = transaction.receipt.event
                     c = 0
                     for i in range(len(events)):
                         if events[i].event_id == event.event_id:
@@ -1488,14 +1491,74 @@ def campaign(request):
                             break
                     if c == 0:
                         e = Eventwise()
+                        d = EventDepartment.objects.get(event=event)
+                        e.dept_id = d.department.dep_id
+                        e.domain_name = d.department.name
                         e.event_id = event.event_id
                         e.event_name = event.event_name
                         e.count = 1
                         events.append(e)
+                        names.append(e.event_name)
+
+            eve = EventMaster.objects.all()
+            # print(names)
+            for e in eve:
+                if e.event_name not in names:
+                    print(e.event_name)
+                    new = Eventwise()
+                    d = EventDepartment.objects.get(event=e)
+                    new.dept_id = d.department.dep_id
+                    new.domain_name = d.department.name
+                    new.event_id = d.event.event_id
+                    new.event_name = d.event.event_name
+                    new.count = 0
+                    events.append(new)
+                    names.append(new.event_name)
+            glob = 0
+            events.sort(key=lambda x: x.count,reverse=True)
+            for e in events:
+                do = 0
+                for d in domains:
+                    if e.dept_id > 5:
+                        if glob == 0:
+                            dom = Domainwise()
+                            dom.name = "Global"
+                            dom.count = e.count
+                            ev = []
+                            ev.append(copy.deepcopy(e))
+                            dom.events = ev
+                            domains.append(copy.deepcopy(dom))
+                            del dom
+                            glob = 1
+                            do = 1
+                            break
+                        elif glob == 1:
+                            if d.name == "Global":
+                                d.count = d.count + e.count
+                                d.events.append(copy.deepcopy(e))
+                                break
+                            do = 1
+
+                    if e.domain_name == d.name:
+                        d.count = d.count + e.count
+                        d.events.append(copy.deepcopy(e))
+                        do = 1
+                        break
+                if do == 0:
+                    dom = Domainwise()
+                    dom.name = e.domain_name
+                    dom.count = e.count
+                    ev = []
+                    ev.append(copy.deepcopy(e))
+                    dom.events = ev
+                    domains.append(copy.deepcopy(dom))
+                    del dom
             total = 0
             for c in events:
                 total = total + c.count
+            domains.sort(key=lambda x: x.count, reverse=True)
             args = {
+                'domains':domains,
                 'events': events,
                 'total': total
             }
