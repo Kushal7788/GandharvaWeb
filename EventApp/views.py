@@ -1852,11 +1852,11 @@ def verifyOTP_event(request):
                 if Team.objects.filter(user=ifuser).count():
                     teams = Team.objects.filter(user=ifuser)
                     for team in teams:
-                        trans = Transaction.objects.filter(team=team)
-                        for tran in trans:
-                            if tran.receipt.event == vishwa:
-                                participant = team
-                                stats = 1
+                        if team.receipt.event == vishwa:
+                           participant = team
+                           stats = 1
+                        else:
+                            stats = 0
                 else:
                     stats = 0
                     participant = None
