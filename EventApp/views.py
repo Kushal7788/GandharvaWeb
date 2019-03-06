@@ -217,7 +217,8 @@ def home(request):
         'gandharvaDate': GandharvaHome.objects.get(title__startswith="Date").data,
         'About': GandharvaHome.objects.get(title__startswith="About").data,
         'role': userget,
-        'global_events': event_name
+        'global_events': event_name,
+        'timelines': Event_days.objects.all().order_by("date")
     }
     sweetify.sweetalert(request, 'Westworld is awesome',
                         text='Really... if you have the chance - watch it! persistent = I agree!')
@@ -2044,9 +2045,6 @@ def event_count(request):
     count = Receipt.objects.filter(event= role.event).count() - 1
     return render(request, 'user/event-count.html', {'count':count,'event':role.event})
 
-def event_days(request):
-    objects = Event_days.objects.all()
-    return render(request, 'events/dawise_events.html', {'events':objects})
 
 def jsonview(request):
     # str = {"employees":[{"firstname":"John","age":30,"mail":"john@gmail.com"},{"firstname":"Jimmy","age":25,"mail":"jimmy@gmail.com"},{"firstname":"Jenny","age":22,"mail":"jenny@gmail.com"},{"firstname":"Jeremy","age":40,"mail":"jeremy@gmail.com"},{"firstname":"Justin","age":32,"mail":"justin@gmail.com"}]}

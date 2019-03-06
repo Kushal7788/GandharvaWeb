@@ -63,7 +63,6 @@ urlpatterns = [
     url(r'^pariwartan$', views.pariwartan, name='pariwartan'),
     url(r'^event-count', views.event_count, name='event-count'),
     url(r'^pariwartan-upload$', views.pariwartan_upload, name='pariwartan-upload'),
-    url(r'^daywise-events$', views.event_days, name='daywise-events'),
     url(r'^live$', views.live, name='live'),
     url(r'^json-view', views.jsonview, name='json-view'),
     url(r'^qr-code-verify$', views.qr_verify, name='qr-verify'),
