@@ -6,9 +6,6 @@ import django.db.models.deletion
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('EventApp', '0072_auto_20190225_0000'),
-    ]
 
     operations = [
         migrations.CreateModel(

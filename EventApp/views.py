@@ -608,7 +608,7 @@ def myaction(request):
         if role.role.name == "Event Head":
             stat = 1
         args = {
-            'button_name': 'Campaign',
+            'button_name': '',
             'urlaccess': campaign,
             'roles': role.role,
             'stat': stat

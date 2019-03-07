@@ -188,7 +188,7 @@
                             </form>
                         {% endif %}
                         {% if user.is_staff %}
-                            {% if level > 4 %}
+                            {% if level == 1 %}
                                 <form method="get" action="{% url 'campaign' %}">
                                     {% elif role == "Participant-Live" %}
                                 <form method="get" action="{% url 'participant-live' %}">

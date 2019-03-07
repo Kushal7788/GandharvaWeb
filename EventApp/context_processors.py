@@ -12,16 +12,18 @@ def add_variable_to_context(request):
     except:
         roles_user = None
     #uncomment lines when you assign levels to all campaign heads
+    roles_level=False
+
     if roles_user:
         roles_user = RoleAssignment.objects.get(user=request.user).role.name
-        # campaign_object = RoleAssignment.objects.filter(role__name="Campaigning Head")[0]
-        # print(campaign_object.user)
-        # campaign = campaign_object.level
+        campaign_object = RoleAssignment.objects.filter(role__name="Campaigning Head")[0]
+        print(campaign_object.user)
+        campaign = campaign_object.level
         roles_level = RoleAssignment.objects.get(user=request.user).level
-        # if roles_level >= campaign:
-        #     roles_level = 1
-        # print(campaign)
-        # print(roles_level)
+        if roles_level >= campaign:
+            roles_level = 1
+        print(campaign)
+        print(roles_level)
 
     if not roles_level :
         roles_level = 0
