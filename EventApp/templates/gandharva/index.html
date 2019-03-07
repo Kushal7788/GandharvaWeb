@@ -182,79 +182,51 @@
 
     {#    TimeLine Section#}
 
-        <section id="event_timeline">
-            <div class="container">
-                <div class="page-header">
-                    <h1 id="timeline" style="text-align: center;padding-top: 20px">Schedule</h1>
-                </div>
-                <ul class="timeline">
-                    {% for timeline in timelines  %}
-                    {% if forloop.counter|divisibleby:2 %}
-                    <li>
-                        <div class="timeline-badge"><span class="timeline-balloon-date-day">{{ timeline.date.day }}</span>
-                            <span class="timeline-balloon-date-month" style="color: #1a1a1a">{{ timeline.date|date:'F' }}</span></div>
-                        <div class="timeline-panel">
-                            <div class="timeline-heading">
-                                <h4 class="timeline-title">{{ timeline.name }}</h4>
-                            </div>
-                            <div class="timeline-body">
-                                <p><span class="font-weight-bold">10:00 AM</span> Some Event and its biiiiggg name and some text <br><span class="font-weight-bold">11:00 AM</span> Machine Learning Workshop</p>
-                                 <p>{{ timeline.info }}</p>
-                            </div>
-                        </div>
-                    </li>
-                    {% else %}
-                    <li class="timeline-inverted">
-                        <div class="timeline-badge warning"><span class="timeline-balloon-date-day">{{ timeline.date.day }}</span>
-                            <span class="timeline-balloon-date-month" style="color: #1a1a1a">{{ timeline.date|date:'F' }}</span></div>
-                        <div class="timeline-panel">
-                            <div class="timeline-heading">
-                                <h4 class="timeline-title">{{ timeline.name }}</h4>
-                            </div>
-                            <div class="timeline-body">
-                                <p>{{ timeline.info }}</p>
-                            </div>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div class="timeline-badge success"><span class="timeline-balloon-date-day">19</span>
-                            <span class="timeline-balloon-date-month" style="color: #1a1a1a">MAR</span></div>
-                        <div class="timeline-panel">
-                            <div class="timeline-heading">
-                                <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                            </div>
-                            <div class="timeline-body">
-                                <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois
-                                    divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis,
-                                    nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta
-                                    quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim.
-                                    Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="timeline-inverted">
-                        <div class="timeline-badge danger"><span class="timeline-balloon-date-day">20</span>
-                            <span class="timeline-balloon-date-month" style="color: #1a1a1a">MAR</span>
-                        </div>
-                        <div class="timeline-panel">
-                            <div class="timeline-heading">
-                                <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                            </div>
-                            <div class="timeline-body">
-                                <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois
-                                    divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis,
-                                    nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta
-                                    quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim.
-                                    Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
-                            </div>
-                        </div>
-                    </li>
-                    {% endif %}
-                    {% endfor %}
-                </ul>
-            </div>
-        </section>
+    {#    <section id="event_timeline">#}
+    {#        <div class="container">#}
+    {#            <div class="page-header">#}
+    {#                <h1 id="timeline" style="text-align: center;padding-top: 20px">Schedule</h1>#}
+    {#            </div>#}
+    {#            <ul class="timeline">#}
+    {#                {% for timeline in timelines %}#}
+    {#                    {% if forloop.counter|divisibleby:2 %}#}
+    {#                        <li>#}
+    {#                            <div class="timeline-badge"><span#}
+    {#                                    class="timeline-balloon-date-day">{{ timeline.date.day }}</span>#}
+    {#                                <span class="timeline-balloon-date-month"#}
+    {#                                      style="color: #1a1a1a">{{ timeline.date|date:'F' }}</span></div>#}
+    {#                            <div class="timeline-panel">#}
+    {#                                <div class="timeline-heading">#}
+    {#                                    <h4 class="timeline-title">{{ timeline.name }}</h4>#}
+    {#                                </div>#}
+    {#                                <div class="timeline-body">#}
+    {#                                    <p><span class="font-weight-bold">10:00 AM</span> Some Event and its biiiiggg name#}
+    {#                                        and some text <br><span class="font-weight-bold">11:00 AM</span> Machine#}
+    {#                                        Learning Workshop</p>#}
+    {#                                    <p>{{ timeline.info }}</p>#}
+    {#                                </div>#}
+    {#                            </div>#}
+    {#                        </li>#}
+    {#                    {% else %}#}
+    {#                        <li class="timeline-inverted">#}
+    {#                            <div class="timeline-badge warning"><span#}
+    {#                                    class="timeline-balloon-date-day">{{ timeline.date.day }}</span>#}
+    {#                                <span class="timeline-balloon-date-month"#}
+    {#                                      style="color: #1a1a1a">{{ timeline.date|date:'F' }}</span></div>#}
+    {#                            <div class="timeline-panel">#}
+    {#                                <div class="timeline-heading">#}
+    {#                                    <h4 class="timeline-title">{{ timeline.name }}</h4>#}
+    {#                                </div>#}
+    {#                                <div class="timeline-body">#}
+    {#                                    <p>{{ timeline.info }}</p>#}
+    {#                                </div>#}
+    {#                            </div>#}
+    {#                        </li>#}
+    {#                    {% endif %}#}
+    {#                {% endfor %}#}
+    {#            </ul>#}
+    {#        </div>#}
+    {#    </section>#}
 
 
     <section id="sponsorSection" class="orange-fade p-5 margin-top-xl pos-r parallax"
@@ -293,44 +265,6 @@
             </div>
         </div>
     </section>
-
-
-    {#        Owl Library#}
-    {#    <section id="sponsorSection" class="orange-fade p-5 margin-top-xl pos-r parallax"#}
-    {#             style="padding:0; background-image: url('{% static 'gandharva/img/p.jpg' %}');">#}
-    {#        <div class="container">#}
-    {#            <div class="row">#}
-    {#                <div class="col-sm-12">#}
-    {#                    <br>#}
-    {#                    <h2 class="text-center text-white" style="padding-top: 6px;font-weight: 500">Our#}
-    {#                        Sponsors</h2>#}
-    {#                    <p></p>#}
-    {#                    <div class="mt-5 pos-r">#}
-    {#                        <div class="carousel-controls testimonial-carousel-controls">#}
-    {#                            <div class="control prev"><i class="fa fa-chevron-left text-white">&nbsp;</i></div>#}
-    {#                            <div class="control next"><i class="fa fa-chevron-right text-white">&nbsp;</i></div>#}
-    {#                        </div>#}
-    {#                        <div class="owl-carousel">#}
-    {#                            {% for sponsor in sponsors %}#}
-    {#                                <div class="one-slide white">#}
-    {#                                    <div class="testimonial w-100 h-100 p-3 text-center">#}
-    {#                                        <div class="brand"><img alt="logo"#}
-    {#                                                                src="{% static sponsor.sponsor_logo %}"#}
-    {#                                                                style="width:auto;height:100px;max-width:100px"/>#}
-    {#                                        </div>#}
-    {#                                        <div class="separator">&nbsp;</div>#}
-    {#                                        <div class="message text-center text-gray"#}
-    {#                                             style="font-size: 1rem;word-wrap: break-word;">{{ sponsor.sponsor_name }}</div>#}
-    {#                                        <p style="font-weight: 300;font-size: 0.9rem;">{{ sponsor.sponsor_type }}</p>#}
-    {#                                    </div>#}
-    {#                                </div>#}
-    {#                            {% endfor %}#}
-    {#                        </div>#}
-    {#                    </div>#}
-    {#                </div>#}
-    {#            </div>#}
-    {#        </div>#}
-    {#    </section>#}
 
     <section id="contact">
         <div class="map-responsive">
