@@ -111,7 +111,7 @@ class MyUser(AbstractUser):
 class RoleMaster(models.Model):
     name = models.CharField(max_length=50)
     assigned_work = models.TextField(max_length=2000, blank=True)
-
+    level = models.IntegerField(null=True, blank=True, default=0)
     def __str__(self):
         return self.name
 
@@ -162,7 +162,7 @@ class RoleAssignment(models.Model):
     user = models.ForeignKey(MyUser, on_delete=models.CASCADE)
     role = models.ForeignKey(RoleMaster, on_delete=models.PROTECT)
     event = models.ForeignKey(EventMaster, on_delete=models.PROTECT, blank=True, null=True)
-    level = models.IntegerField(null=True,blank=True,default=0)
+
     def __str__(self):
         try:
             return str(self.role.name) + ' ' + str(self.user)

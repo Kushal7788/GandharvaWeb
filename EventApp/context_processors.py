@@ -16,14 +16,13 @@ def add_variable_to_context(request):
 
     if roles_user:
         roles_user = RoleAssignment.objects.get(user=request.user).role.name
-        campaign_object = RoleAssignment.objects.filter(role__name="Campaigning Head")[0]
-        print(campaign_object.user)
+        campaign_object = RoleMaster.objects.filter(name="Campaigning Head")[0]
         campaign = campaign_object.level
-        roles_level = RoleAssignment.objects.get(user=request.user).level
+        # print(campaign)
+        roles_level = RoleMaster.objects.filter(name=roles_user)[0].level
         if roles_level >= campaign:
             roles_level = 1
-        print(campaign)
-        print(roles_level)
+        # print(roles_level)
 
     if not roles_level :
         roles_level = 0
