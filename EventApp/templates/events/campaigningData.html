@@ -63,58 +63,58 @@
                     <h5 style="text-align: center;">Domainwise Entries</h5>
                     <br>
                     {% for d in domains %}
-            <div>
-                <h2 style="margin-bottom: 0;padding-bottom: 0; text-align:center ;">{{ d.name }}</h2>
-                <table class="table table-responsive"   >
-                    <thead class="thead-dark">
-                    <tr">
-                        <th>Name</th>
-                        <th>Count</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for e in d.events %}
-                            <tr>
+                        <div>
+                            <h2 style="margin-bottom: 0;padding-bottom: 0; text-align:center ;">{{ d.name }}</h2>
+                            <table class="table table-responsive">
+                                <thead class="thead-dark">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Count</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for e in d.events %}
+                                    <tr>
 
-                                <td class="border">{{ e.event_name }}</td>
+                                        <td class="border">{{ e.event_name }}</td>
 
-                                <td class="border">{{ e.count }}</td>
+                                        <td class="border">{{ e.count }}</td>
 
-                            </tr>
-                    {% endfor %}
-                    <tr style="background-color: #404040;color: white;font-size: 15px;line-height: 8px;min-height: 8px;height:">
-                        <td>
-                            Total
-                        </td>
-                        <td>
-                            {{ d.count }}
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+                                    </tr>
+                                {% endfor %}
+                                <tr style="background-color: #404040;color: white;font-size: 15px;line-height: 8px;min-height: 8px;">
+                                    <td>
+                                        Total
+                                    </td>
+                                    <td>
+                                        {{ d.count }}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                         <br>
-        {% endfor %}
-{#                    <table class="table table-responsive">#}
-{#                        <thead class="thead-dark">#}
-{#                        <tr>#}
-{#                            <th>Event Name</th>#}
-{#                            <th>Participant Count</th>#}
-{#                        </tr>#}
-{#                        </thead>#}
-{#                        <tbody>#}
-{#                        {% for event in events %}#}
-{#                            <tr>#}
-{#                                <td>{{ event.event_name }}</td>#}
-{#                                <td>{{ event.count }}</td>#}
-{#                            </tr>#}
-{#                        {% endfor %}#}
-{#                        <tr>#}
-{#                            <td>Total</td>#}
-{#                            <td>{{ total }}</td>#}
-{#                        </tr>#}
-{#                        </tbody>#}
-{#                    </table>#}
+                    {% endfor %}
+                    {#                    <table class="table table-responsive">#}
+                    {#                        <thead class="thead-dark">#}
+                    {#                        <tr>#}
+                    {#                            <th>Event Name</th>#}
+                    {#                            <th>Participant Count</th>#}
+                    {#                        </tr>#}
+                    {#                        </thead>#}
+                    {#                        <tbody>#}
+                    {#                        {% for event in events %}#}
+                    {#                            <tr>#}
+                    {#                                <td>{{ event.event_name }}</td>#}
+                    {#                                <td>{{ event.count }}</td>#}
+                    {#                            </tr>#}
+                    {#                        {% endfor %}#}
+                    {#                        <tr>#}
+                    {#                            <td>Total</td>#}
+                    {#                            <td>{{ total }}</td>#}
+                    {#                        </tr>#}
+                    {#                        </tbody>#}
+                    {#                    </table>#}
                 </div>
             </div>
 

@@ -1,29 +1,54 @@
 {% extends 'base/base.html' %}
 {% load static %}
-{% block title %}VishwaParivartan Email Verification{% endblock %}
+{% block title %}Daywise Events{% endblock %}
 {% block css %}
-    <link href="{% static 'events/css/login_signup.css' %}" rel="stylesheet">
+    <link href="{% static 'events/css/campaign.css' %}" rel="stylesheet">
+    <style>
+        .table {
+            margin-left: 0;
+        }
+
+        td {
+            width: 500px;
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
-    <br><br><br><br>
+    <br><br><br><br><br>
     <div id="over" class="overlay"></div>
     <div class="loader"></div>
-    <div class="container" style="height: 100vh" id="wrapper">
+    <div class="container">
         <div id="page" class="displayPage">
             <div class="col-sm-5 container-center">
                 <div class="logo">
                     <img class="img-fluid" src="{% static 'gandharva/img/logo_description.png' %}">
                 </div>
-                {% for event in events %}
-                <div>{{ event.date }}  :-  {{ event.name }}
-                {{ event.info }}
-                </div>
-                {% endfor    %}
+                <h5 style="text-align: center;">Daywise Events</h5>
+                <br>
+                <table class="table table-responsive">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>Date</th>
+                        <th>Name</th>
+                        <th>Info</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for event in events %}
+                        <tr>
+                            <td>{{ event.date }}</td>
+                            <td>{{ event.name }}</td>
+                            <td>{{ event.info }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <br>
             </div>
         </div>
     </div>
-    <br><br>
+    <div style="height: 20vh"></div>
     {% block scripts %}
     {% endblock %}
 {% endblock %}
