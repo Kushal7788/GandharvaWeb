@@ -22,7 +22,8 @@ def add_variable_to_context(request):
         #     roles_level = 1
         # print(campaign)
         # print(roles_level)
-    else:
+
+    if not roles_level :
         roles_level = 0
     global_objects = EventDepartment.objects.filter(department=6)
     event_name = []
