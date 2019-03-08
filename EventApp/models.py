@@ -111,6 +111,7 @@ class MyUser(AbstractUser):
 class RoleMaster(models.Model):
     name = models.CharField(max_length=50)
     assigned_work = models.TextField(max_length=2000, blank=True)
+    level = models.IntegerField(null=True, blank=True, default=0)
 
     def __str__(self):
         return self.name
@@ -189,13 +190,15 @@ class EventDepartment(models.Model):
     def __str__(self):
         return self.event.event_name
 
-#sponsor category
+
+# sponsor category
 class SponsorCategory(models.Model):
     sponsor_category = models.CharField(max_length=30)
     category_rank = models.IntegerField()
 
     def __str__(self):
         return self.sponsor_category
+
 
 # sponsors model
 class SponsorMaster(models.Model):
@@ -205,11 +208,10 @@ class SponsorMaster(models.Model):
     sponsor_type = models.CharField(max_length=30, blank=True)
     sponsor_link = models.URLField(blank=True)
     sponsor_rank = models.IntegerField(default=1)
-    sponsor_category = models.ForeignKey(SponsorCategory, on_delete=models.PROTECT,blank=True,default= None,null=True)
+    sponsor_category = models.ForeignKey(SponsorCategory, on_delete=models.PROTECT, blank=True, default=None, null=True)
+
     def __str__(self):
         return self.sponsor_name
-
-
 
 
 # contains media for front-end
@@ -236,6 +238,7 @@ class ContactUs(models.Model):
 class GandharvaHome(models.Model):
     title = models.CharField(max_length=100)
     data = models.TextField(max_length=1000, blank=True)
+
     def __str__(self):
         return self.title
 
@@ -257,6 +260,7 @@ class Team(models.Model):
     referral = models.ForeignKey(MyUser, on_delete=models.PROTECT, blank=True, related_name='Refral_Volunteer',
                                  null=True)
     ispresent = models.BooleanField(default=False)
+
     def __str__(self):
         return str(self.user) + ' Referral: ' + str(self.referral)
 
@@ -365,6 +369,7 @@ class OurTeam(models.Model):
     fb_link = models.URLField(blank=True)
     insta_link = models.URLField(blank=True)
     twitter_link = models.URLField(blank=True)
+
     def __str__(self):
         return 'Username : ' + self.name
 
@@ -389,3 +394,12 @@ class Pariwartan(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+class Event_days(models.Model):
+    date = models.DateField()
+    name = models.CharField(max_length=100)
+    info = models.TextField(max_length=10000)
+
+    def __str__(self):
+        return self.name

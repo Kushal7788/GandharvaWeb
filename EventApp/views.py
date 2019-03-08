@@ -35,7 +35,6 @@ from .email_sender import send_email
 from .forms import *
 from .token import *
 
-
 from django.http.response import JsonResponse, HttpResponse
 from django.views.decorators.http import require_GET, require_POST
 from django.shortcuts import get_object_or_404
@@ -56,23 +55,24 @@ def campaigning_excel(request):
             return render(request, 'user/TableToExcel.html', arg)
         wb = openpyxl.Workbook()
         sheet = wb.active
-        columns = ['Participant Name', 'Event', 'Phone No.', 'Date', 'Email Id','Mode', 'Refral Person','College']
-        merge_col = ['Credit','Cash']
+        columns = ['Participant Name', 'Event', 'Phone No.', 'Date', 'Email Id', 'Mode', 'Refral Person', 'College']
+        merge_col = ['Credit', 'Cash']
         heading_row_num = 1
         data_starting_number = 3
         merge_no = 5
         counter = 0
         sheet.column_dimensions['E'].width = 35
         for each_column in columns:
-            if counter == merge_no :
+            if counter == merge_no:
                 counter = counter + 1
                 merge_no = merge_no + 1
-                curr_cell = sheet.merge_cells(start_row=heading_row_num,start_column=merge_no,end_row=heading_row_num,end_column=merge_no+1)
-                sheet.cell(row=heading_row_num,column=merge_no).value = each_column
+                curr_cell = sheet.merge_cells(start_row=heading_row_num, start_column=merge_no, end_row=heading_row_num,
+                                              end_column=merge_no + 1)
+                sheet.cell(row=heading_row_num, column=merge_no).value = each_column
                 # print(each_column)
                 # print(merge_no)
                 num = merge_no
-                for col in merge_col :
+                for col in merge_col:
                     sheet.cell(row=heading_row_num + 1, column=num).value = col
                     num = num + 1
                 # print(counter, " ", each_column)
@@ -91,12 +91,12 @@ def campaigning_excel(request):
             if request.POST.get('date'):
                 date = request.POST.get('date')
                 # print(date)
-                print(str(each_transaction.date)," ",str(date))
-                if str(each_transaction.date) == str(date) :
+                print(str(each_transaction.date), " ", str(date))
+                if str(each_transaction.date) == str(date):
                     print(1)
                 else:
                     flag = 0
-            if flag == 1 :
+            if flag == 1:
                 if each_transaction.team.referral:
                     values = [each_transaction.team.user.first_name + " " + each_transaction.team.user.last_name,
                               each_transaction.receipt.event.event_name,
@@ -118,8 +118,8 @@ def campaigning_excel(request):
                 col = 0
                 row = row + 1
                 for each_value in values:
-                    if col == (merge_no - 1)  :
-                        if each_transaction.status == "Credit" :
+                    if col == (merge_no - 1):
+                        if each_transaction.status == "Credit":
                             sheet.cell(row=row + data_starting_number, column=col + 1).value = each_value
                             # curr_cell.value = each_value
                         else:
@@ -217,7 +217,8 @@ def home(request):
         'gandharvaDate': GandharvaHome.objects.get(title__startswith="Date").data,
         'About': GandharvaHome.objects.get(title__startswith="About").data,
         'role': userget,
-        'global_events': event_name
+        'global_events': event_name,
+        'timelines': Event_days.objects.all().order_by("date")
     }
     sweetify.sweetalert(request, 'Westworld is awesome',
                         text='Really... if you have the chance - watch it! persistent = I agree!')
@@ -601,12 +602,16 @@ def user_login(request):
 
 @staff_user
 def myaction(request):
+    stat = 0
     role = RoleAssignment.objects.get(user=request.user.id)
     if request.user.is_staff:
+        if role.role.name == "Event Head":
+            stat = 1
         args = {
-            'button_name': 'Campaign',
+            'button_name': '',
             'urlaccess': campaign,
-            'roles': role.role
+            'roles': role.role,
+            'stat': stat
         }
         return render(request, 'user/myactions.html', args)
     # if role.role.name == 'Event Head':
@@ -694,6 +699,25 @@ def register_head(request):
             user_coll = userform.cleaned_data.get('user_coll')
             user_mobile = userform.cleaned_data.get('user_phone')
             user.coll_email = coll_email
+            flag = 0
+            if "@viit" in coll_email:
+                if "@viit.ac.in" not in coll_email:
+                    flag = 1
+            if "@viit" in user_mail:
+                if "@viit.ac.in" not in user_mail:
+                    flag = 1
+
+            if flag == 1:
+                userform = UserRegistration()
+                roleform = RoleMasterForm
+                selected_roles = RoleMaster.objects.all().order_by('name')
+                # print(selected_roles)
+                return render(request, 'events/RegisterHead.html',
+                              {'userform': userform, 'roleform': roleform, 'roles': Roles, 'depts': dept,
+                               'colleges': coll,
+                               'years': year, 'categories': role_categories, 'selected_roles': selected_roles,
+                               'events': events})
+
             user.email = user_mail
             user_year = College_year.objects.get(title=user_year)
             user_coll = College.objects.get(name=user_coll)
@@ -1416,44 +1440,47 @@ def campaign(request):
         # volunteer wise
         if check == "0":
             volunteers = []
-            transactions = Transaction.objects.all().order_by()
+            transactions = Transaction.objects.all()
             for transaction in transactions:
-                if transaction.status == "Credit" or "Cash":
-
-                    try:
-                        ref = transaction.team.referral.username
-                        name = MyUser.objects.get(username=ref)
-                    except Exception:
-                        continue
-                    c = 0
-                    for i in range(len(volunteers)):
-                        if volunteers[i].username == ref:
-                            c = 1
-                            volunteers[i].count = volunteers[i].count + 1
-                            break
-                    if c == 0:
-                        v = Volunteerwise()
-                        v.username = ref
-                        v.name = name
-                        v.count = 1
-                        volunteers.append(v)
+                try:
+                    ref = transaction.team.referral.username
+                    name = MyUser.objects.get(username=ref)
+                except Exception:
+                    continue
+                c = 0
+                for i in range(len(volunteers)):
+                    if volunteers[i].username == ref:
+                        c = 1
+                        volunteers[i].count = volunteers[i].count + 1
+                        volunteers[i].money = volunteers[i].money + transaction.receipt.event.entry_fee
+                        break
+                if c == 0:
+                    v = Volunteerwise()
+                    v.username = ref
+                    v.name = name
+                    v.count = 1
+                    v.money = transaction.receipt.event.entry_fee
+                    volunteers.append(v)
             total = 0
+            total_amount = 0
             for c in volunteers:
                 total = total + c.count
+                total_amount = total_amount + c.money
             args = {
                 'volunteers': volunteers,
-                'total': total
+                'total': total,
+                'total_amount': total_amount
             }
-
-            # print("volunteer")
-            # print(volunteers)
             return render(request, 'events/campaigningData.html', args)
         elif check == "1":
             events = []
+            domains = []
+            names = []
+            # numbers = []
             transactions = Transaction.objects.all()
             for transaction in transactions:
                 if transaction.status == "Credit" or transaction.status == "Cash":
-                    event = transaction.team.receipt.event
+                    event = transaction.receipt.event
                     c = 0
                     for i in range(len(events)):
                         if events[i].event_id == event.event_id:
@@ -1462,14 +1489,74 @@ def campaign(request):
                             break
                     if c == 0:
                         e = Eventwise()
+                        d = EventDepartment.objects.get(event=event)
+                        e.dept_id = d.department.dep_id
+                        e.domain_name = d.department.name
                         e.event_id = event.event_id
                         e.event_name = event.event_name
                         e.count = 1
                         events.append(e)
+                        names.append(e.event_name)
+
+            eve = EventMaster.objects.all()
+            # print(names)
+            for e in eve:
+                if e.event_name not in names:
+                    print(e.event_name)
+                    new = Eventwise()
+                    d = EventDepartment.objects.get(event=e)
+                    new.dept_id = d.department.dep_id
+                    new.domain_name = d.department.name
+                    new.event_id = d.event.event_id
+                    new.event_name = d.event.event_name
+                    new.count = 0
+                    events.append(new)
+                    names.append(new.event_name)
+            glob = 0
+            events.sort(key=lambda x: x.count, reverse=True)
+            for e in events:
+                do = 0
+                for d in domains:
+                    if e.dept_id > 5:
+                        if glob == 0:
+                            dom = Domainwise()
+                            dom.name = "Global"
+                            dom.count = e.count
+                            ev = []
+                            ev.append(copy.deepcopy(e))
+                            dom.events = ev
+                            domains.append(copy.deepcopy(dom))
+                            del dom
+                            glob = 1
+                            do = 1
+                            break
+                        elif glob == 1:
+                            if d.name == "Global":
+                                d.count = d.count + e.count
+                                d.events.append(copy.deepcopy(e))
+                                break
+                            do = 1
+
+                    if e.domain_name == d.name:
+                        d.count = d.count + e.count
+                        d.events.append(copy.deepcopy(e))
+                        do = 1
+                        break
+                if do == 0:
+                    dom = Domainwise()
+                    dom.name = e.domain_name
+                    dom.count = e.count
+                    ev = []
+                    ev.append(copy.deepcopy(e))
+                    dom.events = ev
+                    domains.append(copy.deepcopy(dom))
+                    del dom
             total = 0
             for c in events:
                 total = total + c.count
+            domains.sort(key=lambda x: x.count, reverse=True)
             args = {
+                'domains': domains,
                 'events': events,
                 'total': total
             }
@@ -1541,6 +1628,7 @@ class Volunteerwise:
     username = ""
     name = ""
     count = 0
+    money = 0
 
 
 class Eventwise:
@@ -1570,6 +1658,7 @@ def run_custom():
                                      subuser=each)
 
 
+@user_Campaign_head
 def participant_live(request):
     events = []
     domains = []
@@ -1828,11 +1917,11 @@ def verifyOTP_event(request):
                 if Team.objects.filter(user=ifuser).count():
                     teams = Team.objects.filter(user=ifuser)
                     for team in teams:
-                        trans = Transaction.objects.filter(team=team)
-                        for tran in trans:
-                            if tran.receipt.event == vishwa:
-                                participant = team
-                                stats = 1
+                        if team.receipt.event == vishwa:
+                            participant = team
+                            stats = 1
+                        else:
+                            stats = 0
                 else:
                     stats = 0
                     participant = None
@@ -2017,3 +2106,16 @@ def send_push(request):
         return JsonResponse(status=200, data={"message": "Web push successful"})
     except TypeError:
         return JsonResponse(status=500, data={"message": "An error occurred"})
+
+
+# @event_head_present
+def event_count(request):
+    role = RoleAssignment.objects.get(user=request.user)
+    count = Receipt.objects.filter(event=role.event).count() - 1
+    return render(request, 'user/event-count.html', {'count': count, 'event': role.event})
+
+
+def jsonview(request):
+    # str = {"employees":[{"firstname":"John","age":30,"mail":"john@gmail.com"},{"firstname":"Jimmy","age":25,"mail":"jimmy@gmail.com"},{"firstname":"Jenny","age":22,"mail":"jenny@gmail.com"},{"firstname":"Jeremy","age":40,"mail":"jeremy@gmail.com"},{"firstname":"Justin","age":32,"mail":"justin@gmail.com"}]}
+    # todis = json.dumps(str)
+    return render(request, 'events/package.json', {})

@@ -11,10 +11,21 @@ def add_variable_to_context(request):
         roles_user = RoleAssignment.objects.filter(user=request.user).count()
     except:
         roles_user = None
+    #uncomment lines when you assign levels to all campaign heads
+    roles_level=False
 
     if roles_user:
         roles_user = RoleAssignment.objects.get(user=request.user).role.name
+        campaign_object = RoleMaster.objects.filter(name="Campaigning Head")[0]
+        campaign = campaign_object.level
+        # print(campaign)
+        roles_level = RoleMaster.objects.filter(name=roles_user)[0].level
+        if roles_level >= campaign:
+            roles_level = 1
+        # print(roles_level)
 
+    if not roles_level :
+        roles_level = 0
     global_objects = EventDepartment.objects.filter(department=6)
     event_name = []
     for global_object in global_objects:
@@ -26,4 +37,5 @@ def add_variable_to_context(request):
         'footers': SocialMedia.objects.all(),
         'rulebook': rulebook,
         'role': roles_user,
+        'level': roles_level
     }
