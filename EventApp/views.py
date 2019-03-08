@@ -872,7 +872,7 @@ def participant_event_register(request):
                     send_email(useremail, mail_subject, message)
 
                 return render(request, 'events/participantEventRegister.html',
-                                  {'email': useremail, 'event_id': eventId, 'btndisable': True,'stat':stat})
+                              {'email': useremail, 'event_id': eventId, 'btndisable': True, 'stat': stat})
             else:
                 return render(request, 'events/participantEventRegister.html',
                               {'event_id': eventId, 'email': useremail})
@@ -1416,7 +1416,7 @@ def campaign(request):
         # volunteer wise
         if check == "0":
             volunteers = []
-            transactions = Transaction.objects.all()
+            transactions = Transaction.objects.all().order_by()
             for transaction in transactions:
                 if transaction.status == "Credit" or "Cash":
 
@@ -1441,7 +1441,6 @@ def campaign(request):
             for c in volunteers:
                 total = total + c.count
             args = {
-
                 'volunteers': volunteers,
                 'total': total
             }
@@ -1588,7 +1587,7 @@ def participant_live(request):
                     break
             if c == 0:
                 e = Eventwise()
-                d = EventDepartment.objects.get(event = event)
+                d = EventDepartment.objects.get(event=event)
                 e.dept_id = d.department.dep_id
                 e.domain_name = d.department.name
                 e.event_id = event.event_id
@@ -1599,8 +1598,8 @@ def participant_live(request):
 
     eve = EventMaster.objects.all()
     # print(names)
-    for e in eve :
-        if e.event_name not in names :
+    for e in eve:
+        if e.event_name not in names:
             print(e.event_name)
             new = Eventwise()
             d = EventDepartment.objects.get(event=e)
@@ -1612,9 +1611,9 @@ def participant_live(request):
             events.append(new)
             names.append(new.event_name)
     glob = 0
-    for e in events :
-        do=0
-        for d in domains :
+    for e in events:
+        do = 0
+        for d in domains:
             if e.dept_id > 5:
                 if glob == 0:
                     dom = Domainwise()
@@ -1628,20 +1627,19 @@ def participant_live(request):
                     glob = 1
                     do = 1
                     break
-                elif glob == 1 :
+                elif glob == 1:
                     if d.name == "Global":
                         d.count = d.count + e.count
                         d.events.append(copy.deepcopy(e))
                         break
                     do = 1
 
-
-            if e.domain_name == d.name :
+            if e.domain_name == d.name:
                 d.count = d.count + e.count
                 d.events.append(copy.deepcopy(e))
-                do=1
+                do = 1
                 break
-        if do == 0 :
+        if do == 0:
             dom = Domainwise()
             dom.name = e.domain_name
             dom.count = e.count
@@ -1660,19 +1658,21 @@ def participant_live(request):
     request.session['total'] = total
 
     args = {
-            'domains': domains,
-            'total' : total,
+        'domains': domains,
+        'total': total,
 
-        }
-    return render(request , 'events/participant-live.html' , args)
+    }
+    return render(request, 'events/participant-live.html', args)
 
-class Domainwise :
+
+class Domainwise:
     name = ""
     events = []
     count = 0
 
+
 def live(request):
-    if request.method == "POST" :
+    if request.method == "POST":
         is_khamosh = 0
         events = []
         domains = []
@@ -1759,9 +1759,9 @@ def live(request):
             total = total + d.count
             i = i + 1
             numbers.append(d.count)
-            for e in d.events :
+            for e in d.events:
                 if numbersold:
-                    if numbersold[i] != e.count :
+                    if numbersold[i] != e.count:
                         e.is_change = 1
                         print(e.event_name)
                     i = i + 1
@@ -1769,16 +1769,17 @@ def live(request):
         request.session['numbers'] = numbers
         if request.session.get('total'):
             sub = total - request.session.get('total')
-            if sub == 10 :
+            if sub == 10:
                 is_khamosh = 1
                 request.session['total'] = total
         args = {
             'domains': domains,
             'total': total,
-            'khamosh' : is_khamosh
+            'khamosh': is_khamosh
 
         }
-        return render(request,'events/live.html',args)
+        return render(request, 'events/live.html', args)
+
 
 def pariwartan(request):
     if request.method == 'POST':
@@ -1870,39 +1871,40 @@ def pariwartan_upload(request):
         stats = 1
     return render(request, 'events/pariwartan_upload.html', {'stats': stats, 'participant': participant})
 
+
 @user_passes_test(lambda u: u.is_superuser)
 def qr_verify(request):
-    stat=5
+    stat = 5
     selected = None
     if request.method == 'POST':
         if "qrcode" in request.POST:
             body = request.POST.get('textqr')
             try:
-                 data = json.loads(body)
-                 try:
+                data = json.loads(body)
+                try:
                     event = data['event']
                     name = data['username']
-                 except:
-                     event = data['Event']
-                     name = data['Username']
-                 otpEntered = request.POST.get('textqr')
-                 print(otpEntered)
-                 print(event)
-                 print(name)
+                except:
+                    event = data['Event']
+                    name = data['Username']
+                otpEntered = request.POST.get('textqr')
+                print(otpEntered)
+                print(event)
+                print(name)
             except:
                 stat = 2
             if stat is not 2:
-                user = MyUser.objects.get(email = name)
+                user = MyUser.objects.get(email=name)
                 eventname = EventMaster.objects.get(event_name=event)
-                if Team.objects.filter(user = user).count():
+                if Team.objects.filter(user=user).count():
                     teams = Team.objects.filter(user=user)
                     for team in teams:
                         if team.receipt.event == eventname:
                             if team.ispresent is False:
-                                 selected = team
-                                 team.ispresent = True
-                                 team.save()
-                                 stat = 1
+                                selected = team
+                                team.ispresent = True
+                                team.save()
+                                stat = 1
                             else:
                                 stat = 3
                         else:
@@ -1926,16 +1928,18 @@ def qr_verify(request):
                         stat = 8
             else:
                 stat = 2
-    return  render(request, 'events/qr-code-verify.html',{'stats':stat,'team':selected})
+    return render(request, 'events/qr-code-verify.html', {'stats': stat, 'team': selected})
 
     # print(request.FILES['prof_img']
+
+
 @event_head_present
 def event_present(request):
     present = []
     notcame = []
-    user =request.user
-    if RoleAssignment.objects.filter(user= user).count:
-        event_headpresent = RoleAssignment.objects.get(user= user).event
+    user = request.user
+    if RoleAssignment.objects.filter(user=user).count:
+        event_headpresent = RoleAssignment.objects.get(user=user).event
         event = EventMaster.objects.get(event_name=event_headpresent)
         teams = Team.objects.all()
         for team in teams:
@@ -1967,8 +1971,8 @@ def event_present(request):
             participants_selected = request.POST.getlist('participants')
             for obj in participants_selected:
                 print(obj)
-                selected_user = MyUser.objects.get(email = obj)
-                team_selecteds = Team.objects.filter(user = selected_user)
+                selected_user = MyUser.objects.get(email=obj)
+                team_selecteds = Team.objects.filter(user=selected_user)
                 for team_selected in team_selecteds:
                     if team_selected.receipt.event == event:
                         transaction = Transaction.objects.get(receipt=team_selected.receipt)
@@ -1976,15 +1980,16 @@ def event_present(request):
                         transaction = None
                 mail_subject = 'You have registered for ' + event.event_name + ' '
                 message = render_to_string('events/receiptCashPayment.html', {
-                'user': selected_user,
-                'event': event,
-                'team': team_selected,
-                'transaction': transaction,
+                    'user': selected_user,
+                    'event': event,
+                    'team': team_selected,
+                    'transaction': transaction,
                 })
 
                 send_email(selected_user.email, mail_subject, message, [team.QRcode.path])
 
-    return render(request, "events/event--presenty.html",{'presents':present,'notcomes':notcame})
+    return render(request, "events/event--presenty.html", {'presents': present, 'notcomes': notcame})
+
 
 @require_GET
 def web_push(request):
