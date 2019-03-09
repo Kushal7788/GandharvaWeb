@@ -29,7 +29,6 @@
             {% else %}
                 <h6 style="font-weight: 400;font-size: 16px">No Role Exists</h6>
             {% endif %}
-
             {% if button_name == "Campaign" %}
                 <form method="get" action="{% url 'campaign' %}">
                     <div class="text-center">
@@ -44,6 +43,18 @@
                                 style="margin-left: 0">Event Count</button>
                     </div>
                 </form>
+                        <div class="text-center">
+                            <form method="get" action="{% url 'event-presenty' %}">
+                                <button type="submit" class="btn btn-primary">Event Presenty
+                                </button>
+                            </form>
+                        </div>
+                        <div class="text-center">
+                            <form method="get" action="{% url 'qr-verify' %}">
+                                <button type="submit" class="btn btn-primary">QR Code Verify
+                                </button>
+                            </form>
+                        </div>
                 {% endif %}
             {% endif %}
             {#            {% if button_name == "All Participants" %}#}
