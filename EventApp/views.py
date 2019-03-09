@@ -195,15 +195,19 @@ def home(request):
         if len(role) > 1:
             return HttpResponse('Multiple Role')
         else:
-            role = role[0]
-            if role.role.name == "Jt Campaigning Head" or role.role.name == "Campaigning Head":
-                userget = 1
-            if role.role.name == "Jt Event Head" or role.role.name == "Event Head":
-                userget = 2
-            if role.role.name == "Jt Publicity Head" or role.role.name == "Publicity Head":
-                userget = 3
-            if role.role.name == "Participant-Live":
-                userget = 4
+            try:
+                role = role[0]
+                if role.role.name == "Jt Campaigning Head" or role.role.name == "Campaigning Head":
+                    userget = 1
+                if role.role.name == "Jt Event Head" or role.role.name == "Event Head":
+                    userget = 2
+                if role.role.name == "Jt Publicity Head" or role.role.name == "Publicity Head":
+                    userget = 3
+                if role.role.name == "Participant-Live":
+                    userget = 4
+            except:
+                pass
+
 
     global_objects = EventDepartment.objects.filter(department=6)
     event_name = []
@@ -239,11 +243,15 @@ def event_register(request):
     if request.GET:
         dept = request.GET.get('dept')
         dept_choose = Department.objects.get(name=dept)
-
+        if "cultural" in dept_choose.name.lower() and not request.user.is_active:
+            cultural = 0
+        else:
+            cultural = 1
         args1 = {
             'pageTitle': dept,
             'events': EventDepartment.objects.filter(department=dept_choose).order_by('event__rank'),
-            'dept_choosen': dept_choose
+            'dept_choosen': dept_choose,
+            'cultural' : cultural
         }
         return render(request, 'events/newEvent.html', args1)
 
@@ -444,11 +452,17 @@ def details(request):
         return redirect(response['payment_request']['longurl'])
     else:
         event_name = request.GET.get('event')
+        dept_choose = EventDepartment.objects.get(event=EventMaster.objects.get(event_name__startswith=event_name)).department
+        if "cultural" in dept_choose.name.lower() and not request.user.is_active:
+            cultural = 0
+        else:
+            cultural = 1
         arg = {
             'events_list': EventMaster.objects.all().order_by('rank'),
             'pageTitle': EventMaster.objects.get(event_name__startswith=event_name).event_name,
             'event': EventMaster.objects.get(event_name__startswith=event_name),
             'dept': EventDepartment.objects.get(event=EventMaster.objects.get(event_name__startswith=event_name)),
+            'cultural' : cultural
         }
         return render(request, 'events/category1Event1.html', arg)
 
@@ -916,6 +930,11 @@ def verifyOTP(request):
         userEmail = request.POST.get('useremail')
         eventId = request.POST.get('event_id')
         event = EventMaster.objects.get(pk=eventId)
+        event_dept = EventDepartment.objects.get(event=event).department.name
+        if "cultural" in event_dept.lower():
+            cultural = 1
+        else:
+            cultural = 0
         otpEntered = request.POST.get('otp')
         originalotp = str(request.session.get('otp'))
         # print(originalotp)
@@ -939,7 +958,7 @@ def verifyOTP(request):
             readm = "readonly"
             return render(request, 'events/participantDetails.html',
                           {'event': event, 'colleges': coll, 'email_participant': userEmail, 'present_user': ifuser,
-                           'readm': readm})
+                           'readm': readm,'cultural':cultural})
 
 
 def participant_details(request):

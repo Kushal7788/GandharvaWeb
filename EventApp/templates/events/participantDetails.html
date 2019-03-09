@@ -112,9 +112,11 @@
                     </span>
                     <div class="text-right">
                         <br>
+                    {% if cultural == 0 %}
                         <button type="submit" name="card" value="card" class="btn Login_btn-primary">Pay
                             Now
                         </button>
+                    {% endif %}
                         {% if request.user.is_staff %}
                             <button type="submit" name="cash" value="cash"
                                     class="btn Login_btn-primary"

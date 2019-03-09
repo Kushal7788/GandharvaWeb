@@ -50,10 +50,34 @@
     font-size: 14px;"> {{ event.event.timings }}</span>
                             </h6>
                         {% endif %}
+                        {% if pageTitle == "Cultural" %}
+                            {% if event.event.event_name == "TALAASH" %}
                         <h6 style="font-weight: 400"> Fee Structure: <span style="font-family: Verdana, Geneva, sans-serif;
+    font-weight: 300;
+    font-size: 14px;"> ₹ 120 per
+                        team</span></h6>
+                                {% elif event.event.event_name == "EK MAIN AUR EKK TU" %}
+                        <h6 style="font-weight: 400"> Fee Structure: <span style="font-family: Verdana, Geneva, sans-serif;
+    font-weight: 300;
+    font-size: 14px;"> ₹ 40 per
+                        team</span></h6>
+                                    {% elif event.event.event_name == "TRIPLE DHAMAAL" %}
+                        <h6 style="font-weight: 400"> Fee Structure: <span style="font-family: Verdana, Geneva, sans-serif;
+    font-weight: 300;
+    font-size: 14px;"> ₹ 150 per
+                        team</span></h6>
+                                        {% elif event.event.event_name == "BOLLY-HOUSIE" %}
+                        <h6 style="font-weight: 400"> Fee Structure: <span style="font-family: Verdana, Geneva, sans-serif;
+    font-weight: 300;
+    font-size: 14px;"> ₹ 20 per
+                        team</span></h6>
+                                {% endif %}
+                        {% else %}
+                            <h6 style="font-weight: 400"> Fee Structure: <span style="font-family: Verdana, Geneva, sans-serif;
     font-weight: 300;
     font-size: 14px;"> ₹ {{ event.event.entry_fee }} per
                         team</span></h6>
+                        {% endif %}
                         {% if event.event.rules_file.url != None %}
                             <a style="font-size: 14px"
                                href="{{ event.event.rules_file.url }}" download>{{ event.event.event_name }} rules PDF
@@ -68,11 +92,13 @@
                             </button>
                         </form>
                         {% if event.event.can_register %}
+                            {% if cultural == 1 %}
                             <form method="get" action="{% url 'participantEventRegister' %}">
                                 <input type="hidden" name="event_id" value={{ event.event.event_id }}>
                                 <button type="submit" id="modal-btn" class="btn btn-primary eventButtons">Register Now
                                 </button>
                             </form>
+                            {% endif %}
                         {% endif %}
                     </div>
                 </div>
