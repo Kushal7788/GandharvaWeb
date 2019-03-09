@@ -78,6 +78,24 @@
                             </form>
                         </div>
                     </div>
+                    {% if role.role.name == "Event Head" %}
+                    <div class="col-sm-12 col-md-12">
+                        <div class="text-center">
+                            <form method="get" action="{% url 'event-presenty' %}">
+                                <button type="submit" class="btn btn-primary">Event Presenty
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                     <div class="col-sm-12 col-md-12">
+                        <div class="text-center">
+                            <form method="get" action="{% url 'qr-verify' %}">
+                                <button type="submit" class="btn btn-primary">QR Code Verify
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    {% endif %}
 {#                {% endif %}#}
             </div>
         </div>
