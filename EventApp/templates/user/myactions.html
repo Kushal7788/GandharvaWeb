@@ -33,30 +33,31 @@
                 <form method="get" action="{% url 'campaign' %}">
                     <div class="text-center">
                         <button type="submit" name="{{ button_name }}" class="btn btn-primary"
-                                style="margin-left: 0">{{ button_name }}</button>
+                                style="margin-left: 0">Campaigning Details</button>
                     </div>
                 </form>
-                {% if stat == 1 %}
+
+            {% endif %}
+        {% if stat == 1 %}
                 <form method="get" action="{% url 'event-count' %}">
                     <div class="text-center">
                         <button type="submit" name="event_count" class="btn btn-primary"
                                 style="margin-left: 0">Event Count</button>
                     </div>
                 </form>
-                        <div class="text-center">
-                            <form method="get" action="{% url 'event-presenty' %}">
-                                <button type="submit" class="btn btn-primary">Event Presenty
-                                </button>
-                            </form>
-                        </div>
-                        <div class="text-center">
-                            <form method="get" action="{% url 'qr-verify' %}">
-                                <button type="submit" class="btn btn-primary">QR Code Verify
-                                </button>
-                            </form>
-                        </div>
+{#                        <div class="text-center">#}
+{#                            <form method="get" action="{% url 'event-presenty' %}">#}
+{#                                <button type="submit" class="btn btn-primary">Event Presenty#}
+{#                                </button>#}
+{#                            </form>#}
+{#                        </div>#}
+{#                        <div class="text-center">#}
+{#                            <form method="get" action="{% url 'qr-verify' %}">#}
+{#                                <button type="submit" class="btn btn-primary">QR Code Verify#}
+{#                                </button>#}
+{#                            </form>#}
+{#                        </div>#}
                 {% endif %}
-            {% endif %}
             {#            {% if button_name == "All Participants" %}#}
             {#                <form method="get" action="{% url 'all_participanrs' %}">#}
             {#                    <div class="text-center">#}
