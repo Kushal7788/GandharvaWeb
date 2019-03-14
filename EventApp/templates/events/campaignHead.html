@@ -14,7 +14,7 @@
             <h5 style="text-align: center;">Campaign Head</h5>
             <p style="text-align: center;">Select an option</p>
             <div class="row">
-{#                {% if role.role.name == "Campaigning Head" or role.role.name == "Jt Campaigning Head" %}#}
+                {% if role.role.name == "Campaigning Head" or role.role.name == "Jt Campaigning Head" %}
                     <div class="col-sm-12 col-md-12">
                         <div class="text-center">
                             <form method="post" action="{% url 'campaign' %}">
@@ -26,7 +26,7 @@
                             </form>
                         </div>
                     </div>
-{#                {% endif %}#}
+                {% endif %}
                 <div class="col-sm-12 col-md-12">
                     <div class="text-center">
                         <form method="post" action="{% url 'campaign' %}">
@@ -38,7 +38,7 @@
                         </form>
                     </div>
                 </div>
-{#                {% if role.role.name == "Campaigning Head" or role.role.name == "Jt Campaigning Head" %}#}
+                {% if role.role.name == "Campaigning Head" or role.role.name == "Jt Campaigning Head" %}
                     <div class="col-sm-12 col-md-12">
                         <div class="text-center">
                             <form method="post" action="{% url 'campaign' %}">
@@ -96,7 +96,7 @@
                         </div>
                     </div>
                     {% endif %}
-{#                {% endif %}#}
+                {% endif %}
             </div>
         </div>
     </div>

@@ -1581,7 +1581,14 @@ def campaign(request):
             }
             # print("")
             # print(events)
-            return render(request, 'events/campaigningData.html', args)
+
+            role = RoleAssignment.objects.get(user=request.user.id)
+            campaign_object = RoleMaster.objects.filter(name="Campaigning Head")[0]
+            head_level = campaign_object.level
+            if head_level <= role.role.level:
+                return render(request, 'events/campaigningData.html', args)
+            else:
+                return HttpResponse('You are not allowed')
         elif check == "2":
             colleges = []
             transactions = Transaction.objects.all()
