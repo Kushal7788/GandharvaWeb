@@ -11,7 +11,7 @@
             <div class="logo">
                 <img class="img-fluid" src="{% static 'gandharva/img/logo_description.png' %}">
             </div>
-            <h5 style="text-align: center;">Campaign Head</h5>
+            <h5 style="text-align: center;">Campaign</h5>
             <p style="text-align: center;">Select an option</p>
             <div class="row">
                 {% if role.role.name == "Campaigning Head" or role.role.name == "Jt Campaigning Head" %}
@@ -38,7 +38,7 @@
                         </form>
                     </div>
                 </div>
-                {% if role.role.name == "Campaigning Head" or role.role.name == "Jt Campaigning Head" %}
+                {% if role.role.level >= head_level %}
                     <div class="col-sm-12 col-md-12">
                         <div class="text-center">
                             <form method="post" action="{% url 'campaign' %}">

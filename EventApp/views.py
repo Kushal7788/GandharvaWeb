@@ -1635,7 +1635,9 @@ def campaign(request):
 
     else:
         role = RoleAssignment.objects.get(user=request.user.id)
-        return render(request, 'events/campaignHead.html', {'role': role})
+        campaign_object = RoleMaster.objects.filter(name="Campaigning Head")[0]
+        head_level = campaign_object.level
+        return render(request, 'events/campaignHead.html', {'role': role, 'head_level': head_level})
 
 
 def terms(request):
