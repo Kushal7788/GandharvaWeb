@@ -182,51 +182,50 @@
 
     {#    TimeLine Section#}
 
-        <section id="event_timeline">
-            <div class="container">
-                <div class="page-header">
-                    <h1 id="timeline" style="text-align: center;padding-top: 20px">Schedule</h1>
-                </div>
-                <ul class="timeline">
-                    {% for timeline in timelines %}
-                        {% if forloop.counter|divisibleby:2 %}
-                            <li>
-                                <div class="timeline-badge"><span
-                                        class="timeline-balloon-date-day">{{ timeline.date.day }}</span>
-                                    <span class="timeline-balloon-date-month"
-                                          style="color: #1a1a1a">{{ timeline.date|date:'F' }}</span></div>
-                                <div class="timeline-panel">
-                                    <div class="timeline-heading">
-                                        <h4 class="timeline-title">{{ timeline.name }}</h4>
-                                    </div>
-{#                                    <div class="timeline-body">#}
-{#                                        <p><span class="font-weight-bold">10:00 AM</span> Some Event and its biiiiggg name#}
-{#                                            and some text <br><span class="font-weight-bold">11:00 AM</span> Machine#}
-{#                                            Learning Workshop</p>#}
-                                        <p>{{ timeline.info }}</p>
-{#                                    </div>#}
-                                </div>
-                            </li>
-                        {% else %}
-                            <li class="timeline-inverted">
-                                <div class="timeline-badge warning"><span
-                                        class="timeline-balloon-date-day">{{ timeline.date.day }}</span>
-                                    <span class="timeline-balloon-date-month"
-                                          style="color: #1a1a1a">{{ timeline.date|date:'F' }}</span></div>
-                                <div class="timeline-panel">
-                                    <div class="timeline-heading">
-                                        <h4 class="timeline-title">{{ timeline.name }}</h4>
-                                    </div>
-                                    <div class="timeline-body">
-                                        <p>{{ timeline.info }}</p>
-                                    </div>
-                                </div>
-                            </li>
-                        {% endif %}
-                    {% endfor %}
-                </ul>
+    <section id="event_timeline"
+             style="  background:linear-gradient(0deg,rgba(0,0,0,0.3),rgba(0,0,0,0.3)),url({% static 'gandharva/img/timeline.jpg' %});background-size: cover">
+        <div class="container">
+            <div class="page-header">
+                <h1 id="timeline" class="text-white" style="text-align: center;padding-top: 20px">Schedule</h1>
             </div>
-        </section>
+            <ul class="timeline">
+                {% for timeline in timelines %}
+                    {% if forloop.counter|divisibleby:2 %}
+                        <li>
+                            <div class="timeline-badge" style="background-color:#ff3333"><span
+                                    class="timeline-balloon-date-day">{{ timeline.date.day }}</span>
+                                <span class="timeline-balloon-date-month">{{ timeline.date|date:'F' }}</span></div>
+                            <div class="timeline-panel" style="background:linear-gradient(45deg, #990000, #ff9999);">
+                                <div class="timeline-heading">
+                                    <h2 class="timeline-title text-white">{{ timeline.name }}</h2>
+                                </div>
+                                <br>
+                                <p class="text-white">{{ timeline.info }}</p>
+                            </div>
+                        </li>
+                    {% else %}
+                        <li class="timeline-inverted">
+                            <div class="timeline-badge" style="background-color:#33adff"><span
+                                    class="timeline-balloon-date-day">{{ timeline.date.day }}</span>
+                                <span class="timeline-balloon-date-month">{{ timeline.date|date:'F' }}</span></div>
+                            <div class="timeline-panel" style="background:linear-gradient(45deg,#006bb3, #66c2ff);">
+                                <div class="timeline-heading">
+                                    <h2 class="timeline-title text-white">{{ timeline.name }}</h2>
+                                </div>
+                                <br>
+                                <div class="timeline-body">
+                                    <p class="text-white">{{ timeline.info }}</p>
+                                </div>
+                            </div>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+
+
+
 
 
     <section id="sponsorSection" class="orange-fade p-5 margin-top-xl pos-r parallax"
