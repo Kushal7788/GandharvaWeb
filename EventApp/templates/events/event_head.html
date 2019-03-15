@@ -44,33 +44,37 @@
                     </div>
                 </div>
                 <br>
-                <input type="hidden" name="event_id" value="{{ event_id }}">
-                {% for participant in participants %}
-                    <input type="checkbox" name="participants" id="option{{ participant.email }}"
-                           value={{ participant.email }}>
-                    <label style="font-weight: 400" for="option{{ participant.email }}"
-                           value="{{ participant.email }}">{{ participant.first_name }}  {{ participant.last_name }} {{ participant.user_phone }}  {{ participant.email }}</label>
-                    <br>
-                {% endfor %}
+                {#                <input type="hidden" name="event_id" value="{{ event_id }}">#}
+                {#                {% for participant in participants %}#}
+                {#                    <input type="checkbox" name="participants" id="option{{ participant.email }}"#}
+                {#                           value={{ participant.email }}>#}
+                {#                    <label style="font-weight: 400" for="option{{ participant.email }}"#}
+                {#                           value="{{ participant.email }}">{{ participant.first_name }}  {{ participant.last_name }} {{ participant.user_phone }}  {{ participant.email }}</label>#}
+                {#                    <br>#}
+                {#                {% endfor %}#}
 
-{#            <table class="table table-responsive volTable">#}
-{#                        <thead class="thead-dark">#}
-{#                        <tr>#}
-{#                            <th>Name</th>#}
-{#                            <th>Mobile</th>#}
-{#                            <th>Email</th>#}
-{#                        </tr>#}
-{#                        </thead>#}
-{#                        <tbody>#}
-{#                        {%  for participant in participants %}#}
-{#                            <tr>#}
-{#                                <td>{{ participant.first_name }}  {{ participant.last_name }}</td>#}
-{#                                <td>{{ participant.user_phone }}</td>#}
-{#                                <td>{{ participant.email }}</td>#}
-{#                            </tr>#}
-{#                        {% endfor %}#}
-{#                        </tbody>#}
-{#                    </table>#}
+                <table class="table table-responsive">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>Choose</th>
+                        <th>Name</th>
+                        <th>Mobile</th>
+                        <th>Email</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for participant in participants %}
+                        <tr>
+                            <td><input type="checkbox" name="participants" id="option{{ participant.email }}"
+                                       value={{ participant.email }}></td>
+                            <td>{{ participant.first_name }} {{ participant.last_name }}</td>
+                            <td>{{ participant.user_phone }}</td>
+                            <td>{{ participant.email }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <br>
                 <div class="text-right">
                     <input type="submit" value="Send" class="btn addVolunteer">
                 </div>
