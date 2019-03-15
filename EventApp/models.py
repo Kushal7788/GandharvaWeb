@@ -403,3 +403,16 @@ class Event_days(models.Model):
 
     def __str__(self):
         return self.name
+
+class Feedback_quest(models.Model):
+    event  = models.ForeignKey(EventMaster,on_delete=models.CASCADE)
+    question = models.TextField(max_length=500)
+
+    def __str__(self):
+        return self.event + ' : ' + self.question
+
+class Feedback(models.Model):
+    user = models.ForeignKey(MyUser,on_delete=models.PROTECT)
+
+    def __str__(self):
+        return self.user
