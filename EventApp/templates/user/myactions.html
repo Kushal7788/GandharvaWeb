@@ -38,6 +38,14 @@
                 </form>
 
             {% endif %}
+        {% if publicity == 1 %}
+            <div class="text-center">
+                            <form method="get" action="{% url 'publicity-head' %}">
+                                <button type="submit" class="btn btn-primary">Participant Mail
+                                </button>
+                            </form>
+                        </div>
+        {% endif %}
         {% if stat == 1 %}
                 <form method="get" action="{% url 'event-count' %}">
                     <div class="text-center">

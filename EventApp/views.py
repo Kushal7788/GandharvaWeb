@@ -622,6 +622,9 @@ def myaction(request):
         if role.role.name == "Event Head":
             stat = 1
             event_id = 0
+        publicity = 0
+        if role.role.name == "Publicity Head":
+            publicity = 1
         if request.GET.get('event_id'):
             event_id = request.GET.get('event_id')
         args = {
@@ -629,7 +632,8 @@ def myaction(request):
             'urlaccess': campaign,
             'roles': role.role,
             'stat': stat,
-            'event_id': event_id
+            'event_id': event_id,
+            'publicity' : publicity,
         }
         return render(request, 'user/myactions.html', args)
     # if role.role.name == 'Event Head':
