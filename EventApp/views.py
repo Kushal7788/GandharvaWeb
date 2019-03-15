@@ -617,15 +617,19 @@ def user_login(request):
 @staff_user
 def myaction(request):
     stat = 0
-    role = RoleAssignment.objects.get(user=request.user.id)
+    role = RoleAssignment.objects.get(user=request.user)
     if request.user.is_staff:
         if role.role.name == "Event Head":
             stat = 1
+            event_id = 0
+        if request.GET.get('event_id'):
+            event_id = request.GET.get('event_id')
         args = {
             'button_name': '',
             'urlaccess': campaign,
             'roles': role.role,
-            'stat': stat
+            'stat': stat,
+            'event_id': event_id
         }
         return render(request, 'user/myactions.html', args)
     # if role.role.name == 'Event Head':

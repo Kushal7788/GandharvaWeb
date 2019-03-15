@@ -194,6 +194,7 @@
                                 <form method="get" action="{% url 'participant-live' %}">
                             {% else %}
                                 <form method="get" action="{% url 'myactions' %}">
+                                <input type="hidden" name="event_id" value="{{ event_id }}">
                             {% endif %}
                         <button type="submit" class="dropdown-item dropdownStyle">My Actions</button>
                         </form>

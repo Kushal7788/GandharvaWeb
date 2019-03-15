@@ -3,12 +3,21 @@
 {% block title %}Other Upload{% endblock %}
 {% block css %}
     <link href="{% static 'events/css/campaign.css' %}" rel="stylesheet">
+    <style>
+        .table {
+            margin-left: 0;
+        }
+
+        td {
+            width: 500px;
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
     <br><br><br><br><br><br>
     <div class="container">
-        <div class="col-sm-6 container-center">
+        <div class="col-sm-10 container-center">
             <div class="logo">
                 <img class="img-fluid" src="{% static 'gandharva/img/logo_description.png' %}">
             </div>
@@ -40,9 +49,28 @@
                     <input type="checkbox" name="participants" id="option{{ participant.email }}"
                            value={{ participant.email }}>
                     <label style="font-weight: 400" for="option{{ participant.email }}"
-                           value="{{ participant.email }}">{{ participant.username }}</label>
+                           value="{{ participant.email }}">{{ participant.first_name }}  {{ participant.last_name }} {{ participant.user_phone }}  {{ participant.email }}</label>
                     <br>
                 {% endfor %}
+
+{#            <table class="table table-responsive volTable">#}
+{#                        <thead class="thead-dark">#}
+{#                        <tr>#}
+{#                            <th>Name</th>#}
+{#                            <th>Mobile</th>#}
+{#                            <th>Email</th>#}
+{#                        </tr>#}
+{#                        </thead>#}
+{#                        <tbody>#}
+{#                        {%  for participant in participants %}#}
+{#                            <tr>#}
+{#                                <td>{{ participant.first_name }}  {{ participant.last_name }}</td>#}
+{#                                <td>{{ participant.user_phone }}</td>#}
+{#                                <td>{{ participant.email }}</td>#}
+{#                            </tr>#}
+{#                        {% endfor %}#}
+{#                        </tbody>#}
+{#                    </table>#}
                 <div class="text-right">
                     <input type="submit" value="Send" class="btn addVolunteer">
                 </div>
