@@ -2070,10 +2070,13 @@ def event_present(request):
         teams = Team.objects.all()
         for team in teams:
             if team.receipt.event == event:
-                if team.ispresent:
-                    present.append(team)
-                else:
-                    notcame.append(team)
+                trans = team.transaction_set.all()
+                for tran in trans:
+                    if tran.status == "Cash" or tran.status == "Credit":
+                        if team.ispresent:
+                            present.append(team)
+                        else:
+                            notcame.append(team)
     if request.method == "POST":
         if "send" in request.POST:
             participants_selecteds = request.POST.getlist('participants')
