@@ -2042,11 +2042,12 @@ def qr_verify(request):
                 teams = Team.objects.all()
                 for team in teams:
                     if team.Refral_Code == text:
-                        if team.ispresent is False:
+                        if team.ispresent == False:
                             selected = team
                             team.ispresent = True
                             team.save()
                             stat = 1
+                            break
                         else:
                             stat = 3
                     else:
@@ -2111,7 +2112,7 @@ def event_present(request):
                     'transaction': transaction,
                 })
 
-                send_email(selected_user.email, mail_subject, message, [team.QRcode.path])
+                send_email(selected_user.email, mail_subject, message, [team_selected.QRcode.path])
 
     return render(request, "events/event--presenty.html", {'presents': present, 'notcomes': notcame})
 
