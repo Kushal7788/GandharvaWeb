@@ -19,21 +19,11 @@
                 {% for question in questions %}
                     <p> {{ question.question }}</p>
                     <div class="form-check">
+                        {% for opt in options %}
                         <input class="form-check-input" name="radio{{ question.pk }}" type="radio"
-                               value="{{ option.pk }}">{{ option.option1 }}
+                               value="{{ opt.pk }}">{{ opt.option }}
                         <br>
-                        <input class="form-check-input" name="radio{{ question.pk }}" type="radio"
-                               value="{{ option.pk }}">{{ option.option2 }}
-                        <br>
-                        <input class="form-check-input" name="radio{{ question.pk }}" type="radio"
-                               value="{{ option.pk }}">{{ option.option3 }}
-                        <br>
-                        <input class="form-check-input" name="radio{{ question.pk }}" type="radio"
-                               value="{{ option.pk }}">{{ option.option4 }}
-                        <br>
-                        <input class="form-check-input" name="radio{{ question.pk }}" type="radio"
-                               value="{{ option.pk }}">{{ option.option5 }}
-                        <br>
+                        {% endfor %}
                     </div>
                     <br>
                 {% endfor %}

@@ -424,11 +424,7 @@ class Feedback_questions(models.Model):
         return self.question
 
 class Feedback_options(models.Model):
-    option1 = models.TextField(max_length=40)
-    option2 = models.TextField(max_length=40)
-    option3 = models.TextField(max_length=40)
-    option4 = models.TextField(max_length=40)
-    option5 = models.TextField(max_length=40)
+    option = models.TextField(max_length=40)
 
 class Feedback(models.Model):
     team = models.ForeignKey(Team,on_delete=models.PROTECT)

@@ -2172,8 +2172,8 @@ def verify_qr_feedback(request):
         if check == 1:
             questions = Feedback_questions.objects.all()
             options = Feedback_options.objects.all()
-            option = Feedback_options.objects.latest('pk')
-            return render(request, 'events/feedback.html', {'team': curteam , 'questions': questions , 'option' : option})
+            # option = Feedback_options.objects.latest('pk')
+            return render(request, 'events/feedback.html', {'team': curteam , 'questions': questions , 'options' : options})
         else:
             return render(request, 'events/verify-feedback.html',{'error': "No entry Found"})
     else :
@@ -2214,5 +2214,6 @@ def feedback(request):
        return render(request, 'events/verify-feedback.html',{'done':1})
     else:
         questions = Feedback_questions.objects.all()
-        option = Feedback_options.objects.latest('pk')
-        return render(request, 'events/feedback.html', { 'questions': questions, 'option': option})
+        # option = Feedback_options.objects.latest('pk')
+        option = Feedback_options.objects.all()
+        return render(request, 'events/feedback.html', { 'questions': questions, 'options': option})
