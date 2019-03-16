@@ -17,60 +17,66 @@
                 {% csrf_token %}
                 <input type="hidden" name="team" value="{{ team.pk }}">
                 {% for question in questions %}
-                    {{ question.question }}
+                    <p> {{ question.question }}</p>
                     <div class="form-check">
                         <input class="form-check-input" name="radio{{ question.pk }}" type="radio"
                                value="{{ option.pk }}">{{ option.option1 }}
+                        <br>
                         <input class="form-check-input" name="radio{{ question.pk }}" type="radio"
                                value="{{ option.pk }}">{{ option.option2 }}
+                        <br>
                         <input class="form-check-input" name="radio{{ question.pk }}" type="radio"
                                value="{{ option.pk }}">{{ option.option3 }}
+                        <br>
                         <input class="form-check-input" name="radio{{ question.pk }}" type="radio"
                                value="{{ option.pk }}">{{ option.option4 }}
+                        <br>
                         <input class="form-check-input" name="radio{{ question.pk }}" type="radio"
                                value="{{ option.pk }}">{{ option.option5 }}
+                        <br>
                     </div>
                     <br>
                 {% endfor %}
-                <br>Comments : <textarea rows="4" cols="50" type="text" name="comment"></textarea>
+                <br>Comments :
+                <br><textarea class="form-control" rows="4" cols="50" type="text" name="comment"></textarea>
                 <br>
 
                 <h5 style="text-align: center">Team Details</h5>
                 <div class="form-group">
                     <label class="control-label">Name 1:</label>
-                    <input type="text" name="name1" required>
+                    <input class="form-control" type="text" name="name1" required>
                 </div>
 
                 <div class="form-group">
                     <label class="control-label"> Number 1:</label>
-                    <input type="number" name="number1" required>
+                    <input class="form-control" type="number" name="number1" required>
                 </div>
 
                 <div class="form-group">
                     <label class="control-label">Name 2:</label>
-                    <input type="text" name="name2">
+                    <input class="form-control" type="text" name="name2">
                 </div>
                 <div class="form-group">
                     <label class="control-label">Number 2:</label>
-                    <input type="number" name="number2">
+                    <input class="form-control" type="number" name="number2">
                 </div>
 
                 <div class="form-group">
                     <label class="control-label">Name 3:</label>
-                    <input type="text" name="name3">
+                    <input class="form-control" type="text" name="name3">
                 </div>
                 <div class="form-group">
                     <label class="control-label">Number 3:</label>
-                    <input type="number" name="number3">
+                    <input class="form-control" type="number" name="number3">
                 </div>
 
                 <div class="form-group">
                     <label class="control-label">Name 4:</label>
-                    <input type="text" name="name4">
+                    <input class="form-control" type="text" name="name4">
                 </div>
                 <div class="form-group">
                     <label class="control-label">Number 4:</label>
-                    <input type="number" name="number4">
+                    <input class="form-control" type="number" name="number4">
                 </div>
 
 
@@ -82,12 +88,14 @@
                 {#                Number 3 : <input type="number" name="number3"><br>#}
                 {#                Name 4 : <input type="text" name="name4">#}
                 {#                Number 4 : <input type="number" name="number4"><br>#}
-
+                <br>
                 <div class="text-right">
-                    <input type="submit" name="submit" value="submit" class="btn addVolunteer">
+                    <input type="submit" name="submit" value="Submit" class="btn addVolunteer">
                 </div>
             </form>
+            <br>
         </div>
     </div>
+    <br><br><br>
 {% endblock %}
 

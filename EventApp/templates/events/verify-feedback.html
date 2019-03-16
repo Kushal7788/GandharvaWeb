@@ -1,27 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Verify feedback</title>
-</head>
-<body>
-{% if done == 1 %}
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
-    <script>
-    swal("Good job!","Feedback Submitted Successfully","success");
-    </script>
-{% endif %}
-<form method="post" action="{% url 'verify_qr_feedback' %}">
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}Feedback{% endblock %}
+{% block css %}
+    <link href="{% static 'events/css/campaign.css' %}" rel="stylesheet">
+
+{% endblock %}
+{% block body %}
+    <br><br><br><br><br>
+    <div class="container" style="height: 100vh">
+        <div class="col-sm-6 container-center">
+            <div class="logo">
+                <img class="img-fluid" src="{% static 'gandharva/img/logo_description.png' %}">
+            </div>
+            <h5 style="text-align: center;">Enter Alternate Code</h5>
+            {% if done == 1 %}
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+                <script>
+                    swal("Good job!", "Feedback Submitted Successfully", "success");
+                </script>
+            {% endif %}
+            <br>
+
+            <form method="post" action="{% url 'verify_qr_feedback' %}">
                 {% csrf_token %}
-                <input type=text placeholder="Alternate Code (Substitutuion for QR Code)" name="altqr">
-    {% if error %}
-    {{ error }}
-    {%  endif %}
-    <div class="text-right">
-                    <br>
-                    <input type=submit value="Go" name="altcode">
+                <input type=text placeholder="Alternate Code (Substitutuion for QR Code)" name="altqr"
+                       class="form-control">
+                {% if error %}
+                    {{ error }}
+                {% endif %}
+                <br>
+                <div class="text-right">
+                    <input type=submit value="Go" name="altcode" class="btn addVolunteer">
                 </div>
                 <br>
-</form>
-</body>
-</html>
+            </form>
+
+        </div>
+    </div>
+{% endblock %}

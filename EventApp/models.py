@@ -409,11 +409,11 @@ class Feedback_comments(models.Model):
     comment = models.TextField(max_length = 200)
     name1 = models.TextField(blank=True,max_length=50)
     number1 = models.IntegerField(blank=True, null=True)
-    name2 = models.TextField(blank=True,max_length=50)
+    name2 = models.TextField(blank=True,max_length=50,null=True)
     number2 = models.IntegerField(blank=True, null=True)
-    name3 = models.TextField(blank=True,max_length=50)
+    name3 = models.TextField(blank=True,max_length=50,null=True)
     number3 = models.IntegerField(blank=True, null=True)
-    name4 = models.TextField(blank=True,max_length=50)
+    name4 = models.TextField(blank=True,max_length=50,null=True)
     number4 = models.IntegerField(blank=True, null=True)
 
 

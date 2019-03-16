@@ -2192,15 +2192,24 @@ def feedback(request):
            feed.save()
        feed_comment = Feedback_comments()
        feed_comment.team = team
-       feed_comment.comment = request.POST.get('comment')
-       feed_comment.name1 = request.POST.get('name1')
-       feed_comment.number1 = request.POST.get('number1')
-       feed_comment.name2 = request.POST.get('name2')
-       feed_comment.number2 = request.POST.get('number2')
-       feed_comment.name3 = request.POST.get('name3')
-       feed_comment.number3 = request.POST.get('number3')
-       feed_comment.name4 = request.POST.get('name4')
-       feed_comment.number4 = request.POST.get('number4')
+       if request.POST.get('comment'):
+        feed_comment.comment = request.POST.get('comment')
+       if request.POST.get('name1'):
+        feed_comment.name1 = request.POST.get('name1')
+       if request.POST.get('number1'):
+        feed_comment.number1 = request.POST.get('number1')
+       if request.POST.get('name2'):
+        feed_comment.name2 = request.POST.get('name2')
+       if request.POST.get('number2'):
+        feed_comment.number2 = request.POST.get('number2')
+       if request.POST.get('name3'):
+        feed_comment.name3 = request.POST.get('name3')
+       if request.POST.get('number3'):
+        feed_comment.number3 = request.POST.get('number3')
+       if request.POST.get('name4'):
+         feed_comment.name4 = request.POST.get('name4')
+       if request.POST.get('number4'):
+        feed_comment.number4 = request.POST.get('number4')
        feed_comment.save()
        return render(request, 'events/verify-feedback.html',{'done':1})
     else:
