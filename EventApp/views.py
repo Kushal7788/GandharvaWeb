@@ -134,7 +134,6 @@ def campaigning_excel(request):
         current_site = get_current_site(request)
         pathw = '/media/CampaignData.xlsx'
         wb.save(BASE_DIR + '/media/CampaignData.xlsx')
-        wb.close()
         if request.POST.get('check'):
             return (redirect(pathw))
         else:
@@ -2146,10 +2145,16 @@ def send_push(request):
         return JsonResponse(status=500, data={"message": "An error occurred"})
 
 
-# @event_head_present
+@event_head_present
 def event_count(request):
+    count = 0
     role = RoleAssignment.objects.get(user=request.user)
-    count = Receipt.objects.filter(event=role.event).count() - 1
+    receipts = Receipt.objects.filter(event=role.event)
+    for receipt in receipts:
+        trans = receipt.transaction_set.all()
+        for tran in trans:
+            if tran.status == "Cash" or tran.status == "Credit":
+                count = count + 1
     return render(request, 'user/event-count.html', {'count': count, 'event': role.event})
 
 
