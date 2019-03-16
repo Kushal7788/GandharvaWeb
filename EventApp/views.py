@@ -2019,7 +2019,7 @@ def qr_verify(request):
             except:
                 stat = 2
             if stat is not 2:
-                user = MyUser.objects.get(email=name)
+                user = MyUser.objects.get(username = name)
                 eventname = EventMaster.objects.get(event_name=event)
                 if Team.objects.filter(user=user).count():
                     teams = Team.objects.filter(user=user)

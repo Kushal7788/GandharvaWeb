@@ -3,12 +3,21 @@
 {% block title %}Event Presenty{% endblock %}
 {% block css %}
     <link href="{% static 'events/css/campaign.css' %}" rel="stylesheet">
+    <style>
+        .table {
+            margin-left: 0;
+        }
+
+        td {
+            width: 500px;
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
     <br><br><br><br><br><br>
     <div class="container">
-        <div class="col-sm-6 container-center">
+        <div class="col-sm-8 container-center">
             <div class="logo">
                 <img class="img-fluid" src="{% static 'gandharva/img/logo_description.png' %}">
             </div>
@@ -35,26 +44,82 @@
                     </div>
                 </div>
                 <br>
-                {% for notcome in notcomes %}
-                    <input type="checkbox" name="participants" id="option{{ notcome.user.email }}"
-                           value={{ notcome.user.email }}>
-                    <label style="font-weight: 400" for="option{{ notcome.user.email }}"
-                           value="{{ notcome.user.email }}">{{ notcome.user.username }}</label><br/>
-                {% endfor %}
+                {#                {% for present in presents %}#}
+                {#                    <input type="checkbox" name="participants" id="option{{ present.user.email }}"#}
+                {#                           value={{ present.user.email }}>#}
+                {#                    <label style="font-weight: 400" for="option{{ present.user.email }}"#}
+                {#                           value="{{ present.user.email }}">{{ present.user.username }}</label><br/>#}
+                {#                {% endfor %}#}
 
-                <div class="text-right">
-                    <input name="send" type="submit" value="Send" class="btn addVolunteer">
-                </div>
-                <div class="text-right">
-                    <input name="resend" type="submit" value="Resend Receipt" class="btn addVolunteer">
+                <table class="table table-responsive">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>Select</th>
+                        <th>Email</th>
+                        <th>Name</th>
+                        <th>Mobile</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td style="font-weight: bold">1</td>
+                        <td style="font-weight: bold">Present</td>
+                    </tr>
+                    {% for present in presents %}
+                        <tr>
+                            <td><input type="checkbox" name="participants" id="option{{ present.user.email }}"
+                                       value={{ present.user.email }}></td>
+                            <td><label style="font-weight: 400" for="option{{ present.user.email }}"
+                                       value="{{ present.user.email }}">{{ present.user.email }}</label>
+                            </td>
+                            <td>
+                                <label style="font-weight: 400" for="option{{ present.user.email }}"
+                                       value="{{ present.user.email }}">{{ present.user.first_name }} {{ present.user.last_name }}</label>
+                            </td>
+                            <td>
+                                <label style="font-weight: 400" for="option{{ present.user.email }}"
+                                       value="{{ present.user.email }}">{{ present.user.user_phone }}</label>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                    <tr>
+                        <td style="font-weight: bold">2</td>
+                        <td style="font-weight: bold">Absent</td>
+                    </tr>
+                    {% for notcome in notcomes %}
+                        <tr>
+                            <td><input type="checkbox" name="participants" id="option{{ notcome.user.email }}"
+                                       value={{ notcome.user.email }}>
+                            </td>
+                            <td><label style="font-weight: 400" for="option{{ notcome.user.email }}"
+                                       value="{{ notcome.user.email }}">{{ notcome.user.email }}</label>
+                            </td>
+                         <td>
+                                <label style="font-weight: 400" for="option{{ notcome.user.email }}"
+                                       value="{{ notcome.user.email }}">{{ notcome.user.first_name }} {{ notcome.user.last_name }}</label>
+                            </td>
+                            <td>
+                                <label style="font-weight: 400" for="option{{ notcome.user.email }}"
+                                       value="{{ notcome.user.email }}">{{ notcome.user.user_phone }}</label>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <br>
+
+                <div style="display: flex;flex-direction:row;  justify-content: flex-end;flex-wrap: wrap">
+                    <div class="text-right">
+                        <input name="send" type="submit" value="Send" class="btn addVolunteer">
+                    </div>
+                    <div class="text-right">
+                        <input name="resend" type="submit" value="Resend Receipt" class="btn addVolunteer"
+                               style="margin-left: 6px">
+                    </div>
                 </div>
             </form>
-            <div>
-                <h3>Present PPl</h3>
-                {% for present in presents %}
-                    <h6>{{ present.user.email }}</h6>
-                {% endfor %}
-            </div>
+
             <br>
         </div>
     </div>
