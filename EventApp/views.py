@@ -134,6 +134,7 @@ def campaigning_excel(request):
         current_site = get_current_site(request)
         pathw = '/media/CampaignData.xlsx'
         wb.save(BASE_DIR + '/media/CampaignData.xlsx')
+        wb.close()
         if request.POST.get('check'):
             return (redirect(pathw))
         else:
