@@ -2155,3 +2155,54 @@ def jsonview(request):
     # str = {"employees":[{"firstname":"John","age":30,"mail":"john@gmail.com"},{"firstname":"Jimmy","age":25,"mail":"jimmy@gmail.com"},{"firstname":"Jenny","age":22,"mail":"jenny@gmail.com"},{"firstname":"Jeremy","age":40,"mail":"jeremy@gmail.com"},{"firstname":"Justin","age":32,"mail":"justin@gmail.com"}]}
     # todis = json.dumps(str)
     return render(request, 'events/package.json', {})
+
+def verify_qr_feedback(request):
+    if request.method == "POST":
+        text = request.POST.get("altqr")
+        check = 0
+        if text:
+            teams = Team.objects.all()
+            curteam = None
+            for team in teams:
+                if team.Refral_Code == text:
+                   curteam = team
+                   check = 1
+                   break
+        if check == 1:
+            questions = Feedback_questions.objects.all()
+            options = Feedback_options.objects.all()
+            option = Feedback_options.objects.latest('pk')
+            return render(request, 'events/feedback.html', {'team': curteam , 'questions': questions , 'option' : option})
+        else:
+            return render(request, 'events/verify-feedback.html',{'error': "No entry Found"})
+    else :
+        return render(request, 'events/verify-feedback.html')
+
+def feedback(request):
+    if request.method == "POST":
+       questions = Feedback_questions.objects.all()
+       team = Team.objects.get(pk=request.POST.get('team'))
+       for question in questions:
+           print(request.POST.get('radio'+str(question.pk)))
+           feed = Feedback()
+           feed.team = team
+           feed.question = question
+           feed.option = Feedback_options.objects.get(pk = request.POST.get('radio'+str(question.pk)))
+           feed.save()
+       feed_comment = Feedback_comments()
+       feed_comment.team = team
+       feed_comment.comment = request.POST.get('comment')
+       feed_comment.name1 = request.POST.get('name1')
+       feed_comment.number1 = request.POST.get('number1')
+       feed_comment.name2 = request.POST.get('name2')
+       feed_comment.number2 = request.POST.get('number2')
+       feed_comment.name3 = request.POST.get('name3')
+       feed_comment.number3 = request.POST.get('number3')
+       feed_comment.name4 = request.POST.get('name4')
+       feed_comment.number4 = request.POST.get('number4')
+       feed_comment.save()
+       return render(request, 'events/verify-feedback.html',{'done':1})
+    else:
+        questions = Feedback_questions.objects.all()
+        option = Feedback_options.objects.latest('pk')
+        return render(request, 'events/feedback.html', { 'questions': questions, 'option': option})

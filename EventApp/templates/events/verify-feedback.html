@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Verify feedback</title>
+</head>
+<body>
+{% if done == 1 %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <script>
+    swal("Good job!","Feedback Submitted Successfully","success");
+    </script>
+{% endif %}
+<form method="post" action="{% url 'verify_qr_feedback' %}">
+                {% csrf_token %}
+                <input type=text placeholder="Alternate Code (Substitutuion for QR Code)" name="altqr">
+    {% if error %}
+    {{ error }}
+    {%  endif %}
+    <div class="text-right">
+                    <br>
+                    <input type=submit value="Go" name="altcode">
+                </div>
+                <br>
+</form>
+</body>
+</html>

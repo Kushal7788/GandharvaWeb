@@ -72,4 +72,6 @@ urlpatterns = [
     url(r'^send-push$', views.send_push, name='send-push'),
     url(r'^webpush/', include('webpush.urls')),
     path('sw.js', TemplateView.as_view(template_name='sw.js', content_type='application/x-javascript')),
+    url(r'^verify-feedback$', views.verify_qr_feedback, name='verify_qr_feedback'),
+    url(r'^feedback$', views.feedback, name='feedback'),
 ]

@@ -404,15 +404,35 @@ class Event_days(models.Model):
     def __str__(self):
         return self.name
 
-class Feedback_quest(models.Model):
-    event  = models.ForeignKey(EventMaster,on_delete=models.CASCADE)
+class Feedback_comments(models.Model):
+    team =  models.ForeignKey(Team , on_delete=models.PROTECT)
+    comment = models.TextField(max_length = 200)
+    name1 = models.TextField(blank=True,max_length=50)
+    number1 = models.IntegerField(blank=True, null=True)
+    name2 = models.TextField(blank=True,max_length=50)
+    number2 = models.IntegerField(blank=True, null=True)
+    name3 = models.TextField(blank=True,max_length=50)
+    number3 = models.IntegerField(blank=True, null=True)
+    name4 = models.TextField(blank=True,max_length=50)
+    number4 = models.IntegerField(blank=True, null=True)
+
+
+class Feedback_questions(models.Model):
     question = models.TextField(max_length=500)
 
     def __str__(self):
-        return self.event + ' : ' + self.question
+        return self.question
+
+class Feedback_options(models.Model):
+    option1 = models.TextField(max_length=40)
+    option2 = models.TextField(max_length=40)
+    option3 = models.TextField(max_length=40)
+    option4 = models.TextField(max_length=40)
+    option5 = models.TextField(max_length=40)
 
 class Feedback(models.Model):
-    user = models.ForeignKey(MyUser,on_delete=models.PROTECT)
+    team = models.ForeignKey(Team,on_delete=models.PROTECT)
+    question = models.ForeignKey(Feedback_questions,on_delete=models.PROTECT)
+    option = models.ForeignKey(Feedback_options,on_delete=models.PROTECT)
 
-    def __str__(self):
-        return self.user
+

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Feedback</title>
+</head>
+<body>
+<form method="post" action="{% url 'feedback' %}">
+{% csrf_token %}
+<input type="hidden" name="team" value="{{ team.pk }}">
+{% for question in questions %}
+    {{ question.question }}
+    <br>
+<input name="radio{{ question.pk }}" type="radio" value="{{ option.pk }}">{{ option.option1 }}
+<input name="radio{{ question.pk }}" type="radio" value="{{ option.pk }}">{{ option.option2 }}
+<input name="radio{{ question.pk }}" type="radio" value="{{ option.pk }}">{{ option.option3 }}
+<input name="radio{{ question.pk }}" type="radio" value="{{ option.pk }}">{{ option.option4 }}
+<input name="radio{{ question.pk }}" type="radio" value="{{ option.pk }}">{{ option.option5 }}
+    <br>
+{% endfor %}
+<br>Comments : <input type="text" name="comment"><br>
+<br>Team Details <br>
+    Name 1 : <input type="text" name="name1" required>
+    Number 1 : <input type="number" name="number1" required><br>
+    Name 2 : <input type="text" name="name2">
+    Number 2 : <input type="number" name="number2"><br>
+    Name 3 : <input type="text" name="name3">
+    Number 3 : <input type="number" name="number3"><br>
+    Name 4 : <input type="text" name="name4">
+    Number 4 : <input type="number" name="number4"><br>
+
+<input type="submit" name="submit" value="submit">
+</form>
+</body>
+</html>
