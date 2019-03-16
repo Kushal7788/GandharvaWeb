@@ -208,7 +208,6 @@ def home(request):
             except:
                 pass
 
-
     global_objects = EventDepartment.objects.filter(department=6)
     event_name = []
     for global_object in global_objects:
@@ -251,7 +250,7 @@ def event_register(request):
             'pageTitle': dept,
             'events': EventDepartment.objects.filter(department=dept_choose).order_by('event__rank'),
             'dept_choosen': dept_choose,
-            'cultural' : cultural
+            'cultural': cultural
         }
         return render(request, 'events/newEvent.html', args1)
 
@@ -452,7 +451,8 @@ def details(request):
         return redirect(response['payment_request']['longurl'])
     else:
         event_name = request.GET.get('event')
-        dept_choose = EventDepartment.objects.get(event=EventMaster.objects.get(event_name__startswith=event_name)).department
+        dept_choose = EventDepartment.objects.get(
+            event=EventMaster.objects.get(event_name__startswith=event_name)).department
         if "cultural" in dept_choose.name.lower() and not request.user.is_active:
             cultural = 0
         else:
@@ -462,7 +462,7 @@ def details(request):
             'pageTitle': EventMaster.objects.get(event_name__startswith=event_name).event_name,
             'event': EventMaster.objects.get(event_name__startswith=event_name),
             'dept': EventDepartment.objects.get(event=EventMaster.objects.get(event_name__startswith=event_name)),
-            'cultural' : cultural
+            'cultural': cultural
         }
         return render(request, 'events/category1Event1.html', arg)
 
@@ -966,7 +966,7 @@ def verifyOTP(request):
             readm = "readonly"
             return render(request, 'events/participantDetails.html',
                           {'event': event, 'colleges': coll, 'email_participant': userEmail, 'present_user': ifuser,
-                           'readm': readm,'cultural':cultural})
+                           'readm': readm, 'cultural': cultural})
 
 
 def participant_details(request):
@@ -1942,7 +1942,8 @@ def verifyOTP_event(request):
 
         else:
             request.session['otp'] = ""
-            if MyUser.objects.filter(email=userEmail).count() == 0:
+            if MyUser.objects.filter(email=userEmail).count() == 0 or MyUser.objects.filter(
+                    coll_email=userEmail).count() == 0:
                 ifuser = None
                 error = "Not participated in this Event!!"
                 stats = 0
@@ -1996,7 +1997,6 @@ def pariwartan_upload(request):
         stats = 1
     return render(request, 'events/pariwartan_upload.html', {'stats': stats, 'participant': participant})
 
-
 @user_passes_test(lambda u: u.is_superuser)
 def qr_verify(request):
     stat = 5
@@ -2019,7 +2019,7 @@ def qr_verify(request):
             except:
                 stat = 2
             if stat is not 2:
-                user = MyUser.objects.get(username = name)
+                user = MyUser.objects.get(username=name)
                 eventname = EventMaster.objects.get(event_name=event)
                 if Team.objects.filter(user=user).count():
                     teams = Team.objects.filter(user=user)

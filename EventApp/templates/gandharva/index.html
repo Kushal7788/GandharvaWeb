@@ -195,12 +195,12 @@
                             <div class="timeline-badge" style="background-color:#ff3333"><span
                                     class="timeline-balloon-date-day">{{ timeline.date.day }}</span>
                                 <span class="timeline-balloon-date-month">{{ timeline.date|date:'F' }}</span></div>
-                            <div class="timeline-panel" style="background:linear-gradient(45deg, #990000, #ff9999);">
+                            <div class="timeline-panel" style="background-color: white">
                                 <div class="timeline-heading">
-                                    <h2 class="timeline-title text-white">{{ timeline.name }}</h2>
+                                    <h2 class="timeline-title">{{ timeline.name }}</h2>
                                 </div>
                                 <br>
-                                <p class="text-white">{{ timeline.info }}</p>
+                                <p>{{ timeline.info }}</p>
                             </div>
                         </li>
                     {% else %}
@@ -208,13 +208,13 @@
                             <div class="timeline-badge" style="background-color:#33adff"><span
                                     class="timeline-balloon-date-day">{{ timeline.date.day }}</span>
                                 <span class="timeline-balloon-date-month">{{ timeline.date|date:'F' }}</span></div>
-                            <div class="timeline-panel" style="background:linear-gradient(45deg,#006bb3, #66c2ff);">
+                            <div class="timeline-panel" style="background-color: white">
                                 <div class="timeline-heading">
-                                    <h2 class="timeline-title text-white">{{ timeline.name }}</h2>
+                                    <h2 class="timeline-title">{{ timeline.name }}</h2>
                                 </div>
                                 <br>
                                 <div class="timeline-body">
-                                    <p class="text-white">{{ timeline.info }}</p>
+                                    <p>{{ timeline.info }}</p>
                                 </div>
                             </div>
                         </li>
