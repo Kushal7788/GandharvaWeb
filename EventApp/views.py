@@ -1,9 +1,6 @@
 # inlcude the various features which are to be used in Views here
 import copy
 import datetime
-from datetime import date
-from datetime import time
-from datetime import datetime
 import json
 import re
 import string
@@ -135,7 +132,7 @@ def campaigning_excel(request):
                         # curr_cell.value = each_value
                     col = col + 1
         current_site = get_current_site(request)
-        datetimeobj = datetime.now()
+        datetimeobj = datetime.datetime.now()
         pathw = '/media/CampaignData'+ '_' + str(datetimeobj) +  '.xlsx'
         wb.save(BASE_DIR + pathw)
         if request.POST.get('check'):
