@@ -18,11 +18,12 @@
                 <input type="hidden" name="team" value="{{ team.pk }}">
                 {% for question in questions %}
                     <p> {{ question.question }}</p>
+                    <p style="color: red">*Required</p>
                     <div class="form-check">
                         {% for opt in options %}
-                        <input class="form-check-input" name="radio{{ question.pk }}" type="radio"
-                               value="{{ opt.pk }}">{{ opt.option }}
-                        <br>
+                            <input class="form-check-input" name="radio{{ question.pk }}" type="radio"
+                                   value="{{ opt.pk }}" required>{{ opt.option }}
+                            <br>
                         {% endfor %}
                     </div>
                     <br>
@@ -32,23 +33,24 @@
                 <br>
 
                 <h5 style="text-align: center">Team Details</h5>
+                <p class="text-center">Enter your team details</p>
                 <div class="form-group">
                     <label class="control-label">Name 1:</label>
                     <input class="form-control" type="text" name="name1" required>
                 </div>
-
+                <p style="color: red">*Required</p>
                 <div class="form-group">
-                    <label class="control-label"> Number 1:</label>
-                    <input class="form-control" type="number" name="number1" required>
+                    <label class="control-label">Contact Number 1:</label>
+                    <input class="form-control" type="tel" name="number1" maxlength="10" minlength="10" required>
                 </div>
-
+                <p style="color: red">*Required</p>
                 <div class="form-group">
                     <label class="control-label">Name 2:</label>
                     <input class="form-control" type="text" name="name2">
                 </div>
                 <div class="form-group">
-                    <label class="control-label">Number 2:</label>
-                    <input class="form-control" type="number" name="number2">
+                    <label class="control-label">Contact Number 2:</label>
+                    <input class="form-control" type="tel" maxlength="10" minlength="10" name="number2">
                 </div>
 
                 <div class="form-group">
@@ -56,8 +58,8 @@
                     <input class="form-control" type="text" name="name3">
                 </div>
                 <div class="form-group">
-                    <label class="control-label">Number 3:</label>
-                    <input class="form-control" type="number" name="number3">
+                    <label class="control-label">Contact Number 3:</label>
+                    <input class="form-control" type="tel" name="number3" maxlength="10" minlength="10">
                 </div>
 
                 <div class="form-group">
@@ -65,8 +67,8 @@
                     <input class="form-control" type="text" name="name4">
                 </div>
                 <div class="form-group">
-                    <label class="control-label">Number 4:</label>
-                    <input class="form-control" type="number" name="number4">
+                    <label class="control-label">Contact Number 4:</label>
+                    <input class="form-control" type="tel" name="number4" maxlength="10" minlength="10">
                 </div>
 
 
