@@ -1,12 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-{% for t in teams %}
-    {{ t.user.first_name }} - {{ t.user.last_name }} - {{ t.Refral_Code }}
-{% endfor %}
-</body>
-</html>
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}Feedback Given{% endblock %}
+{% block css %}
+    <link href="{% static 'events/css/campaign.css' %}" rel="stylesheet">
+    <style>
+        .table {
+            margin-left: 0;
+        }
+
+        td {
+            width: 500px;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    <br><br><br><br><br>
+    <div class="container">
+        <div class="col-sm-8 container-center">
+            <div class="logo">
+                <img class="img-fluid" src="{% static 'gandharva/img/logo_description.png' %}">
+            </div>
+            <h5 style="text-align: center;">Feedback Given</h5>
+            <br>
+            <table class="table table-responsive">
+                <thead class="thead-dark">
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Code</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for t in teams %}
+                    <tr>
+                        <td>{{ t.user.first_name }}</td>
+                        <td>{{ t.user.last_name }}</td>
+                        <td>{{ t.Refral_Code }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div style="height: 20vh"></div>
+{% endblock %}
+
+
+
+
+
+{#{% for t in teams %}#}
+{#    {{ t.user.first_name }} - {{ t.user.last_name }} - {{ t.Refral_Code }}#}
+{#{% endfor %}#}
