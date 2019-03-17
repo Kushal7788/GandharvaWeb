@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+</head>
+<body>
+{% for t in teams %}
+    {{ t.user.first_name }} - {{ t.user.last_name }} - {{ t.Refral_Code }}
+{% endfor %}
+</body>
+</html>

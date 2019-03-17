@@ -132,9 +132,8 @@ def campaigning_excel(request):
                         # curr_cell.value = each_value
                     col = col + 1
         current_site = get_current_site(request)
-        datetimeobj = datetime.datetime.now()
-        pathw = '/media/CampaignData'+ '_' + str(datetimeobj) +  '.xlsx'
-        wb.save(BASE_DIR + pathw)
+        pathw = '/media/CampaignData.xlsx'
+        wb.save(BASE_DIR + '/media/CampaignData.xlsx')
         if request.POST.get('check'):
             return (redirect(pathw))
         else:
@@ -626,8 +625,10 @@ def myaction(request):
         publicity = 0
         if role.role.name == "Publicity Head":
             publicity = 1
+        event = None
         if request.GET.get('event_id'):
             event_id = request.GET.get('event_id')
+            event = EventMaster.objects.get(event_id = event_id)
         args = {
             'button_name': '',
             'urlaccess': campaign,
@@ -635,6 +636,7 @@ def myaction(request):
             'stat': stat,
             'event_id': event_id,
             'publicity' : publicity,
+            'event' : event,
         }
         return render(request, 'user/myactions.html', args)
     # if role.role.name == 'Event Head':
@@ -1998,7 +2000,7 @@ def pariwartan_upload(request):
         stats = 1
     return render(request, 'events/pariwartan_upload.html', {'stats': stats, 'participant': participant})
 
-@event_head_present
+@user_passes_test(lambda u: u.is_superuser)
 def qr_verify(request):
     stat = 5
     selected = None
@@ -2043,12 +2045,11 @@ def qr_verify(request):
                 teams = Team.objects.all()
                 for team in teams:
                     if team.Refral_Code == text:
-                        if team.ispresent == False:
+                        if team.ispresent is False:
                             selected = team
                             team.ispresent = True
                             team.save()
                             stat = 1
-                            break
                         else:
                             stat = 3
                     else:
@@ -2071,13 +2072,10 @@ def event_present(request):
         teams = Team.objects.all()
         for team in teams:
             if team.receipt.event == event:
-                trans = team.transaction_set.all()
-                for tran in trans:
-                    if tran.status == "Cash" or tran.status == "Credit":
-                        if team.ispresent:
-                            present.append(team)
-                        else:
-                            notcame.append(team)
+                if team.ispresent:
+                    present.append(team)
+                else:
+                    notcame.append(team)
     if request.method == "POST":
         if "send" in request.POST:
             participants_selecteds = request.POST.getlist('participants')
@@ -2116,7 +2114,7 @@ def event_present(request):
                     'transaction': transaction,
                 })
 
-                send_email(selected_user.email, mail_subject, message, [team_selected.QRcode.path])
+                send_email(selected_user.email, mail_subject, message, [team.QRcode.path])
 
     return render(request, "events/event--presenty.html", {'presents': present, 'notcomes': notcame})
 
@@ -2149,16 +2147,10 @@ def send_push(request):
         return JsonResponse(status=500, data={"message": "An error occurred"})
 
 
-@event_head_present
+# @event_head_present
 def event_count(request):
-    count = 0
     role = RoleAssignment.objects.get(user=request.user)
-    receipts = Receipt.objects.filter(event=role.event)
-    for receipt in receipts:
-        trans = receipt.transaction_set.all()
-        for tran in trans:
-            if tran.status == "Cash" or tran.status == "Credit":
-                count = count + 1
+    count = Receipt.objects.filter(event=role.event).count() - 1
     return render(request, 'user/event-count.html', {'count': count, 'event': role.event})
 
 
@@ -2182,8 +2174,8 @@ def verify_qr_feedback(request):
         if check == 1:
             questions = Feedback_questions.objects.all()
             options = Feedback_options.objects.all()
-            # option = Feedback_options.objects.latest('pk')
-            return render(request, 'events/feedback.html', {'team': curteam , 'questions': questions , 'options' : options})
+            option = Feedback_options.objects.latest('pk')
+            return render(request, 'events/feedback.html', {'team': curteam , 'questions': questions , 'option' : option})
         else:
             return render(request, 'events/verify-feedback.html',{'error': "No entry Found"})
     else :
@@ -2202,28 +2194,29 @@ def feedback(request):
            feed.save()
        feed_comment = Feedback_comments()
        feed_comment.team = team
-       if request.POST.get('comment'):
-        feed_comment.comment = request.POST.get('comment')
-       if request.POST.get('name1'):
-        feed_comment.name1 = request.POST.get('name1')
-       if request.POST.get('number1'):
-        feed_comment.number1 = request.POST.get('number1')
-       if request.POST.get('name2'):
-        feed_comment.name2 = request.POST.get('name2')
-       if request.POST.get('number2'):
-        feed_comment.number2 = request.POST.get('number2')
-       if request.POST.get('name3'):
-        feed_comment.name3 = request.POST.get('name3')
-       if request.POST.get('number3'):
-        feed_comment.number3 = request.POST.get('number3')
-       if request.POST.get('name4'):
-         feed_comment.name4 = request.POST.get('name4')
-       if request.POST.get('number4'):
-        feed_comment.number4 = request.POST.get('number4')
+       feed_comment.comment = request.POST.get('comment')
+       feed_comment.name1 = request.POST.get('name1')
+       feed_comment.number1 = request.POST.get('number1')
+       feed_comment.name2 = request.POST.get('name2')
+       feed_comment.number2 = request.POST.get('number2')
+       feed_comment.name3 = request.POST.get('name3')
+       feed_comment.number3 = request.POST.get('number3')
+       feed_comment.name4 = request.POST.get('name4')
+       feed_comment.number4 = request.POST.get('number4')
        feed_comment.save()
        return render(request, 'events/verify-feedback.html',{'done':1})
     else:
         questions = Feedback_questions.objects.all()
-        # option = Feedback_options.objects.latest('pk')
-        option = Feedback_options.objects.all()
-        return render(request, 'events/feedback.html', { 'questions': questions, 'options': option})
+        option = Feedback_options.objects.latest('pk')
+        return render(request, 'events/feedback.html', { 'questions': questions, 'option': option})
+
+def feedback_given(request):
+    event_id = request.POST.get('event_id')
+    event = EventMaster.objects.get(event_id  = event_id)
+    feed = Feedback_comments.objects.all()
+    teams = []
+    for f in feed :
+        if f.team.receipt.event == event :
+            teams.append(f.team)
+    print(teams)
+    return render(request, 'events/feedback-given.html' , {'teams' : teams})
