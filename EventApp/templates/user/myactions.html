@@ -7,13 +7,13 @@
 
 {% block body %}
     <br><br><br><br><br>
-    <div class="container" style="height:100vh">
+    <div class="container">
         <div class="col-sm-7 container-center">
             <div class="logo">
                 <img class="img-fluid" src="{% static 'gandharva/img/logo_description.png' %}">
             </div>
             <h5 style="text-align: center;">My Actions</h5>
-            <br>
+            <br><br>
             <div class="text-right">
                 {% if roles %}
                     <h5> {{ roles.name }}</h5>
@@ -33,55 +33,57 @@
                 <form method="get" action="{% url 'campaign' %}">
                     <div class="text-center">
                         <button type="submit" name="{{ button_name }}" class="btn btn-primary"
-                                style="margin-left: 0">Campaigning Details</button>
+                                style="margin-left: 0">Campaigning Details
+                        </button>
                     </div>
                 </form>
 
             {% endif %}
-        {% if publicity == 1 %}
-            <div class="text-center">
-                            <form method="get" action="{% url 'publicity-head' %}">
-                                <button type="submit" class="btn btn-primary">Participant Mail
-                                </button>
-                            </form>
-                        </div>
-        {% endif %}
-        {% if stat == 1 %}
+            {% if publicity == 1 %}
+                <div class="text-center">
+                    <form method="get" action="{% url 'publicity-head' %}">
+                        <button type="submit" class="btn btn-primary">Participant Mail
+                        </button>
+                    </form>
+                </div>
+            {% endif %}
+            {% if stat == 1 %}
                 <form method="get" action="{% url 'event-count' %}">
                     <div class="text-center">
                         <button type="submit" name="event_count" class="btn btn-primary"
-                                style="margin-left: 0">Event Count</button>
+                                style="margin-left: 0">Event Count
+                        </button>
                     </div>
                 </form>
-                        <div class="text-center">
-                            <form method="get" action="{% url 'event-presenty' %}">
-                                <button type="submit" class="btn btn-primary">Event Presenty
-                                </button>
-                            </form>
-                        </div>
-                        <div class="text-center">
-                            <form method="get" action="{% url 'qr-verify' %}">
-                                <button type="submit" class="btn btn-primary">QR Code Verify
-                                </button>
-                            </form>
-                        </div>
-                                                <div class="text-center">
-                            <form method="get" action="{% url 'event-head' %}">
-                                <input type="hidden" name="event_id" value="{{ event_id }}">
-                                <button type="submit" class="btn btn-primary">Participant-mail
-                                </button>
-                            </form>
-                        </div>
-            <div class="text-center">
-                            <form method="post" action="{% url 'feedback_given' %}">
-                                {% csrf_token %}
-                                <input type="hidden" name="event_id" value="{{ event }}">
-                                <input type="hidden" name="event_id" value="{{ event_id }}">
-                                <button type="submit" class="btn btn-primary">Feedback Given
-                                </button>
-                            </form>
-                        </div>
-                {% endif %}
+                <div class="text-center">
+                    <form method="get" action="{% url 'event-presenty' %}">
+                        <button type="submit" class="btn btn-primary">Event Presenty
+                        </button>
+                    </form>
+                </div>
+                <div class="text-center">
+                    <form method="get" action="{% url 'qr-verify' %}">
+                        <button type="submit" class="btn btn-primary">QR Code Verify
+                        </button>
+                    </form>
+                </div>
+                <div class="text-center">
+                    <form method="get" action="{% url 'event-head' %}">
+                        <input type="hidden" name="event_id" value="{{ event_id }}">
+                        <button type="submit" class="btn btn-primary">Participant-mail
+                        </button>
+                    </form>
+                </div>
+                <div class="text-center">
+                    <form method="post" action="{% url 'feedback_given' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="event_id" value="{{ event }}">
+                        <input type="hidden" name="event_id" value="{{ event_id }}">
+                        <button type="submit" class="btn btn-primary">Feedback Given
+                        </button>
+                    </form>
+                </div>
+            {% endif %}
             {#            {% if button_name == "All Participants" %}#}
             {#                <form method="get" action="{% url 'all_participanrs' %}">#}
             {#                    <div class="text-center">#}
@@ -93,6 +95,7 @@
 
             {#            {% endif %}#}
         </div>
-        <br>
+        <br><br>
     </div>
+    <div style="height: 32vh"></div>
 {% endblock %}
