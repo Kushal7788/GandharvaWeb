@@ -17,8 +17,7 @@
                 {% csrf_token %}
                 <input type="hidden" name="team" value="{{ team.pk }}">
                 {% for question in questions %}
-                    <p> {{ question.question }}</p>
-                    <p style="color: red">*Required</p>
+                    <p> {{ question.question }} <span style="color: red">*</span></p>
                     <div class="form-check">
                         {% for opt in options %}
                             <input class="form-check-input" name="radio{{ question.pk }}" type="radio"
@@ -35,15 +34,15 @@
                 <h5 style="text-align: center">Team Details</h5>
                 <p class="text-center">Enter your team details</p>
                 <div class="form-group">
-                    <label class="control-label">Name 1:</label>
+                    <label class="control-label">Name 1: <span style="color: red">*</span></label>
                     <input class="form-control" type="text" name="name1" required>
                 </div>
-                <p style="color: red">*Required</p>
+
                 <div class="form-group">
-                    <label class="control-label">Contact Number 1:</label>
+                    <label class="control-label">Contact Number 1: <span style="color: red">*</span></label>
                     <input class="form-control" type="tel" name="number1" maxlength="10" minlength="10" required>
                 </div>
-                <p style="color: red">*Required</p>
+
                 <div class="form-group">
                     <label class="control-label">Name 2:</label>
                     <input class="form-control" type="text" name="name2">
