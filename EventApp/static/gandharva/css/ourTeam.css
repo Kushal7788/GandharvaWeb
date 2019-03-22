@@ -397,16 +397,16 @@ html, body {
 
 .one-slide {
     border-radius: 3px;
-    margin-left: 1rem;
-    margin-right: 1rem;
+    margin:1rem;
     font-size: 1.1rem;
     height: 360px;
 }
 
 .one-slide img {
-    width: 100%;
+    width: 120px;
     height: 120px;
     margin: auto;
+    border-radius: 6px;
 }
 
 .carousel-controls .control {
