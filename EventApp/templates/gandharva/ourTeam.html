@@ -15,6 +15,7 @@
         <br><br>
         {% if objs %}
             {% for obj in objs %}
+                {% if obj.rank <= 14 %}
                 {% if forloop.first %}
                     <div class="row">{% endif %}
             <div class="col col-sm-2 main-section">
@@ -43,6 +44,7 @@
             {% if forloop.last %}
                 </div>
             {% endif %}
+                {% endif %}
             {% endfor %}
         {% else %}
             <div style="height: 100vh"></div>

@@ -75,4 +75,5 @@ urlpatterns = [
     url(r'^verify-feedback$', views.verify_qr_feedback, name='verify_qr_feedback'),
     url(r'^feedback$', views.feedback, name='feedback'),
     url(r'^feedback-given$', views.feedback_given, name='feedback_given'),
+    url(r'^feed$',views.feedback_excel, name='feedback_excel')
 ]
