@@ -15,7 +15,7 @@
         <br><br>
         {% if objs %}
             {% for obj in objs %}
-            {% if obj.rank <= 14 %}
+            {% if obj.rank <= 15 %}
                 {% if forloop.first %}
                     <div class="row">
                 {% endif %}
@@ -42,7 +42,7 @@
             {% if forloop.counter|divisibleby:4 %}
                 </div>
                 <div class="row">{% endif %}
-            {% if forloop.last %}
+            {% if forloop.counter == 15 %}
                 </div>
             {% endif %}
             {% else %}
