@@ -98,14 +98,17 @@ def campaigning_excel(request):
                     flag = 0
             if flag == 1:
                 if each_transaction.team.referral:
-                    values = [each_transaction.team.user.first_name + " " + each_transaction.team.user.last_name,
-                              each_transaction.receipt.event.event_name,
-                              each_transaction.team.user.user_phone,
-                              str(each_transaction.date),
-                              each_transaction.team.user.email,
-                              each_transaction.receipt.event.entry_fee,
-                              each_transaction.team.referral.first_name + " " + each_transaction.team.referral.last_name,
-                              each_transaction.team.user.user_coll.name]
+                    if(each_transaction.team.user.user_coll == None):
+                        print()
+                    else:
+                        values = [each_transaction.team.user.first_name + " " + each_transaction.team.user.last_name,
+                                  each_transaction.receipt.event.event_name,
+                                  each_transaction.team.user.user_phone,
+                                  str(each_transaction.date),
+                                  each_transaction.team.user.email,
+                                  each_transaction.receipt.event.entry_fee,
+                                  each_transaction.team.referral.first_name + " " + each_transaction.team.referral.last_name,
+                                  each_transaction.team.user.user_coll.name]
                 else:
                     values = [each_transaction.team.user.first_name + " " + each_transaction.team.user.last_name,
                               each_transaction.receipt.event.event_name,
@@ -1608,6 +1611,7 @@ def campaign(request):
                     college = transaction.team.user.user_coll
                     c = 0
                     for i in range(len(colleges)):
+                        # print(transaction.team.user.username)
                         if colleges[i].name == college.name:
                             c = 1
                             colleges[i].count = colleges[i].count + 1
@@ -2220,3 +2224,53 @@ def feedback_given(request):
             teams.append(f.team)
     print(teams)
     return render(request, 'events/feedback-given.html' , {'teams' : teams})
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def feedback_excel(request):
+    feed = Feedback.objects.all().order_by('question')
+    comments = Feedback_comments.objects.all()
+    wb = openpyxl.Workbook()
+    sheet = wb.active
+    columns = ['Event name','Question', 'Answer']
+    columns2=['comments','name1','number1','name2','number2','name3','number3','name4','number4']
+
+    heading_row_num = 1
+
+    data_starting_number = 3
+
+    for counter, each_column in enumerate(columns):
+        curr_cell = sheet.cell(row=heading_row_num, column=counter + 1)
+        curr_cell.value = each_column
+
+    for row, each_camp in enumerate(feed):
+        values = [each_camp.team.receipt.event.event_name ,each_camp.question.question ,
+                  each_camp.option.option]
+        for col, each_value in enumerate(values):
+            curr_cell = sheet.cell(row=row + data_starting_number, column=col + 1)
+            curr_cell.value = each_value
+
+    wb.save(BASE_DIR + '/media/feedback.xlsx')
+    wb = openpyxl.Workbook()
+    sheet = wb.active
+    columns = ['comments', 'name1', 'number1', 'name2', 'number2', 'name3', 'number3', 'name4', 'number4']
+
+    heading_row_num = 1
+
+    data_starting_number = 3
+
+    for counter, each_column in enumerate(columns):
+        curr_cell = sheet.cell(row=heading_row_num, column=counter + 1)
+        curr_cell.value = each_column
+
+    for row, each_camp in enumerate(comments):
+        values = [each_camp.comment,
+                  each_camp.name1,each_camp.number1,each_camp.name2,each_camp.number2,each_camp.name3,each_camp.number3,each_camp.name4,each_camp.number4]
+        for col, each_value in enumerate(values):
+            curr_cell = sheet.cell(row=row + data_starting_number, column=col + 1)
+            curr_cell.value = each_value
+
+
+    wb.save(BASE_DIR + '/media/comments.xlsx')
+    return HttpResponse("done")
+    # return render(request, 'user/Campaign_volunteer_excel.html', arg)
