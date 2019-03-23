@@ -15,6 +15,7 @@
         <br><br>
         {% if objs %}
             {% for obj in objs %}
+                {% if obj.rank <= 14 %}
                 {% if forloop.first %}
                     <div class="row">{% endif %}
             <div class="col col-sm-2 main-section">
@@ -43,13 +44,14 @@
             {% if forloop.last %}
                 </div>
             {% endif %}
+                {% endif %}
             {% endfor %}
         {% else %}
             <div style="height: 100vh"></div>
         {% endif %}
     </div>
 
-    {#    slider start#}
+    {# slider start #}
 
     <div style="width: 100%;background-color:black">
         <img class="img-fluid" src="{% static 'gandharva/img/flimstrip.png' %}">
@@ -61,6 +63,7 @@
         {#        </div>#}
         <div class="testimonial-carousel">
             {% for obj in objs %}
+                {% if obj.rank > 14 %}
                 <div class="one-slide white">
                     <div class="clip">
                         <div class="testimonial w-100 h-100 p-3 text-center film">
@@ -84,6 +87,7 @@
                         </div>
                     </div>
                 </div>
+                {% endif %}
             {% endfor %}
         </div>
     </div>
