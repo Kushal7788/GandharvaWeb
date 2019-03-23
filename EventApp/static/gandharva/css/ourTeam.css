@@ -397,7 +397,7 @@ html, body {
 
 .one-slide {
     border-radius: 3px;
-    margin:1rem;
+    margin: 1rem;
     font-size: 1.1rem;
     height: 360px;
 }
@@ -411,8 +411,11 @@ html, body {
 
 .carousel-controls .control {
     position: absolute;
+    color: #737373;
     cursor: pointer;
+    font-size: 25px;
     top: 56.4%;
+    z-index: 1000;
     -webkit-transform: translateY(-50%);
     -moz-transform: translateY(-50%);
     -ms-transform: translateY(-50%);

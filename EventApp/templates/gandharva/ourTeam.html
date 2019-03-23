@@ -16,34 +16,40 @@
         {% if objs %}
             {% for obj in objs %}
                 {% if obj.rank <= 14 %}
-                {% if forloop.first %}
-                    <div class="row">{% endif %}
-            <div class="col col-sm-2 main-section">
-                <div class="modal-content">
-                    <div class="user-img">
-                        <img src="{{ obj.img.url }}"
-                             alt="Contactlogo" style="object-fit: cover">
+                    {% if forloop.first %}
+                        <div class="row">
+                    {% endif %}
+                <div class="col col-sm-2 main-section">
+                    <div class="modal-content">
+                        <div class="user-img">
+                            <img src="{{ obj.img.url }}"
+                                 alt="Contactlogo" style="object-fit: cover">
+                        </div>
+                        <p class="name">{{ obj.name }}<br> <span
+                                style="font-weight: 400;padding-bottom: 10px">{{ obj.post }}</span></p>
+                        <div class="text-center" style="margin-bottom: 6px">
+                            <a target="_blank" href="{{ obj.fb_link }}" style="color: #333333"> <i
+                                    class="fab fa-facebook-f"
+                                    style="margin-right: 8px;font-size: 20px"></i></a>
+                            <a target="_blank" href="{{ obj.twitter_link }}" style="color: #333333"><i
+                                    class="fab fa-twitter"
+                                    style="margin-right: 8px;font-size: 20px"></i></a>
+                            <a target="_blank" href="{{ obj.insta_link }}" style="color: #333333"><i
+                                    class="fab fa-instagram"
+                                    style="margin-right: 8px;font-size:20px"></i></a>
+                        </div>
                     </div>
-                    <p class="name">{{ obj.name }}<br> <span
-                            style="font-weight: 400;padding-bottom: 10px">{{ obj.post }}</span></p>
-                    <div class="text-center" style="margin-bottom: 6px">
-                        <a target="_blank" href="{{ obj.fb_link }}" style="color: #333333"> <i class="fab fa-facebook-f"
-                                                                                               style="margin-right: 8px;font-size: 20px"></i></a>
-                        <a target="_blank" href="{{ obj.twitter_link }}" style="color: #333333"><i
-                                class="fab fa-twitter"
-                                style="margin-right: 8px;font-size: 20px"></i></a>
-                        <a target="_blank" href="{{ obj.insta_link }}" style="color: #333333"><i
-                                class="fab fa-instagram"
-                                style="margin-right: 8px;font-size:20px"></i></a>
+                </div>
+                {% if forloop.counter|divisibleby:4 %}
                     </div>
-                </div>
-            </div>
-            {% if forloop.counter|divisibleby:4 %}
-                </div>
-                <div class="row">{% endif %}
-            {% if forloop.last %}
-                </div>
-            {% endif %}
+                    <div class="row">
+                {% endif %}
+                {% if forloop.last %}
+                    </div>
+                {% endif %}
+                {% endif %}
+                {% if forloop.last %}
+                    </div>
                 {% endif %}
             {% endfor %}
         {% else %}
@@ -52,41 +58,40 @@
     </div>
 
     {# slider start #}
-
     <div style="width: 100%;background-color:black">
         <img class="img-fluid" src="{% static 'gandharva/img/flimstrip.png' %}">
     </div>
     <div class="pos-r" style="background-color: black">
         {#        <div class="carousel-controls testimonial-carousel-controls">#}
-        {#            <div class="control prev"><i class="fa fa-chevron-left text-white">&nbsp;</i></div>#}
-        {#            <div class="control next"><i class="fa fa-chevron-right text-white">&nbsp;</i></div>#}
+        {#            <div class="control prev"><i class="fa fa-chevron-left">&nbsp;</i></div>#}
+        {#            <div class="control next"><i class="fa fa-chevron-right">&nbsp;</i></div>#}
         {#        </div>#}
         <div class="testimonial-carousel">
             {% for obj in objs %}
                 {% if obj.rank > 14 %}
-                <div class="one-slide white">
-                    <div class="clip">
-                        <div class="testimonial w-100 h-100 p-3 text-center film">
-                            <div class="brand">
-                                <img alt="logo" src="{{ obj.img.url }}"/>
-                            </div>
-                            <div class="separator">&nbsp;</div>
-                            <div class="message text-center text-gray">{{ obj.name }}</div>
-                            <p style="font-weight: 300;font-size: 0.9rem; margin-bottom: 4px">{{ obj.post }}</p>
-                            <div class="text-center" style="margin-bottom: 8px">
-                                <a target="_blank" href="{{ obj.fb_link }}" style="color: #333333"> <i
-                                        class="fab fa-facebook-f"
-                                        style="margin-right: 8px;font-size: 20px;"></i></a>
-                                <a target="_blank" href="{{ obj.twitter_link }}" style="color: #333333"><i
-                                        class="fab fa-twitter"
-                                        style="margin-right: 8px;font-size: 20px"></i></a>
-                                <a target="_blank" href="{{ obj.insta_link }}" style="color: #333333"><i
-                                        class="fab fa-instagram"
-                                        style="margin-right: 8px;font-size:20px"></i></a>
+                    <div class="one-slide white">
+                        <div class="clip">
+                            <div class="testimonial w-100 h-100 p-3 text-center film">
+                                <div class="brand">
+                                    <img alt="logo" src="{{ obj.img.url }}" style="object-fit: cover"/>
+                                </div>
+                                <div class="separator">&nbsp;</div>
+                                <div class="message text-center text-gray">{{ obj.name }}</div>
+                                <p style="font-weight: 300;font-size: 0.9rem; margin-bottom: 4px">{{ obj.post }}</p>
+                                <div class="text-center" style="margin-bottom: 8px">
+                                    <a target="_blank" href="{{ obj.fb_link }}" style="color: #333333"> <i
+                                            class="fab fa-facebook-f"
+                                            style="margin-right: 8px;font-size: 20px;"></i></a>
+                                    <a target="_blank" href="{{ obj.twitter_link }}" style="color: #333333"><i
+                                            class="fab fa-twitter"
+                                            style="margin-right: 8px;font-size: 20px"></i></a>
+                                    <a target="_blank" href="{{ obj.insta_link }}" style="color: #333333"><i
+                                            class="fab fa-instagram"
+                                            style="margin-right: 8px;font-size:20px"></i></a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 {% endif %}
             {% endfor %}
         </div>
@@ -94,7 +99,6 @@
     <div style="width: 100%;background-color:black">
         <img class="img-fluid" src="{% static 'gandharva/img/flimstrip.png' %}">
     </div>
-
     {#    slider end#}
 
     <div style="height: 10vh"></div>
@@ -105,7 +109,7 @@
             $(document).ready(function () {
                 $(".testimonial-carousel").slick({
                     infinite: !0,
-                    slidesToShow: 6,
+                    slidesToShow: 5,
                     slidesToScroll: 1,
                     autoplay: true,
                     autoplaySpeed: 2500,
